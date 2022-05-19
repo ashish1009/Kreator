@@ -1,0 +1,3 @@
+[submodule "iKan/vendors/spdlog"]
+	path = iKan/vendors/spdlog
+	url = https://github.com/gabime/spdlog

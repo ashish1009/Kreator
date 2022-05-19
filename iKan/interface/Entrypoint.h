@@ -12,6 +12,11 @@
 
 int main() {
     std::cout << "Hello Project \n";
+
+    // Initialize the Logger
+    iKan::Logger::Init();
+    IK_INFO("Initialized iKan Engine Logger");
+    
     return 0;
 }
 

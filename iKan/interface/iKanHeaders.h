@@ -12,3 +12,10 @@
 
 // C++ Files
 #include <iostream>
+
+// Core Files
+#include <Core/Debug/Logger.hpp>
+
+#include <Core/Utils/Asserts.h>
+
+#include <Core/Application.hpp>

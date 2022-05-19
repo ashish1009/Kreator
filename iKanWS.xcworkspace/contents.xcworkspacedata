@@ -4,6 +4,24 @@
    <FileRef
       location = "group:README.md">
    </FileRef>
+   <Group
+      location = "group:Logs"
+      name = "Logs">
+      <FileRef
+         location = "group:iKan.iKanLog">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:Resources"
+      name = "Resources">
+      <Group
+         location = "group:Branding"
+         name = "Branding">
+         <FileRef
+            location = "group:iKan.png">
+         </FileRef>
+      </Group>
+   </Group>
    <FileRef
       location = "group:Kreator/Kreator.xcodeproj">
    </FileRef>

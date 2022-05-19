@@ -4,8 +4,7 @@ Build-Int/
 DerivedData/
 
 #Engine Files
-.Kreatorlog
+*.iKanLog
 
 # Mac Files
 .DS_Store
-Logs/Kreator.Kreatorlog
