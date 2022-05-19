@@ -56,6 +56,9 @@ namespace iKan {
         static const Application& Get();
         
     private:
+        // Copy Constructor
+        Application(const Application&) = delete;
+        
         // Member variable
         Specification m_Specification;
         
