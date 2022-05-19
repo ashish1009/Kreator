@@ -19,3 +19,4 @@
 #include <Core/Utils/Asserts.h>
 
 #include <Core/Application.hpp>
+#include <Core/Layer.hpp>

@@ -7,8 +7,10 @@
 
 #pragma once
 
+#include "Core/LayerStack.hpp"
+
 namespace iKan {
-    
+
     /// Base class for Core Application. Client can create its own Application derived from Base Core Applicaiton.
     /// Responsible for.
     /// - Initializing all renderers, layers (Include GUI) and Window.
@@ -23,22 +25,22 @@ namespace iKan {
             bool StartMaximized = true;
             bool Resizable = true;
             bool EnableGui = true;
-            
+
             // Constructors and Destructors
             Specification() = default;
             ~Specification() = default;
             Specification(const Specification&);
         };
-        
+
         // Constructors
         /// Application Constructor
         /// @param spec Specification defined for application
         Application(const Specification& spec);
-        
+
         // Virtual Methods
         /// Application Destructor
         virtual ~Application();
-        
+
         // Note: Override these Virtual Methods in client Application only if you want to create complete fresh application.
         // and add some specialisation functionality. If these methods will be overriden in client side then functionality
         // will be completely based on overriden method
@@ -50,24 +52,37 @@ namespace iKan {
         virtual void EventHandler();
         /// Render GUI Window
         virtual void RenderGui();
+        
+        // Non Vertual Methods
+        /// Push the layer in Core Application Layer stack
+        /// @param layer Layer pointer to be added
+        void PushLayer(const std::shared_ptr<Layer>& layer);
+        
+        /// Pop the layer in Core Application Layer stack
+        /// @param layer Layer pointer to be errased
+        void PopLayer(const std::shared_ptr<Layer>& layer);
 
         // Static Methods
         /// Return the reference of Application Instance
         static const Application& Get();
-        
+
     private:
         // Copy Constructor
         Application(const Application&) = delete;
+
+        // Member Methods
+        void Init();
         
         // Member variable
         Specification m_Specification;
-        
+        std::unique_ptr<LayerStack> m_LayerStack;
+
         // Static variables
         static Application* s_Instance;
     };
-    
+
     // NOTE: Client must have the implementation for creating the applicaiton.
     /// Interface for creating instance of Application.
     std::unique_ptr<Application> CreateApplication();
-    
+
 }

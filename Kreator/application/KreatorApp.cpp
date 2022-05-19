@@ -6,6 +6,7 @@
 //
 
 #include <iKanHeaders.h>
+#include "RendererLayer.hpp"
 
 using namespace iKan;
 
@@ -16,12 +17,16 @@ public:
     /// @param spec Core application specification
     KreatorApp(const Application::Specification& spec) : Application(spec) {
         IK_INFO("Creating Kreator Application ...");
+        m_RendererLayer = std::make_shared<RendererLayer>();
+        PushLayer(m_RendererLayer);
     }
     
     /// Kreator Application Destructor
     virtual ~KreatorApp() {
         IK_WARN("Destroying Kreator Application !!!");
     }
+private:
+    std::shared_ptr<Layer> m_RendererLayer;
 };
 
 /// Implementation for creating instance of Core::Application

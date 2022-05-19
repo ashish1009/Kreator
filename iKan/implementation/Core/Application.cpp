@@ -42,6 +42,13 @@ Application::Application(const Specification& spec)
     IK_CORE_INFO("    Resizable             : {0}", m_Specification.Resizable);
     IK_CORE_INFO("    Enable GUI            : {0}", m_Specification.EnableGui);
     IK_LOG_SEPARATOR();
+    
+    Init();
+}
+
+/// Initialize the Application data
+void Application::Init() {
+    m_LayerStack = std::make_unique<LayerStack>();
 }
 
 /// Applciation Destructor
@@ -51,7 +58,15 @@ Application::~Application() {
 
 /// Update the Application each frame
 void Application::Run() {
+    IK_CORE_INFO("------------------ Starting Game Loop ---------------------- ");
+
+    // Updating all the attached layer
+    for (auto& layer : *m_LayerStack.get())
+        layer->Update();
     
+    if (m_Specification.EnableGui)
+        RenderGui();
+    IK_CORE_INFO("------------------ Ending Game Loop ---------------------- ");
 }
 
 /// Handle the External event interuption in window
@@ -61,8 +76,14 @@ void Application::EventHandler() {
 
 /// Render GUI Window
 void Application::RenderGui() {
-    
+    // Render Imgui for all layers
+    for (auto& layer : *m_LayerStack.get())
+        layer->RenderGui();
 }
+
+// ----- Push and Pop Layer in staeck ----
+void Application::PushLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->PushLayer(layer); }
+void Application::PopLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->PopLayer(layer); }
 
 // --------------- Getters --------------- 
 /// Return the reference of Application Instance

@@ -75,6 +75,7 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 - Fundamentals
     - Logger Framework using SPD log module. API created for both core and client.
     - Assert API created for Trigger Exception in both core and client.
+    - Basic Application Class created
 
 ## How to Use the library
 
