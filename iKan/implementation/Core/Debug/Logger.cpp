@@ -94,7 +94,7 @@ void Logger::Init(Level coreLevel, Level clientLevel, const std::string& logFile
     std::cout << " ------------------------------------------------------------- " << std::endl;
 }
 
-/// ---------------- SPD Instance Getters --------------------
+// ---------------- SPD Instance Getters --------------------
 std::shared_ptr<spdlog::logger>& Logger::GetCoreLogger() { return s_CoreLogger; }
 std::shared_ptr<spdlog::logger>& Logger::GetClientLogger() { return s_ClientLogger; }
-/// ----------------------------------------------------------
+// ----------------------------------------------------------

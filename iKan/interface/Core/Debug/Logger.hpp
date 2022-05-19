@@ -51,7 +51,7 @@ namespace iKan {
 #define IK_ERROR(...) ::iKan::Logger::GetClientLogger()->error(__VA_ARGS__)
 #define IK_CRITICAL(...) ::iKan::Logger::GetClientLogger()->critical(__VA_ARGS__)
 
-#define IK_LOG_SEPARATOR()
+#define IK_LOG_SEPARATOR() IK_CORE_TRACE("-------------------------------------------------");
 
 #else
 
@@ -66,3 +66,7 @@ namespace iKan {
 #define IK_LOG_SEPARATOR()
 
 #endif
+
+// Example for LOG API
+// use {i} for printing any variable at ith position in arguament
+// IK_INFO(" ... string ... {0}, {1} .... ", Arg0, Arg1 ...);

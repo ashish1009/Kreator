@@ -14,7 +14,6 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ## Road Map
 - Fundamentals
-    - Logger Framework
     - Application Layers to handle different layers together
     
 - Window
@@ -73,6 +72,9 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     - Serialise and deserialise the scene : To Graw With Time
 
 ## Features
+- Fundamentals
+    - Logger Framework using SPD log module. API created for both core and client.
+    - Assert API created for Trigger Exception in both core and client.
 
 ## How to Use the library
 
@@ -104,4 +106,5 @@ Add the following library search paths
 ## Basic APIs
 
 ## TODOs
+- TODO: Remove Creator and Implementation files in final commit. Only Interface and Library .a file
 - TODO: In Logger::Init() : Change default argument file path when Asset manager will get introduced
