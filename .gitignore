@@ -1,0 +1,11 @@
+# Directories
+Build/
+Build-Int/
+DerivedData/
+
+#Engine Files
+.Kreatorlog
+
+# Mac Files
+.DS_Store
+Logs/Kreator.Kreatorlog
