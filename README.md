@@ -84,17 +84,23 @@ Link the Kreator.a in your project...
 
 ### Frameworks
 Link following frameworks to your project...
+`Cocoa.framework`
+`IOKit.framework`
+`OpenGL.framework`
 
 ### Header Search Paths
 Add the following header search paths 
 `{...} directory where Kreator Engine is cloned`
 - {...}/interface
+- {...}/vendors/spdlog
 
 ### Library Search Paths
 Add the following library search paths 
 `{...} directory where Kreator Engine is cloned`
 
 ### Preprocesor
+- Add `IK_DEBUG_FEATURE` to enable Kreator Debug features like Profiler and so on...
+- Add `IK_ENABLE_LOG` to enable Logging
 
 ### Entiry point
 - Include Kreator Entry point to use Creator Pre defined Application.
@@ -102,6 +108,8 @@ Add the following library search paths
 - else define your own entry point
 
 #### If included Kreator Entry point. 
+- Define `std::unique_ptr<Kreator::Application> Kreator::CreateApplication()` at client side to instanciate client Applicaiton which should be derived from Core `Kreator::Application`.
+- Push Layers in Application. Base Layer is defined in Kreator. Client Layer should be derived from `Kreator::Layer`. Push using Application API `PushLayer(Layer*)`
 
 ## Basic APIs
 

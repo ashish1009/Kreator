@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E6575E82837AFD9006B0C81 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6575E72837AFD8006B0C81 /* Cocoa.framework */; };
+		3E6575EA2837AFDD006B0C81 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6575E92837AFDD006B0C81 /* IOKit.framework */; };
+		3E6575EC2837AFE2006B0C81 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6575EB2837AFE2006B0C81 /* OpenGL.framework */; };
 		3E6A4D5728360954003578F4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A4D5628360954003578F4 /* main.cpp */; };
 		3E6A4D6728360A11003578F4 /* libiKan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6A4D6628360A11003578F4 /* libiKan.a */; };
 		3E6A4D8828366CDD003578F4 /* KreatorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A4D8628366CDD003578F4 /* KreatorApp.cpp */; };
@@ -26,6 +29,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E6575E72837AFD8006B0C81 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		3E6575E92837AFDD006B0C81 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		3E6575EB2837AFE2006B0C81 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		3E6A4D5328360954003578F4 /* Kreator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Kreator; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6A4D5628360954003578F4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3E6A4D6628360A11003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +46,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E6575EC2837AFE2006B0C81 /* OpenGL.framework in Frameworks */,
+				3E6575EA2837AFDD006B0C81 /* IOKit.framework in Frameworks */,
+				3E6575E82837AFD9006B0C81 /* Cocoa.framework in Frameworks */,
 				3E6A4D6728360A11003578F4 /* libiKan.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +95,9 @@
 		3E6A4D6528360A11003578F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E6575EB2837AFE2006B0C81 /* OpenGL.framework */,
+				3E6575E92837AFDD006B0C81 /* IOKit.framework */,
+				3E6575E72837AFD8006B0C81 /* Cocoa.framework */,
 				3E6A4D6628360A11003578F4 /* libiKan.a */,
 			);
 			name = Frameworks;

@@ -60,6 +60,7 @@ namespace iKan {
         GLFWwindow* m_Window;
         Data m_Data;
         Timestep m_Time;
+        float m_LastFrameTime = 0.0f;
     };
     
 }
