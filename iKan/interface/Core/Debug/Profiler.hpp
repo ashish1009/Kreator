@@ -7,6 +7,7 @@
 
 #pragma once
 
+// Call 'Profile()' in begining of any scope. It will compute the time and print the Profiler result at the end of Scope
 #ifdef IK_DEBUG_FEATURE
     #define PROFILE() iKan::Profiler _profiler(__PRETTY_FUNCTION__);
 #else
