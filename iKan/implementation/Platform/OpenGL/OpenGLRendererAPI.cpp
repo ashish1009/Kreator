@@ -45,11 +45,11 @@ void OpenGLRendererAPI::Shutdown() const {
 /// Update the Depth field. Enable or Disablex
 void OpenGLRendererAPI::Depth(bool state) const {
     if (state) {
-        IK_CORE_INFO("Eanble Open GL Depth Feild");
+        IK_CORE_INFO("Eanble Open GL Depth Field");
         glEnable(GL_DEPTH_TEST);
     }
     else {
-        IK_CORE_INFO("Disable Open GL Depth Feild");
+        IK_CORE_INFO("Disable Open GL Depth Field");
         glDisable(GL_DEPTH_TEST);
     }
 }

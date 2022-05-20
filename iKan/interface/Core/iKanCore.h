@@ -17,6 +17,7 @@
 #include "Core/Debug/Logger.hpp"
 #include "Core/Debug/Profiler.hpp"
 #include "Core/Utils/Asserts.h"
+#include "Core/Utils/Buffer.hpp"
 
 // Engine core file - Implementation
 #include "Core/Debug/LoggerCoreAPI.h"

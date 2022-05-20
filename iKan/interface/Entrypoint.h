@@ -21,8 +21,14 @@ int main() {
     
     // Create application
     auto app = iKan::CreateApplication();
-    app->Run();
-    
+    if (app) {
+        IK_INFO("Buffer occupied before application starts --- {0}", iKan::Buffer::GetTotalAllocations());
+        app->Run();
+        IK_INFO("Buffer occupied when application stops --- {0}", iKan::Buffer::GetTotalAllocations());
+        
+        app.reset();
+        IK_INFO("Buffer occupied whn application deleted --- {0}", iKan::Buffer::GetTotalAllocations());
+    }
     return 0;
 }
 

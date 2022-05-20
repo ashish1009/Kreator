@@ -20,6 +20,7 @@
 #include <Core/Debug/Logger.hpp>
 #include <Core/Debug/Profiler.hpp>
 #include <Core/Utils/Asserts.h>
+#include <Core/Utils/Buffer.hpp>
 
 #include <Core/Event/ApplicationEvent.h>
 #include <Core/Event/KeyEvent.h>
