@@ -7,6 +7,7 @@
 
 #include "Renderer.hpp"
 #include "Renderer/Utils/RendererAPI.hpp"
+#include "Renderer/Utils/BatchRenderer.hpp"
 
 using namespace iKan;
 
@@ -23,6 +24,7 @@ void Renderer::Init() {
         SetAPI(API::OpenGL);
     }
     s_RendererAPI->Init();
+    BatchRenderer::Init();
 }
 
 /// Shutdown the Engine Renderer Renderer
@@ -33,6 +35,7 @@ void Renderer::Shutdown() {
         s_RendererAPI->Shutdown();
         s_RendererAPI.reset();
     }
+    BatchRenderer::Shutdown();
 }
 
 /// Clear the renderer Pixel and set Background Color
