@@ -43,3 +43,6 @@
 
 // Renderer Files
 #include <Renderer/Utils/Renderer.hpp>
+
+// Gui Files
+#include <Gui/ImguiAPI.hpp>
