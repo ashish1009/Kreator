@@ -46,7 +46,7 @@ Application* Application::s_Instance = nullptr;
 /// Copy Constructor Application Specification
 /// @param other Specificaion reference
 Application::Specification::Specification(const Application::Specification& other) {
-    IK_CORE_INFO("Copying Application::Specification ... ");
+    IK_CORE_TRACE("Copying Application::Specification  ");
     
     Name = other.Name;
     Os = other.Os;
@@ -62,7 +62,7 @@ Application::Specification::Specification(const Application::Specification& othe
 /// Copy Operator = for Application Specification
 /// @param other Specificaion reference
 Application::Specification& Application::Specification::operator=(const Application::Specification& other) {
-    IK_CORE_INFO("Copying (= operator) Application::Specification ... ");
+    IK_CORE_TRACE("Copying (= operator) Application::Specification  ");
     
     Name = other.Name;
     Os = other.Os;
@@ -88,13 +88,15 @@ Application::Application(const Specification& spec)
     s_Instance = this;
 
     IK_CORE_INFO("Creating Core Application Instance ...");
+
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Application Specifications are");
-    IK_CORE_INFO("    Name                          : {0}", m_Specification.Name);
-    IK_CORE_INFO("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
-    IK_CORE_INFO("    Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
-    IK_CORE_INFO("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
-    IK_CORE_INFO("    Window Resizable              : {0}", m_Specification.Resizable);
-    IK_CORE_INFO("    Enable GUI                    : {0}", m_Specification.EnableGui);
+    IK_CORE_INFO("        Name                          : {0}", m_Specification.Name);
+    IK_CORE_INFO("        Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
+    IK_CORE_INFO("        Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
+    IK_CORE_INFO("        Window Maximized at startup   : {0}", m_Specification.StartMaximized);
+    IK_CORE_INFO("        Window Resizable              : {0}", m_Specification.Resizable);
+    IK_CORE_INFO("        Enable GUI                    : {0}", m_Specification.EnableGui);
     IK_LOG_SEPARATOR();
     
     Init();

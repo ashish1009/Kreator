@@ -30,6 +30,10 @@
 		3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6576002837BA08006B0C81 /* OpenGLRendererAPI.cpp */; };
 		3E6576032837BA08006B0C81 /* OpenGLRendererAPI.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6576012837BA08006B0C81 /* OpenGLRendererAPI.hpp */; };
 		3E65762B2837BE74006B0C81 /* libglad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6576202837BE33006B0C81 /* libglad.a */; };
+		3E65762E2837BEDA006B0C81 /* OpenGLRendererContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E65762C2837BEDA006B0C81 /* OpenGLRendererContext.cpp */; };
+		3E65762F2837BEDA006B0C81 /* OpenGLRendererContext.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E65762D2837BEDA006B0C81 /* OpenGLRendererContext.hpp */; };
+		3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6576302837BF09006B0C81 /* RendererContext.cpp */; };
+		3E6576332837BF09006B0C81 /* RendererContext.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6576312837BF09006B0C81 /* RendererContext.hpp */; };
 		3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */; };
 		3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6B28360E74003578F4 /* Entrypoint.h */; };
 		3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */; };
@@ -80,6 +84,10 @@
 		3E6576002837BA08006B0C81 /* OpenGLRendererAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRendererAPI.cpp; sourceTree = "<group>"; };
 		3E6576012837BA08006B0C81 /* OpenGLRendererAPI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRendererAPI.hpp; sourceTree = "<group>"; };
 		3E65761B2837BE32006B0C81 /* glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glad.xcodeproj; path = glad/glad.xcodeproj; sourceTree = "<group>"; };
+		3E65762C2837BEDA006B0C81 /* OpenGLRendererContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRendererContext.cpp; sourceTree = "<group>"; };
+		3E65762D2837BEDA006B0C81 /* OpenGLRendererContext.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRendererContext.hpp; sourceTree = "<group>"; };
+		3E6576302837BF09006B0C81 /* RendererContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RendererContext.cpp; sourceTree = "<group>"; };
+		3E6576312837BF09006B0C81 /* RendererContext.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RendererContext.hpp; sourceTree = "<group>"; };
 		3E6A4D3C2836091E003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3E6A4D6B28360E74003578F4 /* Entrypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entrypoint.h; sourceTree = "<group>"; };
@@ -183,6 +191,8 @@
 		3E6575F52837B651006B0C81 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				3E6576302837BF09006B0C81 /* RendererContext.cpp */,
+				3E6576312837BF09006B0C81 /* RendererContext.hpp */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -202,6 +212,8 @@
 			children = (
 				3E6576002837BA08006B0C81 /* OpenGLRendererAPI.cpp */,
 				3E6576012837BA08006B0C81 /* OpenGLRendererAPI.hpp */,
+				3E65762C2837BEDA006B0C81 /* OpenGLRendererContext.cpp */,
+				3E65762D2837BEDA006B0C81 /* OpenGLRendererContext.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -353,6 +365,7 @@
 				3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */,
 				3E6576032837BA08006B0C81 /* OpenGLRendererAPI.hpp in Headers */,
 				3E6575FE2837B8E1006B0C81 /* RendererAPI.hpp in Headers */,
+				3E6576332837BF09006B0C81 /* RendererContext.hpp in Headers */,
 				3E6575D628379414006B0C81 /* Event.h in Headers */,
 				3E6A4D8C28369025003578F4 /* Layer.hpp in Headers */,
 				3E6575FA2837B662006B0C81 /* Renderer.hpp in Headers */,
@@ -363,6 +376,7 @@
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
 				3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */,
 				3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */,
+				3E65762F2837BEDA006B0C81 /* OpenGLRendererContext.hpp in Headers */,
 				3E6A4D8428364497003578F4 /* AssertsCoreAPI.h in Headers */,
 				3E6575CB28378FD8006B0C81 /* MacWindow.hpp in Headers */,
 				3E6575DC28379491006B0C81 /* MouseCodes.h in Headers */,
@@ -451,9 +465,11 @@
 				3E6A4D7228360F7C003578F4 /* Application.cpp in Sources */,
 				3E6575E328379C3E006B0C81 /* Timestep.cpp in Sources */,
 				3E6575FD2837B8E1006B0C81 /* RendererAPI.cpp in Sources */,
+				3E65762E2837BEDA006B0C81 /* OpenGLRendererContext.cpp in Sources */,
 				3E6A4D7728362759003578F4 /* Logger.cpp in Sources */,
 				3E6575F92837B662006B0C81 /* Renderer.cpp in Sources */,
 				3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */,
+				3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */,
 				3E6575EF2837B2A4006B0C81 /* Profiler.cpp in Sources */,
 				3E6A4D932836979C003578F4 /* LayerStack.cpp in Sources */,
 				3E6575C428378FB1006B0C81 /* Window.cpp in Sources */,
@@ -588,6 +604,7 @@
 					IK_ENABLE_LOG,
 					IK_DEBUG_FEATURE,
 				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/interface",
 					"${PROJECT_DIR}/implementation",
@@ -614,6 +631,7 @@
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/PrefixHeader.pch";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/interface",
 					"${PROJECT_DIR}/implementation",

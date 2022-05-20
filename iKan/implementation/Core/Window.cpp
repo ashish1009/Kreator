@@ -13,7 +13,7 @@ using namespace iKan;
 /// Copy Constructor Window Specification
 /// @param other Specificaion reference
 Window::Specification::Specification(const Window::Specification& other) {
-    IK_CORE_INFO("Copying Window::Specification ... ");
+    IK_CORE_TRACE("Copying Window::Specification  ");
     
     Title = other.Title;
     Width = other.Width;
@@ -29,7 +29,7 @@ Window::Specification::Specification(const Window::Specification& other) {
 /// Copy Operator = for Window Specification
 /// @param other Specificaion reference
 Window::Specification& Window::Specification::operator=(const Window::Specification& other) {
-    IK_CORE_INFO("Copying (= operator) Window::Specification ... ");
+    IK_CORE_TRACE("Copying (= operator) Window::Specification  ");
    
     Title = other.Title;
     Width = other.Width;

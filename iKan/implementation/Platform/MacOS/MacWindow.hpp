@@ -9,7 +9,7 @@
 
 #include "Core/Utils/Timestep.hpp"
 #include "Core/Window.hpp"
-#include <GLFW/glfw3.h>
+#include "Renderer/Graphics/RendererContext.hpp"
 
 namespace iKan {
     
@@ -60,6 +60,7 @@ namespace iKan {
         GLFWwindow* m_Window;
         Data m_Data;
         Timestep m_Time;
+        std::unique_ptr<RendererContext> m_Context;
         float m_LastFrameTime = 0.0f;
     };
     

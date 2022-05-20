@@ -18,13 +18,15 @@ MacWindow::MacWindow(const Window::Specification& spec) {
     PROFILE();
     m_Data.Specification = spec;
     IK_CORE_INFO("Creating MAC OS Window : {0}...", m_Data.Specification.Title);
+
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("    MAC Wondow Specifications are");
-    IK_CORE_INFO("    Title      : {0}", m_Data.Specification.Title);
-    IK_CORE_INFO("    Width      : {0}", m_Data.Specification.Width);
-    IK_CORE_INFO("    Height     : {0}", m_Data.Specification.Height);
-    IK_CORE_INFO("    VSync      : {0}", m_Data.Specification.VSync);
-    IK_CORE_INFO("    Decorated  : {0}", m_Data.Specification.Decorated);
-    IK_CORE_INFO("    FullScreen : {0}", m_Data.Specification.Fullscreen);
+    IK_CORE_INFO("        Title      : {0}", m_Data.Specification.Title);
+    IK_CORE_INFO("        Width      : {0}", m_Data.Specification.Width);
+    IK_CORE_INFO("        Height     : {0}", m_Data.Specification.Height);
+    IK_CORE_INFO("        VSync      : {0}", m_Data.Specification.VSync);
+    IK_CORE_INFO("        Decorated  : {0}", m_Data.Specification.Decorated);
+    IK_CORE_INFO("        FullScreen : {0}", m_Data.Specification.Fullscreen);
     IK_LOG_SEPARATOR();
     
     Init();
@@ -68,6 +70,9 @@ void MacWindow::Init() {
     
     // Set GLFW Callbacks
     SetEventCallbacks();
+
+    // Creating Context according to API
+    m_Context = RendererContext::Create(m_Window);
 }
 
 /// Mac Window Destructor
@@ -172,6 +177,7 @@ void MacWindow::SetVSync(bool enabled) {
 
 /// Update Window Each Frame. To be called by application on each frame. It swap the context buffers
 void MacWindow::Update() {
+    m_Context->SwapBuffers();
     glfwPollEvents();
     
     float currentFrame = glfwGetTime();
