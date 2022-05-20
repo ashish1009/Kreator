@@ -12,10 +12,7 @@ You can clone the repository to a local destination using git:
 
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
-## Road Map
-- Fundamentals
-    - Application Layers to handle different layers together
-    
+## Road Map    
 - Window
     - Window create feature using GLFW library
     
@@ -76,6 +73,8 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     - Logger Framework using SPD log module. API created for both core and client.
     - Assert API created for Trigger Exception in both core and client.
     - Basic Application Class created
+    - Layer Base class (Client layer should be derived fom this base class)
+    - Layer stack manager to store all the layers in stack
 
 ## How to Use the library
 

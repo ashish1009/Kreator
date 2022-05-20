@@ -12,6 +12,7 @@
 namespace iKan {
 
     /// Stack to store all the Layers used by application
+    /// Responsible for Insertion, deletion and Iteration of layers
     class LayerStack {
     public:
         // Constructors and Destructors
