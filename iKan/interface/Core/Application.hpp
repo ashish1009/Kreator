@@ -80,9 +80,9 @@ namespace iKan {
         
         // Getters
         /// Return the GLFW Window native
-        void* GetWindowPtr();
+        void* GetWindowPtr() const;
         /// Return the iKan Window Instance reference
-        Window& GetWindow();
+        const Window& GetWindow() const;
 
         // Static Methods
         /// Return the reference of Application Instance

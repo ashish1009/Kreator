@@ -189,9 +189,9 @@ void Application::PopLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->
 
 // --------------- Getters ---------------
 /// Return the GLFW Window native pointer
-void* Application::GetWindowPtr() { return (void*)m_Window->GetNativeWindow(); }
+void* Application::GetWindowPtr() const { return (void*)m_Window->GetNativeWindow(); }
 /// Return the iKan Window Instance reference
-Window& Application::GetWindow() { return *m_Window; }
+const Window& Application::GetWindow() const { return *m_Window; }
 
 /// Return the reference of Application Instance
 const Application& Application::Get() { return *s_Instance; }

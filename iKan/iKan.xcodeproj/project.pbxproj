@@ -36,6 +36,8 @@
 		3E6576332837BF09006B0C81 /* RendererContext.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6576312837BF09006B0C81 /* RendererContext.hpp */; };
 		3E65763B2837C785006B0C81 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6576392837C785006B0C81 /* Buffer.cpp */; };
 		3E65763C2837C785006B0C81 /* Buffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E65763A2837C785006B0C81 /* Buffer.hpp */; };
+		3E65763F2837CA95006B0C81 /* MacInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E65763D2837CA95006B0C81 /* MacInput.cpp */; };
+		3E6576402837CA95006B0C81 /* Input.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E65763E2837CA95006B0C81 /* Input.hpp */; };
 		3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */; };
 		3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6B28360E74003578F4 /* Entrypoint.h */; };
 		3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */; };
@@ -92,6 +94,8 @@
 		3E6576312837BF09006B0C81 /* RendererContext.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RendererContext.hpp; sourceTree = "<group>"; };
 		3E6576392837C785006B0C81 /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
 		3E65763A2837C785006B0C81 /* Buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Buffer.hpp; sourceTree = "<group>"; };
+		3E65763D2837CA95006B0C81 /* MacInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacInput.cpp; sourceTree = "<group>"; };
+		3E65763E2837CA95006B0C81 /* Input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
 		3E6A4D3C2836091E003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3E6A4D6B28360E74003578F4 /* Entrypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entrypoint.h; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 			children = (
 				3E6575C828378FD8006B0C81 /* MacWindow.cpp */,
 				3E6575C928378FD8006B0C81 /* MacWindow.hpp */,
+				3E65763D2837CA95006B0C81 /* MacInput.cpp */,
 			);
 			path = MacOS;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 				3E6575DB28379491006B0C81 /* KeyCodes.h */,
 				3E6575DA28379491006B0C81 /* MouseCodes.h */,
 				3E6575C328378FB1006B0C81 /* Window.hpp */,
+				3E65763E2837CA95006B0C81 /* Input.hpp */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -373,6 +379,7 @@
 				3E65763C2837C785006B0C81 /* Buffer.hpp in Headers */,
 				3E6575FE2837B8E1006B0C81 /* RendererAPI.hpp in Headers */,
 				3E6576332837BF09006B0C81 /* RendererContext.hpp in Headers */,
+				3E6576402837CA95006B0C81 /* Input.hpp in Headers */,
 				3E6575D628379414006B0C81 /* Event.h in Headers */,
 				3E6A4D8C28369025003578F4 /* Layer.hpp in Headers */,
 				3E6575FA2837B662006B0C81 /* Renderer.hpp in Headers */,
@@ -478,6 +485,7 @@
 				3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */,
 				3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */,
 				3E6575EF2837B2A4006B0C81 /* Profiler.cpp in Sources */,
+				3E65763F2837CA95006B0C81 /* MacInput.cpp in Sources */,
 				3E65763B2837C785006B0C81 /* Buffer.cpp in Sources */,
 				3E6A4D932836979C003578F4 /* LayerStack.cpp in Sources */,
 				3E6575C428378FB1006B0C81 /* Window.cpp in Sources */,
