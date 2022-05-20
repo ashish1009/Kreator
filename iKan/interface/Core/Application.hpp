@@ -7,12 +7,16 @@
 
 #pragma once
 
-#include "Core/LayerStack.hpp"
 #include "Core/Window.hpp"
 #include "Core/Utils/Timestep.hpp"
 #include "Renderer/Utils/Renderer.hpp"
 
 namespace iKan {
+    
+    // Forward Declarations
+    class WindowCloseEvent;
+    class LayerStack;
+    class Layer;
 
     /// Base class for Core Application. Client can create its own Application derived from Base Core Applicaiton.
     /// Responsible for.
@@ -62,7 +66,9 @@ namespace iKan {
         virtual void EventHandler(Event& event);
         /// Render GUI Window
         virtual void RenderGui();
-        
+        /// Close the Current Application Game Loop
+        virtual void Close();
+
         // Non Vertual Methods
         /// Push the layer in Core Application Layer stack
         /// @param layer Layer pointer to be added
@@ -88,8 +94,10 @@ namespace iKan {
 
         // Member Methods
         void Init();
-        
+        bool WindowClose(WindowCloseEvent& windowEvent);
+
         // Member variable
+        bool m_IsRunning = true;
         Specification m_Specification;
         Timestep m_Timestep;
         std::unique_ptr<Window> m_Window;

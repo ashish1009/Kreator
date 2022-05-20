@@ -36,7 +36,7 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     specification.Os = OS::Mac;
     specification.RendererAPI = Renderer::API::OpenGL;
 
-    specification.StartMaximized = true;
+    specification.StartMaximized = false;
     specification.Resizable = true;
     specification.EnableGui = true;
 

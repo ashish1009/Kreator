@@ -12,16 +12,8 @@ You can clone the repository to a local destination using git:
 
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
-## Road Map    
-- Window
-    - Window create feature using GLFW library
-    
-- Event Handler
-    - Event Abstracetion class
-    - Input Handler
-
+## Road Map
 - Fundamental Renderer
-    - Interface and Implementation for Renderer Context for attching Renderer to Window
     - Interface and Implementation for Shader Compiler.
     - Interface and Implementation for storing Renderer Buffers and Arrays.
     - Interface and Implementation for Frame buffer
@@ -75,6 +67,17 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     - Basic Application Class created
     - Layer Base class (Client layer should be derived fom this base class)
     - Layer stack manager to store all the layers in stack
+    - Scope/Function profiler Feature addded
+    
+- Window
+    - Window create feature using GLFW library
+    
+- Event Handler
+    - Event Abstracetion class
+    - Input Handler
+    
+- Fundamental Renderer
+    - Interface and Implementation for Renderer Context for attching Renderer to Window
 
 ## How to Use the library
 

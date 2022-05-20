@@ -6,7 +6,8 @@
 //
 
 #include "Application.hpp"
-#include "Core/Event/Event.h"
+#include "Core/LayerStack.hpp"
+#include "Core/Event/ApplicationEvent.h"
 #include "Renderer/Utils/Renderer.hpp"
 
 using namespace iKan;
@@ -131,28 +132,42 @@ Application::~Application() {
 
 /// Update the Application each frame
 void Application::Run() {
+    PROFILE();
     IK_CORE_INFO("------------------ Starting Game Loop ---------------------- ");
     
-    // Store the frame time difference
-    m_Timestep = m_Window->GerTimestep();
+    while (m_IsRunning) {
+        // Store the frame time difference
+        m_Timestep = m_Window->GerTimestep();
 
-    // Updating all the attached layer
-    for (auto& layer : *m_LayerStack.get())
-        layer->Update(m_Timestep);
-    
-    if (m_Specification.EnableGui)
-        RenderGui();
-    
-    // Window update each frame
-    m_Window->Update();
-
+        // Updating all the attached layer
+        for (auto& layer : *m_LayerStack.get())
+            layer->Update(m_Timestep);
+        
+        if (m_Specification.EnableGui)
+            RenderGui();
+        
+        // Window update each frame
+        m_Window->Update();
+    }
     IK_CORE_INFO("------------------ Ending Game Loop ---------------------- ");
 }
 
 /// Handle the External event interuption in window
 /// @param event Event (Base class) intance. Dispatch event from Event Dispatcher
 void Application::EventHandler(Event& event) {
+    EventDispatcher dispatcher(event);
+    dispatcher.Dispatch<WindowCloseEvent>(IK_BIND_EVENT_FN(Application::WindowClose));
     
+    // Event Handler for all layers
+    for (auto& layer : *m_LayerStack.get())
+        layer->EventHandler(event);
+}
+
+/// Trigger the Event when WIndow Closes
+/// @param event Reference of Window Close event
+bool Application::WindowClose(WindowCloseEvent& event) {
+    Close();
+    return false;
 }
 
 /// Render GUI Window
@@ -160,6 +175,12 @@ void Application::RenderGui() {
     // Render Imgui for all layers
     for (auto& layer : *m_LayerStack.get())
         layer->RenderGui();
+}
+
+/// Close the application
+void Application::Close() {
+    IK_CORE_INFO("Closing Core Application ");
+    m_IsRunning = false;
 }
 
 // ----- Push and Pop Layer in staeck ----
