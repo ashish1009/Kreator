@@ -6,6 +6,7 @@
 //
 
 #include "Application.hpp"
+#include "Core/Event/Event.h"
 
 using namespace iKan;
 
@@ -49,6 +50,17 @@ Application::Application(const Specification& spec)
 /// Initialize the Application data
 void Application::Init() {
     m_LayerStack = std::make_unique<LayerStack>();
+    
+    // Create Window for application and register the Event callback function to Window
+    m_Window = Window::Create(m_Specification.Os, m_Specification.WindowSpec);
+    m_Window->SetEventFunction(IK_BIND_EVENT_FN(Application::EventHandler));
+    
+    if (m_Specification.StartMaximized)
+        m_Window->Maximize();
+    else
+        m_Window->CenterWindow();
+    
+    m_Window->SetResizable(m_Specification.Resizable);
 }
 
 /// Applciation Destructor
@@ -59,6 +71,9 @@ Application::~Application() {
 /// Update the Application each frame
 void Application::Run() {
     IK_CORE_INFO("------------------ Starting Game Loop ---------------------- ");
+    
+    // Store the frame time difference
+    m_Timestep = m_Window->GerTimestep();
 
     // Updating all the attached layer
     for (auto& layer : *m_LayerStack.get())
@@ -66,6 +81,10 @@ void Application::Run() {
     
     if (m_Specification.EnableGui)
         RenderGui();
+    
+    // Window update each frame
+    m_Window->Update();
+
     IK_CORE_INFO("------------------ Ending Game Loop ---------------------- ");
 }
 
@@ -86,7 +105,12 @@ void Application::RenderGui() {
 void Application::PushLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->PushLayer(layer); }
 void Application::PopLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->PopLayer(layer); }
 
-// --------------- Getters --------------- 
+// --------------- Getters ---------------
+/// Return the GLFW Window native pointer
+void* Application::GetWindowPtr() { return (void*)m_Window->GetNativeWindow(); }
+/// Return the iKan Window Instance reference
+Window& Application::GetWindow() { return *m_Window; }
+
 /// Return the reference of Application Instance
 const Application& Application::Get() { return *s_Instance; }
 // ---------------------------------------

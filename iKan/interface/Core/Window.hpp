@@ -24,7 +24,7 @@ namespace iKan {
     public:
         /// Specifications of Window
         struct Specification {
-            std::string Title = "Kreator";
+            std::string Title = "Default Kreator";
             uint32_t Width = 2100, Height = 900;
 
             bool VSync = true;

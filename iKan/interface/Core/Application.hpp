@@ -8,6 +8,8 @@
 #pragma once
 
 #include "Core/LayerStack.hpp"
+#include "Core/Window.hpp"
+#include "Core/Utils/Timestep.hpp"
 
 namespace iKan {
 
@@ -22,9 +24,13 @@ namespace iKan {
         /// Application Specification
         struct Specification {
             std::string Name = "Kreator";
+            OS Os = OS::None;
             bool StartMaximized = true;
             bool Resizable = true;
             bool EnableGui = true;
+            
+            // If window specification not set manully, iKan will pick default values
+            Window::Specification WindowSpec;
 
             // Constructors and Destructors
             Specification() = default;
@@ -62,6 +68,12 @@ namespace iKan {
         /// Pop the layer in Core Application Layer stack
         /// @param layer Layer pointer to be errased
         void PopLayer(const std::shared_ptr<Layer>& layer);
+        
+        // Getters
+        /// Return the GLFW Window native
+        void* GetWindowPtr();
+        /// Return the iKan Window Instance reference
+        Window& GetWindow();
 
         // Static Methods
         /// Return the reference of Application Instance
@@ -76,6 +88,8 @@ namespace iKan {
         
         // Member variable
         Specification m_Specification;
+        Timestep m_Timestep;
+        std::unique_ptr<Window> m_Window;
         std::unique_ptr<LayerStack> m_LayerStack;
 
         // Static variables

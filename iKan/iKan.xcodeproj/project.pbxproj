@@ -17,7 +17,7 @@
 		3E6575D928379414006B0C81 /* MouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575D528379414006B0C81 /* MouseEvent.h */; };
 		3E6575DC28379491006B0C81 /* MouseCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575DA28379491006B0C81 /* MouseCodes.h */; };
 		3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575DB28379491006B0C81 /* KeyCodes.h */; };
-		3E6575DF283798B5006B0C81 /* iKanCommonPreprocessors.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575DE283798B5006B0C81 /* iKanCommonPreprocessors.h */; };
+		3E6575DF283798B5006B0C81 /* iKanCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575DE283798B5006B0C81 /* iKanCommon.h */; };
 		3E6575E128379C0E006B0C81 /* Timestep.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575E028379C0A006B0C81 /* Timestep.hpp */; };
 		3E6575E328379C3E006B0C81 /* Timestep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575E228379C3E006B0C81 /* Timestep.cpp */; };
 		3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */; };
@@ -47,7 +47,7 @@
 		3E6575D528379414006B0C81 /* MouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseEvent.h; sourceTree = "<group>"; };
 		3E6575DA28379491006B0C81 /* MouseCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseCodes.h; sourceTree = "<group>"; };
 		3E6575DB28379491006B0C81 /* KeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCodes.h; sourceTree = "<group>"; };
-		3E6575DE283798B5006B0C81 /* iKanCommonPreprocessors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKanCommonPreprocessors.h; sourceTree = "<group>"; };
+		3E6575DE283798B5006B0C81 /* iKanCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKanCommon.h; sourceTree = "<group>"; };
 		3E6575E028379C0A006B0C81 /* Timestep.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Timestep.hpp; sourceTree = "<group>"; };
 		3E6575E228379C3E006B0C81 /* Timestep.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Timestep.cpp; sourceTree = "<group>"; };
 		3E6A4D3C2836091E003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,7 +131,7 @@
 			children = (
 				3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */,
 				3E6A4D6B28360E74003578F4 /* Entrypoint.h */,
-				3E6575DE283798B5006B0C81 /* iKanCommonPreprocessors.h */,
+				3E6575DE283798B5006B0C81 /* iKanCommon.h */,
 				3E6A4D6F28360F66003578F4 /* Core */,
 			);
 			path = interface;
@@ -249,7 +249,7 @@
 				3E6A4D8428364497003578F4 /* AssertsCoreAPI.h in Headers */,
 				3E6575CB28378FD8006B0C81 /* MacWindow.hpp in Headers */,
 				3E6575DC28379491006B0C81 /* MouseCodes.h in Headers */,
-				3E6575DF283798B5006B0C81 /* iKanCommonPreprocessors.h in Headers */,
+				3E6575DF283798B5006B0C81 /* iKanCommon.h in Headers */,
 				3E6575D828379414006B0C81 /* ApplicationEvent.h in Headers */,
 				3E6575D728379414006B0C81 /* KeyEvent.h in Headers */,
 			);
