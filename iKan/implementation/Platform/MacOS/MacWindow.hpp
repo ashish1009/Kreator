@@ -53,6 +53,7 @@ namespace iKan {
 
     private:
         // Member Functions
+        void Init();
         void SetEventCallbacks();
 
         // Member veraibles

@@ -73,7 +73,6 @@ Application::Application(const Specification& spec)
     s_Instance = this;
 
     IK_CORE_INFO("Creating Core Application Instance ...");
-    IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Application Specifications are");
     IK_CORE_INFO("    Name                          : {0}", m_Specification.Name);
     IK_CORE_INFO("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
