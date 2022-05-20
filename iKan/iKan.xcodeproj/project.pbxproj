@@ -29,6 +29,7 @@
 		3E6575FE2837B8E1006B0C81 /* RendererAPI.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575FC2837B8E1006B0C81 /* RendererAPI.hpp */; };
 		3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6576002837BA08006B0C81 /* OpenGLRendererAPI.cpp */; };
 		3E6576032837BA08006B0C81 /* OpenGLRendererAPI.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6576012837BA08006B0C81 /* OpenGLRendererAPI.hpp */; };
+		3E65762B2837BE74006B0C81 /* libglad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6576202837BE33006B0C81 /* libglad.a */; };
 		3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */; };
 		3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6B28360E74003578F4 /* Entrypoint.h */; };
 		3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */; };
@@ -44,6 +45,16 @@
 		3E6A4D932836979C003578F4 /* LayerStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A4D912836979C003578F4 /* LayerStack.cpp */; };
 		3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D922836979C003578F4 /* LayerStack.hpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3E65761F2837BE33006B0C81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E65761B2837BE32006B0C81 /* glad.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E65760D2837BE32006B0C81;
+			remoteInfo = glad;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3E6575C228378FB1006B0C81 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
@@ -68,6 +79,7 @@
 		3E6575FC2837B8E1006B0C81 /* RendererAPI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RendererAPI.hpp; sourceTree = "<group>"; };
 		3E6576002837BA08006B0C81 /* OpenGLRendererAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRendererAPI.cpp; sourceTree = "<group>"; };
 		3E6576012837BA08006B0C81 /* OpenGLRendererAPI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRendererAPI.hpp; sourceTree = "<group>"; };
+		3E65761B2837BE32006B0C81 /* glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glad.xcodeproj; path = glad/glad.xcodeproj; sourceTree = "<group>"; };
 		3E6A4D3C2836091E003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3E6A4D6B28360E74003578F4 /* Entrypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entrypoint.h; sourceTree = "<group>"; };
@@ -90,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E65762B2837BE74006B0C81 /* libglad.a in Frameworks */,
 				3E6575E62837AFAB006B0C81 /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,6 +206,14 @@
 			path = OpenGL;
 			sourceTree = "<group>";
 		};
+		3E65761C2837BE32006B0C81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E6576202837BE33006B0C81 /* libglad.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3E6A4D332836091E003578F4 = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +267,7 @@
 		3E6A4D63283609E9003578F4 /* vendors */ = {
 			isa = PBXGroup;
 			children = (
+				3E65761B2837BE32006B0C81 /* glad.xcodeproj */,
 			);
 			path = vendors;
 			sourceTree = "<group>";
@@ -397,12 +419,28 @@
 			mainGroup = 3E6A4D332836091E003578F4;
 			productRefGroup = 3E6A4D3D2836091E003578F4 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3E65761C2837BE32006B0C81 /* Products */;
+					ProjectRef = 3E65761B2837BE32006B0C81 /* glad.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3E6A4D3B2836091E003578F4 /* iKan */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3E6576202837BE33006B0C81 /* libglad.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libglad.a;
+			remoteRef = 3E65761F2837BE33006B0C81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3E6A4D392836091E003578F4 /* Sources */ = {

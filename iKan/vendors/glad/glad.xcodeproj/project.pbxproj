@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3EF720362801C33100CB9FD5 /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 3EF720302801C33000CB9FD5 /* glad.c */; };
-		3EF720372801C33100CB9FD5 /* khrplatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EF720332801C33000CB9FD5 /* khrplatform.h */; };
-		3EF720382801C33100CB9FD5 /* glad.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EF720352801C33000CB9FD5 /* glad.h */; };
+		3E6576282837BE58006B0C81 /* khrplatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6576232837BE58006B0C81 /* khrplatform.h */; };
+		3E6576292837BE58006B0C81 /* glad.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6576252837BE58006B0C81 /* glad.h */; };
+		3E65762A2837BE58006B0C81 /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 3E6576272837BE58006B0C81 /* glad.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3EF720222801C30400CB9FD5 /* libglad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libglad.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EF720302801C33000CB9FD5 /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
-		3EF720332801C33000CB9FD5 /* khrplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = khrplatform.h; sourceTree = "<group>"; };
-		3EF720352801C33000CB9FD5 /* glad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glad.h; sourceTree = "<group>"; };
+		3E65760D2837BE32006B0C81 /* libglad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libglad.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E6576232837BE58006B0C81 /* khrplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = khrplatform.h; sourceTree = "<group>"; };
+		3E6576252837BE58006B0C81 /* glad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glad.h; sourceTree = "<group>"; };
+		3E6576272837BE58006B0C81 /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3EF720202801C30400CB9FD5 /* Frameworks */ = {
+		3E65760B2837BE32006B0C81 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -30,78 +30,78 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3EF720192801C30400CB9FD5 = {
+		3E6576042837BE32006B0C81 = {
 			isa = PBXGroup;
 			children = (
-				3EF720312801C33000CB9FD5 /* include */,
-				3EF7202F2801C33000CB9FD5 /* src */,
-				3EF720232801C30400CB9FD5 /* Products */,
+				3E6576212837BE58006B0C81 /* include */,
+				3E6576262837BE58006B0C81 /* src */,
+				3E65760E2837BE32006B0C81 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		3EF720232801C30400CB9FD5 /* Products */ = {
+		3E65760E2837BE32006B0C81 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3EF720222801C30400CB9FD5 /* libglad.a */,
+				3E65760D2837BE32006B0C81 /* libglad.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3EF7202F2801C33000CB9FD5 /* src */ = {
+		3E6576212837BE58006B0C81 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				3EF720302801C33000CB9FD5 /* glad.c */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		3EF720312801C33000CB9FD5 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				3EF720322801C33000CB9FD5 /* KHR */,
-				3EF720342801C33000CB9FD5 /* glad */,
+				3E6576222837BE58006B0C81 /* KHR */,
+				3E6576242837BE58006B0C81 /* glad */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		3EF720322801C33000CB9FD5 /* KHR */ = {
+		3E6576222837BE58006B0C81 /* KHR */ = {
 			isa = PBXGroup;
 			children = (
-				3EF720332801C33000CB9FD5 /* khrplatform.h */,
+				3E6576232837BE58006B0C81 /* khrplatform.h */,
 			);
 			path = KHR;
 			sourceTree = "<group>";
 		};
-		3EF720342801C33000CB9FD5 /* glad */ = {
+		3E6576242837BE58006B0C81 /* glad */ = {
 			isa = PBXGroup;
 			children = (
-				3EF720352801C33000CB9FD5 /* glad.h */,
+				3E6576252837BE58006B0C81 /* glad.h */,
 			);
 			path = glad;
+			sourceTree = "<group>";
+		};
+		3E6576262837BE58006B0C81 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3E6576272837BE58006B0C81 /* glad.c */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		3EF7201E2801C30400CB9FD5 /* Headers */ = {
+		3E6576092837BE32006B0C81 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EF720382801C33100CB9FD5 /* glad.h in Headers */,
-				3EF720372801C33100CB9FD5 /* khrplatform.h in Headers */,
+				3E6576292837BE58006B0C81 /* glad.h in Headers */,
+				3E6576282837BE58006B0C81 /* khrplatform.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		3EF720212801C30400CB9FD5 /* glad */ = {
+		3E65760C2837BE32006B0C81 /* glad */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3EF720262801C30400CB9FD5 /* Build configuration list for PBXNativeTarget "glad" */;
+			buildConfigurationList = 3E6576182837BE32006B0C81 /* Build configuration list for PBXNativeTarget "glad" */;
 			buildPhases = (
-				3EF7201E2801C30400CB9FD5 /* Headers */,
-				3EF7201F2801C30400CB9FD5 /* Sources */,
-				3EF720202801C30400CB9FD5 /* Frameworks */,
+				3E6576092837BE32006B0C81 /* Headers */,
+				3E65760A2837BE32006B0C81 /* Sources */,
+				3E65760B2837BE32006B0C81 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -109,25 +109,25 @@
 			);
 			name = glad;
 			productName = glad;
-			productReference = 3EF720222801C30400CB9FD5 /* libglad.a */;
+			productReference = 3E65760D2837BE32006B0C81 /* libglad.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		3EF7201A2801C30400CB9FD5 /* Project object */ = {
+		3E6576052837BE32006B0C81 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					3EF720212801C30400CB9FD5 = {
-						CreatedOnToolsVersion = 13.3;
+					3E65760C2837BE32006B0C81 = {
+						CreatedOnToolsVersion = 13.4;
 					};
 				};
 			};
-			buildConfigurationList = 3EF7201D2801C30400CB9FD5 /* Build configuration list for PBXProject "glad" */;
+			buildConfigurationList = 3E6576082837BE32006B0C81 /* Build configuration list for PBXProject "glad" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -135,29 +135,29 @@
 				en,
 				Base,
 			);
-			mainGroup = 3EF720192801C30400CB9FD5;
-			productRefGroup = 3EF720232801C30400CB9FD5 /* Products */;
+			mainGroup = 3E6576042837BE32006B0C81;
+			productRefGroup = 3E65760E2837BE32006B0C81 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3EF720212801C30400CB9FD5 /* glad */,
+				3E65760C2837BE32006B0C81 /* glad */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3EF7201F2801C30400CB9FD5 /* Sources */ = {
+		3E65760A2837BE32006B0C81 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EF720362801C33100CB9FD5 /* glad.c in Sources */,
+				3E65762A2837BE58006B0C81 /* glad.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		3EF720242801C30400CB9FD5 /* Debug */ = {
+		3E6576162837BE32006B0C81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -215,7 +215,7 @@
 			};
 			name = Debug;
 		};
-		3EF720252801C30400CB9FD5 /* Release */ = {
+		3E6576172837BE32006B0C81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -266,22 +266,26 @@
 			};
 			name = Release;
 		};
-		3EF720272801C30400CB9FD5 /* Debug */ = {
+		3E6576192837BE32006B0C81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		3EF720282801C30400CB9FD5 /* Release */ = {
+		3E65761A2837BE32006B0C81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -291,25 +295,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3EF7201D2801C30400CB9FD5 /* Build configuration list for PBXProject "glad" */ = {
+		3E6576082837BE32006B0C81 /* Build configuration list for PBXProject "glad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3EF720242801C30400CB9FD5 /* Debug */,
-				3EF720252801C30400CB9FD5 /* Release */,
+				3E6576162837BE32006B0C81 /* Debug */,
+				3E6576172837BE32006B0C81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3EF720262801C30400CB9FD5 /* Build configuration list for PBXNativeTarget "glad" */ = {
+		3E6576182837BE32006B0C81 /* Build configuration list for PBXNativeTarget "glad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3EF720272801C30400CB9FD5 /* Debug */,
-				3EF720282801C30400CB9FD5 /* Release */,
+				3E6576192837BE32006B0C81 /* Debug */,
+				3E65761A2837BE32006B0C81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 3EF7201A2801C30400CB9FD5 /* Project object */;
+	rootObject = 3E6576052837BE32006B0C81 /* Project object */;
 }

@@ -35,6 +35,9 @@ namespace iKan {
 
         virtual void Init() const = 0;
         virtual void Shutdown() const = 0;
+        
+        virtual void Depth(bool state) const = 0;
+        virtual void Blend(bool state) const = 0;
 
         static std::unique_ptr<RendererAPI> Create();
     };
