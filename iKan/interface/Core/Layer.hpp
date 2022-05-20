@@ -11,6 +11,9 @@
 // All the layer that need to be stored in Application should be derived from this Layer
 namespace iKan {
 
+    // Forward declaration
+    class Event;
+    
     /// Layer Interface class
     /// Core Application manages Bellow API As per functionality defined
     class Layer {
@@ -33,7 +36,8 @@ namespace iKan {
 
         /// Handle events of Layer. Trigger when any Even interrupted layer in each frame.
         /// calls specific even handler from here internally
-        virtual void EventHandler() = 0;
+        /// @param event Event (Base class) intance. Dispatch event from Event Dispatcher
+        virtual void EventHandler(Event& event) = 0;
 
         /// Return the name of layer
         virtual const std::string& GetName() const = 0;

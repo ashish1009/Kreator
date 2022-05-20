@@ -70,7 +70,8 @@ void Application::Run() {
 }
 
 /// Handle the External event interuption in window
-void Application::EventHandler() {
+/// @param event Event (Base class) intance. Dispatch event from Event Dispatcher
+void Application::EventHandler(Event& event) {
     
 }
 

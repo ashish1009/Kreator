@@ -9,6 +9,9 @@
 
 namespace iKan {
     
+//    // Forward declaration
+//    class Event;
+    
     /// Interface class for creating and managing Window for rendering. Implementation depends on the OS defined.
     /// Responsible for
     /// - Creating Window Instance (For now using GLFW)
@@ -34,7 +37,7 @@ namespace iKan {
 //            ~Specification() = default;
 //            Specification(const Specification&);
 //        };
-//        
+//
 //        // Using Typedefs
 //        using EventCallbackFn = std::function<void(Event&)>;
 //

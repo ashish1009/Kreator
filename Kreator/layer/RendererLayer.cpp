@@ -38,6 +38,7 @@ void RendererLayer::RenderGui() {
 }
 
 /// Handle Event interupt for Renderer Layer
-void RendererLayer::EventHandler() {
+/// @param event Event base class Instance.
+void RendererLayer::EventHandler(Event& event) {
 
 }

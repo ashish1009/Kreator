@@ -49,7 +49,8 @@ namespace iKan {
         /// Update the window and Swap the buffers
         virtual void Run();
         /// Handle the External event interuption in window
-        virtual void EventHandler();
+        /// @param event Event (Base class) intance. Dispatch event from Event Dispatcher
+        virtual void EventHandler(Event& event);
         /// Render GUI Window
         virtual void RenderGui();
         

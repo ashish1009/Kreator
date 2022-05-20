@@ -21,7 +21,7 @@ public:
 
     void Update() override;
     void RenderGui() override;
-    void EventHandler() override;
+    void EventHandler(Event& event) override;
     
     const std::string& GetName() const override { return m_Name; }
 };
