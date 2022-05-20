@@ -53,6 +53,17 @@ void Renderer::ClearBits() {
     s_RendererAPI->ClearBits();
 }
 
+/// Enable or disable Depth Field
+/// @param state flag to be set as Depth
+void Renderer::Depth(bool state) { s_RendererAPI->Depth(state); }
+/// Enable or disable Blend Field
+/// @param state flag to be set as Blend
+void Renderer::Blend(bool state) { s_RendererAPI->Blend(state); }
+/// Enable or disable MultiSample Field
+/// @param state flag to be set as MultiSample
+void Renderer::MultiSample(bool state) { s_RendererAPI->MultiSample(state); }
+
+
 /// Return the current active Renderer API
 Renderer::API Renderer::GetAPI() { return s_API; }
 

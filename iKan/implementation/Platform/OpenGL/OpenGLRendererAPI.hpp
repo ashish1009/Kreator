@@ -24,6 +24,7 @@ namespace iKan {
         
         void Depth(bool state) const override;
         void Blend(bool state) const override;
+        void MultiSample(bool state) const override;
     };
     
 }

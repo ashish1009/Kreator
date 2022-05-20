@@ -42,7 +42,7 @@ void OpenGLRendererContext::Init() {
     IK_CORE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Can not initialize the Glad");
     
     IK_LOG_SEPARATOR();
-    IK_CORE_INFO("    OpenGl Specifications are :");
+    IK_CORE_INFO("    OpenGl Vendor Information :");
     IK_CORE_INFO("        Vendor   : {0} ", glGetString(GL_VENDOR));
     IK_CORE_INFO("        Renderer : {0} ", glGetString(GL_RENDERER));
     IK_CORE_INFO("        Version  : {0} ", glGetString(GL_VERSION));

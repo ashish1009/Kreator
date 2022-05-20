@@ -47,6 +47,16 @@ namespace iKan {
         /// Clear all the Renderer Bits
         static void ClearBits();
         
+        /// Enable or disable Depth Field
+        /// @param state flag to be set as Depth
+        static void Depth(bool state);
+        /// Enable or disable Blend Field
+        /// @param state flag to be set as Blend
+        static void Blend(bool state);
+        /// Enable or disable MultiSample Field
+        /// @param state flag to be set as MultiSample
+        static void MultiSample(bool state);
+        
         // Renderer_API Controller
         /// Return the Current Set Renderer API Type
         static API GetAPI();

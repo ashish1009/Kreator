@@ -44,7 +44,8 @@ namespace iKan {
         
         virtual void Depth(bool state) const = 0;
         virtual void Blend(bool state) const = 0;
-
+        virtual void MultiSample(bool state) const = 0;
+        
         static std::unique_ptr<RendererAPI> Create();
     };
     
