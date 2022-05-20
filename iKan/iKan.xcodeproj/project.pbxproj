@@ -46,6 +46,7 @@
 		3E6578F02837DE49006B0C81 /* PropertyGrid.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6578EE2837DE49006B0C81 /* PropertyGrid.hpp */; };
 		3E6578F32837DF04006B0C81 /* ImguiAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6578F12837DF04006B0C81 /* ImguiAPI.cpp */; };
 		3E6578F42837DF04006B0C81 /* ImguiAPI.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6578F22837DF04006B0C81 /* ImguiAPI.hpp */; };
+		3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6578F62837E51E006B0C81 /* RendererStats.hpp */; };
 		3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */; };
 		3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6B28360E74003578F4 /* Entrypoint.h */; };
 		3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */; };
@@ -119,6 +120,7 @@
 		3E6578EE2837DE49006B0C81 /* PropertyGrid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PropertyGrid.hpp; sourceTree = "<group>"; };
 		3E6578F12837DF04006B0C81 /* ImguiAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiAPI.cpp; sourceTree = "<group>"; };
 		3E6578F22837DF04006B0C81 /* ImguiAPI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ImguiAPI.hpp; sourceTree = "<group>"; };
+		3E6578F62837E51E006B0C81 /* RendererStats.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RendererStats.hpp; sourceTree = "<group>"; wrapsLines = 0; };
 		3E6A4D3C2836091E003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3E6A4D6B28360E74003578F4 /* Entrypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entrypoint.h; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			children = (
 				3E6575F72837B662006B0C81 /* Renderer.cpp */,
 				3E6575FB2837B8E1006B0C81 /* RendererAPI.cpp */,
+				3E6578F62837E51E006B0C81 /* RendererStats.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				3E6575E128379C0E006B0C81 /* Timestep.hpp in Headers */,
 				3E6578DC2837D10B006B0C81 /* ImguiLayer.hpp in Headers */,
 				3E6A4D7328360F7C003578F4 /* Application.hpp in Headers */,
+				3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */,
 				3E6575C528378FB1006B0C81 /* Window.hpp in Headers */,
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
 				3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */,
