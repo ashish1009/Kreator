@@ -10,6 +10,24 @@
 
 using namespace iKan;
 
+#ifdef IK_DEBUG_FEATURE
+
+namespace Utils {
+    /// Return the Operating System Type as string
+    /// @param os OS Type in iKan Enum
+    std::string GetOsNameAsString(OS os) {
+        switch (os) {
+            case OS::Mac : return "MAC OS";
+            case OS::None :
+            default:
+                IK_ASSERT(false, "Invalid OS Type");
+        }
+    }
+}
+
+#endif
+
+
 // Static Member variable Declaration and Initialisation
 Application* Application::s_Instance = nullptr;
 
@@ -19,11 +37,30 @@ Application::Specification::Specification(const Application::Specification& othe
     IK_CORE_INFO("Copying Application::Specification ... ");
     
     Name = other.Name;
+    Os = other.Os;
     StartMaximized = other.StartMaximized;
     Resizable = other.Resizable;
     EnableGui = other.EnableGui;
+    WindowSpec = other.WindowSpec;
     
     // NOTE: For now this copy constructor is only to Avoid Redundant copying the data
+}
+
+/// Copy Operator = for Application Specification
+/// @param other Specificaion reference
+Application::Specification& Application::Specification::operator=(const Application::Specification& other) {
+    IK_CORE_INFO("Copying (= operator) Application::Specification ... ");
+    
+    Name = other.Name;
+    Os = other.Os;
+    StartMaximized = other.StartMaximized;
+    Resizable = other.Resizable;
+    EnableGui = other.EnableGui;
+    WindowSpec = other.WindowSpec;
+    
+    // NOTE: For now this copy constructor is only to Avoid Redundant copying the data
+
+    return *this;
 }
 
 /// Applciation Constructor
@@ -38,10 +75,11 @@ Application::Application(const Specification& spec)
     IK_CORE_INFO("Creating Core Application Instance ...");
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Application Specifications are");
-    IK_CORE_INFO("    Name                  : {0}", m_Specification.Name);
-    IK_CORE_INFO("    Maximized at startup  : {0}", m_Specification.StartMaximized);
-    IK_CORE_INFO("    Resizable             : {0}", m_Specification.Resizable);
-    IK_CORE_INFO("    Enable GUI            : {0}", m_Specification.EnableGui);
+    IK_CORE_INFO("    Name                          : {0}", m_Specification.Name);
+    IK_CORE_INFO("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
+    IK_CORE_INFO("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
+    IK_CORE_INFO("    Window Resizable              : {0}", m_Specification.Resizable);
+    IK_CORE_INFO("    Enable GUI                    : {0}", m_Specification.EnableGui);
     IK_LOG_SEPARATOR();
     
     Init();

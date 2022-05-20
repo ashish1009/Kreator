@@ -33,10 +33,19 @@ private:
 std::unique_ptr<Application> iKan::CreateApplication() {
     Application::Specification specification;
     specification.Name = "Kreator";
-    
+    specification.Os = OS::Mac;
+
     specification.StartMaximized = true;
     specification.Resizable = true;
     specification.EnableGui = true;
+
+    specification.WindowSpec.Title = "Kreator";
+    specification.WindowSpec.Width = 1600;
+    specification.WindowSpec.Height = 900;
+    
+    specification.WindowSpec.VSync = true;
+    specification.WindowSpec.Decorated = true;
+    specification.WindowSpec.Fullscreen = false;
 
     return std::make_unique<KreatorApp>(specification);
 }

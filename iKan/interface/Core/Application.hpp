@@ -36,6 +36,7 @@ namespace iKan {
             Specification() = default;
             ~Specification() = default;
             Specification(const Specification&);
+            Specification& operator=(const Specification&);
         };
 
         // Constructors

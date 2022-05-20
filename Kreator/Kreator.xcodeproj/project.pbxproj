@@ -294,6 +294,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					IK_ENABLE_LOG,
+					IK_DEBUG_FEATURE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../iKan/interface",

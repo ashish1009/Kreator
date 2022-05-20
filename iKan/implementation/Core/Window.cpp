@@ -26,6 +26,24 @@ Window::Specification::Specification(const Window::Specification& other) {
     // NOTE: For now this copy constructor is only to Avoid Redundant copying the data
 }
 
+/// Copy Operator = for Window Specification
+/// @param other Specificaion reference
+Window::Specification& Window::Specification::operator=(const Window::Specification& other) {
+    IK_CORE_INFO("Copying (= operator) Window::Specification ... ");
+   
+    Title = other.Title;
+    Width = other.Width;
+    Height = other.Height;
+
+    VSync = other.VSync;
+    Decorated = other.Decorated;
+    Fullscreen = other.Fullscreen;
+    
+    // NOTE: For now this copy constructor is only to Avoid Redundant copying the data
+
+    return *this;
+}
+
 /// Create Instance of window according to enabled Platform
 /// @param os Operatin system to be used. Use OS enum to check supported OS by iKan
 /// @param spec Window Spcification Data
