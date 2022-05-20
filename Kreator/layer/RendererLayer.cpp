@@ -36,6 +36,7 @@ void RendererLayer::Update(Timestep ts) {
 /// Render GUI Window each frame for Renderer Layer
 void RendererLayer::RenderGui() {
     ImguiAPI::StartDcocking();
+    ImguiAPI::FrameRate();
     ImguiAPI::EndDcocking();
 }
 

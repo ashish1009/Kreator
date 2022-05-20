@@ -54,3 +54,17 @@ void ImguiAPI::StartDcocking() {
 void ImguiAPI::EndDcocking() {
     ImGui::End();
 }
+
+/// Render Frame buffer Imgui windw
+void ImguiAPI::FrameRate() {
+    ImGui::Begin("Frame Rate", nullptr, ImGuiWindowFlags_NoScrollbar);
+    ImGui::PushID("Frame Rate");
+
+    ImGui::SetNextWindowContentSize(ImVec2(45, 0.0f));
+    ImGui::BeginChild("##Frame Rate", ImVec2(0, ImGui::GetFontSize() * 2), false, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::Text("%.1f FPS", ImGui::GetIO().Framerate);
+    ImGui::EndChild();
+
+    ImGui::PopID();
+    ImGui::End();
+}

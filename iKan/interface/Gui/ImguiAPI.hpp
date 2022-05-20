@@ -13,6 +13,9 @@ namespace iKan {
         // Docking
         static void StartDcocking();
         static void EndDcocking();
+        
+        // Window to show stats and data
+        static void FrameRate();
     };
     
 }

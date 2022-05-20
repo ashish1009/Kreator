@@ -117,8 +117,6 @@ void Application::Init() {
     // Decorate Window
     if (m_Specification.StartMaximized)
         m_Window->Maximize();
-    else
-        m_Window->CenterWindow();
     
     m_Window->SetResizable(m_Specification.Resizable);
     
