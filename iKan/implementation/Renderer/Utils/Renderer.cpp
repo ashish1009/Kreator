@@ -35,6 +35,24 @@ void Renderer::Shutdown() {
     }
 }
 
+/// Clear the renderer Pixel and set Background Color
+/// @param vec4 Color to be set as background
+void Renderer::Clear(const glm::vec4& color) {
+    s_RendererAPI->SetClearColor(color);
+    s_RendererAPI->ClearBits();
+}
+
+/// Set Background Color
+/// @param vec4 Color to be set as background
+void Renderer::SetClearColor(const glm::vec4& color) {
+    s_RendererAPI->SetClearColor(color);
+}
+
+/// Clear the each bits of renderer Pixels
+void Renderer::ClearBits() {
+    s_RendererAPI->ClearBits();
+}
+
 /// Return the current active Renderer API
 Renderer::API Renderer::GetAPI() { return s_API; }
 

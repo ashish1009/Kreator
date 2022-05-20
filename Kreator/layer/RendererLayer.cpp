@@ -30,7 +30,7 @@ void RendererLayer::Detach() {
 /// Update Renderer Layer each frame
 /// @param ts Time step between 2 Frames
 void RendererLayer::Update(Timestep ts) {
-    
+    Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
 }
 
 /// Render GUI Window each frame for Renderer Layer

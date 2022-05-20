@@ -38,6 +38,15 @@ namespace iKan {
         /// NOTE: to Shutdown Client Specific renderer, Shutdown them in Client Application Destructor
         static void Shutdown();
         
+        /// Clear all the Renderer Bits and set the Clear color to new color
+        /// @param color New color of renderer Clear color
+        static void Clear(const glm::vec4& color);
+        /// Set the Clear color to new color
+        /// @param color New color of renderer Clear color
+        static void SetClearColor(const glm::vec4& color);
+        /// Clear all the Renderer Bits
+        static void ClearBits();
+        
         // Renderer_API Controller
         /// Return the Current Set Renderer API Type
         static API GetAPI();

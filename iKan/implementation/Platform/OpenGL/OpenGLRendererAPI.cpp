@@ -66,3 +66,14 @@ void OpenGLRendererAPI::Blend(bool state) const {
         glDisable(GL_BLEND);
     }
 }
+
+/// Set Background Color
+/// @param vec4 Color to be set as background
+void OpenGLRendererAPI::SetClearColor(const glm::vec4& color) const {
+    glClearColor(color.r, color.g, color.b, color.a);
+}
+
+/// Clear the each bits of renderer Pixels
+void OpenGLRendererAPI::ClearBits() const {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}

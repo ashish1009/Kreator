@@ -19,6 +19,9 @@ namespace iKan {
         void Init() const override;
         void Shutdown() const override;
         
+        void SetClearColor(const glm::vec4& color) const override;
+        void ClearBits() const override;
+        
         void Depth(bool state) const override;
         void Blend(bool state) const override;
     };
