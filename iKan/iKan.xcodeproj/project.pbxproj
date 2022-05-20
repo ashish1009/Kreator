@@ -11,6 +11,13 @@
 		3E6575C528378FB1006B0C81 /* Window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575C328378FB1006B0C81 /* Window.hpp */; };
 		3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C828378FD8006B0C81 /* MacWindow.cpp */; };
 		3E6575CB28378FD8006B0C81 /* MacWindow.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575C928378FD8006B0C81 /* MacWindow.hpp */; };
+		3E6575D628379414006B0C81 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575D228379414006B0C81 /* Event.h */; };
+		3E6575D728379414006B0C81 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575D328379414006B0C81 /* KeyEvent.h */; };
+		3E6575D828379414006B0C81 /* ApplicationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575D428379414006B0C81 /* ApplicationEvent.h */; };
+		3E6575D928379414006B0C81 /* MouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575D528379414006B0C81 /* MouseEvent.h */; };
+		3E6575DC28379491006B0C81 /* MouseCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575DA28379491006B0C81 /* MouseCodes.h */; };
+		3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575DB28379491006B0C81 /* KeyCodes.h */; };
+		3E6575DF283798B5006B0C81 /* iKanCommonPreprocessors.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575DE283798B5006B0C81 /* iKanCommonPreprocessors.h */; };
 		3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */; };
 		3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6B28360E74003578F4 /* Entrypoint.h */; };
 		3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */; };
@@ -32,6 +39,13 @@
 		3E6575C328378FB1006B0C81 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
 		3E6575C828378FD8006B0C81 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		3E6575C928378FD8006B0C81 /* MacWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MacWindow.hpp; sourceTree = "<group>"; };
+		3E6575D228379414006B0C81 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		3E6575D328379414006B0C81 /* KeyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyEvent.h; sourceTree = "<group>"; };
+		3E6575D428379414006B0C81 /* ApplicationEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
+		3E6575D528379414006B0C81 /* MouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseEvent.h; sourceTree = "<group>"; };
+		3E6575DA28379491006B0C81 /* MouseCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseCodes.h; sourceTree = "<group>"; };
+		3E6575DB28379491006B0C81 /* KeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCodes.h; sourceTree = "<group>"; };
+		3E6575DE283798B5006B0C81 /* iKanCommonPreprocessors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKanCommonPreprocessors.h; sourceTree = "<group>"; };
 		3E6A4D3C2836091E003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3E6A4D6B28360E74003578F4 /* Entrypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entrypoint.h; sourceTree = "<group>"; };
@@ -77,6 +91,17 @@
 			path = MacOs;
 			sourceTree = "<group>";
 		};
+		3E6575D128379414006B0C81 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				3E6575D228379414006B0C81 /* Event.h */,
+				3E6575D428379414006B0C81 /* ApplicationEvent.h */,
+				3E6575D328379414006B0C81 /* KeyEvent.h */,
+				3E6575D528379414006B0C81 /* MouseEvent.h */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
 		3E6A4D332836091E003578F4 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +127,7 @@
 			children = (
 				3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */,
 				3E6A4D6B28360E74003578F4 /* Entrypoint.h */,
+				3E6575DE283798B5006B0C81 /* iKanCommonPreprocessors.h */,
 				3E6A4D6F28360F66003578F4 /* Core */,
 			);
 			path = interface;
@@ -133,12 +159,15 @@
 		3E6A4D6F28360F66003578F4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				3E6575D128379414006B0C81 /* Event */,
 				3E6A4D792836277D003578F4 /* Debug */,
 				3E6A4D7B28364272003578F4 /* Utils */,
 				3E6A4D7E283643AD003578F4 /* iKanCore.h */,
 				3E6A4D7128360F7C003578F4 /* Application.hpp */,
 				3E6A4D8A28369025003578F4 /* Layer.hpp */,
 				3E6A4D922836979C003578F4 /* LayerStack.hpp */,
+				3E6575DB28379491006B0C81 /* KeyCodes.h */,
+				3E6575DA28379491006B0C81 /* MouseCodes.h */,
 				3E6575C328378FB1006B0C81 /* Window.hpp */,
 			);
 			path = Core;
@@ -200,15 +229,22 @@
 				3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */,
 				3E6A4D7F283643AD003578F4 /* iKanCore.h in Headers */,
 				3E6A4D7828362759003578F4 /* Logger.hpp in Headers */,
+				3E6575D928379414006B0C81 /* MouseEvent.h in Headers */,
 				3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */,
+				3E6575D628379414006B0C81 /* Event.h in Headers */,
 				3E6A4D8C28369025003578F4 /* Layer.hpp in Headers */,
 				3E6A4D7D28364303003578F4 /* Asserts.h in Headers */,
 				3E6A4D7328360F7C003578F4 /* Application.hpp in Headers */,
 				3E6575C528378FB1006B0C81 /* Window.hpp in Headers */,
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
+				3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */,
 				3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */,
 				3E6A4D8428364497003578F4 /* AssertsCoreAPI.h in Headers */,
 				3E6575CB28378FD8006B0C81 /* MacWindow.hpp in Headers */,
+				3E6575DC28379491006B0C81 /* MouseCodes.h in Headers */,
+				3E6575DF283798B5006B0C81 /* iKanCommonPreprocessors.h in Headers */,
+				3E6575D828379414006B0C81 /* ApplicationEvent.h in Headers */,
+				3E6575D728379414006B0C81 /* KeyEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
