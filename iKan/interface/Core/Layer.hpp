@@ -13,6 +13,7 @@ namespace iKan {
 
     // Forward declaration
     class Event;
+    class Timestep;
     
     /// Layer Interface class
     /// Core Application manages Bellow API As per functionality defined
@@ -32,7 +33,8 @@ namespace iKan {
         virtual void RenderGui() = 0;
         
         /// Update layer each frame. To be called each frame from application
-        virtual void Update() = 0;
+        /// @param ts Time step between 2 Frames
+        virtual void Update(Timestep ts) = 0;
 
         /// Handle events of Layer. Trigger when any Even interrupted layer in each frame.
         /// calls specific even handler from here internally

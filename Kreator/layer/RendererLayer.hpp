@@ -19,7 +19,7 @@ public:
     void Attach() override;
     void Detach() override;
 
-    void Update() override;
+    void Update(Timestep ts) override;
     void RenderGui() override;
     void EventHandler(Event& event) override;
     

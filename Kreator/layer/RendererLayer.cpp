@@ -28,7 +28,8 @@ void RendererLayer::Detach() {
 }
 
 /// Update Renderer Layer each frame
-void RendererLayer::Update() {
+/// @param ts Time step between 2 Frames
+void RendererLayer::Update(Timestep ts) {
     
 }
 

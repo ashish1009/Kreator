@@ -77,7 +77,7 @@ void Application::Run() {
 
     // Updating all the attached layer
     for (auto& layer : *m_LayerStack.get())
-        layer->Update();
+        layer->Update(m_Timestep);
     
     if (m_Specification.EnableGui)
         RenderGui();
