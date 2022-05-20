@@ -202,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				3E6575F82837B662006B0C81 /* Renderer.hpp */,
+				3E6575FC2837B8E1006B0C81 /* RendererAPI.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -209,6 +210,7 @@
 		3E6575F42837B648006B0C81 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				3E6576312837BF09006B0C81 /* RendererContext.hpp */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -217,7 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				3E6576302837BF09006B0C81 /* RendererContext.cpp */,
-				3E6576312837BF09006B0C81 /* RendererContext.hpp */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -226,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				3E6575F72837B662006B0C81 /* Renderer.cpp */,
-				3E6575FC2837B8E1006B0C81 /* RendererAPI.hpp */,
 				3E6575FB2837B8E1006B0C81 /* RendererAPI.cpp */,
 			);
 			path = Utils;
@@ -262,6 +262,7 @@
 		3E6578D72837D071006B0C81 /* Gui */ = {
 			isa = PBXGroup;
 			children = (
+				3E6578DA2837D10B006B0C81 /* ImguiLayer.hpp */,
 			);
 			path = Gui;
 			sourceTree = "<group>";
@@ -270,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				3E6578D92837D10B006B0C81 /* ImguiLayer.cpp */,
-				3E6578DA2837D10B006B0C81 /* ImguiLayer.hpp */,
 				3E6578DD2837D278006B0C81 /* ImguiBuild.cpp */,
 			);
 			path = Gui;

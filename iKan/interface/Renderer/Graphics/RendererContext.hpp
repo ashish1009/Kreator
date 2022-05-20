@@ -16,7 +16,10 @@ namespace iKan {
     public:
         virtual ~RendererContext() = default;
         
+        /// Initialize the Rendeer Context
         virtual void Init() = 0;
+        
+        /// Swap the Buffer each frame
         virtual void SwapBuffers() = 0;
         
         static std::unique_ptr<RendererContext> Create(GLFWwindow* window);

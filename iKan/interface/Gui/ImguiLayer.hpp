@@ -12,6 +12,8 @@
 namespace iKan {
     
     /// Manager Imgui Layer in application
+    /// NOTE: If Not using iKan Renderer then create instance of Imgui Layer in Client Application and manage API Accordingly
+    /// By default Application is taking care of all
     class ImguiLayer : public Layer {
     public:
         ImguiLayer();
@@ -27,9 +29,14 @@ namespace iKan {
         
         const std::string& GetName() const override;
         
+        /// Call begin function before rendering Imgui
+        /// NOTE: Call once per frame
         void Begin();
+        /// Call the end function after rendering All Imgui Windows
+        /// NOTE: Call once per frame
         void End();
         
+        /// Block the Imgui Events if flag is true
         void BlockEvents(bool);
         
     private:

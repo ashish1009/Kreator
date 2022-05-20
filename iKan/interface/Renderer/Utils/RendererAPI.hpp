@@ -9,6 +9,9 @@
 
 namespace iKan {
     
+    /// Interface for Renderer API
+    /// NOTE: If Not using iKan Renderer then create instance of Renderee API in Client side
+    /// By default Application is taking care of all
     class RendererAPI {
     public:
         /// Stores the capability of renderer
