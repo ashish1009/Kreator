@@ -81,18 +81,18 @@
 		3E6575C628378FB7006B0C81 /* Platform */ = {
 			isa = PBXGroup;
 			children = (
-				3E6575C728378FC1006B0C81 /* MacOs */,
+				3E6575C728378FC1006B0C81 /* MacOS */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
 		};
-		3E6575C728378FC1006B0C81 /* MacOs */ = {
+		3E6575C728378FC1006B0C81 /* MacOS */ = {
 			isa = PBXGroup;
 			children = (
 				3E6575C828378FD8006B0C81 /* MacWindow.cpp */,
 				3E6575C928378FD8006B0C81 /* MacWindow.hpp */,
 			);
-			path = MacOs;
+			path = MacOS;
 			sourceTree = "<group>";
 		};
 		3E6575D128379414006B0C81 /* Event */ = {
@@ -453,6 +453,7 @@
 					"${PROJECT_DIR}/interface",
 					"${PROJECT_DIR}/implementation",
 					"${PROJECT_DIR}/vendors/spdlog/include",
+					"${PROJECT_DIR}/vendors/glfw/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -473,6 +474,7 @@
 					"${PROJECT_DIR}/interface",
 					"${PROJECT_DIR}/implementation",
 					"${PROJECT_DIR}/vendors/spdlog/include",
+					"${PROJECT_DIR}/vendors/glfw/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

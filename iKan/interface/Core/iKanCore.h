@@ -20,3 +20,10 @@
 // Engine core file - Implementation
 #include "Core/Debug/LoggerCoreAPI.h"
 #include "Core/Utils/AssertsCoreAPI.h"
+
+/// Supported OS by iKan Engine
+enum class OS : uint8_t {
+    None = 0,
+    Mac = 1
+    /* Add More supported OS */
+};
