@@ -23,7 +23,7 @@ namespace iKan {
     class Renderer {
     public:
         /// Supported Renderer API by iKan Engine
-        enum class API {
+        enum class API : uint8_t {
             None = 0,
             OpenGL = 1,
             /* Add other Supported API */};
