@@ -7,3 +7,6 @@
 [submodule "iKan/vendors/glm"]
 	path = iKan/vendors/glm
 	url = https://github.com/g-truc/glm
+[submodule "iKan/vendors/gui/gui"]
+	path = iKan/vendors/gui/gui
+	url = https://github.com/ashish1009/imgui

@@ -49,7 +49,7 @@ namespace iKan {
         uint32_t GetHeight() const override { return m_Data.Specification.Height; }
         std::string GetTitle() const override { return m_Data.Specification.Title; }
         Timestep GerTimestep() const override { return m_Time; }
-        void* GetNativeWindow() override { return (void*)m_Window; }
+        void* GetNativeWindow() const override { return (void*)m_Window; }
 
     private:
         // Member Functions

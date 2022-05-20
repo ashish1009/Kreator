@@ -17,6 +17,7 @@ namespace iKan {
     class WindowCloseEvent;
     class LayerStack;
     class Layer;
+    class ImguiLayer;
 
     /// Base class for Core Application. Client can create its own Application derived from Base Core Applicaiton.
     /// Responsible for.
@@ -83,6 +84,8 @@ namespace iKan {
         void* GetWindowPtr() const;
         /// Return the iKan Window Instance reference
         const Window& GetWindow() const;
+        /// Return the Imgui Layer pointer Reference
+        ImguiLayer& GetImGuiLayer() const;
 
         // Static Methods
         /// Return the reference of Application Instance
@@ -102,6 +105,7 @@ namespace iKan {
         Timestep m_Timestep;
         std::unique_ptr<Window> m_Window;
         std::unique_ptr<LayerStack> m_LayerStack;
+        std::shared_ptr<ImguiLayer> m_ImguiLayer;
 
         // Static variables
         static Application* s_Instance;

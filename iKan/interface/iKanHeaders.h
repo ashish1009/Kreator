@@ -13,6 +13,9 @@
 // C++ Files
 #include <iostream>
 
+// Imgui file
+#include <imgui.h>
+
 // glm math library
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>

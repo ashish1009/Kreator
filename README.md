@@ -95,7 +95,9 @@ Link following frameworks to your project...
 Add the following header search paths 
 `{...} directory where Kreator Engine is cloned`
 - {...}/interface
-- {...}/vendors/spdlog
+- {...}/vendors/spdlog/include
+- {...}/vendors/glm
+- {...}/vendors/gui/gui
 
 ### Library Search Paths
 Add the following library search paths 

@@ -74,7 +74,7 @@ namespace iKan {
         virtual uint32_t GetHeight() const = 0;
         virtual std::string GetTitle() const = 0;
         virtual Timestep GerTimestep() const = 0;
-        virtual void* GetNativeWindow() = 0;
+        virtual void* GetNativeWindow() const = 0;
         
         /// Static API to Create instance of Window
         /// @param os Operatin system to be used. Use OS enum to check supported OS by iKan

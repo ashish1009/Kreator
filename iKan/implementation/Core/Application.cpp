@@ -9,6 +9,7 @@
 #include "Core/LayerStack.hpp"
 #include "Core/Event/ApplicationEvent.h"
 #include "Renderer/Utils/Renderer.hpp"
+#include "Gui/ImguiLayer.hpp"
 
 using namespace iKan;
 
@@ -113,12 +114,20 @@ void Application::Init() {
     m_Window = Window::Create(m_Specification.Os, m_Specification.WindowSpec);
     m_Window->SetEventFunction(IK_BIND_EVENT_FN(Application::EventHandler));
     
+    // Decorate Window
     if (m_Specification.StartMaximized)
         m_Window->Maximize();
     else
         m_Window->CenterWindow();
     
     m_Window->SetResizable(m_Specification.Resizable);
+    
+    // Initialize the Imgui Layer if GUI is enabled
+    if (m_Specification.EnableGui) {
+        // Attaching the Imgui layer
+        m_ImguiLayer = std::make_shared<ImguiLayer>();
+        PushLayer(m_ImguiLayer);
+    }
     
     Renderer::Init();
 }
@@ -172,9 +181,13 @@ bool Application::WindowClose(WindowCloseEvent& event) {
 
 /// Render GUI Window
 void Application::RenderGui() {
+    m_ImguiLayer->Begin();
+    
     // Render Imgui for all layers
     for (auto& layer : *m_LayerStack.get())
         layer->RenderGui();
+
+    m_ImguiLayer->End();
 }
 
 /// Close the application
@@ -192,6 +205,8 @@ void Application::PopLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->
 void* Application::GetWindowPtr() const { return (void*)m_Window->GetNativeWindow(); }
 /// Return the iKan Window Instance reference
 const Window& Application::GetWindow() const { return *m_Window; }
+/// Return the Imgui layer Pointer reference
+ImguiLayer& Application::GetImGuiLayer() const { return *m_ImguiLayer; }
 
 /// Return the reference of Application Instance
 const Application& Application::Get() { return *s_Instance; }
