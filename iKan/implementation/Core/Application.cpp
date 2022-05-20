@@ -67,6 +67,7 @@ Application::Specification& Application::Specification::operator=(const Applicat
 /// @param spec Specification defined for application
 Application::Application(const Specification& spec)
 : m_Specification(spec) {
+    PROFILE();
     // If instance already created then abort the application
     // as multiple instacne should not be therer
     IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");

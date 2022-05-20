@@ -15,6 +15,7 @@ using namespace iKan;
 /// MAC Window Constructor
 /// @param spec Window Spcification
 MacWindow::MacWindow(const Window::Specification& spec) {
+    PROFILE();
     m_Data.Specification = spec;
     IK_CORE_INFO("Creating MAC OS Window : {0}...", m_Data.Specification.Title);
     IK_CORE_INFO("    MAC Wondow Specifications are");

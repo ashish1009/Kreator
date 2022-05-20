@@ -15,6 +15,7 @@
 
 // Engine core file - Interface
 #include "Core/Debug/Logger.hpp"
+#include "Core/Debug/Profiler.hpp"
 #include "Core/Utils/Asserts.h"
 
 // Engine core file - Implementation
