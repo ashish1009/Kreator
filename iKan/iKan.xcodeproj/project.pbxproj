@@ -627,6 +627,7 @@
 					"${PROJECT_DIR}/vendors/spdlog/include",
 					"${PROJECT_DIR}/vendors/glfw/include",
 					"${PROJECT_DIR}/vendors/glad/include",
+					"${PROJECT_DIR}/vendors/glm",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -654,6 +655,7 @@
 					"${PROJECT_DIR}/vendors/spdlog/include",
 					"${PROJECT_DIR}/vendors/glfw/include",
 					"${PROJECT_DIR}/vendors/glad/include",
+					"${PROJECT_DIR}/vendors/glm",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

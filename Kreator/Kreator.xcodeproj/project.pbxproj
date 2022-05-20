@@ -311,6 +311,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../iKan/interface",
 					"${PROJECT_DIR}/../iKan/vendors/spdlog/include",
+					"${PROJECT_DIR}/../iKan/vendors/glm",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -325,6 +326,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../iKan/interface",
 					"${PROJECT_DIR}/../iKan/vendors/spdlog/include",
+					"${PROJECT_DIR}/../iKan/vendors/glm",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
