@@ -10,6 +10,7 @@
 #include "Core/LayerStack.hpp"
 #include "Core/Window.hpp"
 #include "Core/Utils/Timestep.hpp"
+#include "Renderer/Utils/Renderer.hpp"
 
 namespace iKan {
 
@@ -25,6 +26,7 @@ namespace iKan {
         struct Specification {
             std::string Name = "Kreator";
             OS Os = OS::None;
+            Renderer::API RendererAPI = Renderer::API::None;;
             bool StartMaximized = true;
             bool Resizable = true;
             bool EnableGui = true;

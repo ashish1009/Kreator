@@ -21,6 +21,7 @@ int main() {
     
     // Create application
     auto app = iKan::CreateApplication();
+    app->Run();
     
     return 0;
 }

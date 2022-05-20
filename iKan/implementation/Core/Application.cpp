@@ -7,6 +7,7 @@
 
 #include "Application.hpp"
 #include "Core/Event/Event.h"
+#include "Renderer/Utils/Renderer.hpp"
 
 using namespace iKan;
 
@@ -21,6 +22,17 @@ namespace Utils {
             case OS::None :
             default:
                 IK_ASSERT(false, "Invalid OS Type");
+        }
+    }
+    
+    /// Return the Renderer API Name as string
+    /// @param api Renderer APi Name in iKan Enum
+    std::string GetRendererAPINameAsString(Renderer::API api) {
+        switch (api) {
+            case Renderer::API::OpenGL : return "Open GL";
+            case Renderer::API::None :
+            default:
+                IK_ASSERT(false, "Invalid Renderer API Type");
         }
     }
 }
@@ -38,6 +50,7 @@ Application::Specification::Specification(const Application::Specification& othe
     
     Name = other.Name;
     Os = other.Os;
+    RendererAPI = other.RendererAPI;
     StartMaximized = other.StartMaximized;
     Resizable = other.Resizable;
     EnableGui = other.EnableGui;
@@ -53,6 +66,7 @@ Application::Specification& Application::Specification::operator=(const Applicat
     
     Name = other.Name;
     Os = other.Os;
+    RendererAPI = other.RendererAPI;
     StartMaximized = other.StartMaximized;
     Resizable = other.Resizable;
     EnableGui = other.EnableGui;
@@ -77,6 +91,7 @@ Application::Application(const Specification& spec)
     IK_CORE_INFO("    Application Specifications are");
     IK_CORE_INFO("    Name                          : {0}", m_Specification.Name);
     IK_CORE_INFO("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
+    IK_CORE_INFO("    Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
     IK_CORE_INFO("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
     IK_CORE_INFO("    Window Resizable              : {0}", m_Specification.Resizable);
     IK_CORE_INFO("    Enable GUI                    : {0}", m_Specification.EnableGui);
@@ -89,6 +104,8 @@ Application::Application(const Specification& spec)
 void Application::Init() {
     m_LayerStack = std::make_unique<LayerStack>();
     
+    Renderer::SetAPI(m_Specification.RendererAPI);
+    
     // Create Window for application and register the Event callback function to Window
     m_Window = Window::Create(m_Specification.Os, m_Specification.WindowSpec);
     m_Window->SetEventFunction(IK_BIND_EVENT_FN(Application::EventHandler));
@@ -99,11 +116,15 @@ void Application::Init() {
         m_Window->CenterWindow();
     
     m_Window->SetResizable(m_Specification.Resizable);
+    
+    Renderer::Init();
 }
 
 /// Applciation Destructor
 Application::~Application() {
+    PROFILE();
     IK_CORE_WARN("Destroying Core Application Instance !!!");
+    Renderer::Shutdown();
 }
 
 /// Update the Application each frame

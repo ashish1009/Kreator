@@ -34,6 +34,7 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     Application::Specification specification;
     specification.Name = "Kreator";
     specification.Os = OS::Mac;
+    specification.RendererAPI = Renderer::API::OpenGL;
 
     specification.StartMaximized = true;
     specification.Resizable = true;

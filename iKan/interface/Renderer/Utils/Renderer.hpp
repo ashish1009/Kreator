@@ -16,6 +16,9 @@ namespace iKan {
     /// All renderer ID type
     using RendererID = uint32_t;
 
+    // Forward declaration
+    class RendererAPI;
+
     /// Interface class to handle ALL Renderer API to be used by client
     class Renderer {
     public:
@@ -48,6 +51,7 @@ namespace iKan {
         
         // Member varaibel
         static API s_API;
+        static std::unique_ptr<RendererAPI> s_RendererAPI;
     };
     
 }
