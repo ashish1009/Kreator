@@ -212,7 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				3E6575F82837B662006B0C81 /* Renderer.hpp */,
-				3E6575FC2837B8E1006B0C81 /* RendererAPI.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -220,7 +219,6 @@
 		3E6575F42837B648006B0C81 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				3E6576312837BF09006B0C81 /* RendererContext.hpp */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -228,6 +226,7 @@
 		3E6575F52837B651006B0C81 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				3E6576312837BF09006B0C81 /* RendererContext.hpp */,
 				3E6576302837BF09006B0C81 /* RendererContext.cpp */,
 			);
 			path = Graphics;
@@ -237,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				3E6575F72837B662006B0C81 /* Renderer.cpp */,
+				3E6575FC2837B8E1006B0C81 /* RendererAPI.hpp */,
 				3E6575FB2837B8E1006B0C81 /* RendererAPI.cpp */,
 				3E6578F62837E51E006B0C81 /* RendererStats.hpp */,
 			);
