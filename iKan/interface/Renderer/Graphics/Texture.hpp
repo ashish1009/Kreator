@@ -9,5 +9,10 @@
 
 namespace iKan {
     
+    /// Interface class for Storing Renderer Texture data. Implementation is depending on the
+    /// Supported Renerer API.
+    class Texture {
+    public:
+    };
     
 }

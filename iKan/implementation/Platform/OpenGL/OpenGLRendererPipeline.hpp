@@ -11,5 +11,10 @@
 
 namespace iKan {
     
+    class OpenGLRendererPipeline : public Pipeline {
+    public:
+        OpenGLRendererPipeline();
+        virtual ~OpenGLRendererPipeline();
+    };
     
 }

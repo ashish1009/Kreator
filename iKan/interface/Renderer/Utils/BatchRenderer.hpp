@@ -23,8 +23,13 @@ namespace iKan {
         static void Shutdown();
 
     private:
+        // Making Singleton
         BatchRenderer() = default;
         MAKE_SINGLETON(BatchRenderer);
+        
+        // Member Methods
+        /// Initialze the Quad Renderer Data
+        static void InitQuadData();
     };
     
 }

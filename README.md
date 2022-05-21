@@ -130,3 +130,5 @@ Add the following library search paths
 ## TODOs
 - TODO: Remove Creator and Implementation files in final commit. Only Interface and Library .a file
 - TODO: In Logger::Init() : Change default argument file path when Asset manager will get introduced
+- TODO: In Shader.hpp : Change this value based on the Open GL Version
+- TODO: In BatchRenderer : Make configurable in run time and While initializing the Batch Renderer
