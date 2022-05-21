@@ -95,14 +95,6 @@ void Logger::Init(Level coreLevel, Level clientLevel, const std::string& logFile
 }
 
 // ---------------- SPD Instance Getters --------------------
-std::shared_ptr<spdlog::logger>& Logger::GetCoreLogger() {
-    std::cout << "CRITICAL LOGGER ERROR : Logger Did Not Initailised. Initialize the Logger with API: iKan::Logger::Init(...)" << std::endl;
-    assert(false);
-    return s_CoreLogger;
-}
-std::shared_ptr<spdlog::logger>& Logger::GetClientLogger() {
-    std::cout << "CRITICAL LOGGER ERROR : Logger Did Not Initailised. Initialize the Logger with API: iKan::Logger::Init(...)" << std::endl;
-    assert(false);
-    return s_ClientLogger;
-}
+std::shared_ptr<spdlog::logger>& Logger::GetCoreLogger() { return s_CoreLogger; }
+std::shared_ptr<spdlog::logger>& Logger::GetClientLogger() { return s_ClientLogger; }
 // ----------------------------------------------------------
