@@ -19,6 +19,10 @@ namespace iKan {
         /// @param iconChar Icon to be printed as Help Marker (By default (?) will be renderes)
         /// @param sameLine check for same line icon or in new line
         static void HelpMarker(const char* desc, const char* iconChar = "(?)", bool sameLine = true);
+        
+    private:
+        PropertyGrid() = default;
+        MAKE_SINGLETON(PropertyGrid);
     };
     
 }

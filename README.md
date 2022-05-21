@@ -133,4 +133,3 @@ Add the following library search paths
 
 ###Temp TODO
 - Make Layer stack as Common stack and move to Utils
-- Make some Macoro do delete Copy and Move Constructor and = operator for singleton class

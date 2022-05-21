@@ -13,6 +13,13 @@
 #define BIT(x) (1 << x) // Shift bit 1 at position x
 #define ToString(x) #x  // Convert X to string
 
+/// Delete the copy and Move constructor and Openrator = for any class to make pure singleton
+#define MAKE_SINGLETON(x) \
+    x(const x&) = delete; \
+    x(x&&) = delete; \
+    x& operator =(const x&) = delete; \
+    x& operator =(x&&) = delete; \
+
 // ---------------------- Enums  ----------------------
 /// Supported OS by iKan Engine
 enum class OS : uint8_t {

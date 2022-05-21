@@ -70,6 +70,7 @@ namespace iKan {
         
     private:
         Renderer() = default;
+        MAKE_SINGLETON(Renderer);
         
         // Member varaibel
         static API s_API;

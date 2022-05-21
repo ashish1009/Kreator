@@ -92,8 +92,8 @@ namespace iKan {
         static const Application& Get();
 
     private:
-        // Deleting Copy Constructor
-        Application(const Application&) = delete;
+        // Deleting Copy and Move Constructor and = operator
+        MAKE_SINGLETON(Application);
 
         // Member Methods
         void Init();

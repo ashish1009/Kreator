@@ -70,6 +70,7 @@ namespace iKan {
 
     private:
         RendererStatistics() = default;
+        MAKE_SINGLETON(RendererStatistics);
     };
     
 }

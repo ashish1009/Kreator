@@ -36,6 +36,7 @@ namespace iKan {
 
     private:
         Logger() = default;
+        MAKE_SINGLETON(Logger);
         static std::shared_ptr<spdlog::logger> s_CoreLogger, s_ClientLogger;
     };
     

@@ -16,6 +16,10 @@ namespace iKan {
         
         // Window to show stats and data
         static void FrameRate();
+        
+    private:
+        ImguiAPI() = default;
+        MAKE_SINGLETON(ImguiAPI);
     };
     
 }

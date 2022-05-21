@@ -24,6 +24,7 @@ namespace iKan {
 
     private:
         BatchRenderer() = default;
+        MAKE_SINGLETON(BatchRenderer);
     };
     
 }

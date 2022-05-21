@@ -37,6 +37,7 @@ namespace iKan {
         
     private:
         Input() = default;
+        MAKE_SINGLETON(Input);
     };
     
 }
