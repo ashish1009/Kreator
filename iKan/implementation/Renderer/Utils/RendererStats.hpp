@@ -45,7 +45,7 @@ namespace iKan {
         
         /// RendererStats
         /// @param pIsOpen flag to check presence
-        void RendererStats() {
+        void ImguiRendererStats() {
             ImGui::Begin("Renderer Stats", nullptr, ImGuiWindowFlags_NoScrollbar);
             ImGui::PushID("Renderer Stats");
             

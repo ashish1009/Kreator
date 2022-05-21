@@ -30,6 +30,7 @@ void RendererLayer::Detach() {
 /// Update Renderer Layer each frame
 /// @param ts Time step between 2 Frames
 void RendererLayer::Update(Timestep ts) {
+    Renderer::ResetStatsEachFrame();
     Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
 }
 
@@ -37,6 +38,7 @@ void RendererLayer::Update(Timestep ts) {
 void RendererLayer::RenderGui() {
     ImguiAPI::StartDcocking();
     ImguiAPI::FrameRate();
+    Renderer::ImguiRendererStats();
     ImguiAPI::EndDcocking();
 }
 

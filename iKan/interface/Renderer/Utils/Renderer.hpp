@@ -68,6 +68,16 @@ namespace iKan {
         /// @param state flag to be set as MultiSample
         static void MultiSample(bool state);
         
+        // --------------------- Renderer Stats API ---------------------------------
+        /// Restet the renderer Stats each frame
+        /// NOTE: Only those stats will be reset that need to be reset each frame
+        /// (Draw Calls, Index Count, Vertex Count)
+        static void ResetStatsEachFrame();
+        /// Reste all the renderer stats
+        static void ResetStats();
+        /// Renderer Imgui to show renderer stats
+        static void ImguiRendererStats();
+        
     private:
         Renderer() = default;
         MAKE_SINGLETON(Renderer);

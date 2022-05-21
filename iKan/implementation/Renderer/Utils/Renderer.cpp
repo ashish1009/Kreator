@@ -8,6 +8,7 @@
 #include "Renderer.hpp"
 #include "Renderer/Utils/RendererAPI.hpp"
 #include "Renderer/Utils/BatchRenderer.hpp"
+#include "Renderer/Utils/RendererStats.hpp"
 
 using namespace iKan;
 
@@ -53,7 +54,7 @@ void Renderer::SetAPI(Renderer::API api) {
         default:
             IK_CORE_ASSERT(false, "Invalid Renderer API");
     }
-    IK_CORE_INFO("Renderer API is set to '{0}'", rendererAPI.c_str());
+    IK_CORE_INFO("Setting Renderer API : '{0}'", rendererAPI.c_str());
 #endif
     s_API = api;
     s_RendererAPI = RendererAPI::Create();
@@ -87,3 +88,21 @@ void Renderer::Blend(bool state) { s_RendererAPI->Blend(state); }
 /// Enable or disable MultiSample Field
 /// @param state flag to be set as MultiSample
 void Renderer::MultiSample(bool state) { s_RendererAPI->MultiSample(state); }
+
+// --------------------- Renderer Stats API ---------------------------------
+/// Restet the renderer Stats each frame
+/// NOTE: Only those stats will be reset that need to be reset each frame
+/// (Draw Calls, Index Count, Vertex Count)
+void Renderer::ResetStatsEachFrame() {
+    RendererStatistics::Get().ResetEachFrame();
+}
+
+/// Reset all the stats at all
+void Renderer::ResetStats() {
+    RendererStatistics::Get().ResetAll();
+}
+
+/// Render all the stats in Imgui
+void Renderer::ImguiRendererStats() {
+    RendererStatistics::Get().ImguiRendererStats();
+}
