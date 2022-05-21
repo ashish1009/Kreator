@@ -130,6 +130,3 @@ Add the following library search paths
 ## TODOs
 - TODO: Remove Creator and Implementation files in final commit. Only Interface and Library .a file
 - TODO: In Logger::Init() : Change default argument file path when Asset manager will get introduced
-
-###Temp TODO
-- Make Layer stack as Common stack and move to Utils

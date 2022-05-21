@@ -9,6 +9,12 @@
 
 using namespace iKan;
 
+/// Common 2D Batch Renderer Data
+/// Base class for all 2D Renderer like Quad, Circle ...
+struct RendererData {
+    // Renderer Data storage
+ };
+
 /// Initialize the Batch renderer for 2D Renderer
 void BatchRenderer::Init() {
     PROFILE();
