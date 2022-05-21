@@ -149,13 +149,13 @@ void MacWindow::SetEventCallbacks() {
     
     glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
         MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
-        MouseScrolledEvent event((float)xOffset, (float)yOffset);
+        MouseScrolledEvent event((MOUSE_POS_X_TYPE)xOffset, (MOUSE_POS_Y_TYPE)yOffset);
         data.EventCallback(event);
     });
     
     glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
         MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
-        MouseMovedEvent event((float)xPos, (float)yPos);
+        MouseMovedEvent event((MOUSE_POS_X_TYPE)xPos, (MOUSE_POS_Y_TYPE)yPos);
         data.EventCallback(event);
     });
 }
@@ -180,9 +180,9 @@ void MacWindow::Update() {
     m_Context->SwapBuffers();
     glfwPollEvents();
     
-    float currentFrame = glfwGetTime();
-    m_Time             = currentFrame - m_LastFrameTime;
-    m_LastFrameTime    = currentFrame;
+    TIME currentFrame = glfwGetTime();
+    m_Time            = currentFrame - m_LastFrameTime;
+    m_LastFrameTime   = currentFrame;
 }
 
 /// Make Window resizable if 'resizable' is true else Window can not be resized after callinh this API

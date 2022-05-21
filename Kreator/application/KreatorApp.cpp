@@ -40,6 +40,7 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     specification.Resizable = true;
     specification.EnableGui = true;
 
+    // Window Specification
     specification.WindowSpec.Title = "Kreator";
     specification.WindowSpec.Width = 1600;
     specification.WindowSpec.Height = 900;

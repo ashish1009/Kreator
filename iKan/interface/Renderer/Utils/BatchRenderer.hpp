@@ -17,7 +17,9 @@ namespace iKan {
     /// Wrapper class for storing Batch Renderer API
     class BatchRenderer {
     public:
+        /// Initialze the Batch renderer. Create All buffers needed to store Data (Both Renderer and CPU)
         static void Init();
+        /// Shutdown on destroy the Batch Renderer. Delete all the allocated Data
         static void Shutdown();
 
     private:

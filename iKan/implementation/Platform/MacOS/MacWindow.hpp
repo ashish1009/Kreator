@@ -61,7 +61,7 @@ namespace iKan {
         Data m_Data;
         Timestep m_Time;
         std::unique_ptr<RendererContext> m_Context;
-        float m_LastFrameTime = 0.0f;
+        TIME m_LastFrameTime = 0.0f;
     };
     
 }

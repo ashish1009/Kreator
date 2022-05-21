@@ -9,6 +9,8 @@
 
 // Interface to create a Layer at Core or Client.
 // All the layer that need to be stored in Application should be derived from this Layer
+// NOTE: Core doens not have any renderer Layer except Imgui Layer. For all rendering or audio
+
 namespace iKan {
 
     // Forward declaration

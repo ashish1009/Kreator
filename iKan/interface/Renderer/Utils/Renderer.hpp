@@ -20,6 +20,10 @@ namespace iKan {
     class RendererAPI;
 
     /// Interface class to handle ALL Renderer API to be used by client
+    /// Resposnible for
+    /// - All Core Renderer API Wrapper (e.g. Batch Renderer, Scene Renderer ...)
+    /// - Fundamental Renderer API Wrapper (e.g. Open GL Renderer API ... )
+    /// - Renderer Stats API Wrapper
     class Renderer {
     public:
         /// Supported Renderer API by iKan Engine
@@ -28,8 +32,7 @@ namespace iKan {
             OpenGL = 1,
             /* Add other Supported API */};
         
-        // Static Methods
-        // Core API
+        // -------------------- Core API to control Renderer -------------------------
         /// Intialize all Renderer that are supported by iKan.
         /// NOTE: to Initialize Client Specific renderer, initialize them in Client Application Constructor
         static void Init();
@@ -38,6 +41,14 @@ namespace iKan {
         /// NOTE: to Shutdown Client Specific renderer, Shutdown them in Client Application Destructor
         static void Shutdown();
         
+        /// Return the Current Set Renderer API Type
+        static API GetAPI();
+        /// NOTE: Set the Renerer API even before constructing window as Window is creating Renderer Context
+        /// Based on the API to be set
+        /// @param api Current API need to be set
+        static void SetAPI(API api);
+        
+        // --------------- Fundamental Renderer API Wrappers -------------------------
         /// Clear all the Renderer Bits and set the Clear color to new color
         /// @param color New color of renderer Clear color
         static void Clear(const glm::vec4& color);
@@ -56,14 +67,6 @@ namespace iKan {
         /// Enable or disable MultiSample Field
         /// @param state flag to be set as MultiSample
         static void MultiSample(bool state);
-        
-        // Renderer_API Controller
-        /// Return the Current Set Renderer API Type
-        static API GetAPI();
-        /// NOTE: Set the Renerer API even before constructing window as Window is creating Renderer Context
-        /// Based on the API to be set
-        /// @param api Current API need to be set
-        static void SetAPI(API api);
         
     private:
         Renderer() = default;

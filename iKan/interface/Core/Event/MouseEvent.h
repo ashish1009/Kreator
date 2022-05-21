@@ -27,7 +27,8 @@ namespace iKan {
         EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
         
     private:
-        float m_MouseX, m_MouseY;
+        MOUSE_POS_X_TYPE m_MouseX;
+        MOUSE_POS_Y_TYPE m_MouseY;
     };
     
     /// Mouse scrol event
@@ -45,7 +46,8 @@ namespace iKan {
         EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
         
     private:
-        float m_XOffset, m_YOffset;
+        MOUSE_POS_X_TYPE m_XOffset;
+        MOUSE_POS_Y_TYPE m_YOffset;
     };
     
     /// Mouse button base calss

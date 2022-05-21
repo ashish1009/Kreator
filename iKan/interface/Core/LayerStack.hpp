@@ -27,7 +27,7 @@ namespace iKan {
         /// @param layer layer shared pointer to be deleted
         void PopLayer(const std::shared_ptr<Layer>& layer);
 
-        // APIs for iterators
+        // --------------- APIs for Iterators -------------------------
         std::vector<std::shared_ptr<Layer>>::iterator begin() { return m_Layers.begin(); }
         std::vector<std::shared_ptr<Layer>>::iterator end() { return m_Layers.end(); }
         std::vector<std::shared_ptr<Layer>>::reverse_iterator rbegin() { return m_Layers.rbegin(); }

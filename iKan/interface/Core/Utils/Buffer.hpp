@@ -9,6 +9,8 @@
 
 namespace iKan {
     
+    /// A Containor to store the data in buffer as bytes.
+    /// Allocate the memory in heap on cosntruction and de-allocate the memory on destruction
     struct Buffer {
         // Member variables
         std::byte* Data = nullptr;
@@ -35,18 +37,30 @@ namespace iKan {
         void Write(void* data, uint32_t size, uint32_t offset = 0);
         
         // Getters
+        /// Return the size of buffer
         constexpr uint32_t GetSize() const;
          
         // Operators
+        /// Return true if Data is not nullptr
         operator bool() const;
-        std::byte& operator[](uint32_t size);
-        std::byte operator[](uint32_t size) const;
+        /// return the byte reference at position index
+        /// @param index index of position
+        std::byte& operator[](uint32_t index);
+        /// return the byte value at position index
+        /// @param index index of position
+        std::byte operator[](uint32_t index) const;
         
+        /// equal to operator overload
+        /// @param other assign Buffer other to this Buffer
+        /// NOTE: new memory allocation is done (Deep Copy)
         Buffer& operator =(const Buffer& other);
+        /// equal to operator overload
+        /// @param other move Buffer other to this Buffer
+        /// NOTE: No new memory allocation is done. All data moved as it is
         Buffer& operator =(Buffer&& other);
         
         // Static Member Functions
-        /// Create new instance of Buffer. Copy the data and return the buffer
+        /// Create new instance of Buffer. Copy the 'data' and return the newly created buffer
         /// @param data Data to be copied
         /// @param size size of data
         static Buffer Copy(void* data, uint32_t size);

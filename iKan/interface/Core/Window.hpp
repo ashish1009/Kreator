@@ -45,7 +45,7 @@ namespace iKan {
 
         virtual ~Window() = default;
 
-        // Core Functions
+        // --------------- Virtual Methods -------------------------
         /// Update Window Each Frame. To be called by application on each frame. It swap the context buffers
         virtual void Update() = 0;
         /// Delete the GLFW Window context
@@ -58,7 +58,7 @@ namespace iKan {
         /// Place window at the center of the screen
         virtual void CenterWindow() = 0;
 
-        // Setters
+        // -------------------- Setters ----------------------------
         /// Change the VSync flag by argiument flag
         virtual void SetVSync(bool vSync) = 0;
         /// Make Window resizable if 'resizable' is true else Window can not be resized after callinh this API
@@ -66,7 +66,7 @@ namespace iKan {
         /// Chnage the title of window
         virtual void SetTitle(const std::string& title) = 0;
 
-        // Getters
+        // -------------------- Getters ----------------------------
         virtual bool IsVSync() const = 0;
         virtual bool IsDecorated() const = 0;
         virtual bool IsFullscreen() const = 0;

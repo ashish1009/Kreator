@@ -20,6 +20,8 @@ namespace iKan {
         
         virtual ~ImguiLayer();
         
+        // ----------------- Overriden methods --------------------
+        // For details of Calls, visit Layer.hpp
         void Attach() override;
         void Detach() override;
         void EventHandler(Event& event) override;

@@ -12,12 +12,13 @@ using namespace iKan;
 /// Helper to display a little (?) mark which shows a tooltip when hovered. In your own code you may want to display an
 /// actual icon if you are using a merged icon fonts (see docs/FONTS.txt)
 /// @param desc Helper string
+/// @param iconChar Icon to be printed as Help Marker (By default (?) will be renderes)
 /// @param sameLine Check is it in same line
-void PropertyGrid::HelpMarker(const char* desc, bool sameLine) {
+void PropertyGrid::HelpMarker(const char* desc, const char* iconChar, bool sameLine) {
     if (sameLine)
         ImGui::SameLine();
     
-    ImGui::TextDisabled("(?)");
+    ImGui::TextDisabled(iconChar);
     if (ImGui::IsItemHovered()) {
         ImGui::BeginTooltip();
         ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);

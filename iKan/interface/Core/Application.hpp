@@ -46,16 +46,16 @@ namespace iKan {
             Specification& operator=(const Specification&);
         };
 
-        // Constructors
+        // --------------- Constructors -------------------------
         /// Application Constructor
         /// @param spec Specification defined for application
         Application(const Specification& spec);
 
-        // Virtual Methods
+        // ------------ Virtual Methods -------------------------
         /// Application Destructor
         virtual ~Application();
 
-        // Note: Override these Virtual Methods in client Application only if you want to create complete fresh application.
+        // Note: Override these Virtual Methods in client Application only if you want to create complete fresh application
         // and add some specialisation functionality. If these methods will be overriden in client side then functionality
         // will be completely based on overriden method
         /// Update the Application each frame.
@@ -70,7 +70,7 @@ namespace iKan {
         /// Close the Current Application Game Loop
         virtual void Close();
 
-        // Non Vertual Methods
+        // -------------- Non Virtual Methods -------------------
         /// Push the layer in Core Application Layer stack
         /// @param layer Layer pointer to be added
         void PushLayer(const std::shared_ptr<Layer>& layer);
@@ -79,7 +79,7 @@ namespace iKan {
         /// @param layer Layer pointer to be errased
         void PopLayer(const std::shared_ptr<Layer>& layer);
         
-        // Getters
+        // -------------------- Getters -------------------------
         /// Return the GLFW Window native
         void* GetWindowPtr() const;
         /// Return the iKan Window Instance reference
@@ -87,7 +87,7 @@ namespace iKan {
         /// Return the Imgui Layer pointer Reference
         ImguiLayer& GetImGuiLayer() const;
 
-        // Static Methods
+        // --------------- Static Methods -----------------------
         /// Return the reference of Application Instance
         static const Application& Get();
 

@@ -10,19 +10,25 @@
 namespace iKan {
     
     /// A Wrapper class to store the time difference between two frame.
+    /// NOTE: this class only store the time stamp, it is not any counter to update the tim eon its own
+    /// Time need to be updated each frame
+    /// - Window and Application class sotring the time step of each frame, passing to all Layer via Update(Timestep)
     class Timestep {
     public:
-        Timestep(float time = 0.0f);
+        Timestep(TIME time = 0.0f);
         ~Timestep() = default;
         
-        operator float() const;
+        operator TIME() const;
         
-        float GetSeconds() const;
-        float GetMilliSeconds() const;
-        float GetMicroSeconds() const;
+        /// Get the time step (Time took to render 1 Frame) in Seconds
+        TIME GetSeconds() const;
+        /// Get the time step (Time took to render 1 Frame) in mili Seconds
+        TIME GetMilliSeconds() const;
+        /// Get the time step (Time took to render 1 Frame) in micro Seconds
+        TIME GetMicroSeconds() const;
 
     private:
-        float m_Time = 0.0f;
+        TIME m_Time = 0.0f;
     };
     
 }

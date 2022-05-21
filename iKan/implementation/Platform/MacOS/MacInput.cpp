@@ -44,22 +44,22 @@ bool Input::IsMouseButtonReleased(MouseButton button) {
 }
 
 /// Get the mouse position
-std::pair<float, float> Input::GetMousePosition() {
+std::pair<MOUSE_POS_X_TYPE, MOUSE_POS_X_TYPE> Input::GetMousePosition() {
     auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowPtr());
     double xpos, ypos;
     glfwGetCursorPos(window, &xpos, &ypos);
     
-    return { (float)xpos, (float)ypos };
+    return { (MOUSE_POS_X_TYPE)xpos, (MOUSE_POS_X_TYPE)ypos };
 }
 
 /// get the x position of mouse
-float Input::GetMouseX() {
+MOUSE_POS_X_TYPE Input::GetMouseX() {
     auto[x, y] = GetMousePosition();
     return x;
 }
 
 /// get the y position of mouse
-float Input::GetMouseY() {
+MOUSE_POS_X_TYPE Input::GetMouseY() {
     auto[x, y] = GetMousePosition();
     return y;
 }

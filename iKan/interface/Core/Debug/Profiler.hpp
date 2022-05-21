@@ -15,7 +15,10 @@
 #endif
 
 namespace iKan {
-
+    
+    /// Class to get the Profile time of the execution of a scope.
+    /// Intantiate the Profiler with function name in any scope. It will print the executrion time of the function.
+    /// Or just call the Macro defiled PROFILE().
     class Profiler
     {
     public:
