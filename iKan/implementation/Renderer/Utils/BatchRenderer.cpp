@@ -59,18 +59,25 @@ struct QuadData : RendererData {
     };
     
     // --------------- Constants -----------------
-    static constexpr uint32_t VertexForSingleQuad = 4;
-    static constexpr uint32_t IndicesForSingleQuad = 6;
     /// Max number of Quad to be rendered in single Batch
     /// NOTE: Memory will be reserved in GPU for MaxQuads.
     /// TODO: Make configurable in run time and While initializing the Batch Renderer
     static constexpr uint32_t MaxQuad = 1000;
+
+    // Fixed Constants
+    static constexpr uint32_t VertexForSingleQuad = 4;
+    static constexpr uint32_t IndicesForSingleQuad = 6;
+    static constexpr uint32_t MaxVertex = MaxQuad * VertexForSingleQuad;
+    static constexpr uint32_t MaxIndices = MaxQuad * IndicesForSingleQuad;
 
     // -------------- Variables ------------------
     /// Base pointer of Vertex Data. This is start of Batch data for single draw call
     Vertex* VertexBufferBase = nullptr;
     /// Incrememntal Vetrtex Data Pointer to store all the batch data in Buffer
     Vertex* VertexBufferPtr = nullptr;
+    
+    /// Basic vertex of quad
+    glm::vec4 VertexPositions[4];
 
     /// Constructor
     QuadData() {
@@ -115,9 +122,16 @@ void BatchRenderer::InitQuadData() {
     // Create Pipeline instance
     s_QuadData->Pipeline = Pipeline::Create();
 
+    // Setting basic Vertex point of quad
+    s_QuadData->VertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+    s_QuadData->VertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+    s_QuadData->VertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
+    s_QuadData->VertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Quad Renderer Data");
-    IK_CORE_INFO("        Max Quads per Batch     : {0}", QuadData::MaxQuad);
-    IK_CORE_INFO("        Max Texture Slots Batch : {0}", MaxTextureSlotsInShader);
+    IK_CORE_INFO("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
+    IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
+    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
     IK_LOG_SEPARATOR();
 }
