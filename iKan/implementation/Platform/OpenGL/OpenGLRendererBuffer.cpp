@@ -57,6 +57,24 @@ OpenGLVertexBuffer::~OpenGLVertexBuffer() {
     glDeleteBuffers(1, &m_RendererID);
 }
 
+/// Open GL Vertex Buffer Bind function
+void OpenGLVertexBuffer::Bind() const {
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+}
+
+/// Open GL Vertex Buffer Unbind function
+void OpenGLVertexBuffer::Unbind() const {
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+/// Set the data to Open GL Vertex buffer dynamically
+/// @param data Data pointer
+/// @param size size of data
+void OpenGLVertexBuffer::SetData(void* data, uint32_t size) {
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+}
+
 /// Open GL Index Buffer Constructor
 /// @param size size of data to be stored
 /// @param data data pointer
@@ -86,3 +104,12 @@ OpenGLIndexBuffer::~OpenGLIndexBuffer() {
     glDeleteBuffers(1, &m_RendererID);
 }
 
+/// Open GL Index Buffer Binding
+void OpenGLIndexBuffer::Bind() const {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+}
+
+/// Unbind Open GL Buffer
+void OpenGLIndexBuffer::Unbind() const {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}

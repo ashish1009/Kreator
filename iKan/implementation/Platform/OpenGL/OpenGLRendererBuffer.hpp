@@ -18,6 +18,11 @@ namespace iKan {
         OpenGLVertexBuffer(uint32_t size);
         virtual ~OpenGLVertexBuffer();
         
+        void Bind() const override;
+        void Unbind() const override;
+        
+        void SetData(void* data, uint32_t size) override;
+
         uint32_t GetSize() const override { return m_Size; }
         Buffer GetData() const override { return m_Data; }
         RendererID GetRendererID() const override { return m_RendererID; }
@@ -34,6 +39,9 @@ namespace iKan {
         OpenGLIndexBuffer(void* data, uint32_t size);
         virtual ~OpenGLIndexBuffer();
         
+        void Bind() const override;
+        void Unbind() const override;
+
         // Getters
         uint32_t GetCount() const override { return m_Count; }
         uint32_t GetSize() const override { return m_Size; }

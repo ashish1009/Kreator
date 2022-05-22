@@ -16,6 +16,11 @@ namespace iKan {
         OpenGLRendererPipeline();
         virtual ~OpenGLRendererPipeline();
         
+        void Bind() const override;
+        void Unbind() const override;
+        
+        RendererID GetRendererID() const override { return m_RendererID; };
+        
     private:
         RendererID m_RendererID = 0;
     };

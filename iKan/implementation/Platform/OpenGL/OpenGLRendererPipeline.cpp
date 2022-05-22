@@ -28,3 +28,13 @@ OpenGLRendererPipeline::~OpenGLRendererPipeline() {
     IK_CORE_WARN("Destroying Open GL Piperline with Renderer ID : {0} !!!", m_RendererID);
     glDeleteVertexArrays(1, &m_RendererID);
 }
+
+/// Bind Open GL Vertex Array
+void OpenGLRendererPipeline::Bind() const {
+    glBindVertexArray(m_RendererID);
+}
+
+/// Unbind Open GL Vertex Array
+void OpenGLRendererPipeline::Unbind() const {
+    glBindVertexArray(0);
+}

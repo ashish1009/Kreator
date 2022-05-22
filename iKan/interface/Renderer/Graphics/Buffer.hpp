@@ -17,6 +17,17 @@ namespace iKan {
     public:
         virtual ~VertexBuffer() = default;
         
+        /// Bind the Vertex Buffer before rendering
+        virtual void Bind() const = 0;
+        /// Unbind the Vertex Buffer after rendering
+        virtual void Unbind() const = 0;
+        
+        /// Load the Data in Vertex Buffer (GPU) at run time.
+        /// For each draw call we can dynamically load the data.
+        /// @param data Data pointer
+        /// @param size size of Data
+        virtual void SetData(void* data, uint32_t size) = 0;
+        
         /// Return the size of Vertex Buffer in GPU
         virtual uint32_t GetSize() const = 0;
         /// Return the Data Buffer stored in GPU
@@ -38,6 +49,11 @@ namespace iKan {
     class IndexBuffer {
     public:
         virtual ~IndexBuffer() = default;
+        
+        /// Bind the Index Buffer before rendering
+        virtual void Bind() const = 0;
+        /// Unbind the Index Buffer after rendering
+        virtual void Unbind() const = 0;
 
         /// Return the Number of Indices used by this Index Buffer
         virtual uint32_t GetCount() const = 0;
