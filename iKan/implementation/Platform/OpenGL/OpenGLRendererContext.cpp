@@ -27,7 +27,6 @@ OpenGLRendererContext::~OpenGLRendererContext() {
 /// Initialize the Open GL Graphics Context
 void OpenGLRendererContext::Init() {
     PROFILE();
-    IK_CORE_INFO("    Initialize Open GL Renderer context ");
     
     // Create GLFW Window Context.
     // NOTE: This function makes the OpenGL or OpenGL ES context of the specified window
@@ -42,6 +41,7 @@ void OpenGLRendererContext::Init() {
     IK_CORE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Can not initialize the Glad");
     
     IK_LOG_SEPARATOR();
+    IK_CORE_INFO("    Initialize Open GL Renderer context ");
     IK_CORE_INFO("    OpenGl Vendor Information :");
     IK_CORE_INFO("        Vendor   : {0} ", glGetString(GL_VENDOR));
     IK_CORE_INFO("        Renderer : {0} ", glGetString(GL_RENDERER));

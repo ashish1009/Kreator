@@ -7,7 +7,6 @@
 
 #include "Buffer.hpp"
 #include "Platform/OpenGL/OpenGLRendererBuffer.hpp"
-#include "Renderer/Utils/Renderer.hpp"
 
 using namespace iKan;
 

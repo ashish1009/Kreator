@@ -116,22 +116,44 @@ void BatchRenderer::Shutdown() {
 /// Initialize Quad Data
 void BatchRenderer::InitQuadData() {
     PROFILE();
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Initialising the Quad Renderer");
+    IK_CORE_INFO("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
+    IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
+    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
+    IK_LOG_SEPARATOR();
+
+    // Alloc memory for Quad Data
     s_QuadData = new QuadData();
     
     // Create Pipeline instance
     s_QuadData->Pipeline = Pipeline::Create();
+    
+    // Create vertes Buffer
+    s_QuadData->VertexBuffer = VertexBuffer::Create(QuadData::MaxVertex * sizeof(QuadData::Vertex));
+    
+    // Create Index Buffer
+    uint32_t* quadIndices = new uint32_t[QuadData::MaxIndices];
+    
+    uint32_t offset = 0;
+    for (size_t i = 0; i < QuadData::MaxIndices; i += QuadData::IndicesForSingleQuad) {
+        quadIndices[i + 0] = offset + 0;
+        quadIndices[i + 1] = offset + 1;
+        quadIndices[i + 2] = offset + 2;
+        
+        quadIndices[i + 3] = offset + 2;
+        quadIndices[i + 4] = offset + 3;
+        quadIndices[i + 5] = offset + 0;
+        
+        offset += 4;
+    }
+    
+    std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, QuadData::MaxIndices);
+    delete[] quadIndices;
 
     // Setting basic Vertex point of quad
     s_QuadData->VertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
     s_QuadData->VertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
     s_QuadData->VertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
     s_QuadData->VertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
-
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("    Quad Renderer Data");
-    IK_CORE_INFO("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
-    IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
-    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
-    IK_LOG_SEPARATOR();
 }

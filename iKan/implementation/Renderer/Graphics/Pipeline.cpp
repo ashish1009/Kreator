@@ -7,7 +7,6 @@
 
 #include "Pipeline.hpp"
 #include "Platform/OpenGL/OpenGLRendererPipeline.hpp"
-#include "Renderer/Utils/Renderer.hpp"
 
 using namespace iKan;
 

@@ -15,6 +15,9 @@ namespace iKan {
     public:
         OpenGLRendererPipeline();
         virtual ~OpenGLRendererPipeline();
+        
+    private:
+        RendererID m_RendererID = 0;
     };
     
 }
