@@ -19,6 +19,7 @@
 #include "Core/Utils/Asserts.h"
 #include "Core/Utils/Buffer.hpp"
 #include "Core/Utils/AssetManager.hpp"
+#include "Core/Utils/StringUtils.hpp"
 
 // Engine core file - Implementation
 #include "Core/Debug/LoggerCoreAPI.h"

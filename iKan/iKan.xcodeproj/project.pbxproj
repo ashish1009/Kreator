@@ -85,6 +85,10 @@
 		3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D922836979C003578F4 /* LayerStack.hpp */; };
 		3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244A9283A8E1900640481 /* AssetManager.cpp */; };
 		3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244AA283A8E1900640481 /* AssetManager.hpp */; };
+		3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B4283A92D400640481 /* ShaderLibrary.cpp */; };
+		3EE244B7283A92D400640481 /* ShaderLibrary.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244B5283A92D400640481 /* ShaderLibrary.hpp */; };
+		3EE244BA283A936B00640481 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B8283A936B00640481 /* StringUtils.cpp */; };
+		3EE244BB283A936B00640481 /* StringUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244B9283A936B00640481 /* StringUtils.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +189,10 @@
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
+		3EE244B4283A92D400640481 /* ShaderLibrary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderLibrary.cpp; sourceTree = "<group>"; };
+		3EE244B5283A92D400640481 /* ShaderLibrary.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderLibrary.hpp; sourceTree = "<group>"; };
+		3EE244B8283A936B00640481 /* StringUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
+		3EE244B9283A936B00640481 /* StringUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +308,8 @@
 				3E6575FB2837B8E1006B0C81 /* RendererAPI.cpp */,
 				3E6578F62837E51E006B0C81 /* RendererStats.hpp */,
 				3E6578F92837E892006B0C81 /* BatchRenderer.cpp */,
+				3EE244B4283A92D400640481 /* ShaderLibrary.cpp */,
+				3EE244B5283A92D400640481 /* ShaderLibrary.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -499,6 +509,7 @@
 				3E6575E028379C0A006B0C81 /* Timestep.hpp */,
 				3E65763A2837C785006B0C81 /* Buffer.hpp */,
 				3EE244AA283A8E1900640481 /* AssetManager.hpp */,
+				3EE244B9283A936B00640481 /* StringUtils.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -510,6 +521,7 @@
 				3E6575E228379C3E006B0C81 /* Timestep.cpp */,
 				3E6576392837C785006B0C81 /* Buffer.cpp */,
 				3EE244A9283A8E1900640481 /* AssetManager.cpp */,
+				3EE244B8283A936B00640481 /* StringUtils.cpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -571,6 +583,7 @@
 				3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */,
 				3E6A4D7F283643AD003578F4 /* iKanCore.h in Headers */,
 				3E6A4D7828362759003578F4 /* Logger.hpp in Headers */,
+				3EE244BB283A936B00640481 /* StringUtils.hpp in Headers */,
 				3E2FA100283920AA00EE289A /* FrameBuffer.hpp in Headers */,
 				3E6575D928379414006B0C81 /* MouseEvent.h in Headers */,
 				3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */,
@@ -593,6 +606,7 @@
 				3E2FA104283920C400EE289A /* OpenGLShader.hpp in Headers */,
 				3E6578DC2837D10B006B0C81 /* ImguiLayer.hpp in Headers */,
 				3E6A4D7328360F7C003578F4 /* Application.hpp in Headers */,
+				3EE244B7283A92D400640481 /* ShaderLibrary.hpp in Headers */,
 				3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */,
 				3E6575C528378FB1006B0C81 /* Window.hpp in Headers */,
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
@@ -707,6 +721,7 @@
 				3E6575FD2837B8E1006B0C81 /* RendererAPI.cpp in Sources */,
 				3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */,
 				3E65762E2837BEDA006B0C81 /* OpenGLRendererContext.cpp in Sources */,
+				3EE244BA283A936B00640481 /* StringUtils.cpp in Sources */,
 				3E2FA0F32839208200EE289A /* Buffers.cpp in Sources */,
 				3E2FA0FF283920AA00EE289A /* FrameBuffer.cpp in Sources */,
 				3E6A4D7728362759003578F4 /* Logger.cpp in Sources */,
@@ -717,6 +732,7 @@
 				3E6575F92837B662006B0C81 /* Renderer.cpp in Sources */,
 				3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */,
 				3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */,
+				3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */,
 				3E2FA107283920CF00EE289A /* OpenGLTexture.cpp in Sources */,
 				3E6578DE2837D278006B0C81 /* ImguiBuild.cpp in Sources */,
 				3E2FA0FB2839209A00EE289A /* Texture.cpp in Sources */,
