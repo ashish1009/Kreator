@@ -115,10 +115,16 @@ bool Renderer::IsTextureRendererIDExist(RendererID rendererId) {
     return std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) != s_TextureRendererIDs.end();
 }
 
-/// Manage Texture renderer ID so that they wont get repeated
+/// Add Texture renderer ID so that they wont get repeated
 /// @param rendererId Renderer ID to be added in set
-void Renderer::ManageRendererIDs(RendererID rendererId) {
+void Renderer::AddRendererIDs(RendererID rendererId) {
     // Extra Check
     IK_CORE_ASSERT(std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) == s_TextureRendererIDs.end(), "Repeated Renderer ID... ");
     s_TextureRendererIDs.insert(rendererId);
+}
+
+/// Remove Texture renderer ID so that they wont get repeated
+/// @param rendererId Renderer ID to be added in set
+void Renderer::RemoveRendererIDs(RendererID rendererId) {
+    s_TextureRendererIDs.erase(rendererId);
 }

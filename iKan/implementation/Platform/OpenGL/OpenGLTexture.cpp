@@ -42,7 +42,7 @@ OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32
         glGenTextures(1, &m_RendererID);
     }
     
-    Renderer::ManageRendererIDs(m_RendererID);
+    Renderer::AddRendererIDs(m_RendererID);
     glBindTexture(GL_TEXTURE_2D, m_RendererID);
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -70,7 +70,6 @@ OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32
 
 /// Open GL Texture Destructor
 OpenGLTexture::~OpenGLTexture() {
-    // TODO: Delete Renderer ID from Texture ID Library stored in Renderer.pp
     PROFILE();
 
     IK_LOG_SEPARATOR();
@@ -84,6 +83,7 @@ OpenGLTexture::~OpenGLTexture() {
     IK_CORE_WARN("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
     IK_LOG_SEPARATOR();
 
-    RendererStatistics::Get().TextureBufferSize -= m_Size;
+    Renderer::RemoveRendererIDs(m_RendererID);
     glDeleteTextures(1, &m_RendererID);
+    RendererStatistics::Get().TextureBufferSize -= m_Size;
 }

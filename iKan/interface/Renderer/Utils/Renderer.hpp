@@ -85,7 +85,10 @@ namespace iKan {
         static bool IsTextureRendererIDExist(RendererID rendererId);
         /// Store the Renderer ID in Renderer Set
         /// @param rendererId Renderer ID
-        static void ManageRendererIDs(RendererID rendererId);
+        static void AddRendererIDs(RendererID rendererId);
+        /// Remove the Renderer ID in Renderer Set
+        /// @param rendererId Renderer ID
+        static void RemoveRendererIDs(RendererID rendererId);
         
     private:
         Renderer() = default;
