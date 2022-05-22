@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Renderer/Graphics/Buffer.hpp"
+#include "Renderer/Graphics/Buffers.hpp"
 
 namespace iKan {
     
@@ -22,15 +22,19 @@ namespace iKan {
         void Unbind() const override;
         
         void SetData(void* data, uint32_t size) override;
+        void AddLayout(const BufferLayout& layout) override { m_Layout = layout; }
 
+        // Getters
         uint32_t GetSize() const override { return m_Size; }
         Buffer GetData() const override { return m_Data; }
         RendererID GetRendererID() const override { return m_RendererID; }
+        const BufferLayout& GetLayout() const override { return m_Layout; }
 
     private:
         RendererID m_RendererID = 0;
         uint32_t m_Size = 0;
         Buffer m_Data;
+        BufferLayout m_Layout;
     };
     
     /// Implemantation for creating the Opne GL Index Buffer

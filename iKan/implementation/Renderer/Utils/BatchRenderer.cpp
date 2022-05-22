@@ -7,7 +7,7 @@
 
 #include "BatchRenderer.hpp"
 #include "Renderer/Graphics/Pipeline.hpp"
-#include "Renderer/Graphics/Buffer.hpp"
+#include "Renderer/Graphics/Buffers.hpp"
 #include "Renderer/Graphics/Shader.hpp"
 #include "Renderer/Graphics/Texture.hpp"
 
@@ -131,7 +131,16 @@ void BatchRenderer::InitQuadData() {
     
     // Create vertes Buffer
     s_QuadData->VertexBuffer = VertexBuffer::Create(QuadData::MaxVertex * sizeof(QuadData::Vertex));
-    
+    s_QuadData->VertexBuffer->AddLayout({
+        { "a_Position",     ShaderDataType::Float3 },
+        { "a_Color",        ShaderDataType::Float4 },
+        { "a_TexCoords",    ShaderDataType::Float2 },
+        { "a_TexIndex",     ShaderDataType::Float },
+        { "a_TilingFactor", ShaderDataType::Float },
+        { "a_ObjectID",     ShaderDataType::Int },
+    });
+    s_QuadData->Pipeline->AddVertexBuffer(s_QuadData->VertexBuffer);
+
     // Create Index Buffer
     uint32_t* quadIndices = new uint32_t[QuadData::MaxIndices];
     
@@ -149,6 +158,7 @@ void BatchRenderer::InitQuadData() {
     }
     
     std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, QuadData::MaxIndices);
+    s_QuadData->Pipeline->SetIndexBuffer(ib);
     delete[] quadIndices;
 
     // Setting basic Vertex point of quad
