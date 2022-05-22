@@ -184,6 +184,7 @@
 		3E6A4D922836979C003578F4 /* LayerStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LayerStack.hpp; sourceTree = "<group>"; };
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
+		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +414,10 @@
 		3E6A4D5D2836098E003578F4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				3EE244B2283A921400640481 /* fonts */,
+				3EE244B3283A921400640481 /* models */,
+				3EE244AE283A921400640481 /* shaders */,
+				3EE244AD283A921400640481 /* textures */,
 			);
 			path = assets;
 			sourceTree = "<group>";
@@ -507,6 +512,51 @@
 				3EE244A9283A8E1900640481 /* AssetManager.cpp */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		3EE244AD283A921400640481 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
+		3EE244AE283A921400640481 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				3EE244AF283A921400640481 /* 3D */,
+				3EE244B0283A921400640481 /* 2D */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
+		3EE244AF283A921400640481 /* 3D */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = 3D;
+			sourceTree = "<group>";
+		};
+		3EE244B0283A921400640481 /* 2D */ = {
+			isa = PBXGroup;
+			children = (
+				3EE244B1283A921400640481 /* BatchQuadShader.glsl */,
+			);
+			path = 2D;
+			sourceTree = "<group>";
+		};
+		3EE244B2283A921400640481 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		3EE244B3283A921400640481 /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
