@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "Renderer/Utils/Renderer.hpp"
+
 namespace iKan {
     
     /// Maximum Texture slot supported by Senderer Shader
@@ -18,6 +20,11 @@ namespace iKan {
     /// Supported Renerer API.
     class Shader {
     public:
+        virtual ~Shader() = default;
+        
+        /// Create Shader Instance based on the Suported API
+        /// @param path Absolute Path of shader
+        static std::shared_ptr<Shader> Create(const std::string& path);
     };
     
 }

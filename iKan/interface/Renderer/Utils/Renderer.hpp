@@ -18,7 +18,8 @@ namespace iKan {
 
     // Forward declaration
     class RendererAPI;
-
+    class Shader;
+    
     /// Interface class to handle ALL Renderer API to be used by client
     /// Resposnible for
     /// - All Core Renderer API Wrapper (e.g. Batch Renderer, Scene Renderer ...)
@@ -89,6 +90,9 @@ namespace iKan {
         /// Remove the Renderer ID in Renderer Set
         /// @param rendererId Renderer ID
         static void RemoveRendererIDs(RendererID rendererId);
+        
+        // ---------------- Shader Manager ----------------------------
+        static std::shared_ptr<Shader> GetShader(const std::string& path);
         
     private:
         Renderer() = default;

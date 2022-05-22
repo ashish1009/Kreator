@@ -9,6 +9,7 @@
 #include "Renderer/Utils/RendererAPI.hpp"
 #include "Renderer/Utils/BatchRenderer.hpp"
 #include "Renderer/Utils/RendererStats.hpp"
+#include "Renderer/Utils/ShaderLibrary.hpp"
 
 using namespace iKan;
 
@@ -127,4 +128,11 @@ void Renderer::AddRendererIDs(RendererID rendererId) {
 /// @param rendererId Renderer ID to be added in set
 void Renderer::RemoveRendererIDs(RendererID rendererId) {
     s_TextureRendererIDs.erase(rendererId);
+}
+
+// ---------------- Shader Manager ----------------------------
+/// Generate and store a new shader if not created already. Else return already created Shader
+/// @param path Shader file path
+std::shared_ptr<Shader> Renderer::GetShader(const std::string& path) {
+    return ShaderLibrary::GetShader(path);
 }
