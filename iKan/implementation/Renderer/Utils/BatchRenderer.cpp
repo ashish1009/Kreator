@@ -186,4 +186,7 @@ void BatchRenderer::InitQuadData() {
     s_QuadData->VertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
     s_QuadData->VertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
     s_QuadData->VertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+    
+    // Setup the Quad Shader
+    s_QuadData->Shader = Renderer:: GetShader(AssetManager::GetCoreAsset("shaders/2D/BatchQuadShader.glsl"));
 }

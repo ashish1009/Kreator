@@ -22,6 +22,18 @@ namespace iKan {
     public:
         virtual ~Shader() = default;
         
+        /// Bind the Current Shader to GPU
+        virtual void Bind() const = 0;
+        /// Unbind the Current Shader to GPU
+        virtual void Unbind() const = 0;
+        
+        /// Return the Name of Shader
+        virtual const std::string& GetName() const = 0;
+        /// Return the File Path of Shader
+        virtual const std::string& GetFilePath() const = 0;
+        /// return the Renderer ID of Shader
+        virtual RendererID GetRendererID() const = 0;
+        
         /// Create Shader Instance based on the Suported API
         /// @param path Absolute Path of shader
         static std::shared_ptr<Shader> Create(const std::string& path);
