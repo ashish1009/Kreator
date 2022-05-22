@@ -14,7 +14,6 @@ using namespace iKan;
 /// @param window GLFW Window instance
 OpenGLRendererContext::OpenGLRendererContext(GLFWwindow* window) : m_Window(window) {
     IK_CORE_ASSERT(window, "Window pointer is NULL !!!");
-    IK_CORE_INFO("Creating Open GL Renderer Context ... ");
     Init();
 }
 
@@ -41,11 +40,10 @@ void OpenGLRendererContext::Init() {
     IK_CORE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Can not initialize the Glad");
     
     IK_LOG_SEPARATOR();
-    IK_CORE_INFO("    Initialize Open GL Renderer context ");
-    IK_CORE_INFO("    OpenGl Vendor Information :");
-    IK_CORE_INFO("        Vendor   : {0} ", glGetString(GL_VENDOR));
-    IK_CORE_INFO("        Renderer : {0} ", glGetString(GL_RENDERER));
-    IK_CORE_INFO("        Version  : {0} ", glGetString(GL_VERSION));
+    IK_CORE_INFO("Creating Open GL Renderer Context ... ");
+    IK_CORE_INFO("    Vendor   : {0} ", glGetString(GL_VENDOR));
+    IK_CORE_INFO("    Renderer : {0} ", glGetString(GL_RENDERER));
+    IK_CORE_INFO("    Version  : {0} ", glGetString(GL_VERSION));
     IK_LOG_SEPARATOR();
 }
 

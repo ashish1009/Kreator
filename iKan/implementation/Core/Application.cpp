@@ -89,16 +89,14 @@ Application::Application(const Specification& spec)
     IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
     s_Instance = this;
 
-    IK_CORE_INFO("Creating Core Application Instance ...");
-
     IK_LOG_SEPARATOR();
-    IK_CORE_INFO("    Application Specifications are");
-    IK_CORE_INFO("        Name                          : {0}", m_Specification.Name);
-    IK_CORE_INFO("        Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
-    IK_CORE_INFO("        Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
-    IK_CORE_INFO("        Window Maximized at startup   : {0}", m_Specification.StartMaximized);
-    IK_CORE_INFO("        Window Resizable              : {0}", m_Specification.Resizable);
-    IK_CORE_INFO("        Enable GUI                    : {0}", m_Specification.EnableGui);
+    IK_CORE_INFO("Creating Core Application Instance ...");
+    IK_CORE_INFO("    Name                          : {0}", m_Specification.Name);
+    IK_CORE_INFO("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
+    IK_CORE_INFO("    Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
+    IK_CORE_INFO("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
+    IK_CORE_INFO("    Window Resizable              : {0}", m_Specification.Resizable);
+    IK_CORE_INFO("    Enable GUI                    : {0}", m_Specification.EnableGui);
     IK_LOG_SEPARATOR();
     
     Init();
@@ -133,14 +131,24 @@ void Application::Init() {
 /// Applciation Destructor
 Application::~Application() {
     PROFILE();
+
+    IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Core Application Instance !!!");
+    IK_CORE_WARN("    Name                          : {0}", m_Specification.Name);
+    IK_CORE_WARN("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
+    IK_CORE_WARN("    Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
+    IK_CORE_WARN("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
+    IK_CORE_WARN("    Window Resizable              : {0}", m_Specification.Resizable);
+    IK_CORE_WARN("    Enable GUI                    : {0}", m_Specification.EnableGui);
+    IK_LOG_SEPARATOR();
+
     Renderer::Shutdown();
 }
 
 /// Update the Application each frame
 void Application::Run() {
     PROFILE();
-    IK_CORE_INFO("------------------ Starting Game Loop ---------------------- ");
+    IK_CORE_INFO(" -----------------------------------------  Starting Game Loop  -----------------------------------------------");
     
     while (m_IsRunning) {
         // Store the frame time difference
@@ -156,7 +164,7 @@ void Application::Run() {
         // Window update each frame
         m_Window->Update();
     }
-    IK_CORE_INFO("------------------ Ending Game Loop ---------------------- ");
+    IK_CORE_INFO(" ------------------------------------------  Ending Game Loop  -----------------------------------------------");
 }
 
 /// Handle the External event interuption in window

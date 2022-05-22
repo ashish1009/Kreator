@@ -113,6 +113,14 @@ void BatchRenderer::Init() {
 void BatchRenderer::Shutdown() {
     PROFILE();
     IK_CORE_WARN("Shutting down the Batch Renderer 2D !!!");
+    
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("    Destroying the Quad Renderer Data");
+    IK_CORE_WARN("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
+    IK_CORE_WARN("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
+    IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
+    IK_LOG_SEPARATOR();
+
     if (s_QuadData)
         delete s_QuadData;
 }
@@ -120,6 +128,9 @@ void BatchRenderer::Shutdown() {
 /// Initialize Quad Data
 void BatchRenderer::InitQuadData() {
     PROFILE();
+    // Alloc memory for Quad Data
+    s_QuadData = new QuadData();
+    
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Initialising the Quad Renderer");
     IK_CORE_INFO("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
@@ -127,8 +138,6 @@ void BatchRenderer::InitQuadData() {
     IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
     IK_LOG_SEPARATOR();
 
-    // Alloc memory for Quad Data
-    s_QuadData = new QuadData();
     
     // Allocating the memory for vertex Buffer Pointer
     s_QuadData->VertexBufferBase = new QuadData::Vertex[QuadData::MaxVertex];

@@ -74,7 +74,11 @@ OpenGLRendererPipeline::OpenGLRendererPipeline() {
 /// Open GL Pipeline Destructor
 OpenGLRendererPipeline::~OpenGLRendererPipeline() {
     PROFILE();
-    IK_CORE_WARN("Destroying Open GL Piperline with Renderer ID : {0} !!!", m_RendererID);
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("Destroying Open GL Piperline !!!");
+    IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
+    IK_LOG_SEPARATOR();
+
     glDeleteVertexArrays(1, &m_RendererID);
 }
 
@@ -97,16 +101,16 @@ void OpenGLRendererPipeline::Unbind() const {
 /// @param vertexBuffer Vertex Buffer adding to the Pipeline
 void OpenGLRendererPipeline::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) {
     PROFILE();
-    IK_CORE_INFO("Storing the Vertex Buffer (ID: {0}) into Pipeline (ID: {1})", vertexBuffer->GetRendererID(), m_RendererID);
-    IK_CORE_INFO("    Number of Vertex Buffer stored in Pipeline (ID {0}) : {1}", m_RendererID, m_VertexBuffers.size());
     
     glBindVertexArray(m_RendererID);
     m_VertexBuffers.push_back(vertexBuffer);
     
-    IK_LOG_SEPARATOR();
-
     uint32_t index = 0;
     const auto& layout = vertexBuffer->GetLayout();
+    
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Storing the Vertex Buffer (ID: {0}) into Pipeline (ID: {1})", vertexBuffer->GetRendererID(), m_RendererID);
+    IK_CORE_INFO("    Number of Vertex Buffer stored in Pipeline (ID {0}) : {1}", m_RendererID, m_VertexBuffers.size());
     IK_CORE_INFO("    Vertex Attrib with Stride : {0} ", layout.GetStride());
     for (const auto& element : layout.GetElements()) {
         IK_CORE_INFO("        -----------------------------------------");

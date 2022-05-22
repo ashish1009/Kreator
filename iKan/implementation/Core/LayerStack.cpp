@@ -38,7 +38,7 @@ void LayerStack::PushLayer(const std::shared_ptr<Layer>& layer) {
 /// Pop the New layer in the stack
 /// @param layer layer pointer to be deleted from the stack
 void LayerStack::PopLayer(const std::shared_ptr<Layer>& layer) {
-    IK_CORE_WARN("Poping the layer : '{0}', from the stack. (Total Layers : {1})", layer->GetName().c_str(), m_NumLayers--);
+    IK_CORE_WARN("Poping the layer : '{0}', from the stack. (Total Layers  Left : {1})", layer->GetName().c_str(), --m_NumLayers);
     if (auto it = std::find(m_Layers.begin(), m_Layers.end(), layer); it != m_Layers.end()) {
         layer->Detach();
         m_Layers.erase(it);

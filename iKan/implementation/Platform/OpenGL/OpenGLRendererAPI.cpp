@@ -23,9 +23,9 @@ OpenGLRendererAPI::~OpenGLRendererAPI() {
 /// Initialize the Renderer API
 void OpenGLRendererAPI::Init() const {
     PROFILE();
-    IK_CORE_INFO("Initializeing Open GL Renderer API");
 
     IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Initializeing Open GL Renderer API");
     MultiSample(true);
     Depth(true);
     Blend(true);
