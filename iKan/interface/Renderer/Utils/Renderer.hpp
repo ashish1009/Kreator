@@ -78,6 +78,15 @@ namespace iKan {
         /// Renderer Imgui to show renderer stats
         static void ImguiRendererStats();
         
+        // ---------------- Texture Renderer API Manager ----------------------------
+        /// Check if current Renderer ID is already Assigned to any Texture
+        /// Return true of already present, fase if fresh ID
+        /// @param rendererId Renderer ID
+        static bool IsTextureRendererIDExist(RendererID rendererId);
+        /// Store the Renderer ID in Renderer Set
+        /// @param rendererId Renderer ID
+        static void ManageRendererIDs(RendererID rendererId);
+        
     private:
         Renderer() = default;
         MAKE_SINGLETON(Renderer);
@@ -85,6 +94,7 @@ namespace iKan {
         // Member varaibel
         static API s_API;
         static std::unique_ptr<RendererAPI> s_RendererAPI;
+        static std::set<RendererID> s_TextureRendererIDs;
     };
     
 }

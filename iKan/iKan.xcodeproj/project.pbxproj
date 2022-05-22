@@ -811,6 +811,7 @@
 					"${PROJECT_DIR}/vendors/glad/include",
 					"${PROJECT_DIR}/vendors/glm",
 					"${PROJECT_DIR}/vendors/gui/gui",
+					"${PROJECT_DIR}/vendors/stbimage",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -840,6 +841,7 @@
 					"${PROJECT_DIR}/vendors/glad/include",
 					"${PROJECT_DIR}/vendors/glm",
 					"${PROJECT_DIR}/vendors/gui/gui",
+					"${PROJECT_DIR}/vendors/stbimage",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

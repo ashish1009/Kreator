@@ -16,6 +16,7 @@
 
 // C++ Files
 #include <iostream>
+#include <set>
 
 // Engine files
 #include "Core/iKanCore.h"

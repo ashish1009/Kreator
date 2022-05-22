@@ -14,6 +14,7 @@ using namespace iKan;
 
 Renderer::API Renderer::s_API = Renderer::API::None;
 std::unique_ptr<RendererAPI> Renderer::s_RendererAPI;
+std::set<RendererID> Renderer::s_TextureRendererIDs;
 
 // ----------------------- Core Renderer API ----------------------------------
 /// Initialize the Engine Renderer
@@ -105,4 +106,19 @@ void Renderer::ResetStats() {
 /// Render all the stats in Imgui
 void Renderer::ImguiRendererStats() {
     RendererStatistics::Get().ImguiRendererStats();
+}
+
+// ---------------- Texture Renderer API Manager ----------------------------
+/// Check is this renderer ID already given to some texture
+/// @param rendererId Renderer ID to be checked
+bool Renderer::IsTextureRendererIDExist(RendererID rendererId) {
+    return std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) != s_TextureRendererIDs.end();
+}
+
+/// Manage Texture renderer ID so that they wont get repeated
+/// @param rendererId Renderer ID to be added in set
+void Renderer::ManageRendererIDs(RendererID rendererId) {
+    // Extra Check
+    IK_CORE_ASSERT(std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) == s_TextureRendererIDs.end(), "Repeated Renderer ID... ");
+    s_TextureRendererIDs.insert(rendererId);
 }

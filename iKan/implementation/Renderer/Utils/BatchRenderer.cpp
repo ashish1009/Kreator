@@ -6,6 +6,7 @@
 //
 
 #include "BatchRenderer.hpp"
+#include "Renderer/Utils/RendererStats.hpp"
 #include "Renderer/Graphics/Pipeline.hpp"
 #include "Renderer/Graphics/Buffers.hpp"
 #include "Renderer/Graphics/Shader.hpp"
@@ -88,6 +89,9 @@ struct QuadData : RendererData {
         IK_CORE_WARN("Destroying QuadData instance and clearing the data !!!");
         delete [] VertexBufferBase;
         VertexBufferBase = nullptr;
+        
+        RendererStatistics::Get().VertexBufferSize -= MaxVertex * sizeof(QuadData::Vertex);
+        RendererStatistics::Get().IndexBufferSize -= MaxIndices * sizeof(uint32_t);
     }
     
     /// start new batch for quad rendering
@@ -126,6 +130,9 @@ void BatchRenderer::InitQuadData() {
     // Alloc memory for Quad Data
     s_QuadData = new QuadData();
     
+    // Allocating the memory for vertex Buffer Pointer
+    s_QuadData->VertexBufferBase = new QuadData::Vertex[QuadData::MaxVertex];
+    
     // Create Pipeline instance
     s_QuadData->Pipeline = Pipeline::Create();
     
@@ -160,6 +167,10 @@ void BatchRenderer::InitQuadData() {
     std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, QuadData::MaxIndices);
     s_QuadData->Pipeline->SetIndexBuffer(ib);
     delete[] quadIndices;
+    
+    // Creating white texture for colorful quads witout any texture or sprite
+    uint32_t whiteTextureData = 0xffffffff;
+    s_QuadData->TextureSlots[0] = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
 
     // Setting basic Vertex point of quad
     s_QuadData->VertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };

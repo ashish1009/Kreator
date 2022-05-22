@@ -132,3 +132,4 @@ Add the following library search paths
 - TODO: In Logger::Init() : Change default argument file path when Asset manager will get introduced
 - TODO: In Shader.hpp : Change this value based on the Open GL Version
 - TODO: In BatchRenderer : Make configurable in run time and While initializing the Batch Renderer
+- TODO: In glGenTextures() : Decide later to delete older on or not
