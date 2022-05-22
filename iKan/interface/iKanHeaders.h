@@ -34,6 +34,7 @@
 #include <Core/Debug/Profiler.hpp>
 #include <Core/Utils/Asserts.h>
 #include <Core/Utils/Buffer.hpp>
+#include <Core/Utils/AssetManager.hpp>
 
 #include <Core/Event/ApplicationEvent.h>
 #include <Core/Event/KeyEvent.h>

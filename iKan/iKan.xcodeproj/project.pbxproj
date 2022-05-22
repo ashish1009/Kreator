@@ -83,6 +83,8 @@
 		3E6A4D8C28369025003578F4 /* Layer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D8A28369025003578F4 /* Layer.hpp */; };
 		3E6A4D932836979C003578F4 /* LayerStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A4D912836979C003578F4 /* LayerStack.cpp */; };
 		3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D922836979C003578F4 /* LayerStack.hpp */; };
+		3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244A9283A8E1900640481 /* AssetManager.cpp */; };
+		3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244AA283A8E1900640481 /* AssetManager.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +182,8 @@
 		3E6A4D8A28369025003578F4 /* Layer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Layer.hpp; sourceTree = "<group>"; };
 		3E6A4D912836979C003578F4 /* LayerStack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LayerStack.cpp; sourceTree = "<group>"; };
 		3E6A4D922836979C003578F4 /* LayerStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LayerStack.hpp; sourceTree = "<group>"; };
+		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
+		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -489,6 +493,7 @@
 				3E6A4D7C28364303003578F4 /* Asserts.h */,
 				3E6575E028379C0A006B0C81 /* Timestep.hpp */,
 				3E65763A2837C785006B0C81 /* Buffer.hpp */,
+				3EE244AA283A8E1900640481 /* AssetManager.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -499,6 +504,7 @@
 				3E6A4D8328364497003578F4 /* AssertsCoreAPI.h */,
 				3E6575E228379C3E006B0C81 /* Timestep.cpp */,
 				3E6576392837C785006B0C81 /* Buffer.cpp */,
+				3EE244A9283A8E1900640481 /* AssetManager.cpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -526,6 +532,7 @@
 				3E6576402837CA95006B0C81 /* Input.hpp in Headers */,
 				3E2FA0E62839204100EE289A /* OpenGLRendererPipeline.hpp in Headers */,
 				3E6575D628379414006B0C81 /* Event.h in Headers */,
+				3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */,
 				3E2FA0F82839209000EE289A /* Shader.hpp in Headers */,
 				3E2FA10C283920DA00EE289A /* OpenGLFrameBuffer.hpp in Headers */,
 				3E2FA0F42839208200EE289A /* Buffers.hpp in Headers */,
@@ -648,6 +655,7 @@
 				3E2FA0E52839204100EE289A /* OpenGLRendererPipeline.cpp in Sources */,
 				3E6575E328379C3E006B0C81 /* Timestep.cpp in Sources */,
 				3E6575FD2837B8E1006B0C81 /* RendererAPI.cpp in Sources */,
+				3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */,
 				3E65762E2837BEDA006B0C81 /* OpenGLRendererContext.cpp in Sources */,
 				3E2FA0F32839208200EE289A /* Buffers.cpp in Sources */,
 				3E2FA0FF283920AA00EE289A /* FrameBuffer.cpp in Sources */,

@@ -6,6 +6,7 @@
 //
 
 #include "Application.hpp"
+#include "Core/Utils/AssetManager.hpp"
 #include "Core/LayerStack.hpp"
 #include "Core/Event/ApplicationEvent.h"
 #include "Renderer/Utils/Renderer.hpp"
@@ -56,6 +57,10 @@ Application::Specification::Specification(const Application::Specification& othe
     StartMaximized = other.StartMaximized;
     Resizable = other.Resizable;
     EnableGui = other.EnableGui;
+    
+    CoreAssetPath = other.CoreAssetPath;
+    ClientAssetPath = other.ClientAssetPath;
+    
     WindowSpec = other.WindowSpec;
     
     // NOTE: For now this copy constructor is only to Avoid Redundant copying the data
@@ -72,6 +77,10 @@ Application::Specification& Application::Specification::operator=(const Applicat
     StartMaximized = other.StartMaximized;
     Resizable = other.Resizable;
     EnableGui = other.EnableGui;
+    
+    CoreAssetPath = other.CoreAssetPath;
+    ClientAssetPath = other.ClientAssetPath;
+    
     WindowSpec = other.WindowSpec;
     
     // NOTE: For now this copy constructor is only to Avoid Redundant copying the data
@@ -97,6 +106,8 @@ Application::Application(const Specification& spec)
     IK_CORE_INFO("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
     IK_CORE_INFO("    Window Resizable              : {0}", m_Specification.Resizable);
     IK_CORE_INFO("    Enable GUI                    : {0}", m_Specification.EnableGui);
+    IK_CORE_INFO("    Core Asset Path               : {0}", m_Specification.CoreAssetPath);
+    IK_CORE_INFO("    Client Asset Path             : {0}", m_Specification.ClientAssetPath);
     IK_LOG_SEPARATOR();
     
     Init();
@@ -125,6 +136,10 @@ void Application::Init() {
         PushLayer(m_ImguiLayer);
     }
     
+    // Set the Asset Manager paths
+    AssetManager::SetCoreAssetPath(m_Specification.CoreAssetPath);
+    AssetManager::SetClientAssetPath(m_Specification.ClientAssetPath);
+    
     Renderer::Init();
 }
 
@@ -140,6 +155,9 @@ Application::~Application() {
     IK_CORE_WARN("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
     IK_CORE_WARN("    Window Resizable              : {0}", m_Specification.Resizable);
     IK_CORE_WARN("    Enable GUI                    : {0}", m_Specification.EnableGui);
+    IK_CORE_WARN("    Core Asset Path               : {0}", m_Specification.CoreAssetPath);
+    IK_CORE_WARN("    Client Asset Path             : {0}", m_Specification.ClientAssetPath);
+
     IK_LOG_SEPARATOR();
 
     Renderer::Shutdown();

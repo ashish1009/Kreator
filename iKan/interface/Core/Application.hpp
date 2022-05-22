@@ -36,6 +36,13 @@ namespace iKan {
             bool Resizable = true;
             bool EnableGui = true;
             
+            /// Core Asset folder path relative to the .exce binary
+            /// NOTE: Make sure the path have '\' in the end
+            std::string CoreAssetPath;
+            /// Client Asset folder path relative to the .exce binary
+            /// NOTE: Make sure the path have '\' in the end
+            std::string ClientAssetPath;
+            
             // If window specification not set manully, iKan will pick default values
             Window::Specification WindowSpec;
 

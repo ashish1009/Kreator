@@ -39,6 +39,9 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     specification.StartMaximized = false;
     specification.Resizable = true;
     specification.EnableGui = true;
+    
+    specification.CoreAssetPath = "../../iKan/assets/";
+    specification.ClientAssetPath = "../../Kreator/assets/";
 
     // Window Specification
     specification.WindowSpec.Title = "Kreator";
