@@ -23,6 +23,8 @@ namespace TextureUtils {
     
     class OpenGLTexture : public Texture {
     public:
+        // Constructors and Destructors
+        OpenGLTexture(const std::string& path, bool inverted);
         OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32_t size);
         virtual ~OpenGLTexture();
 
@@ -37,13 +39,13 @@ namespace TextureUtils {
         void Unbind() const override;
 
     private:
+        // Member variables
         bool m_Uploaded = false;
         
         RendererID m_RendererID = 0;
         
         int32_t m_Width = 0, m_Height = 0;
         int32_t m_Channel = 0;
-        
         uint32_t m_Size = 0;
         uint32_t m_InternalFormat = 0, m_DataFormat = 0;
         

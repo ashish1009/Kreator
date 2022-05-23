@@ -1,0 +1,74 @@
+Scene: Untitled
+Entities:
+  - Entity: 7248646227653802898
+    TagComponent:
+      Tag: Circle 1
+      Group: Circles
+    TransformComponent:
+      Translation: [-3.25, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CircleComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      Thickness: 1
+      Fade: 0.00499999989
+      Use: true
+      TexturePath: ../../../../../../../iKan./iKan/Github/Product/Kreator/Editor/assets/texture/basicTextures/wood.png
+  - Entity: 16544168221767804957
+    TagComponent:
+      Tag: Quad 2
+      Group: Quads
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    QuadComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      Use: true
+      TexturePath: ../../../../../../../iKan./iKan/Github/Product/Kreator/Editor/assets/texture/basicTextures/checkerboard.png
+  - Entity: 13569252211370756472
+    TagComponent:
+      Tag: Quad 1
+      Group: Quads
+    TransformComponent:
+      Translation: [6.25, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    QuadComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      Use: true
+      TexturePath: ../../../../../../../iKan./iKan/Github/Product/Kreator/Editor/assets/texture/basicTextures/window.png
+  - Entity: 5183792546281107927
+    TagComponent:
+      Tag: Camera
+      Group: Cameras
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      FixedAspectRatio: false
+      Primary: true
+      ProjectionType: 0
+      PerspectiveFOV: 1.76278257
+      OrthographicSize: 10
+      Near: 0.00999999978
+      Far: 10000
+  - Entity: 7162245696712429451
+    TagComponent:
+      Tag: Circle 2
+      Group: Circles
+    TransformComponent:
+      Translation: [-6.75, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CircleComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      Thickness: 1.20000005
+      Fade: 0.0199999996
+      Use: true
+      TexturePath: ../../../../../../../iKan./iKan/Github/Product/Kreator/Editor/assets/texture/basicTextures/window.png

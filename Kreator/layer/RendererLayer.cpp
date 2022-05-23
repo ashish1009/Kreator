@@ -17,7 +17,7 @@ RendererLayer::RendererLayer() : Layer("Renderer") {
 
 /// Renderer layer Destructor
 RendererLayer::~RendererLayer() {
-    IK_WARN("Creating {0} Layer !!!", m_Name);
+    IK_WARN("Destroying {0} Layer !!!", m_Name);
 }
 
 /// Renderer Layer Attach
@@ -36,6 +36,8 @@ void RendererLayer::Attach() {
     // Temp Init
     m_SceneCamera = SceneCamera::Create(SceneCamera::ProjectionType::Orthographic);
     m_EditorCamera = EditorCamera::Create();
+    
+    m_Textures[0] = Texture::Create(AssetManager::GetClientAsset("texture/basicTextures/checkerboard.png"));
 }
 
 /// Renderer Layer Detach
@@ -59,7 +61,7 @@ void RendererLayer::Update(Timestep ts) {
         BatchRenderer::BeginBatch(m_SceneCamera->GetProjectionMatrix() * glm::inverse(cameraTransform));
         
         glm::mat4 quadTransform = glm::translate(glm::mat4(1.0f), QuadTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
-        BatchRenderer::DrawQuad(quadTransform, { 1.0, 1.0, 1.0, 1.0 });
+        BatchRenderer::DrawQuad(quadTransform, m_Textures[0], { 1.0, 1.0, 1.0, 1.0 });
         BatchRenderer::EndBatch();
     }
     m_VpData.FrameBuffer->Unbind();

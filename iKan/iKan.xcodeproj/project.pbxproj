@@ -92,6 +92,8 @@
 		3E8200A4283B8A3A0024DF91 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E8200A2283B8A3A0024DF91 /* Camera.cpp */; };
 		3E8200A8283B8F750024DF91 /* EditorCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E8200A6283B8F750024DF91 /* EditorCamera.cpp */; };
 		3E8200A9283B8F750024DF91 /* EditorCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E8200A7283B8F750024DF91 /* EditorCamera.hpp */; };
+		3EB1C88E283BBA200098836F /* stb_image.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EB1C88A283BBA200098836F /* stb_image.h */; };
+		3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1C88B283BBA200098836F /* stb_image.cpp */; };
 		3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244A9283A8E1900640481 /* AssetManager.cpp */; };
 		3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244AA283A8E1900640481 /* AssetManager.hpp */; };
 		3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B4283A92D400640481 /* ShaderLibrary.cpp */; };
@@ -205,6 +207,8 @@
 		3E8200A2283B8A3A0024DF91 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		3E8200A6283B8F750024DF91 /* EditorCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorCamera.cpp; sourceTree = "<group>"; };
 		3E8200A7283B8F750024DF91 /* EditorCamera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorCamera.hpp; sourceTree = "<group>"; };
+		3EB1C88A283BBA200098836F /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		3EB1C88B283BBA200098836F /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
@@ -475,6 +479,7 @@
 		3E6A4D63283609E9003578F4 /* vendors */ = {
 			isa = PBXGroup;
 			children = (
+				3EB1C889283BBA200098836F /* stbimage */,
 				3E6576582837CEB5006B0C81 /* gui.xcodeproj */,
 				3E65761B2837BE32006B0C81 /* glad.xcodeproj */,
 			);
@@ -568,6 +573,15 @@
 				3E82009D283B896A0024DF91 /* SceneCamera.cpp */,
 			);
 			path = Scene;
+			sourceTree = "<group>";
+		};
+		3EB1C889283BBA200098836F /* stbimage */ = {
+			isa = PBXGroup;
+			children = (
+				3EB1C88A283BBA200098836F /* stb_image.h */,
+				3EB1C88B283BBA200098836F /* stb_image.cpp */,
+			);
+			path = stbimage;
 			sourceTree = "<group>";
 		};
 		3EE244AD283A921400640481 /* textures */ = {
@@ -668,6 +682,7 @@
 				3E6575CB28378FD8006B0C81 /* MacWindow.hpp in Headers */,
 				3E6575DC28379491006B0C81 /* MouseCodes.h in Headers */,
 				3E2FA108283920CF00EE289A /* OpenGLTexture.hpp in Headers */,
+				3EB1C88E283BBA200098836F /* stb_image.h in Headers */,
 				3E6575DF283798B5006B0C81 /* iKanCommon.h in Headers */,
 				3E6575D828379414006B0C81 /* ApplicationEvent.h in Headers */,
 				3E2FA0EC2839205700EE289A /* OpenGLRendererBuffer.hpp in Headers */,
@@ -764,6 +779,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E2FA103283920C400EE289A /* OpenGLShader.cpp in Sources */,
+				3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */,
 				3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */,
 				3E8200A4283B8A3A0024DF91 /* Camera.cpp in Sources */,
 				3E6A4D7228360F7C003578F4 /* Application.cpp in Sources */,

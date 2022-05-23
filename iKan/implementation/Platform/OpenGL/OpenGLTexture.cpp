@@ -68,12 +68,92 @@ OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32
     IK_LOG_SEPARATOR();
 }
 
+/// Open GL Texture Constructor
+/// @param path Texture file path
+OpenGLTexture::OpenGLTexture(const std::string& path, bool inverted)
+: m_Filepath(path), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA) {
+    PROFILE();
+
+    if (m_RendererID)
+        glDeleteTextures(1, &m_RendererID);
+    
+    if (inverted)
+        stbi_set_flip_vertically_on_load(1);
+    
+    m_TextureData = stbi_load(m_Filepath.c_str(), &m_Width, &m_Height, &m_Channel, 0);
+    
+    if (m_TextureData) {
+        m_Uploaded = true;
+        
+        switch (m_Channel) {
+            case 4 :
+                m_InternalFormat = GL_RGBA8;
+                m_DataFormat     = GL_RGBA;
+                break;
+            case 3 :
+                m_InternalFormat = GL_RGB8;
+                m_DataFormat     = GL_RGB;
+                break;
+            case 2 :
+            case 1 :
+                m_InternalFormat = GL_RED;
+                m_DataFormat     = GL_RED;
+                break;
+                
+            default:
+                IK_CORE_ASSERT(false, "Invalid Format ");
+        }
+        
+        glGenTextures(1, &m_RendererID);
+        while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
+            /// Checking is this assihned renderer ID already given to some texture.
+            /// If yes then recreate new Texture renderer ID
+            // TODO: decide later to delete older on or not
+            glGenTextures(1, &m_RendererID);
+        }
+        
+        Renderer::AddRendererIDs(m_RendererID);
+        glBindTexture(GL_TEXTURE_2D, m_RendererID);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, m_TextureData);
+    
+        m_Size = m_Width * m_Height * m_Channel;
+        RendererStatistics::Get().TextureBufferSize += m_Size;
+        
+        delete (stbi_uc*)m_TextureData;
+    }
+    
+    IK_LOG_SEPARATOR();
+    if (m_Uploaded) {
+        IK_CORE_INFO("Creating Open GL Texture from File ... ");
+        IK_CORE_INFO("    File Path         : {0}", m_Filepath);
+        IK_CORE_INFO("    Renderer ID       : {0}", m_RendererID);
+        IK_CORE_INFO("    Width             : {0}", m_Width);
+        IK_CORE_INFO("    Height            : {0}", m_Height);
+        IK_CORE_INFO("    Size              : {0} Bytes, {1} KB, {2} MB", m_Size, (float)m_Size / 1000.0f, (float)m_Size / 1000000.0f);
+        IK_CORE_INFO("    Number of Channel : {0}", m_Channel);
+        IK_CORE_INFO("    InternalFormat    : {0}", TextureUtils::GetFormatNameFromEnum(m_InternalFormat));
+        IK_CORE_INFO("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
+    }
+    else
+        IK_CORE_CRITICAL("Failed to load stbi Image {0}", m_Filepath.c_str());
+    IK_LOG_SEPARATOR();
+}
+
 /// Open GL Texture Destructor
 OpenGLTexture::~OpenGLTexture() {
     PROFILE();
 
     IK_LOG_SEPARATOR();
-    IK_CORE_WARN("Destroying Open GL Texture: {0} !!! ", m_Filepath.c_str());
+    IK_CORE_WARN("Destroying Open GL Texture: !!! ");
+    if (m_Filepath != "")
+        IK_CORE_WARN("    File Path         : {0}", m_Filepath);
+
     IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);
     IK_CORE_WARN("    Width             : {0}", m_Width);
     IK_CORE_WARN("    Height            : {0}", m_Height);

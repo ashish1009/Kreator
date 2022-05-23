@@ -33,12 +33,17 @@ namespace iKan {
         /// Unbind the Current Texture from shader slot
         virtual void Unbind() const = 0;
         
-        /// Create Emptry Textyre with user Defined Data of size height and Width
+        /// Create Emptry Texture with user Defined Data of size height and Width
         /// @param width Width of Empty Texture
         /// @param height Height of Empty Texture
         /// @param data Data to be stored in Empty Texture
         /// @param size Size of type of data stored in Texture
         static std::shared_ptr<Texture> Create(uint32_t width, uint32_t height, void* data, uint32_t size);
+        
+        /// Create the Texture from image file
+        /// @param path path of texture file
+        /// @param inverted flag to check if we need to load the image vertically inverted
+        static std::shared_ptr<Texture> Create(const std::string& path, bool inverted = true);
     };
     
 }

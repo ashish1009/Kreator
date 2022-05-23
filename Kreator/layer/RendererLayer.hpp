@@ -37,5 +37,6 @@ private:
     // Temp Data
     std::shared_ptr<SceneCamera> m_SceneCamera;
     std::shared_ptr<EditorCamera> m_EditorCamera;
+    std::shared_ptr<Texture> m_Textures[16];
 };
 
