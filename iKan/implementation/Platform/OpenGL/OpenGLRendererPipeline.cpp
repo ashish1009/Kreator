@@ -114,12 +114,12 @@ void OpenGLRendererPipeline::AddVertexBuffer(const std::shared_ptr<VertexBuffer>
     IK_CORE_INFO("    Vertex Attrib with Stride : {0} ", layout.GetStride());
     for (const auto& element : layout.GetElements()) {
         IK_CORE_INFO("        -----------------------------------------");
-        IK_CORE_INFO("        Name      : {0} ", element.Name);
-        IK_CORE_INFO("        Type      : {0} ", ShaderDataTypeToString(element.Type));
-        IK_CORE_INFO("        Size      : {0} ", element.Size);
-        IK_CORE_INFO("        Count     : {0} ", element.Count);
-        IK_CORE_INFO("        Offset    : {0} ", element.Offset);
-        IK_CORE_INFO("        Normalize : {0} ", element.Normalized);
+        if (element.Normalized)
+            IK_CORE_INFO("        {0} {1} [{2}] (Normalised)", ShaderDataTypeToString(element.Type), element.Name, element.Count);
+        else
+            IK_CORE_INFO("        {0} {1} [{2}] (Not Normalised)", ShaderDataTypeToString(element.Type), element.Name, element.Count);
+        IK_CORE_INFO("               Offset     : {0}", element.Offset);
+        IK_CORE_INFO("               Size       : {0}", element.Size);
 
         switch (element.Type) {
             case ShaderDataType::Int:

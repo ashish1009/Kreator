@@ -16,6 +16,7 @@ using namespace iKan;
 
 // forward declaration
 class QuadData;
+class CircleData;
 
 /// Common 2D Batch Renderer Data
 /// Base class for all 2D Renderer like Quad, Circle ...
@@ -40,12 +41,13 @@ struct RendererData {
     virtual ~RendererData() = default;
     
     friend class QuadData;
+    friend class CircleData;
     
 private:
     RendererData() = default;
  };
 
-/// Batch Data to render Quads
+/// Batch Data to Rendering Quads
 struct QuadData : RendererData {
     /// Single vertex of a Quad
     struct Vertex {
@@ -103,10 +105,72 @@ struct QuadData : RendererData {
 };
 static QuadData* s_QuadData;
 
+/// Batch Data to Rendering Circles
+struct CircleData : RendererData {
+    /// Single vertex of a Circle
+    struct Vertex {
+        glm::vec3 Position;  // Position of a Quad
+        glm::vec4 Color;     // Color of a Quad
+        glm::vec2 TexCoords; // Texture coordinates of a Quad
+        
+        float TexIndex;     // Texture Index (Slot index which texture need to be loaded/rendered)
+        float TilingFactor; // Tiling factor (Multiply Texture Tile by factor)
+        float Thickness;    // Thickness of Circle
+        float Fade;         // Fadeness of Edge of Circle
+        
+        int32_t ObjectID; // Pixel ID of Quad
+    };
+    
+    // --------------- Constants -----------------
+    /// Max number of Quad to be rendered in single Batch
+    /// NOTE: Memory will be reserved in GPU for MaxQuads.
+    /// TODO: Make configurable in run time and While initializing the Batch Renderer
+    static constexpr uint32_t MaxCircles = 1000;
+
+    // Fixed Constants
+    static constexpr uint32_t VertexForSingleCircle = 4;
+    static constexpr uint32_t IndicesForSingleCircle = 6;
+    static constexpr uint32_t MaxVertex = MaxCircles * VertexForSingleCircle;
+    static constexpr uint32_t MaxIndices = MaxCircles * IndicesForSingleCircle;
+
+    // -------------- Variables ------------------
+    /// Base pointer of Vertex Data. This is start of Batch data for single draw call
+    Vertex* VertexBufferBase = nullptr;
+    /// Incrememntal Vetrtex Data Pointer to store all the batch data in Buffer
+    Vertex* VertexBufferPtr = nullptr;
+    
+    /// Basic vertex of quad
+    /// Vertex of circle is taken as Quad only
+    glm::vec4 VertexPositions[4];
+
+    /// Constructor
+    CircleData() {
+        IK_CORE_INFO("Creating CircleData instance ...");
+    }
+    /// Destructir
+    virtual ~CircleData() {
+        IK_CORE_WARN("Destroying Circle Data instance and clearing the data !!!");
+        delete [] VertexBufferBase;
+        VertexBufferBase = nullptr;
+
+        RendererStatistics::Get().VertexBufferSize -= CircleData::MaxVertex * sizeof(CircleData::Vertex);
+        RendererStatistics::Get().IndexBufferSize -= CircleData::MaxIndices * sizeof(uint32_t);
+    }
+    
+    /// start new batch for quad rendering
+    void StartBatch() {
+        IndexCount = 0;
+        VertexBufferPtr = VertexBufferBase;
+        TextureSlotIndex = 1;
+    }
+};
+static CircleData* s_CircleData;
+
 /// Initialize the Batch renderer for 2D Renderer
 void BatchRenderer::Init() {
     IK_CORE_INFO("Initialising the Batch Renderer 2D ...");
     InitQuadData();
+    InitCircleData();
 }
 
 /// SHutdown or destroy the batch Renderer
@@ -121,8 +185,18 @@ void BatchRenderer::Shutdown() {
     IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
     IK_LOG_SEPARATOR();
 
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("    Destroying the Circle Renderer Data");
+    IK_CORE_WARN("        Max Circles per Batch           : {0}", CircleData::MaxCircles);
+    IK_CORE_WARN("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
+    IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", CircleData::MaxVertex * sizeof(CircleData::Vertex),  CircleData::MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
+    IK_LOG_SEPARATOR();
+
     if (s_QuadData)
         delete s_QuadData;
+
+    if (s_CircleData)
+        delete s_CircleData;
 }
 
 /// Initialize Quad Data
@@ -137,7 +211,6 @@ void BatchRenderer::InitQuadData() {
     IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
     IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
     IK_LOG_SEPARATOR();
-
     
     // Allocating the memory for vertex Buffer Pointer
     s_QuadData->VertexBufferBase = new QuadData::Vertex[QuadData::MaxVertex];
@@ -190,4 +263,72 @@ void BatchRenderer::InitQuadData() {
     
     // Setup the Quad Shader
     s_QuadData->Shader = Renderer::GetShader(AssetManager::GetCoreAsset("shaders/2D/BatchQuadShader.glsl"));
+}
+
+/// Initialize Circle Data
+void BatchRenderer::InitCircleData() {
+    PROFILE();
+    // Alloc memory for Circle Data
+    s_CircleData = new CircleData();
+    
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("    Initialising the Circle Renderer");
+    IK_CORE_INFO("        Max Circle per Batch            : {0}", CircleData::MaxCircles);
+    IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
+    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", CircleData::MaxVertex * sizeof(CircleData::Vertex),  CircleData::MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
+    IK_LOG_SEPARATOR();
+    
+    // Allocating the memory for vertex Buffer Pointer
+    s_CircleData->VertexBufferBase = new CircleData::Vertex[QuadData::MaxVertex];
+    
+    // Create Pipeline instance
+    s_CircleData->Pipeline = Pipeline::Create();
+    
+    // Create vertes Buffer
+    s_CircleData->VertexBuffer = VertexBuffer::Create(CircleData::MaxVertex * sizeof(CircleData::Vertex));
+    s_CircleData->VertexBuffer->AddLayout({
+        { "a_Position",     ShaderDataType::Float3 },
+        { "a_Color",        ShaderDataType::Float4 },
+        { "a_TexCoords",    ShaderDataType::Float2 },
+        { "a_TexIndex",     ShaderDataType::Float },
+        { "a_TilingFactor", ShaderDataType::Float },
+        { "a_Thickness",    ShaderDataType::Float },
+        { "a_Fade",         ShaderDataType::Float },
+        { "a_ObjectID",     ShaderDataType::Int },
+    });
+    s_CircleData->Pipeline->AddVertexBuffer(s_CircleData->VertexBuffer);
+
+    // Create Index Buffer
+    uint32_t* quadIndices = new uint32_t[CircleData::MaxIndices];
+    
+    uint32_t offset = 0;
+    for (size_t i = 0; i < CircleData::MaxIndices; i += CircleData::IndicesForSingleCircle) {
+        quadIndices[i + 0] = offset + 0;
+        quadIndices[i + 1] = offset + 1;
+        quadIndices[i + 2] = offset + 2;
+        
+        quadIndices[i + 3] = offset + 2;
+        quadIndices[i + 4] = offset + 3;
+        quadIndices[i + 5] = offset + 0;
+        
+        offset += 4;
+    }
+    
+    // Create Index Buffer in GPU for storing Indices
+    std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, CircleData::MaxIndices);
+    s_CircleData->Pipeline->SetIndexBuffer(ib);
+    delete[] quadIndices;
+    
+    // Creating white texture for colorful quads witout any texture or sprite
+    uint32_t whiteTextureData = 0xffffffff;
+    s_CircleData->TextureSlots[0] = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
+
+    // Setting basic Vertex point of quad
+    s_CircleData->VertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+    s_CircleData->VertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+    s_CircleData->VertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
+    s_CircleData->VertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+    
+    // Setup the Circle Shader
+    s_CircleData->Shader = Renderer::GetShader(AssetManager::GetCoreAsset("shaders/2D/BatchCircleShader.glsl"));
 }

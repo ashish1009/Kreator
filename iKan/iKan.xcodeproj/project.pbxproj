@@ -192,6 +192,7 @@
 		3E820089283B551C0024DF91 /* ShaderUniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderUniform.hpp; sourceTree = "<group>"; };
 		3E82008E283B61220024DF91 /* OpenGLShaderUniform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLShaderUniform.cpp; sourceTree = "<group>"; };
 		3E82008F283B61220024DF91 /* OpenGLShaderUniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLShaderUniform.hpp; sourceTree = "<group>"; };
+		3E820092283B738A0024DF91 /* BatchCircleShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchCircleShader.glsl; sourceTree = "<group>"; };
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
@@ -562,6 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				3EE244B1283A921400640481 /* BatchQuadShader.glsl */,
+				3E820092283B738A0024DF91 /* BatchCircleShader.glsl */,
 			);
 			path = 2D;
 			sourceTree = "<group>";

@@ -23,8 +23,8 @@ OpenGLShaderResourceDeclaration::Type OpenGLShaderResourceDeclaration::StringToT
 /// @param type type uniform sampler
 std::string OpenGLShaderResourceDeclaration::TypeToString(Type type) {
     switch (type) {
-        case Type::NONE:        return "None";
-        case Type::TEXTURE2D:   return "sampler2D";
+        case Type::NONE:        return "None       ";
+        case Type::TEXTURE2D:   return "sampler2D  ";
         case Type::TEXTURECUBE: return "samplerCube";
     }
     return "Invalid Type";
@@ -76,15 +76,15 @@ OpenGLShaderUniformDeclaration::Type OpenGLShaderUniformDeclaration::StringToTyp
 /// @param type uniform variable type
 std::string OpenGLShaderUniformDeclaration::TypeToString(Type type) {
     switch (type) {
-        case OpenGLShaderUniformDeclaration::Type::NONE:       return "None";
-        case OpenGLShaderUniformDeclaration::Type::BOOLEAN:    return "bool";
-        case OpenGLShaderUniformDeclaration::Type::INT32:      return "int32";
-        case OpenGLShaderUniformDeclaration::Type::FLOAT32:    return "float";
-        case OpenGLShaderUniformDeclaration::Type::VEC2:       return "vec2";
-        case OpenGLShaderUniformDeclaration::Type::VEC3:       return "vec3";
-        case OpenGLShaderUniformDeclaration::Type::VEC4:       return "vec4";
-        case OpenGLShaderUniformDeclaration::Type::MAT3:       return "mat3";
-        case OpenGLShaderUniformDeclaration::Type::MAT4:       return "mat4";
+        case OpenGLShaderUniformDeclaration::Type::NONE:       return "None  ";
+        case OpenGLShaderUniformDeclaration::Type::BOOLEAN:    return "bool  ";
+        case OpenGLShaderUniformDeclaration::Type::INT32:      return "int32 ";
+        case OpenGLShaderUniformDeclaration::Type::FLOAT32:    return "float ";
+        case OpenGLShaderUniformDeclaration::Type::VEC2:       return "vec2  ";
+        case OpenGLShaderUniformDeclaration::Type::VEC3:       return "vec3  ";
+        case OpenGLShaderUniformDeclaration::Type::VEC4:       return "vec4  ";
+        case OpenGLShaderUniformDeclaration::Type::MAT3:       return "mat3  ";
+        case OpenGLShaderUniformDeclaration::Type::MAT4:       return "mat4  ";
         case OpenGLShaderUniformDeclaration::Type::STRUCT:     return "struct";
     }
     return "Invalid Type";

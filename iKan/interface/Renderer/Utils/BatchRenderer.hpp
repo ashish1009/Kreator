@@ -30,6 +30,7 @@ namespace iKan {
         // Member Methods
         /// Initialze the Quad Renderer Data
         static void InitQuadData();
+        static void InitCircleData();
     };
     
 }
