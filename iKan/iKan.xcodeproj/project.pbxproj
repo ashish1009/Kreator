@@ -86,6 +86,7 @@
 		3E82008B283B551C0024DF91 /* ShaderUniform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E820089283B551C0024DF91 /* ShaderUniform.hpp */; };
 		3E820090283B61220024DF91 /* OpenGLShaderUniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E82008E283B61220024DF91 /* OpenGLShaderUniform.cpp */; };
 		3E820091283B61220024DF91 /* OpenGLShaderUniform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E82008F283B61220024DF91 /* OpenGLShaderUniform.hpp */; };
+		3E82009B283B88B40024DF91 /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E82009A283B88B40024DF91 /* Camera.h */; };
 		3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244A9283A8E1900640481 /* AssetManager.cpp */; };
 		3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244AA283A8E1900640481 /* AssetManager.hpp */; };
 		3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B4283A92D400640481 /* ShaderLibrary.cpp */; };
@@ -193,6 +194,7 @@
 		3E82008E283B61220024DF91 /* OpenGLShaderUniform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLShaderUniform.cpp; sourceTree = "<group>"; };
 		3E82008F283B61220024DF91 /* OpenGLShaderUniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLShaderUniform.hpp; sourceTree = "<group>"; };
 		3E820092283B738A0024DF91 /* BatchCircleShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchCircleShader.glsl; sourceTree = "<group>"; };
+		3E82009A283B88B40024DF91 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			children = (
 				3E6575F82837B662006B0C81 /* Renderer.hpp */,
 				3E6578FA2837E892006B0C81 /* BatchRenderer.hpp */,
+				3E82009A283B88B40024DF91 /* Camera.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 				3E6A4D7328360F7C003578F4 /* Application.hpp in Headers */,
 				3EE244B7283A92D400640481 /* ShaderLibrary.hpp in Headers */,
 				3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */,
+				3E82009B283B88B40024DF91 /* Camera.h in Headers */,
 				3E82008B283B551C0024DF91 /* ShaderUniform.hpp in Headers */,
 				3E6575C528378FB1006B0C81 /* Window.hpp in Headers */,
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
