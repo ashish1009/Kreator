@@ -77,13 +77,13 @@ namespace iKan {
         virtual void SetUniformInt1(const std::string& name, int32_t value) = 0;
         /// Upload the Int Array value to shader
         /// @param name Name of Uniform
-        /// @param value Value of Uniform
+        /// @param values Value of Uniform
         /// @param count Size of array
         virtual void SetIntArray(const std::string& name, int32_t* values, uint32_t count) = 0;
         
         /// Upload the Matrix 4x4 array value to shader
         /// @param name Name of Uniform
-        /// @param value Value of Uniform
+        /// @param values Value of Uniform
         /// @param count Size of Mat4 Array
         virtual void SetUniformMat4Array(const std::string& name, const glm::mat4& values, uint32_t count) = 0;
         

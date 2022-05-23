@@ -19,11 +19,21 @@ RendererLayer::~RendererLayer() {
 
 /// Renderer Layer Attach
 void RendererLayer::Attach() {
+    PROFILE();
     IK_INFO("Attaching {0} Layer to Application", m_Name);
+    
+    FrameBuffer::Specification spec;
+    spec.Attachments = {
+        FrameBuffer::Attachment::TextureFormat::RGBA8,
+        FrameBuffer::Attachment::TextureFormat::Depth24Stencil,
+        FrameBuffer::Attachment::TextureFormat::R32I
+    };
+    m_VpData.FrameBuffer = FrameBuffer::Create(spec);
 }
 
 /// Renderer Layer Detach
 void RendererLayer::Detach() {
+    PROFILE();
     IK_WARN("Detaching {0} Layer to Application", m_Name);
 }
 

@@ -40,6 +40,9 @@ void Renderer::Shutdown() {
         s_RendererAPI.reset();
     }
     BatchRenderer::Shutdown();
+    
+    // Destorry the Shader library
+    ShaderLibrary::ResetShaders();
 }
 
 /// Return the current active Renderer API

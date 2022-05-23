@@ -11,6 +11,12 @@
 
 using namespace iKan;
 
+/// Viewport Data
+struct Viewport {
+    std::shared_ptr<FrameBuffer> FrameBuffer;
+};
+
+/// Kreator's Renderer Layer
 class RendererLayer : public Layer {
 public:
     RendererLayer();
@@ -24,5 +30,8 @@ public:
     void EventHandler(Event& event) override;
     
     const std::string& GetName() const override { return m_Name; }
+    
+private:
+    Viewport m_VpData;
 };
 

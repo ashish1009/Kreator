@@ -47,6 +47,11 @@
 
 // Renderer Files
 #include <Renderer/Utils/Renderer.hpp>
+#include <Renderer/Graphics/Pipeline.hpp>
+#include <Renderer/Graphics/Buffers.hpp>
+#include <Renderer/Graphics/Texture.hpp>
+#include <Renderer/Graphics/Shader.hpp>
+#include <Renderer/Graphics/FrameBuffer.hpp>
 
 // Gui Files
 #include <Gui/ImguiAPI.hpp>
