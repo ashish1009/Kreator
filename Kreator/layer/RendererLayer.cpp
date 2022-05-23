@@ -7,6 +7,9 @@
 
 #include "RendererLayer.hpp"
 
+glm::vec3 CameraTranslation   = { 0.0f, 0.0f, 0.1f };
+glm::vec3 QuadTranslation   = { 0.0f, 0.0f, 0.1f };
+
 /// Renderer Layer Constructor
 RendererLayer::RendererLayer() : Layer("Renderer") {
     IK_INFO("Creating {0} Layer ...", m_Name);
@@ -31,7 +34,7 @@ void RendererLayer::Attach() {
     m_VpData.FrameBuffer = FrameBuffer::Create(spec);
     
     // Temp Init
-    m_SceneCamera = SceneCamera::Create();
+    m_SceneCamera = SceneCamera::Create(SceneCamera::ProjectionType::Orthographic);
     m_EditorCamera = EditorCamera::Create();
 }
 
@@ -49,6 +52,15 @@ void RendererLayer::Update(Timestep ts) {
     m_VpData.FrameBuffer->Bind();
     {
         Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
+        
+        glm::mat4 rotation = glm::toMat4(glm::quat(glm::vec3(0.0f)));
+        glm::mat4 cameraTransform = glm::translate(glm::mat4(1.0f), CameraTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
+        
+        BatchRenderer::BeginBatch(m_SceneCamera->GetProjectionMatrix() * glm::inverse(cameraTransform));
+        
+        glm::mat4 quadTransform = glm::translate(glm::mat4(1.0f), QuadTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
+        BatchRenderer::DrawQuad(quadTransform, { 1.0, 1.0, 1.0, 1.0 });
+        BatchRenderer::EndBatch();
     }
     m_VpData.FrameBuffer->Unbind();
 }
@@ -59,7 +71,7 @@ void RendererLayer::RenderGui() {
     
     ImguiAPI::FrameRate();
     Renderer::ImguiRendererStats();
-    
+        
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Kreator Viewport");

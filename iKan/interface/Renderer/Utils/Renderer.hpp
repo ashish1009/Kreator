@@ -19,6 +19,7 @@ namespace iKan {
     // Forward declaration
     class RendererAPI;
     class Shader;
+    class Pipeline;
     
     /// Interface class to handle ALL Renderer API to be used by client
     /// Resposnible for
@@ -68,6 +69,12 @@ namespace iKan {
         /// Enable or disable MultiSample Field
         /// @param state flag to be set as MultiSample
         static void MultiSample(bool state);
+        
+        // --------------------------- Draw API -------------------------------------
+        /// Draw Vertex Array with indexed count
+        /// @param pipeline pipeline ref pointer
+        /// @param count count
+        static void DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count = 0);
         
         // --------------------- Renderer Stats API ---------------------------------
         /// Restet the renderer Stats each frame

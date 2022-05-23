@@ -48,6 +48,7 @@
 // Renderer Files
 #include <Renderer/Utils/Renderer.hpp>
 #include <Renderer/Utils/Camera.hpp>
+#include <Renderer/Utils/BatchRenderer.hpp>
 #include <Renderer/Graphics/Pipeline.hpp>
 #include <Renderer/Graphics/Buffers.hpp>
 #include <Renderer/Graphics/Texture.hpp>

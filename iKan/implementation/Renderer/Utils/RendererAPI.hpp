@@ -9,6 +9,9 @@
 
 namespace iKan {
     
+    // Forward Declaration
+    class Pipeline;
+    
     /// Interface for Renderer API
     class RendererAPI {
     public:
@@ -43,6 +46,8 @@ namespace iKan {
         virtual void Depth(bool state) const = 0;
         virtual void Blend(bool state) const = 0;
         virtual void MultiSample(bool state) const = 0;
+        
+        virtual void DrawIndexed(const std::shared_ptr<Pipeline>& va, uint32_t count) const = 0;
         
         static std::unique_ptr<RendererAPI> Create();
     };

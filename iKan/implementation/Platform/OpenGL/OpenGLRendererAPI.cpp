@@ -6,6 +6,8 @@
 //
 
 #include "OpenGLRendererAPI.hpp"
+#include "Renderer/Graphics/Pipeline.hpp"
+#include "Renderer/Utils/RendererStats.hpp"
 #include <glad/glad.h>
 
 using namespace iKan;
@@ -82,4 +84,19 @@ void OpenGLRendererAPI::SetClearColor(const glm::vec4& color) const {
 /// Clear the each bits of renderer Pixels
 void OpenGLRendererAPI::ClearBits() const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
+
+/// Draw Indexed Vertex Array
+/// @param pipeline pipeline having vertex buffer and index buffer
+/// @param count number of Indices (if 0 then use index buffer of Vertex array)
+void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) const {
+    pipeline->Bind();
+    uint32_t c = (count ? count : pipeline->GetIndexBuffer()->GetCount());
+    glDrawElements(GL_TRIANGLES, c , GL_UNSIGNED_INT, nullptr);
+    
+    // Unbinding Textures and va
+    glBindTexture(GL_TEXTURE_2D, 0);
+    pipeline->Unbind();
+    
+    RendererStatistics::Get().DrawCalls++;
 }

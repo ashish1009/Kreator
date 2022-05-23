@@ -10,6 +10,7 @@
 #include "Renderer/Utils/BatchRenderer.hpp"
 #include "Renderer/Utils/RendererStats.hpp"
 #include "Renderer/Utils/ShaderLibrary.hpp"
+#include "Renderer/Graphics/Pipeline.hpp"
 
 using namespace iKan;
 
@@ -93,6 +94,13 @@ void Renderer::Blend(bool state) { s_RendererAPI->Blend(state); }
 /// Enable or disable MultiSample Field
 /// @param state flag to be set as MultiSample
 void Renderer::MultiSample(bool state) { s_RendererAPI->MultiSample(state); }
+
+/// Draw Vertex Array with indexed cound
+/// @param pipeline vertex array ref pointer
+/// @param count count
+void Renderer::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) {
+    s_RendererAPI->DrawIndexed(pipeline, count);
+}
 
 // --------------------- Renderer Stats API ---------------------------------
 /// Restet the renderer Stats each frame

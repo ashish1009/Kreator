@@ -55,7 +55,7 @@ namespace iKan {
             
             ImGui::SetColumnWidth(0, 65); ImGui::Text("%d", DrawCalls); PropertyGrid::HelpMarker("Draw Calls"); ImGui::NextColumn();
             ImGui::SetColumnWidth(1, 70); ImGui::Text("%d", VertexCount); PropertyGrid::HelpMarker("Vertex Counts"); ImGui::NextColumn();
-            ImGui::SetColumnWidth(2, 70); ImGui::Text("%d", VertexCount); PropertyGrid::HelpMarker("Index Counts"); ImGui::NextColumn();
+            ImGui::SetColumnWidth(2, 70); ImGui::Text("%d", IndexCount); PropertyGrid::HelpMarker("Index Counts"); ImGui::NextColumn();
             
             ImGui::SetColumnWidth(3, 170); ImGui::Text("%.2f KB (%.2f MB)", (float)VertexBufferSize / (float)1000.0f, (float)VertexBufferSize / (float)1000000.0f); PropertyGrid::HelpMarker("Vertex Buffer Size"); ImGui::NextColumn();
             ImGui::SetColumnWidth(4, 170); ImGui::Text("%.2f KB (%.2f MB)", (float)IndexBufferSize / (float)1000.0f, (float)IndexBufferSize / (float)1000000.0f); PropertyGrid::HelpMarker("Index Buffer Size"); ImGui::NextColumn();

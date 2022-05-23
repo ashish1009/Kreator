@@ -25,6 +25,8 @@ namespace iKan {
         void Depth(bool state) const override;
         void Blend(bool state) const override;
         void MultiSample(bool state) const override;
+        
+        void DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) const override;
     };
     
 }

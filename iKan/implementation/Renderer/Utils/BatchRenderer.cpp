@@ -332,3 +332,208 @@ void BatchRenderer::InitCircleData() {
     // Setup the Circle Shader
     s_CircleData->Shader = Renderer::GetShader(AssetManager::GetCoreAsset("shaders/2D/BatchCircleShader.glsl"));
 }
+
+/// Begin the Batch renderer Scene
+/// @param viewProj View projection matrix of Camera
+void BatchRenderer::BeginBatch(const glm::mat4& cameraViewProj) {
+    s_QuadData->Shader->Bind();
+    s_QuadData->Shader->SetUniformMat4("u_ViewProjection", cameraViewProj);
+    s_QuadData->StartBatch();
+    
+    s_CircleData->Shader->Bind();
+    s_CircleData->Shader->SetUniformMat4("u_ViewProjection", cameraViewProj);
+    s_CircleData->StartBatch();
+}
+
+/// End the Batch Rendere Scene
+void BatchRenderer::EndBatch() {
+    Flush();
+}
+
+/// Flush the scene for single batch
+void BatchRenderer::Flush() {
+    if (s_QuadData->IndexCount) {
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_QuadData->VertexBufferPtr - (uint8_t*)s_QuadData->VertexBufferBase);
+        s_QuadData->VertexBuffer->SetData(s_QuadData->VertexBufferBase, dataSize);
+        
+        // Bind textures
+        for (size_t i = 0; i < s_QuadData->TextureSlotIndex; i++)
+            s_QuadData->TextureSlots[i]->Bind((uint32_t)i);
+        
+        // Render the Scene
+        s_QuadData->Shader->Bind();
+        Renderer::DrawIndexed(s_QuadData->Pipeline, s_QuadData->IndexCount);
+    }
+    
+    if (s_CircleData->IndexCount) {
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_CircleData->VertexBufferPtr - (uint8_t*)s_CircleData->VertexBufferBase);
+        s_CircleData->VertexBuffer->SetData(s_CircleData->VertexBufferBase, dataSize);
+
+        // Bind textures
+        for (size_t i = 0; i < s_CircleData->TextureSlotIndex; i++)
+            s_CircleData->TextureSlots[i]->Bind((uint32_t)i);
+        
+        // Render the Scene
+        s_CircleData->Shader->Bind();
+        Renderer::DrawIndexed(s_CircleData->Pipeline, s_CircleData->IndexCount);
+    }
+}
+
+/// start Next Renderer Batch
+void BatchRenderer::NextBatch() {
+    EndBatch();
+    s_QuadData->StartBatch();
+    s_CircleData->StartBatch();
+}
+
+/// Draw Quad API with color
+/// @param transform Transformation of Quad
+/// @param color Clor of Quad
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int32_t entID) {
+    constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+    DrawTextureQuad(transform, nullptr, textureCoords, 1.0f, color, entID);
+}
+
+/// Draw Quad API for Texture
+/// @param transform Quad transform
+/// @param texture Texture to be uploaded
+/// @param tilingFactor tiling factor
+/// @param tintColor color
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor, float tilingFactor, int32_t entID) {
+    constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+    DrawTextureQuad(transform, texture, textureCoords, tilingFactor, tintColor, entID);
+}
+
+/// Draw Circle API with color
+/// @param transform Transformation of Circle
+/// @param color Clor of Circle
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness, float fade, int32_t entID) {
+    DrawTextureCircle(transform, nullptr, 1.0f, color, thickness, fade, entID);
+}
+
+/// Draw Circle API for Texture
+/// @param transform Circle transform
+/// @param texture Texture to be uploaded
+/// @param tilingFactor tiling factor
+/// @param tintColor color
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawCircle(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor, float tilingFactor, float thickness, float fade, int32_t entID) {
+    DrawTextureCircle(transform, texture, tilingFactor, tintColor, thickness, fade, entID);
+}
+
+/// Common Quad Renderer
+/// @param transform Quad transform
+/// @param texture Texture to be uploaded
+/// @param textureCoords Texture coordinates
+/// @param tilingFactor tiling factor
+/// @param tintColor color
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawTextureQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec2* textureCoords, float tilingFactor, const glm::vec4& tintColor, int32_t entID) {
+    // If number of indices increase in batch then start new batch
+    if (s_QuadData->IndexCount >= QuadData::MaxIndices) {
+        IK_CORE_WARN("    Starts the new batch as number of indices ({0}) increases in the previous batch", s_QuadData->IndexCount);
+        NextBatch();
+    }
+    
+    float textureIndex = 0.0f;
+    if (texture) {
+        // Find if texture is already loaded in current batch
+        for (size_t i = 1; i < s_QuadData->TextureSlotIndex; i++) {
+            if (s_QuadData->TextureSlots[i].get() == texture.get()) {
+                // Found the current textue in the batch
+                textureIndex = (float)i;
+                break;
+            }
+        }
+        
+        // If current texture slot is not pre loaded then load the texture in proper slot
+        if (textureIndex == 0.0f) {
+            // If number of slots increases max then start new batch
+            if (s_QuadData->TextureSlotIndex >= MaxTextureSlotsInShader) {
+                IK_CORE_WARN("    Starts the new batch as number of texture slot ({0}) increases in the previous batch", s_QuadData->TextureSlotIndex);
+                NextBatch();
+            }
+            
+            // Loading the current texture in the first free slot slot
+            textureIndex = (float)s_QuadData->TextureSlotIndex;
+            s_QuadData->TextureSlots[s_QuadData->TextureSlotIndex] = texture;
+            s_QuadData->TextureSlotIndex++;
+        }
+    }
+    
+    for (size_t i = 0; i < QuadData::VertexForSingleQuad; i++) {
+        s_QuadData->VertexBufferPtr->Position     = transform * s_QuadData->VertexPositions[i];
+        s_QuadData->VertexBufferPtr->Color        = tintColor;
+        s_QuadData->VertexBufferPtr->TexCoords    = textureCoords[i];
+        s_QuadData->VertexBufferPtr->TexIndex     = textureIndex;
+        s_QuadData->VertexBufferPtr->TilingFactor = tilingFactor;
+        s_QuadData->VertexBufferPtr->ObjectID     = entID;
+        s_QuadData->VertexBufferPtr++;
+    }
+    
+    s_QuadData->IndexCount += QuadData::IndicesForSingleQuad;
+    
+    RendererStatistics::Get().IndexCount += QuadData::IndicesForSingleQuad;
+    RendererStatistics::Get().VertexCount += QuadData::VertexForSingleQuad;
+}
+
+/// Render the Circle
+/// @param transform Transform of crcle
+/// @param color color of circle
+/// @param thickness thickneess
+/// @param fade fade
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawTextureCircle(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, float tilingFactor, const glm::vec4& color, float thickness, float fade, int32_t entID)
+{
+    // If number of indices increase in batch then start new batch
+    if (s_CircleData->IndexCount >= CircleData::MaxIndices) {
+        IK_CORE_WARN("Starts the new batch as number of indices ({0}) increases in the previous batch", s_CircleData->IndexCount);
+        NextBatch();
+    }
+    
+    float textureIndex = 0.0f;
+    if (texture) {
+        // Find if texture is already loaded in current batch
+        for (size_t i = 1; i < s_CircleData->TextureSlotIndex; i++) {
+            if (s_CircleData->TextureSlots[i].get() == texture.get()) {
+                // Found the current textue in the batch
+                textureIndex = (float)i;
+                break;
+            }
+        }
+        
+        // If current texture slot is not pre loaded then load the texture in proper slot
+        if (textureIndex == 0.0f) {
+            // If number of slots increases max then start new batch
+            if (s_CircleData->TextureSlotIndex >= MaxTextureSlotsInShader) {
+                IK_CORE_WARN("    Starts the new batch as number of texture slot ({0}) increases in the previous batch", s_CircleData->TextureSlotIndex);
+                NextBatch();
+            }
+            
+            // Loading the current texture in the first free slot slot
+            textureIndex = (float)s_CircleData->TextureSlotIndex;
+            s_CircleData->TextureSlots[s_CircleData->TextureSlotIndex] = texture;
+            s_CircleData->TextureSlotIndex++;
+        }
+    }
+    
+    for (size_t i = 0; i < CircleData::VertexForSingleCircle; i++) {
+        s_CircleData->VertexBufferPtr->Position     = transform * s_CircleData->VertexPositions[i];
+        s_CircleData->VertexBufferPtr->Color        = color;
+        s_CircleData->VertexBufferPtr->TexCoords    = 2.0f * s_CircleData->VertexPositions[i];
+        s_CircleData->VertexBufferPtr->TexIndex     = textureIndex;
+        s_CircleData->VertexBufferPtr->TilingFactor = tilingFactor;
+        s_CircleData->VertexBufferPtr->Thickness    = thickness;
+        s_CircleData->VertexBufferPtr->Fade         = fade;
+        s_CircleData->VertexBufferPtr->ObjectID     = entID;
+        s_CircleData->VertexBufferPtr++;
+    }
+    
+    s_CircleData->IndexCount += CircleData::IndicesForSingleCircle;
+    
+    RendererStatistics::Get().IndexCount += CircleData::IndicesForSingleCircle;
+    RendererStatistics::Get().VertexCount += CircleData::VertexForSingleCircle;
+}
