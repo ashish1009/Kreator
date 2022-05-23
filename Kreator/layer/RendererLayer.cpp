@@ -32,6 +32,7 @@ void RendererLayer::Attach() {
     
     // Temp Init
     m_SceneCamera = SceneCamera::Create();
+    m_EditorCamera = EditorCamera::Create();
 }
 
 /// Renderer Layer Detach

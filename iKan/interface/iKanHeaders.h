@@ -57,5 +57,8 @@
 // Scene Files
 #include <Scene/SceneCamera.hpp>
 
+// Editor Files
+#include <Editor/EditorCamera.hpp>
+
 // Gui Files
 #include <Gui/ImguiAPI.hpp>
