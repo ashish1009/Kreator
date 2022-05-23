@@ -23,6 +23,23 @@ namespace ShaderUtils {
         IK_CORE_ASSERT(false, "Unknown shader type!");
     }
     
+    /// Get the Open GL Shader Name from Type
+    /// @param type type of shader in GL enum
+    static const std::string ShaderNameFromInternalType(const ShaderDomain& type) {
+        switch (type) {
+            case ShaderDomain::Vertex: return "Vertex";
+            case ShaderDomain::Geometry: return "Geometry";
+            case ShaderDomain::Fragment: return "Fragment";
+            case ShaderDomain::None:
+            default: IK_CORE_ASSERT(false, "Invalid domain");
+        }
+        if (type == ShaderDomain::None) return "Vertex";
+        if (type == ShaderDomain::None) return "Fragment";
+        if (type == ShaderDomain::None) return "Geomatry";
+        
+        IK_CORE_ASSERT(false, "Unknown shader type!");
+    }
+
 #endif
     
     /// Get the Open GL Shader Type from string
@@ -75,7 +92,8 @@ OpenGLShader::OpenGLShader(const std::string& path) : m_AssetPath(path), m_Name(
     
     // Parse and Store all the Uniform in Shader
     Parse();
-    
+    ResolveUniforms();
+
     IK_LOG_SEPARATOR();
 }
 
@@ -323,6 +341,71 @@ void OpenGLShader::ParseUniform(const std::string& statement, ShaderDomain domai
             
             m_GSMaterialUniformBuffer->PushUniform(declaration);
         }
+    }
+}
+
+/// Resolved tht stored Uniforms
+void OpenGLShader::ResolveUniforms() {
+    glUseProgram(m_RendererID);
+    
+    IK_CORE_INFO("    ---------------------------------------------");
+    IK_CORE_INFO("    Resolving Uniform locations for Shader '{0}'", m_Name);
+    
+    IK_CORE_INFO("        Resolving Uniforms for Samplers...");
+    // Setting location of sampler uniform
+    uint32_t sampler = 0;
+    for (size_t i = 0; i < m_Resources.size(); i++) {
+        OpenGLShaderResourceDeclaration* resource = (OpenGLShaderResourceDeclaration*)m_Resources[i];
+        int32_t location = GetUniformLocation(resource->m_Name);
+        
+        if (resource->GetCount() == 1) {
+            resource->m_Register = sampler;
+            if (location != -1) {
+                IK_CORE_INFO("            Location : {0} for {1} [{2}]", sampler, resource->m_Name, resource->GetCount());
+                SetUniformInt1(resource->m_Name, sampler);
+            }
+            
+            sampler++;
+        }
+        else if (resource->GetCount() > 1) {
+            resource->m_Register = 0;
+            
+            uint32_t count = resource->GetCount();
+            int32_t* samplers = new int32_t[count];
+            
+            for (uint32_t s = 0; s < count; s++)
+                samplers[s] = s;
+            IK_CORE_INFO("            Location : {0} to {1} for {2} [{3}]", 0, count, resource->GetName(), resource->GetCount());
+            SetIntArray(resource->GetName(), samplers, count);
+            delete[] samplers;
+        }
+    }
+    IK_CORE_INFO("        -----------------------------------------");
+    
+    std::shared_ptr<OpenGLShaderUniformBufferDeclaration> decls[3] = { m_VSMaterialUniformBuffer, m_FSMaterialUniformBuffer, m_GSMaterialUniformBuffer };
+    for (uint8_t shaderIdx = 0; shaderIdx < MaxShaderSupported; shaderIdx++) {
+        IK_CORE_INFO("        Resolving Uniforms for Datatypes of '{0}' Shader...", ShaderUtils::ShaderNameFromInternalType((ShaderDomain)(shaderIdx + 1)));
+        auto decl = decls[shaderIdx];
+        if (decl) {
+            const std::vector<ShaderUniformDeclaration*>& uniforms = decl->GetUniformDeclarations();
+            for (size_t j = 0; j < uniforms.size(); j++) {
+                OpenGLShaderUniformDeclaration* uniform = (OpenGLShaderUniformDeclaration*)uniforms[j];
+                if (uniform->GetType() == OpenGLShaderUniformDeclaration::Type::STRUCT) {
+                    const ShaderStruct& s = uniform->GetShaderUniformStruct();
+                    const auto& fields = s.GetFields();
+                    for (size_t k = 0; k < fields.size(); k++) {
+                        OpenGLShaderUniformDeclaration* field = (OpenGLShaderUniformDeclaration*)fields[k];
+                        field->m_Location = GetUniformLocation(uniform->m_Name + "." + field->m_Name);
+                        IK_CORE_INFO("            Location : {0} for {1}.{2} [{3}]", field->m_Location, s.GetName(), field->GetName(), field->GetCount());
+                    }
+                }
+                else {
+                    uniform->m_Location = GetUniformLocation(uniform->m_Name);
+                    IK_CORE_INFO("            Location : {0} for {1} [{2}]", uniform->m_Location, uniform->GetName(), uniform->GetCount());
+                }
+            }
+        }
+        IK_CORE_INFO("        -----------------------------------------");
     }
 }
 
