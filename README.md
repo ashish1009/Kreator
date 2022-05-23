@@ -89,6 +89,8 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 ### Library
 `{...} directory where Kreator Engine is cloned`
 Link the Kreator.a in your project... 
+Link the libassimp.5.dylib from path {...}/vendors/assimp/lib
+Link the libIrrXML.dylib from path {...}/vendors/assimp/lib 
 
 ### Frameworks
 Link following frameworks to your project...
@@ -107,6 +109,7 @@ Add the following header search paths
 ### Library Search Paths
 Add the following library search paths 
 `{...} directory where Kreator Engine is cloned`
+- {...}/vendors/assimp/lib
 
 ### Preprocesor
 - Add `IK_DEBUG_FEATURE` to enable Kreator Debug features like Profiler and so on...

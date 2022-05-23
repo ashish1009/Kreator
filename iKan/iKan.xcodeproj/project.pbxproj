@@ -94,6 +94,8 @@
 		3E8200A9283B8F750024DF91 /* EditorCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E8200A7283B8F750024DF91 /* EditorCamera.hpp */; };
 		3EB1C88E283BBA200098836F /* stb_image.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EB1C88A283BBA200098836F /* stb_image.h */; };
 		3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1C88B283BBA200098836F /* stb_image.cpp */; };
+		3EB1C892283BCAB20098836F /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB1C890283BCAB10098836F /* libIrrXML.dylib */; };
+		3EB1C893283BCAB20098836F /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB1C891283BCAB10098836F /* libassimp.5.dylib */; };
 		3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244A9283A8E1900640481 /* AssetManager.cpp */; };
 		3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244AA283A8E1900640481 /* AssetManager.hpp */; };
 		3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B4283A92D400640481 /* ShaderLibrary.cpp */; };
@@ -209,6 +211,8 @@
 		3E8200A7283B8F750024DF91 /* EditorCamera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorCamera.hpp; sourceTree = "<group>"; };
 		3EB1C88A283BBA200098836F /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		3EB1C88B283BBA200098836F /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
+		3EB1C890283BCAB10098836F /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = vendors/assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
+		3EB1C891283BCAB10098836F /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = vendors/assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EB1C892283BCAB20098836F /* libIrrXML.dylib in Frameworks */,
+				3EB1C893283BCAB20098836F /* libassimp.5.dylib in Frameworks */,
 				3E65765E2837CF88006B0C81 /* libgui.a in Frameworks */,
 				3E65762B2837BE74006B0C81 /* libglad.a in Frameworks */,
 				3E6575E62837AFAB006B0C81 /* libglfw3.a in Frameworks */,
@@ -265,6 +271,8 @@
 		3E6575E42837AFAA006B0C81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3EB1C891283BCAB10098836F /* libassimp.5.dylib */,
+				3EB1C890283BCAB10098836F /* libIrrXML.dylib */,
 				3E6575E52837AFAB006B0C81 /* libglfw3.a */,
 			);
 			name = Frameworks;
@@ -956,10 +964,12 @@
 					"${PROJECT_DIR}/vendors/glm",
 					"${PROJECT_DIR}/vendors/gui/gui",
 					"${PROJECT_DIR}/vendors/stbimage",
+					"${PROJECT_DIR}/vendors/assimp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendors/glfw/lib",
+					"$(PROJECT_DIR)/vendors/assimp/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -986,10 +996,12 @@
 					"${PROJECT_DIR}/vendors/glm",
 					"${PROJECT_DIR}/vendors/gui/gui",
 					"${PROJECT_DIR}/vendors/stbimage",
+					"${PROJECT_DIR}/vendors/assimp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendors/glfw/lib",
+					"$(PROJECT_DIR)/vendors/assimp/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
