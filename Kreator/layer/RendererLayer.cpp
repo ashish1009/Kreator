@@ -29,6 +29,9 @@ void RendererLayer::Attach() {
         FrameBuffer::Attachment::TextureFormat::R32I
     };
     m_VpData.FrameBuffer = FrameBuffer::Create(spec);
+    
+    // Temp Init
+    m_SceneCamera = SceneCamera::Create();
 }
 
 /// Renderer Layer Detach

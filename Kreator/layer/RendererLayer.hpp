@@ -33,5 +33,8 @@ public:
     
 private:
     Viewport m_VpData;
+    
+    // Temp Data
+    std::shared_ptr<SceneCamera> m_SceneCamera;
 };
 
