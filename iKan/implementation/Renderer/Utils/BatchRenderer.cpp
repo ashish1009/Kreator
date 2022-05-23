@@ -173,6 +173,7 @@ void BatchRenderer::InitQuadData() {
         offset += 4;
     }
     
+    // Create Index Buffer in GPU for storing Indices
     std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, QuadData::MaxIndices);
     s_QuadData->Pipeline->SetIndexBuffer(ib);
     delete[] quadIndices;

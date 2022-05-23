@@ -83,6 +83,9 @@
 		3E6A4D8C28369025003578F4 /* Layer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D8A28369025003578F4 /* Layer.hpp */; };
 		3E6A4D932836979C003578F4 /* LayerStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A4D912836979C003578F4 /* LayerStack.cpp */; };
 		3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D922836979C003578F4 /* LayerStack.hpp */; };
+		3E82008B283B551C0024DF91 /* ShaderUniform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E820089283B551C0024DF91 /* ShaderUniform.hpp */; };
+		3E820090283B61220024DF91 /* OpenGLShaderUniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E82008E283B61220024DF91 /* OpenGLShaderUniform.cpp */; };
+		3E820091283B61220024DF91 /* OpenGLShaderUniform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E82008F283B61220024DF91 /* OpenGLShaderUniform.hpp */; };
 		3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244A9283A8E1900640481 /* AssetManager.cpp */; };
 		3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244AA283A8E1900640481 /* AssetManager.hpp */; };
 		3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B4283A92D400640481 /* ShaderLibrary.cpp */; };
@@ -186,6 +189,9 @@
 		3E6A4D8A28369025003578F4 /* Layer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Layer.hpp; sourceTree = "<group>"; };
 		3E6A4D912836979C003578F4 /* LayerStack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LayerStack.cpp; sourceTree = "<group>"; };
 		3E6A4D922836979C003578F4 /* LayerStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LayerStack.hpp; sourceTree = "<group>"; };
+		3E820089283B551C0024DF91 /* ShaderUniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderUniform.hpp; sourceTree = "<group>"; };
+		3E82008E283B61220024DF91 /* OpenGLShaderUniform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLShaderUniform.cpp; sourceTree = "<group>"; };
+		3E82008F283B61220024DF91 /* OpenGLShaderUniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLShaderUniform.hpp; sourceTree = "<group>"; };
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
@@ -310,6 +316,7 @@
 				3E6578F92837E892006B0C81 /* BatchRenderer.cpp */,
 				3EE244B4283A92D400640481 /* ShaderLibrary.cpp */,
 				3EE244B5283A92D400640481 /* ShaderLibrary.hpp */,
+				3E820089283B551C0024DF91 /* ShaderUniform.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -327,6 +334,8 @@
 				3E2FA0EA2839205700EE289A /* OpenGLRendererBuffer.hpp */,
 				3E2FA101283920C400EE289A /* OpenGLShader.cpp */,
 				3E2FA102283920C400EE289A /* OpenGLShader.hpp */,
+				3E82008E283B61220024DF91 /* OpenGLShaderUniform.cpp */,
+				3E82008F283B61220024DF91 /* OpenGLShaderUniform.hpp */,
 				3E2FA105283920CF00EE289A /* OpenGLTexture.cpp */,
 				3E2FA106283920CF00EE289A /* OpenGLTexture.hpp */,
 				3E2FA109283920DA00EE289A /* OpenGLFrameBuffer.cpp */,
@@ -583,6 +592,7 @@
 				3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */,
 				3E6A4D7F283643AD003578F4 /* iKanCore.h in Headers */,
 				3E6A4D7828362759003578F4 /* Logger.hpp in Headers */,
+				3E820091283B61220024DF91 /* OpenGLShaderUniform.hpp in Headers */,
 				3EE244BB283A936B00640481 /* StringUtils.hpp in Headers */,
 				3E2FA100283920AA00EE289A /* FrameBuffer.hpp in Headers */,
 				3E6575D928379414006B0C81 /* MouseEvent.h in Headers */,
@@ -608,6 +618,7 @@
 				3E6A4D7328360F7C003578F4 /* Application.hpp in Headers */,
 				3EE244B7283A92D400640481 /* ShaderLibrary.hpp in Headers */,
 				3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */,
+				3E82008B283B551C0024DF91 /* ShaderUniform.hpp in Headers */,
 				3E6575C528378FB1006B0C81 /* Window.hpp in Headers */,
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
 				3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */,
@@ -731,6 +742,7 @@
 				3E2FA0F72839209000EE289A /* Shader.cpp in Sources */,
 				3E6575F92837B662006B0C81 /* Renderer.cpp in Sources */,
 				3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */,
+				3E820090283B61220024DF91 /* OpenGLShaderUniform.cpp in Sources */,
 				3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */,
 				3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */,
 				3E2FA107283920CF00EE289A /* OpenGLTexture.cpp in Sources */,

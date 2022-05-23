@@ -50,6 +50,7 @@ OpenGLShader::OpenGLShader(const std::string& path) : m_AssetPath(path), m_Name(
 
     PreprocessFile(StringUtils::ReadFromFile(m_AssetPath));
     Compile();
+    
     IK_LOG_SEPARATOR();
 }
 
