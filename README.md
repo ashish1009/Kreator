@@ -13,14 +13,7 @@ You can clone the repository to a local destination using git:
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ## Road Map
-- Fundamental Renderer
-    - Interface and Implementation for Shader Compiler.
-    - Interface and Implementation for storing Renderer Buffers and Arrays.
-    - Interface and Implementation for Frame buffer
-    - Interface and Implementation for Loading Texture file (using stb image files)
-
 - Renderer APIs
-    - Batch Renderer API for rendering Quad and Circles (2D Batch)
     - Scene Renderer
         - API for Environment
         - Render Mesh
@@ -41,7 +34,6 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     
 - Editor
     - Scene Hierarchy pannel : To Grow With Time
-    - Added Editor 3D camera
     - Property Grid API For IM GUI
     - Content Browser pannel : To Optimize With Time
     - ImGuimzo
@@ -58,7 +50,7 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     - Scene class to manage all entities : To Grow With Time
     
 - Project
-    - Serialise and deserialise the scene : To Graw With Time
+    - Serialise and 4 the scene : To Graw With Time
 
 ## Features
 - Fundamentals
@@ -78,6 +70,19 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     
 - Fundamental Renderer
     - Interface and Implementation for Renderer Context for attching Renderer to Window
+    - Interface and Implementation for Shader Compiler.
+    - Interface and Implementation for storing Renderer Buffers and Arrays.
+    - Interface and Implementation for Frame buffer
+    - Interface and Implementation for Loading Texture file (using stb image files)
+    
+- Renderer APIs
+    - Batch Renderer API for rendering Quad and Circles (2D Batch)
+    
+- Editor
+    - Added Editor 3D camera
+
+- Scene
+    - Added Scene camera
 
 ## How to Use the library
 

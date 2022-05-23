@@ -7,8 +7,8 @@
 
 #include "RendererLayer.hpp"
 
-glm::vec3 CameraTranslation   = { 0.0f, 0.0f, 0.1f };
-glm::vec3 QuadTranslation   = { 0.0f, 0.0f, 0.1f };
+glm::vec3 CameraTranslation = { 0.0f, 0.0f, 0.1f };
+glm::vec3 QuadTranslation = { 0.0f, 0.0f, 0.1f };
 
 /// Renderer Layer Constructor
 RendererLayer::RendererLayer() : Layer("Renderer") {
