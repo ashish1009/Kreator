@@ -36,9 +36,8 @@ std::string OpenGLShaderResourceDeclaration::TypeToString(Type type) {
 /// @param count count of uniform
 OpenGLShaderResourceDeclaration::OpenGLShaderResourceDeclaration(Type type, const std::string& name, uint32_t count)
 : m_Type(type), m_Name(name), m_Count(count) {
-    IK_CORE_INFO("            OpenGLShaderResourceDeclaration:- Name: '{0}', Type: {1}, Count: {2}", m_Name, TypeToString(m_Type), m_Count);
+    IK_CORE_INFO("            {0} {1} [{2}]", TypeToString(m_Type), m_Name, m_Count);
 }
-
 
 /// Get the size of type in bytes
 /// @param type uniform variable type
@@ -99,7 +98,7 @@ std::string OpenGLShaderUniformDeclaration::TypeToString(Type type) {
 OpenGLShaderUniformDeclaration::OpenGLShaderUniformDeclaration(ShaderDomain domain, ShaderStruct* uniformStruct, const std::string& name, uint32_t count)
 : m_Struct(uniformStruct), m_Type(OpenGLShaderUniformDeclaration::Type::STRUCT), m_Domain(domain), m_Name(name), m_Count(count) {
     m_Size = m_Struct->GetSize() * count;
-    IK_CORE_INFO("            OpenGLShaderUniformDeclaration:- Name: '{0}', Type: {1}, Count: {2}, Size: {3}", m_Name, TypeToString(m_Type), m_Count, m_Size);
+    IK_CORE_INFO("            {0} {1} [{2}] (Size : {3}) ", TypeToString(m_Type), m_Name, m_Count, m_Size);
 }
 
 /// OpenGLShaderUniformDeclaration Constructor with type
@@ -110,7 +109,7 @@ OpenGLShaderUniformDeclaration::OpenGLShaderUniformDeclaration(ShaderDomain doma
 OpenGLShaderUniformDeclaration::OpenGLShaderUniformDeclaration(ShaderDomain domain, Type type, const std::string& name, uint32_t count)
 : m_Type(type), m_Struct(nullptr), m_Domain(domain), m_Name(name), m_Count(count) {
     m_Size = SizeOfUniformType(m_Type) * m_Count;
-    IK_CORE_INFO("            OpenGLShaderUniformDeclaration:- Name: '{0}', Type: {1}, Count: {2}, Size: {3}", m_Name, TypeToString(m_Type), m_Count, m_Size);
+    IK_CORE_INFO("            {0} {1} [{2}] (Size : {3}) ", TypeToString(m_Type), m_Name, m_Count, m_Size);
 }
 
 /// Update the offset value

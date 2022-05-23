@@ -11,16 +11,7 @@ using namespace iKan;
 
 namespace ShaderUtils {
 
-    /// Get the Open GL Shader Type from string
-    /// @param type type of shader in string
-    static GLenum ShaderTypeFromString(const std::string& type) {
-        if ("vertex" == type)   return GL_VERTEX_SHADER;
-        if ("fragment" == type) return GL_FRAGMENT_SHADER;
-        if ("geometry" == type) return GL_GEOMETRY_SHADER;
-        
-        IK_CORE_ASSERT(false, "Unknown shader type!");
-    }
-
+    
 #ifdef IK_DEBUG_FEATURE
     /// Get the Open GL Shader Name from Type
     /// @param type type of shader in GL enum
@@ -31,7 +22,37 @@ namespace ShaderUtils {
         
         IK_CORE_ASSERT(false, "Unknown shader type!");
     }
+    
 #endif
+    
+    /// Get the Open GL Shader Type from string
+    /// @param type type of shader in string
+    static GLenum ShaderTypeFromString(const std::string& type) {
+        if ("vertex" == type)   return GL_VERTEX_SHADER;
+        if ("fragment" == type) return GL_FRAGMENT_SHADER;
+        if ("geometry" == type) return GL_GEOMETRY_SHADER;
+        
+        IK_CORE_ASSERT(false, "Unknown shader type!");
+    }
+    
+    /// Check if the string type is sampler
+    /// @param type type of samepler uniform
+    static bool IsTypeStringResource(const std::string& type) {
+        if (type == "sampler2D")          return true;
+        if (type == "sampler2DMS")        return true;
+        if (type == "samplerCube")        return true;
+        if (type == "sampler2DShadow")    return true;
+        return false;
+    }
+    
+    /// get Open GL shader domain typy from internal type
+    /// @param domain internal domain type
+    static ShaderDomain GlDomainToShaderDomain(GLint domain) {
+        if (domain == GL_VERTEX_SHADER)         return ShaderDomain::Vertex;
+        else if (domain == GL_FRAGMENT_SHADER)  return ShaderDomain::Fragment;
+        else if (domain == GL_GEOMETRY_SHADER)  return ShaderDomain::Geometry;
+        else IK_CORE_ASSERT(false, "Invalid domain");
+    }
     
 }
 
@@ -48,8 +69,12 @@ OpenGLShader::OpenGLShader(const std::string& path) : m_AssetPath(path), m_Name(
     IK_CORE_INFO("    File Path   : {0} ", m_AssetPath);
     IK_CORE_INFO("    ---------------------------------------------");
 
+    // Extract and Compile the Shader
     PreprocessFile(StringUtils::ReadFromFile(m_AssetPath));
     Compile();
+    
+    // Parse and Store all the Uniform in Shader
+    Parse();
     
     IK_LOG_SEPARATOR();
 }
@@ -95,8 +120,6 @@ void OpenGLShader::Compile() {
     std::array<GLuint, MaxShaderSupported> shaderId;
     
     for (const auto& [type, src] : m_SourceShaderString) {
-        IK_CORE_INFO("        Compiling '{0}' Shader ", ShaderUtils::ShaderNameFromType(type).c_str());
-        
         GLuint shader = glCreateShader(type);
         
         // Attch the shader source and then compile
@@ -122,6 +145,8 @@ void OpenGLShader::Compile() {
         // Attach both shader and link them
         glAttachShader(m_RendererID, shader);
         shaderId[glShaderIDIndex++] = shader;
+
+        IK_CORE_INFO("        Compiled '{0}' Shader ", ShaderUtils::ShaderNameFromType(type).c_str());
     }
     
     glLinkProgram(m_RendererID);
@@ -149,6 +174,166 @@ void OpenGLShader::Compile() {
     
     for (auto id : shaderId)
         glDeleteShader(id);
+}
+
+/// Read the shader code Extract the structure and uniforms and store them
+void OpenGLShader::Parse() {
+    m_Structs.clear();
+    m_Resources.clear();
+    
+    m_VSMaterialUniformBuffer.reset();
+    m_FSMaterialUniformBuffer.reset();
+    m_GSMaterialUniformBuffer.reset();
+    
+    const char* token;
+    for (auto& [domain, string] : m_SourceShaderString) {
+        auto& vertexSource = string;
+        const char* vstr = vertexSource.c_str();
+        
+        IK_CORE_INFO("    ---------------------------------------------");
+        IK_CORE_INFO("    Parsing the '{0}' shader to extracts all the Structures for '{1}' Shader", m_Name, ShaderUtils::ShaderNameFromType(domain));
+        while ((token = StringUtils::FindToken(vstr, "struct")))
+            ParseUniformStruct(StringUtils::GetBlock(token, &vstr), ShaderUtils::GlDomainToShaderDomain(domain));
+
+        vstr = vertexSource.c_str();
+        
+        IK_CORE_INFO("    ---------------------------------------------");
+        IK_CORE_INFO("    Parsing the '{0}' shader to extracts all the Uniforms for '{1}' Shader", m_Name, ShaderUtils::ShaderNameFromType(domain));
+        IK_CORE_INFO("        Parsing the Uniforms : ");
+        while ((token = StringUtils::FindToken(vstr, "uniform")))
+            ParseUniform(StringUtils::GetStatement(token, &vstr), ShaderUtils::GlDomainToShaderDomain(domain));
+        IK_CORE_INFO("        ----------------------------------------- ");
+    }
+}
+
+/// Parse the Uniforms that are structure in shader. It will just store the structures
+/// @param block Structure code block in string
+/// @param domain type of shader domain
+void OpenGLShader::ParseUniformStruct(const std::string& block, ShaderDomain domain) {
+    // get each word from the block and store them in vector
+    std::vector<std::string> tokens = StringUtils::Tokenize(block);
+    
+    uint32_t index = 1; // 0 is for keyword "struct"
+    
+    std::string name = tokens[index++];
+    ShaderStruct* uniformStruct = new ShaderStruct(name);
+    index++;  // 1 is for Name (stored)
+
+    IK_CORE_INFO("        struct {0} ", name);
+    IK_CORE_INFO("        {");
+    while (index < tokens.size()) {
+        if (tokens[index] == "}")
+            break;
+        
+        std::string type = tokens[index++]; // Type of element
+        std::string name = tokens[index++]; // Name of element
+        
+        // Strip ; from name if present
+        if (const char* s = strstr(name.c_str(), ";"))
+            name = std::string(name.c_str(), s - name.c_str());
+        
+        // Check is it array if yes the extract count
+        uint32_t count = 1;
+        const char* namestr = name.c_str();
+        if (const char* countWithBrackets = strstr(namestr, "[")) {
+            auto nameWithoutCount = std::string(namestr, countWithBrackets - namestr);
+            
+            const char* end = strstr(namestr, "]");
+            std::string countWithLastBracket(countWithBrackets + 1, end - countWithBrackets);
+            count = atoi(countWithLastBracket.c_str());
+            
+            name = nameWithoutCount;
+        }
+        
+        // Stores the content of structure in struct
+        ShaderUniformDeclaration* field = new OpenGLShaderUniformDeclaration(domain, OpenGLShaderUniformDeclaration::StringToType(type), name, count);
+        uniformStruct->AddField(field);
+    }
+    IK_CORE_INFO("        }");
+    IK_CORE_INFO("        ----------------------------------------- ");
+
+    // Store all the structure in shader
+    m_Structs.emplace_back(uniformStruct);
+}
+
+/// Parse the Uniforms that are fundamental datatype in shader
+/// @param statement uniform statement
+/// @param domain type of shader domain
+void OpenGLShader::ParseUniform(const std::string& statement, ShaderDomain domain) {
+    std::vector<std::string> tokens = StringUtils::Tokenize(statement);
+    uint32_t index = 1; // 0th is for keyword unifrom
+    
+    std::string typeString = tokens[index++];
+    std::string name = tokens[index++];
+    
+    // Strip ; from name if present
+    if (const char* s = strstr(name.c_str(), ";"))
+        name = std::string(name.c_str(), s - name.c_str());
+    
+    std::string nameWithSize(name);
+    
+    // Check is it array if yes the extract count
+    int32_t count = 1;
+    const char* namestr = nameWithSize.c_str();
+    if (const char* countWithBrackets = strstr(namestr, "[")) {
+        auto nameWithoutCount = std::string(namestr, countWithBrackets - namestr);
+        
+        const char* end = strstr(namestr, "]");
+        std::string countWithLastBracket(countWithBrackets + 1, end - countWithBrackets);
+        count = atoi(countWithLastBracket.c_str());
+        
+        name = nameWithoutCount;
+    }
+    
+    if (ShaderUtils::IsTypeStringResource(typeString)) {
+        // Store the resources uniform inside shader (Resources like Sampler 2D)
+        ShaderResourceDeclaration* declaration = new OpenGLShaderResourceDeclaration(OpenGLShaderResourceDeclaration::StringToType(typeString), name, count);
+        m_Resources.push_back(declaration);
+    }
+    else {
+        // Store the resources uniform inside shader fundamental and structures
+        OpenGLShaderUniformDeclaration::Type type = OpenGLShaderUniformDeclaration::StringToType(typeString);
+        OpenGLShaderUniformDeclaration* declaration = nullptr;
+        
+        if (type == OpenGLShaderUniformDeclaration::Type::NONE) {
+            // Find struct
+            ShaderStruct* structture = FindStruct(typeString);
+            IK_CORE_ASSERT(structture, "");
+            declaration = new OpenGLShaderUniformDeclaration(domain, structture, name, count);
+        }
+        else {
+            declaration = new OpenGLShaderUniformDeclaration(domain, type, name, count);
+        }
+        
+        if (domain == ShaderDomain::Vertex) {
+            if (!m_VSMaterialUniformBuffer)
+                m_VSMaterialUniformBuffer.reset(new OpenGLShaderUniformBufferDeclaration("", domain));
+            
+            m_VSMaterialUniformBuffer->PushUniform(declaration);
+        }
+        else if (domain == ShaderDomain::Fragment) {
+            if (!m_FSMaterialUniformBuffer)
+                m_FSMaterialUniformBuffer.reset(new OpenGLShaderUniformBufferDeclaration("", domain));
+            
+            m_FSMaterialUniformBuffer->PushUniform(declaration);
+        }
+        else if (domain == ShaderDomain::Geometry) {
+            if (!m_GSMaterialUniformBuffer)
+                m_GSMaterialUniformBuffer.reset(new OpenGLShaderUniformBufferDeclaration("", domain));
+            
+            m_GSMaterialUniformBuffer->PushUniform(declaration);
+        }
+    }
+}
+
+/// Find the structure stored in shader
+/// @param name Name of structure
+ShaderStruct* OpenGLShader::FindStruct(const std::string& name) {
+    for (ShaderStruct* s : m_Structs)
+        if (s->GetName() == name)
+            return s;
+    
+    return nullptr;
 }
 
 /// Upload the Uniform Vertex shader

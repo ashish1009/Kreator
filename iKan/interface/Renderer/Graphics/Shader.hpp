@@ -11,6 +11,11 @@
 
 namespace iKan {
     
+    // NOTE: For better oriented Logs print, while writing any shader it is suggested to group same data uniform resource together
+    // Like Keep all structure together
+    // Fundamental date type like int float and so on together
+    // Sampler resources together.....
+    
     // Forward Declaration
     class ShaderUniformBufferDeclaration;
     class ShaderResourceDeclaration;
