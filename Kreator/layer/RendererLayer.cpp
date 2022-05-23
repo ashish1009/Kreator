@@ -41,14 +41,34 @@ void RendererLayer::Detach() {
 /// @param ts Time step between 2 Frames
 void RendererLayer::Update(Timestep ts) {
     Renderer::ResetStatsEachFrame();
-    Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
+    
+    m_VpData.FrameBuffer->Bind();
+    {
+        Renderer::Clear({ 1.2f, 0.2f, 0.2f, 1.0f });
+    }
+    m_VpData.FrameBuffer->Unbind();
 }
 
 /// Render GUI Window each frame for Renderer Layer
 void RendererLayer::RenderGui() {
     ImguiAPI::StartDcocking();
+    
     ImguiAPI::FrameRate();
     Renderer::ImguiRendererStats();
+    
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::Begin("Kreator Viewport");
+        {
+            ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+            size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
+            ImGui::Image((void*)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+        }
+        
+        ImGui::End(); // ImGui::Begin("Kreator Viewport");
+        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+    }
+    
     ImguiAPI::EndDcocking();
 }
 
