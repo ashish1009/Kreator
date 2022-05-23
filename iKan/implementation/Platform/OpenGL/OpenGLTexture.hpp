@@ -32,6 +32,10 @@ namespace TextureUtils {
         RendererID GetRendererID() const override { return m_RendererID; }
         std::string GetfilePath() const override { return m_Filepath; }
         
+        // Fundamentals
+        void Bind(uint32_t slot = 0) const override;
+        void Unbind() const override;
+
     private:
         bool m_Uploaded = false;
         

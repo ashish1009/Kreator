@@ -87,3 +87,15 @@ OpenGLTexture::~OpenGLTexture() {
     glDeleteTextures(1, &m_RendererID);
     RendererStatistics::Get().TextureBufferSize -= m_Size;
 }
+
+/// Bind Open GL Texture
+/// @param slot Shader slot in which texture need to be binded
+void OpenGLTexture::Bind(uint32_t slot) const {
+    glActiveTexture(GL_TEXTURE0 + slot);
+    glBindTexture(GL_TEXTURE_2D, m_RendererID);
+}
+
+/// Unbind Open GL Texture
+void OpenGLTexture::Unbind() const {
+    glBindTexture(GL_TEXTURE_2D, 0);
+}

@@ -27,6 +27,12 @@ namespace iKan {
         /// NOTE: Return "" for white texture
         virtual std::string GetfilePath() const = 0;
         
+        /// Bind the Current Texture to a slot of shader
+        /// @param slot Slot of shader
+        virtual void Bind(uint32_t slot = 0) const = 0;
+        /// Unbind the Current Texture from shader slot
+        virtual void Unbind() const = 0;
+        
         /// Create Emptry Textyre with user Defined Data of size height and Width
         /// @param width Width of Empty Texture
         /// @param height Height of Empty Texture
