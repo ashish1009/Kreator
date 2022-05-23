@@ -11,6 +11,22 @@
 using namespace iKan;
 
 namespace FbUtils {
+    
+#ifdef IK_DEBUG_FEATURE
+    std::string GetTextureFormateStringFromEnum(FrameBuffer::Attachment::TextureFormat format)
+    {
+        switch (format) {
+            case FrameBuffer::Attachment::TextureFormat::RGBA8: return "RGBA8";
+            case FrameBuffer::Attachment::TextureFormat::R32I:  return "R32I";
+            case FrameBuffer::Attachment::TextureFormat::Depth24Stencil: return "Depth24Stencil";
+            case FrameBuffer::Attachment::TextureFormat::DepthCubeMap: return "DepthCubeMap";
+            case FrameBuffer::Attachment::TextureFormat::None:
+            default:
+                IK_CORE_ASSERT(false, "invalid format");
+        }
+    }
+#endif
+    
     /// Check is the specification format is depth or not
     /// @param format Format type
     bool IsDepthFormat(FrameBuffer::Attachment::TextureFormat format) {
@@ -147,8 +163,30 @@ OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBuffer::Specification& specs) : 
 /// Open GL Framebuffer destructor
 OpenGLFrameBuffer::~OpenGLFrameBuffer() {
     PROFILE();
-    IK_CORE_WARN("Destroying Open GL Framebuffer !!!");
     
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("Destroying Open GL Framebuffer !!!");
+    IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
+    
+    uint32_t i = 0;
+    IK_CORE_WARN("    ---------------------------------------------");
+    IK_CORE_WARN("    Color Attachments ");
+    for (const auto& colorSpec : m_ColorSpecifications) {
+        Renderer::RemoveRendererIDs(m_ColorAttachments[i]);
+        
+        IK_CORE_WARN("        Renderer ID : {0}", m_ColorAttachments[i]);
+        IK_CORE_WARN("        Formate     : {0}", FbUtils::GetTextureFormateStringFromEnum(colorSpec));
+        i++;
+    }
+    
+    Renderer::RemoveRendererIDs(m_DepthAttachment);
+    IK_CORE_WARN("    ---------------------------------------------");
+    IK_CORE_WARN("    Depth Attachments ");
+    IK_CORE_WARN("        Renderer ID : {0}", m_DepthAttachment);
+    IK_CORE_WARN("        Formate     : {0}", FbUtils::GetTextureFormateStringFromEnum(m_DepthSpecification));
+
+    IK_LOG_SEPARATOR();
+
     glDeleteFramebuffers(1, &m_RendererID);
     glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
     glDeleteTextures(1, &m_DepthAttachment);

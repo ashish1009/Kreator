@@ -13,15 +13,6 @@ You can clone the repository to a local destination using git:
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ## Road Map
-### Temp Road Map
-- Renderer Stats
-- Batch Renderer (Quad and Circle)
-    - Buffers
-    - Pipeline
-    - Shader Compiler
-    - Shader Uniform
-    - Texture
-
 - Fundamental Renderer
     - Interface and Implementation for Shader Compiler.
     - Interface and Implementation for storing Renderer Buffers and Arrays.

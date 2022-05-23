@@ -44,7 +44,7 @@ void RendererLayer::Update(Timestep ts) {
     
     m_VpData.FrameBuffer->Bind();
     {
-        Renderer::Clear({ 1.2f, 0.2f, 0.2f, 1.0f });
+        Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
     }
     m_VpData.FrameBuffer->Unbind();
 }
