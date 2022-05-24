@@ -23,6 +23,15 @@
       </Group>
    </Group>
    <FileRef
+      location = "group:Suduku/Suduku.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Chess/Chess.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Mario/Mario.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Kreator/Kreator.xcodeproj">
    </FileRef>
    <FileRef

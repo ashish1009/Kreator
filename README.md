@@ -108,6 +108,12 @@ Add the following header search paths
 - {...}/vendors/gui/gui
 - {...}/vendors/enTT/include
 
+${PROJECT_DIR}/../iKan/interface
+${PROJECT_DIR}/../iKan/vendors/spdlog/include
+${PROJECT_DIR}/../iKan/vendors/glm
+${PROJECT_DIR}/../iKan/vendors/gui/gui
+${PROJECT_DIR}/../iKan/vendors/enTT/include
+
 ### Library Search Paths
 Add the following library search paths 
 `{...} directory where Kreator Engine is cloned`
