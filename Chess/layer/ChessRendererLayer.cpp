@@ -50,6 +50,7 @@ void ChessRendererLayer::Attach() {
 /// Update the renderer Layer each frame
 void ChessRendererLayer::Update(Timestep ts) {
     Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
+    m_Scene->Update(ts);
 }
 
 /// Render ; for Renderer Layer

@@ -24,6 +24,9 @@ namespace iKan {
     /// Stores all infor and data of scene
     class Scene {
     public:
+        /// State of Scene
+        enum State : uint8_t { Play = 0, Edit = 1 };
+
         /// Scene Constructor
         Scene();
         /// Scene Destructor
@@ -40,10 +43,23 @@ namespace iKan {
         /// @param entity Entity pointer reference
         void DestroyEntity(const std::shared_ptr<Entity>& entity);
         
+        /// Update the Scene each frame
+        /// @param ts time step of each frame
+        void Update(Timestep ts);
+        
+        /// Play the Scene
+        void PlayScene();
+        /// Edit the Scene
+        void EditScene();
+        
         /// Create Scene instance
         static std::shared_ptr<Scene> Create();
         
     private:
+        // Member functions
+        void UpdateEditor(Timestep ts);
+        void UpdateRuntime(Timestep ts);
+
         // Registry to store all entity
         entt::registry m_Registry;
 
@@ -52,6 +68,11 @@ namespace iKan {
 
         // Number of Entity stored in Scene and Max ID given to Entity
         uint32_t m_NumEntities = 0, m_MaxEntityId = 0;
+        
+        // Function pointers
+        std::function<void(Timestep)> m_Update;
+        
+        State m_State = State::Edit;
         
         friend class Entity;
         friend class SceneHierarchyPannel;

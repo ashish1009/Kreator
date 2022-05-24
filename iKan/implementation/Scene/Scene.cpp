@@ -27,6 +27,13 @@ std::shared_ptr<Scene> Scene::Create() {
 Scene::Scene() {
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Scene ...");
+    
+    if (m_State == State::Edit)
+        EditScene();
+    else if (m_State == State::Play)
+        PlayScene();
+    else
+        IK_CORE_ASSERT(false, "Invalid State");
 }
 
 /// Scene Destructor
@@ -82,4 +89,38 @@ std::shared_ptr<Entity> Scene::DuplicateEntity(const std::shared_ptr<Entity>& en
     CopyComponentIfExist<TransformComponent>(*newEntity.get(), *entity.get());
 
     return newEntity;
+}
+
+/// Update the Scene
+/// @param ts time step
+void Scene::Update(Timestep ts) {
+    m_Update(ts);
+}
+
+/// Update the Scene while editing
+/// @param ts Time step
+void Scene::UpdateEditor(Timestep ts) {
+}
+
+/// Update the Scene at runtime
+/// @param ts Time step
+void Scene::UpdateRuntime(Timestep ts) {
+}
+
+/// Set Scene to play mode
+void Scene::PlayScene() {
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Scene is Set to Play");
+    
+    m_State = State::Play;
+    m_Update = std::bind(&Scene::UpdateRuntime, this, std::placeholders::_1);
+}
+
+/// Set scene to Edit mode
+void Scene::EditScene() {
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Scene is Set to Edit");
+    
+    m_State = State::Edit;
+    m_Update = std::bind(&Scene::UpdateEditor, this, std::placeholders::_1);
 }
