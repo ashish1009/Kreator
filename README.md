@@ -13,6 +13,12 @@ You can clone the repository to a local destination using git:
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ## Road Map
+Develop the following Games and Editor and Add Fetures as per need in iKan
+- Chess
+- Mario
+- Kreator
+- Suduku
+
 - 3D
     - Renderer APIs
         - Scene Renderer
@@ -34,11 +40,6 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     - ImGuimzo
         - Mouse selectable entity
 
-- ECS
-    - Entity Component System to make User friendly UI
-    - Entity class to store the component of entity
-    - Components : To Grow With Time
-    - Scene class to manage all entities : To Grow With Time
     
 - Project
     - Serialise and 4 the scene : To Graw With Time
@@ -84,6 +85,12 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     - Skeleton
     - Save All Animations
     - AABB
+    
+- ECS
+    - Entity Component System to make User friendly UI
+    - Entity class to store the component of entity
+    - Components : To Grow With Time
+    - Scene class to manage all entities : To Grow With Time
 
 ## How to Use the library
 

@@ -39,10 +39,10 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     specification.EnableGui = true;
     
     specification.CoreAssetPath = "../../iKan/assets/";
-    specification.ClientAssetPath = "../../Kreator/assets/";
+    specification.ClientAssetPath = "../../Mario/assets/";
 
     // Window Specification
-    specification.WindowSpec.Title = "Kreator";
+    specification.WindowSpec.Title = "Mario";
     specification.WindowSpec.Width = 1600;
     specification.WindowSpec.Height = 900;
     

@@ -5,27 +5,7 @@
 //  Created by iKan on 19/05/22.
 //
 
-#include <iKanHeaders.h>
-#include "ChessRendererLayer.hpp"
-
-using namespace iKan;
-
-/// Application for rendering all the layer. Derived from Core iKan::Application
-class ChessApp : public Application {
-public:
-    /// Chess Application instance
-    /// @param spec Core application specification
-    ChessApp(const Application::Specification& spec) : Application(spec) {
-        IK_INFO("Creating Chess Application ...");
-    }
-    
-    /// Chess Application Destructor
-    virtual ~ChessApp() {
-        IK_WARN("Destroying Chess Application !!!");
-    }
-private:
-    std::shared_ptr<Layer> m_RendererLayer;
-};
+#include "ChessApp.hpp"
 
 /// Implementation for creating instance of Core::Application
 std::unique_ptr<Application> iKan::CreateApplication() {
@@ -39,10 +19,10 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     specification.EnableGui = true;
     
     specification.CoreAssetPath = "../../iKan/assets/";
-    specification.ClientAssetPath = "../../Kreator/assets/";
+    specification.ClientAssetPath = "../../Chess/assets/";
 
     // Window Specification
-    specification.WindowSpec.Title = "Kreator";
+    specification.WindowSpec.Title = "Chess";
     specification.WindowSpec.Width = 1600;
     specification.WindowSpec.Height = 900;
     
@@ -50,5 +30,19 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     specification.WindowSpec.Decorated = true;
     specification.WindowSpec.Fullscreen = false;
 
-    return std::make_unique<ChessApp>(specification);
+    return std::make_unique<Chess::ChessApp>(specification);
+}
+
+using namespace Chess;
+
+/// Chess Application instance
+/// @param spec Core application specification
+ChessApp::ChessApp(const Application::Specification& spec) : Application(spec) {
+    IK_INFO("Creating Chess Application ...");
+    m_RendererLayer = std::make_shared<ChessRendererLayer>();
+}
+
+/// Chess Application Destructor
+ChessApp::~ChessApp() {
+    IK_WARN("Destroying Chess Application !!!");
 }

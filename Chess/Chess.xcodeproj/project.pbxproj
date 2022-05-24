@@ -42,6 +42,21 @@
 		3EF2AAD5283D0247009764F8 /* ChessRendererLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ChessRendererLayer.hpp; sourceTree = "<group>"; };
 		3EF2AAD6283D0247009764F8 /* ChessRendererLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChessRendererLayer.cpp; sourceTree = "<group>"; };
 		3EF2AAD8283D0247009764F8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3EF2AB61283D0D60009764F8 /* king.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = king.png; sourceTree = "<group>"; };
+		3EF2AB62283D0D60009764F8 /* queen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = queen.png; sourceTree = "<group>"; };
+		3EF2AB63283D0D60009764F8 /* rook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rook.png; sourceTree = "<group>"; };
+		3EF2AB64283D0D60009764F8 /* knight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = knight.png; sourceTree = "<group>"; };
+		3EF2AB65283D0D60009764F8 /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
+		3EF2AB66283D0D60009764F8 /* bishop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bishop.png; sourceTree = "<group>"; };
+		3EF2AB67283D0D60009764F8 /* pawn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pawn.png; sourceTree = "<group>"; };
+		3EF2AB69283D0D60009764F8 /* king.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = king.png; sourceTree = "<group>"; };
+		3EF2AB6A283D0D60009764F8 /* queen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = queen.png; sourceTree = "<group>"; };
+		3EF2AB6B283D0D60009764F8 /* rook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rook.png; sourceTree = "<group>"; };
+		3EF2AB6C283D0D60009764F8 /* knight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = knight.png; sourceTree = "<group>"; };
+		3EF2AB6D283D0D60009764F8 /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
+		3EF2AB6E283D0D60009764F8 /* bishop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bishop.png; sourceTree = "<group>"; };
+		3EF2AB6F283D0D60009764F8 /* pawn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pawn.png; sourceTree = "<group>"; };
+		3EF2AB70283D1090009764F8 /* ChessApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChessApp.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				3EF2AAD3283D0247009764F8 /* ChessApp.cpp */,
+				3EF2AB70283D1090009764F8 /* ChessApp.hpp */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -138,8 +154,38 @@
 		3EF2AB01283D0247009764F8 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				3EF2AB60283D0D60009764F8 /* black */,
+				3EF2AB68283D0D60009764F8 /* white */,
 			);
 			path = texture;
+			sourceTree = "<group>";
+		};
+		3EF2AB60283D0D60009764F8 /* black */ = {
+			isa = PBXGroup;
+			children = (
+				3EF2AB61283D0D60009764F8 /* king.png */,
+				3EF2AB62283D0D60009764F8 /* queen.png */,
+				3EF2AB63283D0D60009764F8 /* rook.png */,
+				3EF2AB64283D0D60009764F8 /* knight.png */,
+				3EF2AB65283D0D60009764F8 /* block.png */,
+				3EF2AB66283D0D60009764F8 /* bishop.png */,
+				3EF2AB67283D0D60009764F8 /* pawn.png */,
+			);
+			path = black;
+			sourceTree = "<group>";
+		};
+		3EF2AB68283D0D60009764F8 /* white */ = {
+			isa = PBXGroup;
+			children = (
+				3EF2AB69283D0D60009764F8 /* king.png */,
+				3EF2AB6A283D0D60009764F8 /* queen.png */,
+				3EF2AB6B283D0D60009764F8 /* rook.png */,
+				3EF2AB6C283D0D60009764F8 /* knight.png */,
+				3EF2AB6D283D0D60009764F8 /* block.png */,
+				3EF2AB6E283D0D60009764F8 /* bishop.png */,
+				3EF2AB6F283D0D60009764F8 /* pawn.png */,
+			);
+			path = white;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
