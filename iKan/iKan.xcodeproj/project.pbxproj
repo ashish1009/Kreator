@@ -106,6 +106,14 @@
 		3EE244B7283A92D400640481 /* ShaderLibrary.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244B5283A92D400640481 /* ShaderLibrary.hpp */; };
 		3EE244BA283A936B00640481 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B8283A936B00640481 /* StringUtils.cpp */; };
 		3EE244BB283A936B00640481 /* StringUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244B9283A936B00640481 /* StringUtils.hpp */; };
+		3EF2AA08283CFC0B009764F8 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA06283CFC0B009764F8 /* Scene.cpp */; };
+		3EF2AA09283CFC0B009764F8 /* Scene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AA07283CFC0B009764F8 /* Scene.hpp */; };
+		3EF2AA0E283CFC15009764F8 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA0C283CFC15009764F8 /* Entity.cpp */; };
+		3EF2AA0F283CFC15009764F8 /* Entity.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AA0D283CFC15009764F8 /* Entity.hpp */; };
+		3EF2AA12283CFC22009764F8 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA10283CFC22009764F8 /* Component.cpp */; };
+		3EF2AA13283CFC22009764F8 /* Component.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AA11283CFC22009764F8 /* Component.hpp */; };
+		3EF2AA16283CFD84009764F8 /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA14283CFD84009764F8 /* UUID.cpp */; };
+		3EF2AA17283CFD84009764F8 /* UUID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AA15283CFD84009764F8 /* UUID.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +240,14 @@
 		3EE244B5283A92D400640481 /* ShaderLibrary.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderLibrary.hpp; sourceTree = "<group>"; };
 		3EE244B8283A936B00640481 /* StringUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		3EE244B9283A936B00640481 /* StringUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
+		3EF2AA06283CFC0B009764F8 /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		3EF2AA07283CFC0B009764F8 /* Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
+		3EF2AA0C283CFC15009764F8 /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
+		3EF2AA0D283CFC15009764F8 /* Entity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Entity.hpp; sourceTree = "<group>"; };
+		3EF2AA10283CFC22009764F8 /* Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Component.cpp; sourceTree = "<group>"; };
+		3EF2AA11283CFC22009764F8 /* Component.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Component.hpp; sourceTree = "<group>"; };
+		3EF2AA14283CFD84009764F8 /* UUID.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UUID.cpp; sourceTree = "<group>"; };
+		3EF2AA15283CFD84009764F8 /* UUID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UUID.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -587,6 +603,9 @@
 			isa = PBXGroup;
 			children = (
 				3E82009E283B896A0024DF91 /* SceneCamera.hpp */,
+				3EF2AA07283CFC0B009764F8 /* Scene.hpp */,
+				3EF2AA0D283CFC15009764F8 /* Entity.hpp */,
+				3EF2AA11283CFC22009764F8 /* Component.hpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -595,6 +614,9 @@
 			isa = PBXGroup;
 			children = (
 				3E82009D283B896A0024DF91 /* SceneCamera.cpp */,
+				3EF2AA06283CFC0B009764F8 /* Scene.cpp */,
+				3EF2AA0C283CFC15009764F8 /* Entity.cpp */,
+				3EF2AA10283CFC22009764F8 /* Component.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -612,6 +634,7 @@
 			isa = PBXGroup;
 			children = (
 				3EB1C8A0283BD5020098836F /* AABB.hpp */,
+				3EF2AA15283CFD84009764F8 /* UUID.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -619,6 +642,7 @@
 		3EB1C8A3283BD51A0098836F /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				3EF2AA14283CFD84009764F8 /* UUID.cpp */,
 				3EB1C89F283BD5020098836F /* AABB.cpp */,
 			);
 			path = Math;
@@ -691,6 +715,7 @@
 				3EB1C8A2283BD5020098836F /* AABB.hpp in Headers */,
 				3E6575D928379414006B0C81 /* MouseEvent.h in Headers */,
 				3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */,
+				3EF2AA09283CFC0B009764F8 /* Scene.hpp in Headers */,
 				3E6576032837BA08006B0C81 /* OpenGLRendererAPI.hpp in Headers */,
 				3E65763C2837C785006B0C81 /* Buffer.hpp in Headers */,
 				3E6575FE2837B8E1006B0C81 /* RendererAPI.hpp in Headers */,
@@ -709,6 +734,8 @@
 				3E8200A9283B8F750024DF91 /* EditorCamera.hpp in Headers */,
 				3E6575E128379C0E006B0C81 /* Timestep.hpp in Headers */,
 				3E2FA104283920C400EE289A /* OpenGLShader.hpp in Headers */,
+				3EF2AA0F283CFC15009764F8 /* Entity.hpp in Headers */,
+				3EF2AA13283CFC22009764F8 /* Component.hpp in Headers */,
 				3E6578DC2837D10B006B0C81 /* ImguiLayer.hpp in Headers */,
 				3E6A4D7328360F7C003578F4 /* Application.hpp in Headers */,
 				3EB1C89D283BCB4D0098836F /* Mesh.hpp in Headers */,
@@ -725,6 +752,7 @@
 				3E6578F42837DF04006B0C81 /* ImguiAPI.hpp in Headers */,
 				3E6A4D8428364497003578F4 /* AssertsCoreAPI.h in Headers */,
 				3E6575CB28378FD8006B0C81 /* MacWindow.hpp in Headers */,
+				3EF2AA17283CFD84009764F8 /* UUID.hpp in Headers */,
 				3E6575DC28379491006B0C81 /* MouseCodes.h in Headers */,
 				3E2FA108283920CF00EE289A /* OpenGLTexture.hpp in Headers */,
 				3EB1C88E283BBA200098836F /* stb_image.h in Headers */,
@@ -823,6 +851,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EF2AA16283CFD84009764F8 /* UUID.cpp in Sources */,
 				3E2FA103283920C400EE289A /* OpenGLShader.cpp in Sources */,
 				3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */,
 				3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */,
@@ -839,14 +868,17 @@
 				3E2FA0FF283920AA00EE289A /* FrameBuffer.cpp in Sources */,
 				3E6A4D7728362759003578F4 /* Logger.cpp in Sources */,
 				3E6578DB2837D10B006B0C81 /* ImguiLayer.cpp in Sources */,
+				3EF2AA0E283CFC15009764F8 /* Entity.cpp in Sources */,
 				3E2FA10B283920DA00EE289A /* OpenGLFrameBuffer.cpp in Sources */,
 				3E6578FB2837E892006B0C81 /* BatchRenderer.cpp in Sources */,
 				3E2FA0F72839209000EE289A /* Shader.cpp in Sources */,
 				3E6575F92837B662006B0C81 /* Renderer.cpp in Sources */,
+				3EF2AA12283CFC22009764F8 /* Component.cpp in Sources */,
 				3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */,
 				3E820090283B61220024DF91 /* OpenGLShaderUniform.cpp in Sources */,
 				3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */,
 				3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */,
+				3EF2AA08283CFC0B009764F8 /* Scene.cpp in Sources */,
 				3E82009F283B896A0024DF91 /* SceneCamera.cpp in Sources */,
 				3E2FA107283920CF00EE289A /* OpenGLTexture.cpp in Sources */,
 				3E6578DE2837D278006B0C81 /* ImguiBuild.cpp in Sources */,
@@ -1005,6 +1037,7 @@
 					"${PROJECT_DIR}/vendors/gui/gui",
 					"${PROJECT_DIR}/vendors/stbimage",
 					"${PROJECT_DIR}/vendors/assimp/include",
+					"${PROJECT_DIR}/vendors/enTT/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1037,6 +1070,7 @@
 					"${PROJECT_DIR}/vendors/gui/gui",
 					"${PROJECT_DIR}/vendors/stbimage",
 					"${PROJECT_DIR}/vendors/assimp/include",
+					"${PROJECT_DIR}/vendors/enTT/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

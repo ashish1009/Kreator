@@ -325,6 +325,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/spdlog/include",
 					"${PROJECT_DIR}/../iKan/vendors/glm",
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
+					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -342,6 +343,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/spdlog/include",
 					"${PROJECT_DIR}/../iKan/vendors/glm",
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
+					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";

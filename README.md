@@ -106,6 +106,7 @@ Add the following header search paths
 - {...}/vendors/spdlog/include
 - {...}/vendors/glm
 - {...}/vendors/gui/gui
+- {...}/vendors/enTT/include
 
 ### Library Search Paths
 Add the following library search paths 
