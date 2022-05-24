@@ -35,6 +35,9 @@ namespace iKan {
         /// @param size Size of data to be copied
         /// @param offset offset from where data to be copied
         void Write(void* data, uint32_t size, uint32_t offset = 0);
+        /// Allocate the memory to buffer of size
+        /// @param size size of new buffer
+        void Allocate(uint32_t size);
         
         // Getters
         /// Return the size of buffer
@@ -76,7 +79,6 @@ namespace iKan {
         
     private:
         void Dealocate();
-        void Allocate(uint32_t size);
 
         // Stores the Total allocation made in program using Buffer class
         static uint32_t s_AllocatedBytes;

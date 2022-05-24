@@ -18,6 +18,7 @@
 #include <iostream>
 #include <set>
 #include <fstream>
+#include <unordered_set>
 
 // Engine files
 #include "Core/iKanCore.h"

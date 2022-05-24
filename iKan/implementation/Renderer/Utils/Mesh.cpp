@@ -50,7 +50,7 @@ void AnimatedVertex::AddBoneData(uint32_t BoneID, float Weight) {
             return;
         }
     }
-    IK_CORE_WARN("            Vertex has more than four bones/weights affecting it, extra data will be discarded (BoneID : {0}, Weight :{1})", BoneID, Weight);
+    IK_CORE_WARN("    Vertex has more than four bones/weights affecting it, extra data will be discarded (BoneID : {0}, Weight : {1})", BoneID, Weight);
 }
 
 /// Create mesh API
@@ -108,9 +108,9 @@ void Mesh::LoadMesh() {
 
 /// Stores vertices and Indices to Graphics buffer
 void Mesh::StoreVerticesAndIndices() {
-    IK_CORE_INFO("        -----------------------------------------");
-    IK_CORE_INFO("        Storing Vertices and Indices");
-    IK_CORE_INFO("            Number of Submesh: {0}",  m_Scene->mNumMeshes);
+    IK_CORE_INFO("    ---------------------------------------------");
+    IK_CORE_INFO("Storing Vertices and Indices for : {0}", m_Name);
+    IK_CORE_INFO("    Number of Submesh         : {0}",  m_Scene->mNumMeshes);
 
     uint32_t vertexCount = 0;
     uint32_t indexCount = 0;
@@ -211,11 +211,11 @@ void Mesh::StoreVerticesAndIndices() {
     } // for (size_t m = 0; m < m_Scene->mNumMeshes; m++)
     
     if (m_IsAnimated)
-        IK_CORE_INFO("            Number of Animated Vertex : {0}", m_AnimatedVertices.size());
+        IK_CORE_INFO("    Number of Animated Vertex : {0}", m_AnimatedVertices.size());
     else
-        IK_CORE_INFO("            Number of Static Vertex   : {0}", m_StaticVertices.size());
+        IK_CORE_INFO("    Number of Static Vertex   : {0}", m_StaticVertices.size());
 
-    IK_CORE_INFO("            Number of Indices         : {0}", m_Indices.size());
+    IK_CORE_INFO("    Number of Indices         : {0}", m_Indices.size());
 }
 
 /// Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process
@@ -238,8 +238,8 @@ void Mesh::TraverseNodes(aiNode* node, const glm::mat4& parentTransform, uint32_
 
 /// Add Bones in Mesh
 void Mesh::AddBones() {
-    IK_CORE_INFO("        -----------------------------------------");
-    IK_CORE_INFO("        Adding Bones in Mesh");
+    IK_CORE_INFO("    ---------------------------------------------");
+    IK_CORE_INFO("Adding Bones in Mesh : {0}", m_Name);
     for (size_t m = 0; m < m_Scene->mNumMeshes; m++) {
         aiMesh* mesh = m_Scene->mMeshes[m];
         SubMesh& submesh = m_Submeshes[m];
@@ -260,7 +260,7 @@ void Mesh::AddBones() {
                 m_BoneMapping[boneName] = boneIndex;
             }
             else {
-                IK_CORE_INFO("            Found existing bone in map");
+                IK_CORE_INFO("    Found existing bone in map");
                 boneIndex = m_BoneMapping[boneName];
             }
             
@@ -272,13 +272,13 @@ void Mesh::AddBones() {
         }
     }
     m_BoneTransforms.resize(m_BoneCount);
-    IK_CORE_INFO("            Number of Bones : {0}", m_BoneCount);
+    IK_CORE_INFO("    Number of Bones : {0}", m_BoneCount);
 }
 
 /// Load all stored data to Graphics Buffer and array
 void Mesh::LoadGraphicsdata() {
-    IK_CORE_INFO("        -----------------------------------------");
-    IK_CORE_INFO("        Storing Data to Renderer Buffers");
+    IK_CORE_INFO("    ---------------------------------------------");
+    IK_CORE_INFO("Storing Data to Renderer Buffers for : {0}", m_Name);
     
     m_Pipeline = Pipeline::Create();
 
