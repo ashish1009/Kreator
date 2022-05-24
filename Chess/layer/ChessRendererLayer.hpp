@@ -13,6 +13,27 @@ using namespace iKan;
 
 namespace Chess {
     
+    /// Type of Block position
+    typedef uint8_t BLOCK_POSITION;
+    
+    // Constants
+    static constexpr uint8_t MAX_ROWS = 8;
+    static constexpr uint8_t MAX_COLUMNS = 8;
+    
+    /// Block Data
+    struct Block {
+        /// Position of block relative to Row and Column
+        /// X{ 0 : 7} | Y{ 0 : 7 }
+        BLOCK_POSITION X, Y;
+        
+        /// Block Index. e.g. Block at [2][3] is 2 * 8 + 3 = 19
+        int8_t BlockIndex = -1;
+        
+        /// Entity of Each block
+        std::shared_ptr<Entity> Entity;
+    };
+    
+    /// Chess Renderer Layer
     class ChessRendererLayer : public Layer {
     public:
         ChessRendererLayer();
@@ -33,6 +54,9 @@ namespace Chess {
         
         // Member variabls
         std::shared_ptr<Scene> m_Scene;
+        
+        // Stores the blocks data of chess
+        Block m_Blocks[MAX_ROWS][MAX_COLUMNS];
     };
 
 }

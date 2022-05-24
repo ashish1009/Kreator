@@ -44,7 +44,15 @@ namespace iKan {
         static std::shared_ptr<Scene> Create();
         
     private:
+        // Registry to store all entity
         entt::registry m_Registry;
+
+        // Store the entity ID Map
+        std::unordered_map<UUID, std::shared_ptr<Entity>> m_EntityIDMap;
+
+        // Number of Entity stored in Scene and Max ID given to Entity
+        uint32_t m_NumEntities = 0, m_MaxEntityId = 0;
+        
         friend class Entity;
         friend class SceneHierarchyPannel;
         friend class SceneSerializer;

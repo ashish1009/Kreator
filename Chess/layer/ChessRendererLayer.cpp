@@ -24,6 +24,27 @@ void ChessRendererLayer::Attach() {
     IK_INFO("Attaching '{0}'", m_Name);
     
     m_Scene = Scene::Create();
+    
+    // Initialize the Block data
+    for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
+        for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
+            // Stores the Position of Blocks
+            m_Blocks[rowIdx][colIdx].X = rowIdx;
+            m_Blocks[rowIdx][colIdx].Y = colIdx;
+            
+            // Stores the Index of each block
+            m_Blocks[rowIdx][colIdx].BlockIndex = rowIdx * MAX_ROWS + colIdx;
+            
+            // Create Entity for each Block
+            std::string blockName = "Block " + std::to_string(m_Blocks[rowIdx][colIdx].BlockIndex);
+            m_Blocks[rowIdx][colIdx].Entity = m_Scene->CreateEntity(blockName);
+            
+            // Update the block position
+            auto& blockPosition = m_Blocks[rowIdx][colIdx].Entity->GetComponent<TransformComponent>().Translation;
+            blockPosition.x = rowIdx;
+            blockPosition.y = colIdx;
+        }
+    }
 }
 
 /// Update the renderer Layer each frame
