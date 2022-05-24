@@ -75,7 +75,13 @@ namespace iKan {
         /// @param pipeline pipeline ref pointer
         /// @param count count
         static void DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count = 0);
-        
+        /// Render Complex submesh
+        /// @param pipeline Pipeline
+        /// @param count Count of index in submesh
+        /// @param indicesdata indices data
+        /// @param basevertex Base vertex pos
+        static void DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex);
+
         // --------------------- Renderer Stats API ---------------------------------
         /// Restet the renderer Stats each frame
         /// NOTE: Only those stats will be reset that need to be reset each frame

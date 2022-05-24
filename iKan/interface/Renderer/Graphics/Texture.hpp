@@ -11,6 +11,17 @@
 
 namespace iKan {
     
+    class Texture;
+    /// Texture property used by any component. Also contain flag to render or not
+    struct TextureComponent {
+        std::shared_ptr<Texture> Component = nullptr;
+        bool Use = true;
+        
+        TextureComponent() = default;
+        TextureComponent(const TextureComponent& other);
+        TextureComponent(const std::shared_ptr<Texture>& comp, bool use = true);
+    };
+    
     /// Interface class for Storing Renderer Texture data. Implementation is depending on the
     /// Supported Renerer API.
     class Texture {

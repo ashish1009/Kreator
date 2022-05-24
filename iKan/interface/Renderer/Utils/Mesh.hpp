@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include "Core/Utils/Timestep.hpp"
+#include "Renderer/Utils/Material.hpp"
+#include "Renderer/Graphics/Texture.hpp"
 #include "Renderer/Graphics/Pipeline.hpp"
 
 class aiScene;
@@ -15,6 +18,8 @@ class aiNodeAnim;
 class aiAnimation;
 
 namespace iKan {
+    
+    static constexpr uint32_t MaxPBRTextureSupported = 5;
     
     /// Vertex of Static Submesh
     struct StaticVertex {
@@ -70,24 +75,76 @@ namespace iKan {
         std::string NodeName, MeshName;
     };
     
+    /// Material Infor Sent directly to Shader
+    struct MaterialProperty {
+        glm::vec3 AlbedoColor = glm::vec3(1.0f);
+        
+        float Metalness = 0.5;;
+        float Roughness = 0.5f;
+        float TilinghFactor = 1.0f;
+    };
+    
+    /// Mesh Material data
+    struct MeshMaterial {
+        bool InvertTextureX = false, InvertTextureY = false;
+        std::string Name = "Unnamed Mateiral";
+        MaterialProperty Property;
+        std::shared_ptr<MaterialInstance> MaterialInstance = nullptr;
+        std::array<TextureComponent, MaxPBRTextureSupported> Textures;
+    };
+    
+    /// Wrapper structure used to draw mesh. load to SHader
+    struct MeshCamera {
+        glm::vec3 Position;
+        glm::mat4 ViewProjection;
+        
+        MeshCamera(glm::vec3 position, glm::mat4 viewProjection) : Position(position), ViewProjection(viewProjection) {}
+    };
+    
     /// Mesh Loader class
     class Mesh {
     public:
-        Mesh(const std::string& path, uint32_t entityId);
+        Mesh(const std::string& path, uint32_t entityId, bool loadPredefinedMaterial);
         ~Mesh();
+        
+        /// Draw the Mesh
+        /// @param camera Mesh Camera reference
+        /// @param transform mesh transform matrix
+        void Draw(const MeshCamera& camera, const glm::mat4& transform);
+
+        /// Update the mesh position each frame : For animation
+        /// @param ts time step of each frame
+        void Update(Timestep ts);
         
         /// Create instance of Mesh
         /// @param path Path of Mesh to be loaded
         /// @param entityId Entity ID of Mesh
-        static std::shared_ptr<Mesh> Create(const std::string& path, uint32_t entityId);
+        static std::shared_ptr<Mesh> Create(const std::string& path, uint32_t entityId, bool loadPredefinedMaterial = true);
         
     private:
         // Member Methods
-        void LoadMesh();
+        void LoadMesh(bool loadPredefinedMaterial);
         void StoreVerticesAndIndices();
         void TraverseNodes(aiNode* node, const glm::mat4& parentTransform = glm::mat4(1.0f), uint32_t level = 0);
         void AddBones();
         void LoadGraphicsdata();
+
+        void UploadMaterials();;
+        
+        void BoneTransform(float time);
+        void ReadNodeHierarchy(float AnimationTime, const aiNode* pNode, const glm::mat4& parentTransform);
+        
+        const aiNodeAnim* FindNodeAnim(const std::string& nodeName);
+
+        uint32_t FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
+        uint32_t FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
+        uint32_t FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
+        glm::vec3 InterpolateTranslation(float animationTime, const aiNodeAnim* nodeAnim);
+        glm::quat InterpolateRotation(float animationTime, const aiNodeAnim* nodeAnim);
+        glm::vec3 InterpolateScale(float animationTime, const aiNodeAnim* nodeAnim);
+
+        void CopyRootNode(const aiNode* pSrcNode, aiNode** pDstNode);
+        void DeleteRootNode(aiNode** pDstNode);
 
         // Member Variables
         AABB m_BoundingBox;
@@ -96,6 +153,7 @@ namespace iKan {
         std::shared_ptr<Pipeline> m_Pipeline;
         std::shared_ptr<VertexBuffer> m_VertexBuffer;
         std::shared_ptr<IndexBuffer> m_IndexBuffer;
+        std::shared_ptr<Material> m_BaseMaterial;
         
         std::vector<SubMesh> m_Submeshes;
         std::vector<StaticVertex> m_StaticVertices;
@@ -103,11 +161,30 @@ namespace iKan {
         std::vector<Index> m_Indices;
 
         std::unordered_map<uint32_t, std::vector<Triangle>> m_TriangleCache;
+        
+        // Material Information
+        uint32_t m_CurrentMaterialIndex = 0;
+        std::vector<MeshMaterial> m_MeshMaterials;
+        std::vector<std::string> m_MaterialNames; // Store material name for GUI
 
         // Animation Data
-        bool m_IsAnimated = false;
+        bool m_IsAnimated = false, m_AnimationPlaying = true;
+        float m_AnimationTime = 0.0f;
+        float m_WorldTime = 0.0f;
+        float m_TimeMultiplier = 1.0f;
+        float m_TicksPerSecond = 0.0;
+        float m_Duration = 0.0;
 
         uint32_t m_BoneCount = 0;
+
+        aiNode* m_RootNode;
+
+        // For each Animation
+        uint32_t m_NumChannels = 0;
+        aiAnimation* m_Animation;
+        aiNodeAnim** m_AnimChannels;
+
+        glm::mat4 m_InverseTransform;
 
         std::unordered_map<std::string, uint32_t> m_BoneMapping;
         std::vector<BoneInfo> m_BoneInfo;

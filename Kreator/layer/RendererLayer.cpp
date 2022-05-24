@@ -61,11 +61,12 @@ void RendererLayer::Update(Timestep ts) {
         glm::mat4 rotation = glm::toMat4(glm::quat(glm::vec3(0.0f)));
         glm::mat4 cameraTransform = glm::translate(glm::mat4(1.0f), CameraTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
         
-        BatchRenderer::BeginBatch(m_SceneCamera->GetProjectionMatrix() * glm::inverse(cameraTransform));
+//        BatchRenderer::BeginBatch(m_SceneCamera->GetProjectionMatrix() * glm::inverse(cameraTransform));
         
         glm::mat4 quadTransform = glm::translate(glm::mat4(1.0f), QuadTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
-        BatchRenderer::DrawQuad(quadTransform, m_Textures[0], { 1.0, 1.0, 1.0, 1.0 });
-        BatchRenderer::EndBatch();
+//        BatchRenderer::DrawQuad(quadTransform, m_Textures[0], { 1.0, 1.0, 1.0, 1.0 });
+//        BatchRenderer::EndBatch();
+        m_BagPack->Draw({ CameraTranslation, cameraTransform }, quadTransform);
     }
     m_VpData.FrameBuffer->Unbind();
 }

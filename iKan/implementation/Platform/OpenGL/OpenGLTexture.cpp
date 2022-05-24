@@ -19,7 +19,10 @@ namespace iKan::TextureUtils {
     /// @param format enum taken as uint (enum in Glad)
     std::string GetFormatNameFromEnum(uint32_t format) {
         if (format == GL_RGBA8) return "GL_RGBA8";
-        if (format == GL_RGBA)  return "GL_RGBA8";
+        if (format == GL_RGBA)  return "GL_RGBA";
+        if (format == GL_RGB8)  return "GL_RGB8";
+        if (format == GL_RGB)   return "GL_RGB";
+        if (format == GL_RED)   return "GL_RED";
         else IK_CORE_ASSERT(false, "Add New Featured format herer too");
     }
 }

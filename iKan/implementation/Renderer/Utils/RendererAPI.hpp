@@ -48,7 +48,8 @@ namespace iKan {
         virtual void MultiSample(bool state) const = 0;
         
         virtual void DrawIndexed(const std::shared_ptr<Pipeline>& va, uint32_t count) const = 0;
-        
+        virtual void DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex) const = 0;
+
         static std::unique_ptr<RendererAPI> Create();
     };
     

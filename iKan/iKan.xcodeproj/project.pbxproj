@@ -205,6 +205,8 @@
 		3E6A4D922836979C003578F4 /* LayerStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LayerStack.hpp; sourceTree = "<group>"; };
 		3E803911283CCD870034F547 /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
 		3E803912283CCD870034F547 /* Material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
+		3E803917283CD2CC0034F547 /* PBRAnimShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = PBRAnimShader.glsl; sourceTree = "<group>"; };
+		3E803918283CD2CC0034F547 /* PBRStaticShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = PBRStaticShader.glsl; sourceTree = "<group>"; };
 		3E820089283B551C0024DF91 /* ShaderUniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderUniform.hpp; sourceTree = "<group>"; };
 		3E82008E283B61220024DF91 /* OpenGLShaderUniform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLShaderUniform.cpp; sourceTree = "<group>"; };
 		3E82008F283B61220024DF91 /* OpenGLShaderUniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLShaderUniform.hpp; sourceTree = "<group>"; };
@@ -641,6 +643,8 @@
 		3EE244AF283A921400640481 /* 3D */ = {
 			isa = PBXGroup;
 			children = (
+				3E803917283CD2CC0034F547 /* PBRAnimShader.glsl */,
+				3E803918283CD2CC0034F547 /* PBRStaticShader.glsl */,
 			);
 			path = 3D;
 			sourceTree = "<group>";

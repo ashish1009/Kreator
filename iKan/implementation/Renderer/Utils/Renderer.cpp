@@ -102,6 +102,15 @@ void Renderer::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t c
     s_RendererAPI->DrawIndexed(pipeline, count);
 }
 
+/// Render Complex submesh
+/// @param pipeline Pipeline
+/// @param count Count of index in submesh
+/// @param indicesdata indices data
+/// @param basevertex Base vertex pos
+void Renderer::DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex) {
+    s_RendererAPI->DrawIndexedBaseVertex(pipeline, count, indicesdata, basevertex);
+}
+
 // --------------------- Renderer Stats API ---------------------------------
 /// Restet the renderer Stats each frame
 /// NOTE: Only those stats will be reset that need to be reset each frame

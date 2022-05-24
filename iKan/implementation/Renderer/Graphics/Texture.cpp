@@ -33,3 +33,6 @@ std::shared_ptr<Texture> Texture::Create(const std::string& path, bool inverted)
         default: IK_CORE_ASSERT(false, "Invalid Renderer API (None)"); break;
     }
 }
+
+TextureComponent::TextureComponent(const std::shared_ptr<Texture>& comp, bool use) : Component(comp), Use(use) {}
+TextureComponent::TextureComponent(const TextureComponent& other) : Component(other.Component), Use(other.Use) { IK_CORE_INFO("Copying TextureComponent"); }

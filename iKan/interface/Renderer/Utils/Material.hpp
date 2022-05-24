@@ -122,8 +122,8 @@ namespace iKan {
         /// return the name of material
         const std::string& GetName() const;
         /// Update the name of material
-        /// @param string new name of material
-        void SetName(const std::string&);
+        /// @param name new name of material
+        void SetName(const std::string& name);
 
         /// Create instance of material instance with material reference and name
         /// @param material material reference

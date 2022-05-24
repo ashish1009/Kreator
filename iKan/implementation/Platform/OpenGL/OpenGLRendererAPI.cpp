@@ -100,3 +100,19 @@ void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, u
     
     RendererStatistics::Get().DrawCalls++;
 }
+
+/// Render Complex submesh
+/// @param Pipeline pipeline
+/// @param count Count of index in submesh
+/// @param indicesdata indices data
+/// @param basevertex Base vertex pos
+void OpenGLRendererAPI::DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex) const {
+    pipeline->Bind();
+    glDrawElementsBaseVertex(GL_TRIANGLES, count, GL_UNSIGNED_INT, indicesdata, basevertex);
+    
+    // Unbinding Textures
+    glBindTexture(GL_TEXTURE_2D, 0);
+    pipeline->Unbind();
+    
+    RendererStatistics::Get().DrawCalls++;
+}

@@ -26,13 +26,17 @@ std::shared_ptr<Material> Material::Create(const std::string& shaderFilePath) {
 /// Material Constructor
 /// @param shader Shader to be binded with this material
 Material::Material(const std::shared_ptr<Shader>& shader) : m_Shader(shader) {
-    IK_CORE_INFO("Creating Material with Shader '{0}' ...", m_Shader->GetName());
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Creating Material ...");
+    IK_CORE_INFO("    Shader           : {0}", m_Shader->GetName());
     AllocateStorage();
 }
 
 /// Material Destructor
 Material::~Material() {
-    IK_CORE_WARN("Desroying Material with Shader '{0}' !!!", m_Shader->GetName());
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("Desroying Material !!!");
+    IK_CORE_WARN("    Shader : {0}", m_Shader->GetName());
 }
 
 /// Allocate memory to store shader uniforms
@@ -41,21 +45,21 @@ void Material::AllocateStorage() {
         const auto& vsBuffer = m_Shader->GetVSMaterialUniformBuffer();
         m_VSUniformStorageBuffer.Allocate(vsBuffer.GetSize());
         m_VSUniformStorageBuffer.ZeroInitialize();
-        IK_CORE_INFO("    Allocating Material Vertex Shader Buffer of size: {0}", vsBuffer.GetSize());
+        IK_CORE_INFO("    Vertex Buffer    : {0} Bytes", vsBuffer.GetSize());
     }
     
     if (m_Shader->HasFSMaterialUniformBuffer()) {
         const auto& psBuffer = m_Shader->GetFSMaterialUniformBuffer();
         m_FSUniformStorageBuffer.Allocate(psBuffer.GetSize());
         m_FSUniformStorageBuffer.ZeroInitialize();
-        IK_CORE_INFO("    Allocating Material Fragment Shader Buffer of size: {0}", psBuffer.GetSize());
+        IK_CORE_INFO("    Fragment Buffer  : {0} Bytes", psBuffer.GetSize());
     }
     
     if (m_Shader->HasGSMaterialUniformBuffer()) {
         const auto& gsBuffer = m_Shader->GetGSMaterialUniformBuffer();
         m_GSUniformStorageBuffer.Allocate(gsBuffer.GetSize());
         m_GSUniformStorageBuffer.ZeroInitialize();
-        IK_CORE_INFO("    Allocating Material Geomatry Shader Buffer of size: {0}", gsBuffer.GetSize());
+        IK_CORE_INFO("    Geomatery Buffer : {0} Bytes", gsBuffer.GetSize());
     }
 }
 
@@ -187,15 +191,21 @@ std::shared_ptr<MaterialInstance> MaterialInstance::Create(const std::shared_ptr
 /// @param material Material
 /// @param name Name
 MaterialInstance::MaterialInstance(const std::shared_ptr<Material>& material, const std::string& name) : m_Material(material), m_Name(name) {
-    IK_CORE_INFO("Creating MaterialInstance '{0}' with material containing shader '{1}' ...", m_Name, m_Material->m_Shader->GetName());
-
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Creating MaterialInstance ...");
+    IK_CORE_INFO("    Name               : {0}", m_Name);
+    IK_CORE_INFO("    Shader             : {0}", m_Material->m_Shader->GetName());
     m_Material->m_MaterialInstances.insert(this);
     AllocateStorage();
 }
 
 /// Material instnace destructor
 MaterialInstance::~MaterialInstance() {
-    IK_CORE_WARN("Destroying MaterialInstance '{0}' with material containing shader '{1}' !!!", m_Name, m_Material->m_Shader->GetName());
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("Destroying MaterialInstance ...");
+    IK_CORE_WARN("    Name   : {0}", m_Name);
+    IK_CORE_WARN("    Shader : {0}", m_Material->m_Shader->GetName());
+    
     m_Material->m_MaterialInstances.erase(this);
 }
 
@@ -205,21 +215,23 @@ void MaterialInstance::AllocateStorage() {
         const auto& vsBuffer = m_Material->m_Shader->GetVSMaterialUniformBuffer();
         m_VSUniformStorageBuffer.Allocate(vsBuffer.GetSize());
         memcpy(m_VSUniformStorageBuffer.Data, m_Material->m_VSUniformStorageBuffer.Data, vsBuffer.GetSize());
-        IK_CORE_INFO("    Allocating MaterialInstance Vertex Shader Buffer of size: {0}", vsBuffer.GetSize());
+        
+        IK_CORE_INFO("    Vertex Buffer      : {0} Bytes", vsBuffer.GetSize());
     }
     
     if (m_Material->m_Shader->HasFSMaterialUniformBuffer()) {
         const auto& psBuffer = m_Material->m_Shader->GetFSMaterialUniformBuffer();
         m_FSUniformStorageBuffer.Allocate(psBuffer.GetSize());
         memcpy(m_FSUniformStorageBuffer.Data, m_Material->m_FSUniformStorageBuffer.Data, psBuffer.GetSize());
-        IK_CORE_INFO("    Allocating MaterialInstance Fragment Shader Buffer of size: {0}", psBuffer.GetSize());
+        
+        IK_CORE_INFO("    Fragment Buffer    : {0} Bytes", psBuffer.GetSize());
     }
     
     if (m_Material->m_Shader->HasGSMaterialUniformBuffer()) {
         const auto& gsBuffer = m_Material->m_Shader->GetGSMaterialUniformBuffer();
         m_GSUniformStorageBuffer.Allocate(gsBuffer.GetSize());
         memcpy(m_GSUniformStorageBuffer.Data, m_Material->m_GSUniformStorageBuffer.Data, gsBuffer.GetSize());
-        IK_CORE_INFO("    Allocating MaterialInstance Geomatry Shader Buffer of size: {0}", gsBuffer.GetSize());
+        IK_CORE_INFO("    Geomatry Buffer    : {0} Bytes", gsBuffer.GetSize());
     }
 }
 

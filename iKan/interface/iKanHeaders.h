@@ -14,6 +14,7 @@
 #include <iostream>
 #include <set>
 #include <fstream>
+#include <unordered_set>
 
 // Imgui file
 #include <imgui.h>
