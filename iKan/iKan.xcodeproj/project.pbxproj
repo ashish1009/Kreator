@@ -94,8 +94,10 @@
 		3E8200A9283B8F750024DF91 /* EditorCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E8200A7283B8F750024DF91 /* EditorCamera.hpp */; };
 		3EB1C88E283BBA200098836F /* stb_image.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EB1C88A283BBA200098836F /* stb_image.h */; };
 		3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1C88B283BBA200098836F /* stb_image.cpp */; };
-		3EB1C892283BCAB20098836F /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB1C890283BCAB10098836F /* libIrrXML.dylib */; };
-		3EB1C893283BCAB20098836F /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB1C891283BCAB10098836F /* libassimp.5.dylib */; };
+		3EB1C89C283BCB4D0098836F /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1C89A283BCB4D0098836F /* Mesh.cpp */; };
+		3EB1C89D283BCB4D0098836F /* Mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB1C89B283BCB4D0098836F /* Mesh.hpp */; };
+		3EB1C8A1283BD5020098836F /* AABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1C89F283BD5020098836F /* AABB.cpp */; };
+		3EB1C8A2283BD5020098836F /* AABB.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB1C8A0283BD5020098836F /* AABB.hpp */; };
 		3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244A9283A8E1900640481 /* AssetManager.cpp */; };
 		3EE244AC283A8E1900640481 /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EE244AA283A8E1900640481 /* AssetManager.hpp */; };
 		3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EE244B4283A92D400640481 /* ShaderLibrary.cpp */; };
@@ -213,6 +215,10 @@
 		3EB1C88B283BBA200098836F /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		3EB1C890283BCAB10098836F /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = vendors/assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
 		3EB1C891283BCAB10098836F /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = vendors/assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
+		3EB1C89A283BCB4D0098836F /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		3EB1C89B283BCB4D0098836F /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		3EB1C89F283BD5020098836F /* AABB.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AABB.cpp; sourceTree = "<group>"; };
+		3EB1C8A0283BD5020098836F /* AABB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AABB.hpp; sourceTree = "<group>"; };
 		3EE244A9283A8E1900640481 /* AssetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		3EE244AA283A8E1900640481 /* AssetManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		3EE244B1283A921400640481 /* BatchQuadShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = BatchQuadShader.glsl; sourceTree = "<group>"; };
@@ -227,8 +233,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EB1C892283BCAB20098836F /* libIrrXML.dylib in Frameworks */,
-				3EB1C893283BCAB20098836F /* libassimp.5.dylib in Frameworks */,
 				3E65765E2837CF88006B0C81 /* libgui.a in Frameworks */,
 				3E65762B2837BE74006B0C81 /* libglad.a in Frameworks */,
 				3E6575E62837AFAB006B0C81 /* libglfw3.a in Frameworks */,
@@ -302,6 +306,7 @@
 				3E6575F82837B662006B0C81 /* Renderer.hpp */,
 				3E6578FA2837E892006B0C81 /* BatchRenderer.hpp */,
 				3E82009A283B88B40024DF91 /* Camera.hpp */,
+				3EB1C89B283BCB4D0098836F /* Mesh.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 				3EE244B5283A92D400640481 /* ShaderLibrary.hpp */,
 				3E820089283B551C0024DF91 /* ShaderUniform.hpp */,
 				3E8200A2283B8A3A0024DF91 /* Camera.cpp */,
+				3EB1C89A283BCB4D0098836F /* Mesh.cpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -500,6 +506,7 @@
 				3E6575D128379414006B0C81 /* Event */,
 				3E6A4D792836277D003578F4 /* Debug */,
 				3E6A4D7B28364272003578F4 /* Utils */,
+				3EB1C89E283BD4F70098836F /* Math */,
 				3E6A4D7E283643AD003578F4 /* iKanCore.h */,
 				3E6A4D7128360F7C003578F4 /* Application.hpp */,
 				3E6A4D8A28369025003578F4 /* Layer.hpp */,
@@ -517,6 +524,7 @@
 			children = (
 				3E6A4D7A28362785003578F4 /* Debug */,
 				3E6A4D8228364485003578F4 /* Utils */,
+				3EB1C8A3283BD51A0098836F /* Math */,
 				3E6A4D7028360F7C003578F4 /* Application.cpp */,
 				3E6A4D912836979C003578F4 /* LayerStack.cpp */,
 				3E6575C228378FB1006B0C81 /* Window.cpp */,
@@ -592,6 +600,22 @@
 			path = stbimage;
 			sourceTree = "<group>";
 		};
+		3EB1C89E283BD4F70098836F /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				3EB1C8A0283BD5020098836F /* AABB.hpp */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
+		3EB1C8A3283BD51A0098836F /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				3EB1C89F283BD5020098836F /* AABB.cpp */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
 		3EE244AD283A921400640481 /* textures */ = {
 			isa = PBXGroup;
 			children = (
@@ -654,6 +678,7 @@
 				3E820091283B61220024DF91 /* OpenGLShaderUniform.hpp in Headers */,
 				3EE244BB283A936B00640481 /* StringUtils.hpp in Headers */,
 				3E2FA100283920AA00EE289A /* FrameBuffer.hpp in Headers */,
+				3EB1C8A2283BD5020098836F /* AABB.hpp in Headers */,
 				3E6575D928379414006B0C81 /* MouseEvent.h in Headers */,
 				3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */,
 				3E6576032837BA08006B0C81 /* OpenGLRendererAPI.hpp in Headers */,
@@ -676,6 +701,7 @@
 				3E2FA104283920C400EE289A /* OpenGLShader.hpp in Headers */,
 				3E6578DC2837D10B006B0C81 /* ImguiLayer.hpp in Headers */,
 				3E6A4D7328360F7C003578F4 /* Application.hpp in Headers */,
+				3EB1C89D283BCB4D0098836F /* Mesh.hpp in Headers */,
 				3EE244B7283A92D400640481 /* ShaderLibrary.hpp in Headers */,
 				3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */,
 				3E82009B283B88B40024DF91 /* Camera.hpp in Headers */,
@@ -789,6 +815,7 @@
 				3E2FA103283920C400EE289A /* OpenGLShader.cpp in Sources */,
 				3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */,
 				3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */,
+				3EB1C8A1283BD5020098836F /* AABB.cpp in Sources */,
 				3E8200A4283B8A3A0024DF91 /* Camera.cpp in Sources */,
 				3E6A4D7228360F7C003578F4 /* Application.cpp in Sources */,
 				3E2FA0E52839204100EE289A /* OpenGLRendererPipeline.cpp in Sources */,
@@ -816,6 +843,7 @@
 				3E6578EF2837DE49006B0C81 /* PropertyGrid.cpp in Sources */,
 				3E6575EF2837B2A4006B0C81 /* Profiler.cpp in Sources */,
 				3E65763F2837CA95006B0C81 /* MacInput.cpp in Sources */,
+				3EB1C89C283BCB4D0098836F /* Mesh.cpp in Sources */,
 				3E8200A8283B8F750024DF91 /* EditorCamera.cpp in Sources */,
 				3E65763B2837C785006B0C81 /* Buffer.cpp in Sources */,
 				3E6A4D932836979C003578F4 /* LayerStack.cpp in Sources */,

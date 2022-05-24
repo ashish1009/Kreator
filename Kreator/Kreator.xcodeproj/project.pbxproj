@@ -326,6 +326,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/glm",
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 				);
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -342,6 +343,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/glm",
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 				);
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

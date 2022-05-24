@@ -38,5 +38,7 @@ private:
     std::shared_ptr<SceneCamera> m_SceneCamera;
     std::shared_ptr<EditorCamera> m_EditorCamera;
     std::shared_ptr<Texture> m_Textures[16];
+    std::shared_ptr<Mesh> m_Vampire;
+    std::shared_ptr<Mesh> m_BagPack;
 };
 

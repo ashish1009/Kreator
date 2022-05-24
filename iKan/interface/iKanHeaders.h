@@ -33,10 +33,13 @@
 // Core Files
 #include <Core/Debug/Logger.hpp>
 #include <Core/Debug/Profiler.hpp>
+
 #include <Core/Utils/Asserts.h>
 #include <Core/Utils/Buffer.hpp>
 #include <Core/Utils/AssetManager.hpp>
 #include <Core/Utils/StringUtils.hpp>
+
+#include <Core/Math/AABB.hpp>
 
 #include <Core/Event/ApplicationEvent.h>
 #include <Core/Event/KeyEvent.h>
@@ -49,6 +52,7 @@
 #include <Renderer/Utils/Renderer.hpp>
 #include <Renderer/Utils/Camera.hpp>
 #include <Renderer/Utils/BatchRenderer.hpp>
+#include <Renderer/Utils/Mesh.hpp>
 #include <Renderer/Graphics/Pipeline.hpp>
 #include <Renderer/Graphics/Buffers.hpp>
 #include <Renderer/Graphics/Texture.hpp>

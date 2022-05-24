@@ -16,6 +16,7 @@
 // Engine core file - Interface
 #include "Core/Debug/Logger.hpp"
 #include "Core/Debug/Profiler.hpp"
+#include "Core/Math/AABB.hpp"
 #include "Core/Utils/Asserts.h"
 #include "Core/Utils/Buffer.hpp"
 #include "Core/Utils/AssetManager.hpp"

@@ -38,6 +38,9 @@ void RendererLayer::Attach() {
     m_EditorCamera = EditorCamera::Create();
     
     m_Textures[0] = Texture::Create(AssetManager::GetClientAsset("texture/basicTextures/checkerboard.png"));
+    
+    m_Vampire = Mesh::Create(AssetManager::GetClientAsset("models/vampire/dancing_vampire.dae"), 0);
+    m_BagPack = Mesh::Create(AssetManager::GetClientAsset("models/backpack/backpack.obj"), 1);
 }
 
 /// Renderer Layer Detach
