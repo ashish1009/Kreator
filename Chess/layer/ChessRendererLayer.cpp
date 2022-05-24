@@ -22,6 +22,8 @@ ChessRendererLayer::~ChessRendererLayer() {
 /// Attach the Renderer Layer to the application
 void ChessRendererLayer::Attach() {
     IK_INFO("Attaching '{0}'", m_Name);
+    
+    m_Scene = Scene::Create();
 }
 
 /// Update the renderer Layer each frame

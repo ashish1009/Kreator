@@ -40,6 +40,7 @@ using namespace Chess;
 ChessApp::ChessApp(const Application::Specification& spec) : Application(spec) {
     IK_INFO("Creating Chess Application ...");
     m_RendererLayer = std::make_shared<ChessRendererLayer>();
+    PushLayer(m_RendererLayer);
 }
 
 /// Chess Application Destructor

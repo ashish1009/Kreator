@@ -30,6 +30,9 @@ namespace Chess {
         // Member functions
         bool OnKeyPressed(KeyPressedEvent& e);
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+        
+        // Member variabls
+        std::shared_ptr<Scene> m_Scene;
     };
 
 }
