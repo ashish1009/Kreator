@@ -7,6 +7,10 @@
 
 #pragma once
 
+// To remove documentation warning in entt::entity
+#pragma clang diagnostic ignored "-Wdocumentation"
+#pragma clang diagnostic ignored "-Wformat-security"
+
 // Include any core headers and Macros here that should be included in client side.
 // Client should include just one file to compile Core engine library
 
@@ -62,6 +66,9 @@
 
 // Scene Files
 #include <Scene/SceneCamera.hpp>
+#include <Scene/Scene.hpp>
+#include <Scene/Entity.hpp>
+#include <Scene/Component.hpp>
 
 // Editor Files
 #include <Editor/EditorCamera.hpp>

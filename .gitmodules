@@ -10,3 +10,6 @@
 [submodule "iKan/vendors/gui/gui"]
 	path = iKan/vendors/gui/gui
 	url = https://github.com/ashish1009/imgui
+[submodule "iKan/vendors/yamlSerialiser/yaml"]
+	path = iKan/vendors/yamlSerialiser/yaml
+	url = https://github.com/ashish1009/yaml-cpp

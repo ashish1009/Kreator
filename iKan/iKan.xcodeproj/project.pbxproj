@@ -114,6 +114,8 @@
 		3EF2AA13283CFC22009764F8 /* Component.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AA11283CFC22009764F8 /* Component.hpp */; };
 		3EF2AA16283CFD84009764F8 /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA14283CFD84009764F8 /* UUID.cpp */; };
 		3EF2AA17283CFD84009764F8 /* UUID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AA15283CFD84009764F8 /* UUID.hpp */; };
+		3EF2AE53283D2742009764F8 /* SceneSerialiser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AE51283D2742009764F8 /* SceneSerialiser.cpp */; };
+		3EF2AE54283D2742009764F8 /* SceneSerialiser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AE52283D2742009764F8 /* SceneSerialiser.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +132,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3E65764A2837CEB4006B0C81;
 			remoteInfo = gui;
+		};
+		3EF2AB93283D1FBC009764F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EF2AB8F283D1FBC009764F8 /* yaml.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3EF2AB7B283D1F15009764F8;
+			remoteInfo = yaml;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -248,6 +257,9 @@
 		3EF2AA11283CFC22009764F8 /* Component.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Component.hpp; sourceTree = "<group>"; };
 		3EF2AA14283CFD84009764F8 /* UUID.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UUID.cpp; sourceTree = "<group>"; };
 		3EF2AA15283CFD84009764F8 /* UUID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UUID.hpp; sourceTree = "<group>"; };
+		3EF2AB8F283D1FBC009764F8 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = yamlSerialiser/yaml.xcodeproj; sourceTree = "<group>"; };
+		3EF2AE51283D2742009764F8 /* SceneSerialiser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerialiser.cpp; sourceTree = "<group>"; };
+		3EF2AE52283D2742009764F8 /* SceneSerialiser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneSerialiser.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -518,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				3EB1C889283BBA200098836F /* stbimage */,
+				3EF2AB8F283D1FBC009764F8 /* yaml.xcodeproj */,
 				3E6576582837CEB5006B0C81 /* gui.xcodeproj */,
 				3E65761B2837BE32006B0C81 /* glad.xcodeproj */,
 			);
@@ -606,6 +619,7 @@
 				3EF2AA07283CFC0B009764F8 /* Scene.hpp */,
 				3EF2AA0D283CFC15009764F8 /* Entity.hpp */,
 				3EF2AA11283CFC22009764F8 /* Component.hpp */,
+				3EF2AE52283D2742009764F8 /* SceneSerialiser.hpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -617,6 +631,7 @@
 				3EF2AA06283CFC0B009764F8 /* Scene.cpp */,
 				3EF2AA0C283CFC15009764F8 /* Entity.cpp */,
 				3EF2AA10283CFC22009764F8 /* Component.cpp */,
+				3EF2AE51283D2742009764F8 /* SceneSerialiser.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -696,6 +711,14 @@
 			path = models;
 			sourceTree = "<group>";
 		};
+		3EF2AB90283D1FBC009764F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3EF2AB94283D1FBC009764F8 /* libyaml.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -747,6 +770,7 @@
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
 				3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */,
 				3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */,
+				3EF2AE54283D2742009764F8 /* SceneSerialiser.hpp in Headers */,
 				3E803914283CCD870034F547 /* Material.hpp in Headers */,
 				3E65762F2837BEDA006B0C81 /* OpenGLRendererContext.hpp in Headers */,
 				3E6578F42837DF04006B0C81 /* ImguiAPI.hpp in Headers */,
@@ -821,6 +845,10 @@
 					ProductGroup = 3E6576592837CEB5006B0C81 /* Products */;
 					ProjectRef = 3E6576582837CEB5006B0C81 /* gui.xcodeproj */;
 				},
+				{
+					ProductGroup = 3EF2AB90283D1FBC009764F8 /* Products */;
+					ProjectRef = 3EF2AB8F283D1FBC009764F8 /* yaml.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -844,6 +872,13 @@
 			remoteRef = 3E65765C2837CEB5006B0C81 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3EF2AB94283D1FBC009764F8 /* libyaml.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyaml.a;
+			remoteRef = 3EF2AB93283D1FBC009764F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -856,6 +891,7 @@
 				3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */,
 				3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */,
 				3EB1C8A1283BD5020098836F /* AABB.cpp in Sources */,
+				3EF2AE53283D2742009764F8 /* SceneSerialiser.cpp in Sources */,
 				3E8200A4283B8A3A0024DF91 /* Camera.cpp in Sources */,
 				3E6A4D7228360F7C003578F4 /* Application.cpp in Sources */,
 				3E2FA0E52839204100EE289A /* OpenGLRendererPipeline.cpp in Sources */,
@@ -1038,6 +1074,7 @@
 					"${PROJECT_DIR}/vendors/stbimage",
 					"${PROJECT_DIR}/vendors/assimp/include",
 					"${PROJECT_DIR}/vendors/enTT/include",
+					"${PROJECT_DIR}/vendors/yamlSerialiser/yaml/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1071,6 +1108,7 @@
 					"${PROJECT_DIR}/vendors/stbimage",
 					"${PROJECT_DIR}/vendors/assimp/include",
 					"${PROJECT_DIR}/vendors/enTT/include",
+					"${PROJECT_DIR}/vendors/yamlSerialiser/yaml/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
