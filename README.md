@@ -13,24 +13,19 @@ You can clone the repository to a local destination using git:
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ## Road Map
-- Renderer APIs
-    - Scene Renderer
-        - API for Environment
-        - Render Mesh
+- 3D
+    - Renderer APIs
+        - Scene Renderer
+            - API for Environment
+            - Render Mesh
 
-- Environment
-    - Light
-    - PBR
-    - IBL
-    - Shadow
-    - HDR Environment Map
-    - Manager to manage all Environment
-    
-- Mesh
-    - Class to load and Render Model
-    - Skeleton
-    - Save All Animations
-    - AABB
+    - Environment
+        - Light
+        - PBR
+        - IBL
+        - Shadow
+        - HDR Environment Map
+        - Manager to manage all Environment
     
 - Editor
     - Scene Hierarchy pannel : To Grow With Time
@@ -39,10 +34,6 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
     - ImGuimzo
         - Mouse selectable entity
 
-- Materials
-    - Added Shader uniform class
-    - Added Material class to handle Shader uniforms as collective buffers
-    
 - ECS
     - Entity Component System to make User friendly UI
     - Entity class to store the component of entity
@@ -83,6 +74,16 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 - Scene
     - Added Scene camera
+    
+- Materials
+    - Added Shader uniform class
+    - Added Material class to handle Shader uniforms as collective buffers
+    
+- Mesh
+    - Class to load and Render Model
+    - Skeleton
+    - Save All Animations
+    - AABB
 
 ## How to Use the library
 

@@ -57,4 +57,45 @@ namespace iKan {
         static std::shared_ptr<Texture> Create(const std::string& path, bool inverted = true);
     };
     
+    /// Wrepper class to load texture and render as sprite
+    class SubTexture {
+    public:
+        /// Subtexture Constructir
+        /// @param texture Texture instnace
+        /// @param min min bound of sub texture
+        /// @param max min bound of sub texture
+        /// @param spriteSize Sprite size (Block size of sub texture)
+        /// @param cellSize Sprite size (in pixels)
+        /// @param coords Coordinated of sub texture from Sprite
+        SubTexture(const std::shared_ptr<Texture>& texture, const glm::vec2& min, const glm::vec2& max, const glm::vec2& spriteSize = {1.0f, 1.0f}, const glm::vec2& cellSize = {16.0f, 16.0f}, const glm::vec2& coords = {0.0f, 0.0f});
+        ~SubTexture() = default;
+        
+        /// return the texture reference of sprite
+        const std::shared_ptr<Texture> GetTexture() const { return m_Texture; }
+        /// return Texture coordinates of Subtexture
+        const glm::vec2* GetTexCoord() const { return m_TexCoord; }
+        /// return Sprite size of Subtexture
+        glm::vec2& GetSpriteSize() { return m_SpriteSize; }
+        /// return Cell Size of Subtexture
+        glm::vec2& GetCellSize() { return m_CellSize; }
+        /// return Coordinates of Subtexture
+        glm::vec2& GetCoords() { return m_Coords; }
+
+        /// Create Subtexture from a texture sprite
+        /// @param texture Texture instnace
+        /// @param coords Coordinated of sub texture from Sprite
+        /// @param spriteSize Sprite size (Block size of sub texture)
+        /// @param cellSize Sprite size (in pixels)
+        static std::shared_ptr<SubTexture> CreateFromCoords(const std::shared_ptr<Texture>& texture, const glm::vec2& coords, const glm::vec2& spriteSize = {1.0f, 1.0f}, const glm::vec2& cellSize = {16.0f, 16.0f});
+
+    private:
+        
+        void UpdateTexcoords();
+
+        std::shared_ptr<Texture> m_Texture;
+        glm::vec2 m_TexCoord[4];
+        glm::vec2 m_SpriteSize;
+        glm::vec2 m_CellSize;
+        glm::vec2 m_Coords;
+    };
 }
