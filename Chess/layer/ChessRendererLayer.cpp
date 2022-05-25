@@ -24,6 +24,7 @@ void ChessRendererLayer::Attach() {
     IK_INFO("Attaching '{0}'", m_Name);
     
     m_Scene = Scene::Create();
+    m_Scene->PlayScene();
     
     // Initialize the Block data
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
@@ -38,6 +39,7 @@ void ChessRendererLayer::Attach() {
             // Create Entity for each Block
             std::string blockName = "Block " + std::to_string(m_Blocks[rowIdx][colIdx].BlockIndex);
             m_Blocks[rowIdx][colIdx].Entity = m_Scene->CreateEntity(blockName);
+            m_Blocks[rowIdx][colIdx].Entity->AddComponent<QuadComponent>();
             
             // Update the block position
             auto& blockPosition = m_Blocks[rowIdx][colIdx].Entity->GetComponent<TransformComponent>().Translation;
@@ -48,6 +50,7 @@ void ChessRendererLayer::Attach() {
     
     // Setup the scene Camera Entity
     m_CameraEntity = m_Scene->CreateEntity("Camera");
+    m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
 }
 
 /// Update the renderer Layer each frame

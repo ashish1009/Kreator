@@ -7,6 +7,7 @@
 
 #include "Scene.hpp"
 #include "Scene/Entity.hpp"
+#include "Renderer/Utils/BatchRenderer.hpp"
 
 using namespace iKan;
 
@@ -105,6 +106,14 @@ void Scene::UpdateEditor(Timestep ts) {
 /// Update the Scene at runtime
 /// @param ts Time step
 void Scene::UpdateRuntime(Timestep ts) {
+    if (const std::shared_ptr<Entity>& primaryCameraEntity = GetPrimaryCameraEntity(); primaryCameraEntity) {
+        const std::shared_ptr<SceneCamera>& camera = primaryCameraEntity->GetComponent<CameraComponent>().Camera;
+        
+        const auto& tc = primaryCameraEntity->GetComponent<TransformComponent>();
+        const glm::mat4& cameraTransform = tc.GetTransform();
+        
+        Render2DComponents(camera->GetProjectionMatrix() * glm::inverse(cameraTransform));
+    }
 }
 
 /// Set Scene to play mode
@@ -123,4 +132,32 @@ void Scene::EditScene() {
     
     m_State = State::Edit;
     m_Update = std::bind(&Scene::UpdateEditor, this, std::placeholders::_1);
+}
+
+/// Get the first primary camera in the scene
+std::shared_ptr<Entity> Scene::GetPrimaryCameraEntity() {
+    auto view = m_Registry.view<CameraComponent>();
+    for (auto entity : view) {
+        auto& comp = view.get<CameraComponent>(entity);
+        if (comp.Primary)
+            return m_EntityIDMap[m_Registry.get<IDComponent>(entity).ID];
+    }
+    return nullptr;
+}
+
+/// Render all 2D components
+/// @param viewProj Camera View projection matrix
+void Scene::Render2DComponents(const glm::mat4& viewProj) {
+    BatchRenderer::BeginBatch(viewProj);
+
+    // Quads
+    auto quadGroup = m_Registry.group<TransformComponent>(entt::get<QuadComponent>);
+    for (const auto& entity : quadGroup) {
+        const auto [transform, quadComp] = quadGroup.get<TransformComponent, QuadComponent>(entity);
+        if (quadComp.Texture.Component && quadComp.Texture.Use)
+            BatchRenderer::DrawQuad(transform.GetTransform(), quadComp.Texture.Component, quadComp.Color, quadComp.TilingFactor, (int32_t)entity);
+        else
+            BatchRenderer::DrawQuad(transform.GetTransform(), quadComp.Color, (int32_t)entity);
+    }
+    BatchRenderer::EndBatch();
 }

@@ -8,6 +8,8 @@
 #pragma once
 
 #include "Core/Math/UUID.hpp"
+#include "Scene/SceneCamera.hpp"
+#include "Renderer/Graphics/Texture.hpp"
 
 namespace iKan {
     
@@ -42,8 +44,20 @@ namespace iKan {
         bool Primary = true;
         std::shared_ptr<SceneCamera> Camera;
         
-        CameraComponent();
+        CameraComponent(SceneCamera::ProjectionType projType);
         void RenderImgui();
+    };
+    
+    /// Stores the Quad Component
+    struct QuadComponent {
+        TextureComponent Texture;
+        glm::vec4 Color = glm::vec4(1.0f);
+        float TilingFactor = 1.0f;
+        
+        QuadComponent() = default;
+        QuadComponent(const TextureComponent& texComp, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+        QuadComponent(const std::shared_ptr<iKan::Texture>& texture);
+        QuadComponent(const std::string& texturePath);
     };
     
 }

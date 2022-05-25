@@ -59,6 +59,9 @@ namespace iKan {
         // Member functions
         void UpdateEditor(Timestep ts);
         void UpdateRuntime(Timestep ts);
+        void Render2DComponents(const glm::mat4& viewProj);
+        
+        std::shared_ptr<Entity> GetPrimaryCameraEntity();
 
         // Registry to store all entity
         entt::registry m_Registry;
