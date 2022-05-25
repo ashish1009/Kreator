@@ -45,6 +45,9 @@ void ChessRendererLayer::Attach() {
             blockPosition.y = colIdx;
         }
     }
+    
+    // Setup the scene Camera Entity
+    m_CameraEntity = m_Scene->CreateEntity("Camera");
 }
 
 /// Update the renderer Layer each frame

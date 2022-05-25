@@ -57,6 +57,9 @@ namespace Chess {
         
         // Stores the blocks data of chess
         Block m_Blocks[MAX_ROWS][MAX_COLUMNS];
+        
+        // Camera Entity
+        std::shared_ptr<Entity> m_CameraEntity;
     };
 
 }

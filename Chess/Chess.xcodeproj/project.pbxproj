@@ -121,8 +121,8 @@
 		3EF2AAD4283D0247009764F8 /* layer */ = {
 			isa = PBXGroup;
 			children = (
-				3EF2AAD5283D0247009764F8 /* ChessRendererLayer.hpp */,
 				3EF2AAD6283D0247009764F8 /* ChessRendererLayer.cpp */,
+				3EF2AAD5283D0247009764F8 /* ChessRendererLayer.hpp */,
 			);
 			path = layer;
 			sourceTree = "<group>";

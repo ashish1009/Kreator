@@ -11,6 +11,8 @@
 
 namespace iKan {
     
+    class SceneCamera;
+    
     /// Store the unique ID of Entity
     struct IDComponent {
         UUID ID = 0;
@@ -34,4 +36,14 @@ namespace iKan {
         glm::mat4 GetTransform() const;
     };
 
+    /// Scene Camera
+    struct CameraComponent {
+        bool FixedAspectRatio = false;
+        bool Primary = true;
+        std::shared_ptr<SceneCamera> Camera;
+        
+        CameraComponent();
+        void RenderImgui();
+    };
+    
 }
