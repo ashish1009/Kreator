@@ -26,25 +26,47 @@ void ChessRendererLayer::Attach() {
     m_Scene = Scene::Create();
     m_Scene->PlayScene();
     
+    // Render the Outline board of Chess
+    std::shared_ptr<Entity> backgroundEntity = m_Scene->CreateEntity("Background");
+    backgroundEntity->AddComponent<QuadComponent>(glm::vec4(0.5f, 0.6f, 0.8f, 1.0f));
+    auto& tc = backgroundEntity->GetComponent<TransformComponent>();
+    tc.Translation = { -0.5f, -0.5f, 0.0f };
+    tc.Scale = { 8.5f, 8.5f, 1.0f };
+
     // Initialize the Block data
+    // NOTE: Row Index is the Y position of Renderer Screen
+    //       Column Index is the X Position of Renderer Screen
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
         for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
             // Stores the Position of Blocks
-            m_Blocks[rowIdx][colIdx].X = rowIdx;
-            m_Blocks[rowIdx][colIdx].Y = colIdx;
+            m_Blocks[colIdx][rowIdx].X = colIdx - 4;
+            m_Blocks[colIdx][rowIdx].Y = rowIdx - 4;
             
             // Stores the Index of each block
-            m_Blocks[rowIdx][colIdx].BlockIndex = rowIdx * MAX_ROWS + colIdx;
+            m_Blocks[colIdx][rowIdx].BlockIndex = rowIdx * MAX_ROWS + colIdx;
             
             // Create Entity for each Block
-            std::string blockName = "Block " + std::to_string(m_Blocks[rowIdx][colIdx].BlockIndex);
-            m_Blocks[rowIdx][colIdx].Entity = m_Scene->CreateEntity(blockName);
-            m_Blocks[rowIdx][colIdx].Entity->AddComponent<QuadComponent>();
+            std::string blockName = "Block " + std::to_string(m_Blocks[colIdx][rowIdx].BlockIndex);
+            m_Blocks[colIdx][rowIdx].Entity = m_Scene->CreateEntity(blockName);
+            auto& qc = m_Blocks[colIdx][rowIdx].Entity->AddComponent<QuadComponent>();
+            
+            if (rowIdx % 2 == 0) {
+                if (m_Blocks[colIdx][rowIdx].BlockIndex % 2 == 0)
+                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
+                else
+                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
+            }
+            else {
+                if (m_Blocks[colIdx][rowIdx].BlockIndex % 2 == 0)
+                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
+                else
+                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
+            }
             
             // Update the block position
-            auto& blockPosition = m_Blocks[rowIdx][colIdx].Entity->GetComponent<TransformComponent>().Translation;
-            blockPosition.x = rowIdx;
-            blockPosition.y = colIdx;
+            auto& blockPosition = m_Blocks[colIdx][rowIdx].Entity->GetComponent<TransformComponent>().Translation;
+            blockPosition.x = m_Blocks[colIdx][rowIdx].X;
+            blockPosition.y = m_Blocks[colIdx][rowIdx].Y;
         }
     }
     

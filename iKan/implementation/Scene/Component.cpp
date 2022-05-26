@@ -27,3 +27,4 @@ CameraComponent::CameraComponent(SceneCamera::ProjectionType projType) : Camera(
 QuadComponent::QuadComponent(const TextureComponent& texComp, const glm::vec4& color, float tilingFactor) : Texture(texComp), Color(color), TilingFactor(tilingFactor) {}
 QuadComponent::QuadComponent(const std::shared_ptr<iKan::Texture>& texture) { Texture.Component = texture; }
 QuadComponent::QuadComponent(const std::string& texturePath) { Texture.Component = Texture::Create(texturePath);}
+QuadComponent::QuadComponent(const glm::vec4& color) : Color(color) {  }

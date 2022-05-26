@@ -14,7 +14,7 @@ using namespace iKan;
 namespace Chess {
     
     /// Type of Block position
-    typedef uint8_t BLOCK_POSITION;
+    typedef int8_t BLOCK_POSITION;
     
     // Constants
     static constexpr uint8_t MAX_ROWS = 8;

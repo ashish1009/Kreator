@@ -7,32 +7,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0F78CCF2-4F2C-4F46-912F-90716073C8C2"
+            uuid = "4EF50364-FBC6-443E-8A51-2F2C7D52EF16"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iKan/implementation/Scene/Scene.cpp"
+            filePath = "Chess/layer/ChessRendererLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "Scene::UpdateRuntime(ts)"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "ChessRendererLayer::Attach()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "849704AF-924F-4F77-AD2A-74D07C42DA39"
+            uuid = "B83936AC-E563-4553-9C64-0A224088AFEA"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iKan/implementation/Scene/Scene.cpp"
+            filePath = "Chess/layer/ChessRendererLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "Scene::UpdateRuntime(ts)"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "ChessRendererLayer::Attach()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "30652645-04EB-4A11-A04E-D9A824E59476"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Chess/layer/ChessRendererLayer.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "ChessRendererLayer::Attach()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94E5457A-F8DA-4850-B33A-9626B854FE72"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Chess/layer/ChessRendererLayer.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "ChessRendererLayer::Attach()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

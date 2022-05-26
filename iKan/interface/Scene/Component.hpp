@@ -58,6 +58,7 @@ namespace iKan {
         QuadComponent(const TextureComponent& texComp, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
         QuadComponent(const std::shared_ptr<iKan::Texture>& texture);
         QuadComponent(const std::string& texturePath);
+        QuadComponent(const glm::vec4& color);
     };
     
 }
