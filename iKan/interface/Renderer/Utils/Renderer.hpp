@@ -70,6 +70,11 @@ namespace iKan {
         /// @param state flag to be set as MultiSample
         static void MultiSample(bool state);
         
+        /// Update the Graphics Viewport siz
+        /// @param width new width
+        /// @param height new heughr
+        static void SetViewportSize(float width, float height);
+        
         // --------------------------- Draw API -------------------------------------
         /// Draw Vertex Array with indexed count
         /// @param pipeline pipeline ref pointer

@@ -158,7 +158,11 @@ void SceneCamera::SetPerspective(float fov, float nearClip, float farClip) {
 /// @param height height
 void SceneCamera::SetViewportSize(uint32_t width, uint32_t height) {
     m_AspectRatio = (float)width / (float)height;
-    IK_CORE_INFO("Changing Viewport Size of Scene Camera : {0} x {1}. (NOTE: Updating View Projection Matrix)", width, height);
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Changing Viewport Size of Scene Camera");
+    IK_CORE_INFO("    Width        : {0}", width);
+    IK_CORE_INFO("    Height       : {0}", height);
+    IK_CORE_INFO("    Aspect Ratio : {0}", m_AspectRatio);
     RecalculateProjection();
 }
 

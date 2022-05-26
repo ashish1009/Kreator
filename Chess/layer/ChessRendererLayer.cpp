@@ -50,16 +50,24 @@ void ChessRendererLayer::Attach() {
             m_Blocks[colIdx][rowIdx].Entity = m_Scene->CreateEntity(blockName);
             auto& qc = m_Blocks[colIdx][rowIdx].Entity->AddComponent<QuadComponent>();
             
+            // Assign color to each block alternative
+            // First check alternate rows.
             if (rowIdx % 2 == 0) {
+                // Then check each alternate columns
                 if (m_Blocks[colIdx][rowIdx].BlockIndex % 2 == 0)
+                    // If rows % 2 is 0 then first block of row is bright
                     qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
                 else
+                    // else first block of row is dark
                     qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
             }
             else {
+                // Then check each alternate columns
                 if (m_Blocks[colIdx][rowIdx].BlockIndex % 2 == 0)
+                    // If rows % 2 is NOT 0 then first block of row is dark
                     qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
                 else
+                    // else first block of row is bright
                     qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
             }
             
@@ -95,6 +103,9 @@ void ChessRendererLayer::EventHandler(Event& event) {
     EventDispatcher dispatcher(event);
     dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(ChessRendererLayer::OnKeyPressed));
     dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(ChessRendererLayer::OnMouseButtonPressed));
+    dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(ChessRendererLayer::OnWindowResize));
+
+    m_Scene->EventHandler(event);
 }
 
 /// Mouse button Event
@@ -106,5 +117,12 @@ bool ChessRendererLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
 /// Kwy Press Event
 /// @param event Key Press event handler
 bool ChessRendererLayer::OnKeyPressed(KeyPressedEvent& event) {
+    return false;
+}
+
+/// Mouse button Event
+/// @param e Mouse Button event handler
+bool ChessRendererLayer::OnWindowResize(WindowResizeEvent& e) {
+    Renderer::SetViewportSize(e.GetWidth(), e.GetHeight());
     return false;
 }

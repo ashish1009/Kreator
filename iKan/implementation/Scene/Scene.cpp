@@ -123,6 +123,7 @@ void Scene::PlayScene() {
     
     m_State = State::Play;
     m_Update = std::bind(&Scene::UpdateRuntime, this, std::placeholders::_1);
+    m_EventHandler = std::bind(&Scene::EventHandlerRuntime, this, std::placeholders::_1);
 }
 
 /// Set scene to Edit mode
@@ -132,17 +133,38 @@ void Scene::EditScene() {
     
     m_State = State::Edit;
     m_Update = std::bind(&Scene::UpdateEditor, this, std::placeholders::_1);
+    m_EventHandler = std::bind(&Scene::EventHandlerEditor, this, std::placeholders::_1);
 }
 
-/// Get the first primary camera in the scene
-std::shared_ptr<Entity> Scene::GetPrimaryCameraEntity() {
+/// Handle the events
+/// @param event event instance
+void Scene::EventHandler(Event& event) {
+    EventDispatcher dispatch(event);
+    dispatch.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(Scene::WindowResizeEventHandler));
+    m_EventHandler(event);
+}
+
+/// Handle the events while editing
+/// @param event event instance
+void Scene::EventHandlerEditor(Event& event) {
+}
+
+/// Handle the events runtime
+/// @param event event instance
+void Scene::EventHandlerRuntime(Event& event) {
+}
+
+/// Handle Window Resize event
+/// @param event window resize event
+bool Scene::WindowResizeEventHandler(WindowResizeEvent& event) {
+    // Resize all non fixed aspect ratio camera
     auto view = m_Registry.view<CameraComponent>();
-    for (auto entity : view) {
+    for (auto& entity : view) {
         auto& comp = view.get<CameraComponent>(entity);
-        if (comp.Primary)
-            return m_EntityIDMap[m_Registry.get<IDComponent>(entity).ID];
+        if (!comp.FixedAspectRatio)
+            comp.Camera->SetViewportSize(event.GetWidth(), event.GetHeight());
     }
-    return nullptr;
+    return false;
 }
 
 /// Render all 2D components
@@ -160,4 +182,15 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
             BatchRenderer::DrawQuad(transform.GetTransform(), quadComp.Color, (int32_t)entity);
     }
     BatchRenderer::EndBatch();
+}
+
+/// Get the first primary camera in the scene
+std::shared_ptr<Entity> Scene::GetPrimaryCameraEntity() {
+    auto view = m_Registry.view<CameraComponent>();
+    for (auto entity : view) {
+        auto& comp = view.get<CameraComponent>(entity);
+        if (comp.Primary)
+            return m_EntityIDMap[m_Registry.get<IDComponent>(entity).ID];
+    }
+    return nullptr;
 }

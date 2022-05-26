@@ -95,6 +95,13 @@ void Renderer::Blend(bool state) { s_RendererAPI->Blend(state); }
 /// @param state flag to be set as MultiSample
 void Renderer::MultiSample(bool state) { s_RendererAPI->MultiSample(state); }
 
+/// Update the Graphics Viewport siz
+/// @param width new width
+/// @param height new heughr
+void Renderer::SetViewportSize(float width, float height) {
+    s_RendererAPI->SetViewPortSize(width, height);
+}
+
 /// Draw Vertex Array with indexed cound
 /// @param pipeline vertex array ref pointer
 /// @param count count

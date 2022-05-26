@@ -86,6 +86,13 @@ void OpenGLRendererAPI::ClearBits() const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
+/// Update the Graphics Viewport
+/// @param widht new width
+/// @param height new heighr
+void OpenGLRendererAPI::SetViewPortSize(uint32_t widht, uint32_t height) const {
+    glViewport(0, 0, widht, height);
+}
+
 /// Draw Indexed Vertex Array
 /// @param pipeline pipeline having vertex buffer and index buffer
 /// @param count number of Indices (if 0 then use index buffer of Vertex array)

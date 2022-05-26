@@ -25,6 +25,8 @@ namespace iKan {
         void Depth(bool state) const override;
         void Blend(bool state) const override;
         void MultiSample(bool state) const override;
+
+        void SetViewPortSize(uint32_t widht, uint32_t height) const override;
         
         void DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) const override;
         void DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex) const override;

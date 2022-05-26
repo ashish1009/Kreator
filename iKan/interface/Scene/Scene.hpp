@@ -8,7 +8,7 @@
 #pragma once
 
 #include <entt.hpp>
-#include "Core/Event/Event.h"
+#include "Core/Event/ApplicationEvent.h"
 #include "Core/Math/UUID.hpp"
 #include "Editor/EditorCamera.hpp"
 #include "Renderer/Graphics/Texture.hpp"
@@ -47,6 +47,10 @@ namespace iKan {
         /// @param ts time step of each frame
         void Update(Timestep ts);
         
+        /// Handle the events
+        /// @param event event instance
+        void EventHandler(Event& event);
+        
         /// Play the Scene
         void PlayScene();
         /// Edit the Scene
@@ -59,6 +63,12 @@ namespace iKan {
         // Member functions
         void UpdateEditor(Timestep ts);
         void UpdateRuntime(Timestep ts);
+        
+        void EventHandlerEditor(Event& event);
+        void EventHandlerRuntime(Event& event);
+        
+        bool WindowResizeEventHandler(WindowResizeEvent& event);
+
         void Render2DComponents(const glm::mat4& viewProj);
         
         std::shared_ptr<Entity> GetPrimaryCameraEntity();
@@ -74,6 +84,7 @@ namespace iKan {
         
         // Function pointers
         std::function<void(Timestep)> m_Update;
+        std::function<void(Event&)> m_EventHandler;
         
         State m_State = State::Edit;
         
