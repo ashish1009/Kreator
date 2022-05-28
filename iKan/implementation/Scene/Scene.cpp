@@ -154,17 +154,28 @@ void Scene::EventHandlerEditor(Event& event) {
 void Scene::EventHandlerRuntime(Event& event) {
 }
 
+/// Update the Scene Viewport size
+/// @param width new width
+/// @param height new height
+void Scene::SetViewport(uint32_t width, uint32_t height) {
+    ResizeCameraEntity(width, height);
+}
+
 /// Handle Window Resize event
 /// @param event window resize event
 bool Scene::WindowResizeEventHandler(WindowResizeEvent& event) {
-    // Resize all non fixed aspect ratio camera
+    ResizeCameraEntity(event.GetWidth(), event.GetHeight());
+    return false;
+}
+
+/// Resize the Viewport of all scene camera which are not fixed aspect ratio
+void Scene::ResizeCameraEntity(uint32_t width, uint32_t height) {
     auto view = m_Registry.view<CameraComponent>();
     for (auto& entity : view) {
         auto& comp = view.get<CameraComponent>(entity);
         if (!comp.FixedAspectRatio)
-            comp.Camera->SetViewportSize(event.GetWidth(), event.GetHeight());
+            comp.Camera->SetViewportSize(width, height);
     }
-    return false;
 }
 
 /// Render all 2D components

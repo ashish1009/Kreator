@@ -23,8 +23,8 @@ std::unique_ptr<Application> iKan::CreateApplication() {
 
     // Window Specification
     specification.WindowSpec.Title = "Chess";
-    specification.WindowSpec.Width = 1600;
-    specification.WindowSpec.Height = 900;
+    specification.WindowSpec.Width = 1200;
+    specification.WindowSpec.Height = 800;
     
     specification.WindowSpec.VSync = true;
     specification.WindowSpec.Decorated = true;

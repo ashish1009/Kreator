@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1E2C4B87-97A6-4C5B-80F6-DB88A803CBAC"
+            uuid = "034FC9AC-41FB-4293-8022-FAD921FD8492"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iKan/implementation/Scene/Scene.cpp"
+            filePath = "Chess/layer/ChessRendererLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "Scene::WindowResizeEventHandler(event)"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "ChessRendererLayer::Attach()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

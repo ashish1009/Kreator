@@ -51,6 +51,11 @@ namespace iKan {
         /// @param event event instance
         void EventHandler(Event& event);
         
+        /// Update the Scene Viewport size
+        /// @param width new width
+        /// @param height new height
+        void SetViewport(uint32_t width, uint32_t height);
+        
         /// Play the Scene
         void PlayScene();
         /// Edit the Scene
@@ -69,6 +74,8 @@ namespace iKan {
         
         bool WindowResizeEventHandler(WindowResizeEvent& event);
 
+        void ResizeCameraEntity(uint32_t width, uint32_t height);
+        
         void Render2DComponents(const glm::mat4& viewProj);
         
         std::shared_ptr<Entity> GetPrimaryCameraEntity();

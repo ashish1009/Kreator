@@ -29,8 +29,16 @@ void ChessRendererLayer::Attach() {
     // Render the Outline board of Chess
     std::shared_ptr<Entity> backgroundEntity = m_Scene->CreateEntity("Background");
     backgroundEntity->AddComponent<QuadComponent>(glm::vec4(0.5f, 0.6f, 0.8f, 1.0f));
+    
+    // Setup the scene Camera Entity
+    m_CameraEntity = m_Scene->CreateEntity("Camera");
+    m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
+
+    // Shifiting the camera and Border block as {0, 0} is our first block (bottom left) which is at the center
+    auto& camPosition = m_CameraEntity->GetComponent<TransformComponent>().Translation;
+    camPosition = { 3.5f, 3.5f, 0.0f };
     auto& tc = backgroundEntity->GetComponent<TransformComponent>();
-    tc.Translation = { -0.5f, -0.5f, 0.0f };
+    tc.Translation = { 3.5f, 3.5f, 0.0f };
     tc.Scale = { 8.5f, 8.5f, 1.0f };
 
     // Initialize the Block data
@@ -39,8 +47,8 @@ void ChessRendererLayer::Attach() {
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
         for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
             // Stores the Position of Blocks
-            m_Blocks[colIdx][rowIdx].X = colIdx - 4;
-            m_Blocks[colIdx][rowIdx].Y = rowIdx - 4;
+            m_Blocks[colIdx][rowIdx].X = colIdx;
+            m_Blocks[colIdx][rowIdx].Y = rowIdx;
             
             // Stores the Index of each block
             m_Blocks[colIdx][rowIdx].BlockIndex = rowIdx * MAX_ROWS + colIdx;
@@ -78,9 +86,8 @@ void ChessRendererLayer::Attach() {
         }
     }
     
-    // Setup the scene Camera Entity
-    m_CameraEntity = m_Scene->CreateEntity("Camera");
-    m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
+    // Before starting Game loop Update the Scene viewport
+    m_Scene->SetViewport(1200, 800);
 }
 
 /// Update the renderer Layer each frame
