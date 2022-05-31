@@ -117,7 +117,6 @@ void ChessRendererLayer::Update(Timestep ts) {
 
     Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
     m_Scene->Update(ts);
-    
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
 
@@ -146,7 +145,10 @@ void ChessRendererLayer::RenderGui() {
     m_ViewportData.UpdateBound();
 
     ImGui::PopID();
-    ImGui::End();
+    ImGui::End(); // Viewport
+    
+    ImGui::Begin("Debug Window");
+    
     ImguiAPI::EndDcocking();
 }
 
@@ -168,6 +170,11 @@ void ChessRendererLayer::EventHandler(Event& event) {
 /// Mouse button Event
 /// @param e Mouse Button event handler
 bool ChessRendererLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
+    if (e.GetMouseButton() == MouseButton::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt)) {
+        if (m_ViewportData.Hovered) {
+            m_Scene->SetSelectedEntity(m_ViewportData.HoveredEntity);
+        }
+    }
     return false;
 }
 
@@ -188,10 +195,6 @@ bool ChessRendererLayer::OnWindowResize(WindowResizeEvent& e) {
 void ChessRendererLayer::UpdateHoveredEntity() {
     if (m_ViewportData.Hovered) {
         Renderer::GetEntityIdFromPixels(m_ViewportData.MousePosX, m_ViewportData.MousePosY, m_ViewportData.HoveredEntityID);
-        IK_INFO("{0}", m_ViewportData.HoveredEntityID);
         m_ViewportData.HoveredEntity = (m_ViewportData.HoveredEntityID > m_Scene->GetMaxEntityId()) ? nullptr : m_Scene->GetEnitityFromId(m_ViewportData.HoveredEntityID);
     }
-    
-    if (m_ViewportData.HoveredEntity)
-        IK_INFO("{0}", (uint32_t)(*m_ViewportData.HoveredEntity));
 }

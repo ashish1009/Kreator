@@ -52,6 +52,7 @@
 
 #include <Core/Application.hpp>
 #include <Core/Layer.hpp>
+#include <Core/Input.hpp>
 
 // Renderer Files
 #include <Renderer/Utils/Renderer.hpp>

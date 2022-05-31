@@ -33,6 +33,11 @@ void RendererLayer::Attach() {
     };
     m_VpData.FrameBuffer = FrameBuffer::Create(spec);
     
+    // Temp TODO: Create Scene using UI
+    // Create scene
+    m_ActiveScene = Scene::Create();
+    m_ActiveScene->PlayScene();
+    
     // Temp Init
     m_SceneCamera = SceneCamera::Create(SceneCamera::ProjectionType::Orthographic);
     m_EditorCamera = EditorCamera::Create();
@@ -52,11 +57,25 @@ void RendererLayer::Detach() {
 /// Update Renderer Layer each frame
 /// @param ts Time step between 2 Frames
 void RendererLayer::Update(Timestep ts) {
+    if (!m_ActiveScene)
+        return;
+    
+    // If resize the window call the update the Scene View port and Frame buffer should be resized
+    if (const FrameBuffer::Specification& spec = m_VpData.FrameBuffer->GetSpecification();
+        (uint32_t)m_VpData.Size.x > 0 && (uint32_t)m_VpData.Size.y > 0 && // zero sized framebuffer is invalid
+        (spec.Width != (uint32_t)m_VpData.Size.x || spec.Height != (uint32_t)m_VpData.Size.y)) {
+        m_VpData.FrameBuffer->Resize((uint32_t)m_VpData.Size.x, (uint32_t)m_VpData.Size.y);
+        m_ActiveScene->SetViewport((uint32_t)m_VpData.Size.x, (uint32_t)m_VpData.Size.y);
+    }
+
     Renderer::ResetStatsEachFrame();
     
     m_VpData.FrameBuffer->Bind();
     {
         Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
+        
+        m_ActiveScene->Update(ts);
+        m_VpData.UpdateMousePos();
         
         glm::mat4 rotation = glm::toMat4(glm::quat(glm::vec3(0.0f)));
         glm::mat4 cameraTransform = glm::translate(glm::mat4(1.0f), CameraTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
@@ -81,12 +100,21 @@ void RendererLayer::RenderGui() {
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Kreator Viewport");
-        {
-            ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-            size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
-            ImGui::Image((void*)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-        }
+        ImGui::PushID("Chess Viewport");
         
+        m_VpData.Focused = ImGui::IsWindowFocused();
+        m_VpData.Hovered = ImGui::IsWindowHovered();
+        
+        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+        m_VpData.Size = { viewportPanelSize.x, viewportPanelSize.y };
+        
+        size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
+        PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
+        ImGui::PopStyleVar();
+
+        m_VpData.UpdateBound();
+
+        ImGui::PopID();
         ImGui::End(); // ImGui::Begin("Kreator Viewport");
         ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
     }

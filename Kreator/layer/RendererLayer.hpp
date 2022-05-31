@@ -11,11 +11,6 @@
 
 using namespace iKan;
 
-/// Viewport Data
-struct Viewport {
-    std::shared_ptr<FrameBuffer> FrameBuffer;
-};
-
 /// Kreator's Renderer Layer
 class RendererLayer : public Layer {
 public:
@@ -33,6 +28,7 @@ public:
     
 private:
     Viewport m_VpData;
+    std::shared_ptr<Scene> m_ActiveScene;
     
     // Temp Data
     std::shared_ptr<SceneCamera> m_SceneCamera;
