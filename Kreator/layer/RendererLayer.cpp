@@ -93,10 +93,14 @@ void RendererLayer::Update(Timestep ts) {
 /// Render GUI Window each frame for Renderer Layer
 void RendererLayer::RenderGui() {
     ImguiAPI::StartDcocking();
-    
-    ImguiAPI::FrameRate();
-    Renderer::ImguiRendererStats();
+    // Debug Window
+    {
+        ImguiAPI::FrameRate();
+        Renderer::ImguiRendererStats();
+        m_VpData.RenderImgui();
+    }
         
+    // Viewport
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Kreator Viewport");

@@ -28,9 +28,6 @@ namespace Chess {
         
         /// Block Index. e.g. Block at [2][3] is 2 * 8 + 3 = 19
         int8_t BlockIndex = -1;
-        
-        /// Entity of Each block
-        std::shared_ptr<Entity> Entity;
     };
     
     /// Chess Renderer Layer
@@ -59,7 +56,7 @@ namespace Chess {
         std::shared_ptr<Scene> m_Scene;
         
         // Stores the blocks data of chess
-        Block m_Blocks[MAX_ROWS][MAX_COLUMNS];
+        std::unordered_map<std::shared_ptr<Entity>, Block> m_BlockEntityMap;
         
         // Camera Entity
         std::shared_ptr<Entity> m_CameraEntity;
