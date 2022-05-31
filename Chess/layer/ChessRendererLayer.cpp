@@ -121,7 +121,7 @@ void ChessRendererLayer::Update(Timestep ts) {
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
 
-    m_ViewportData.FrameBuffer->Bind();
+    m_ViewportData.FrameBuffer->Unbind();
 }
 
 /// Render ; for Renderer Layer
@@ -143,7 +143,6 @@ void ChessRendererLayer::RenderGui() {
     PropertyGrid::Image((void*)textureID, { m_ViewportData.Size.x, m_ViewportData.Size.y }, { 0, 1 }, { 1, 0 });
     ImGui::PopStyleVar();
 
-    OnImguizmoUpdate();
     m_ViewportData.UpdateBound();
 
     ImGui::PopID();
@@ -188,55 +187,11 @@ bool ChessRendererLayer::OnWindowResize(WindowResizeEvent& e) {
 /// Update Hovered Entity
 void ChessRendererLayer::UpdateHoveredEntity() {
     if (m_ViewportData.Hovered) {
-//        Renderer::GetEntityIdFromPixels(m_ViewportData.MousePosX, m_ViewportData.MousePosY, m_ViewportData.HoveredEntityID);
+        Renderer::GetEntityIdFromPixels(m_ViewportData.MousePosX, m_ViewportData.MousePosY, m_ViewportData.HoveredEntityID);
         IK_INFO("{0}", m_ViewportData.HoveredEntityID);
         m_ViewportData.HoveredEntity = (m_ViewportData.HoveredEntityID > m_Scene->GetMaxEntityId()) ? nullptr : m_Scene->GetEnitityFromId(m_ViewportData.HoveredEntityID);
     }
-}
-
-/// Update Imnguizmo
-void ChessRendererLayer::OnImguizmoUpdate() {
-//    const std::shared_ptr<Entity>& selectedEntity = m_SHP->GetSelectedEntity();
-//    if (selectedEntity && m_VpData.GizmoType != -1) {
-//        ImGuizmo::SetOrthographic(false);
-//        ImGuizmo::SetDrawlist();
-//        
-//        float windowWidth = (float)ImGui::GetWindowWidth();
-//        float windowHeight = (float)ImGui::GetWindowHeight();
-//        ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-//        
-//        // Camera
-//        const std::shared_ptr<EditorCamera>& editorCamera = m_ActiveScene->GetEditorCamera();
-//        
-//        glm::mat4 cameraProjection = editorCamera->GetProjectionMatrix();
-//        glm::mat4 cameraView       = editorCamera->GetViewMatrix();
-//        
-//        // Entity transform
-//        auto& tc = selectedEntity->GetComponent<TransformComponent>();
-//        glm::mat4 transform = tc.GetTransform();
-//        
-//        // Snapping
-//        bool snap = Input::IsKeyPressed(KeyCode::LeftControl);
-//        float snapValue = 0.5f; // Snap to 0.5m for translation/scale
-//        
-//        // Snap to 45 degrees for rotation
-//        if (m_VpData.GizmoType == ImGuizmo::OPERATION::ROTATE)
-//            snapValue = 45.0f;
-//        
-//        float snapValues[3] = { snapValue, snapValue, snapValue };
-//        
-//        ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
-//                             (ImGuizmo::OPERATION)m_VpData.GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
-//                             nullptr, snap ? snapValues : nullptr);
-//        
-//        if (ImGuizmo::IsUsing()) {
-//            glm::vec3 translation, rotation, scale;
-//            Math::DecomposeTransform(transform, translation, rotation, scale);
-//            
-//            glm::vec3 deltaRotation = rotation - tc.Rotation;
-//            tc.Translation = translation;
-//            tc.Rotation += deltaRotation;
-//            tc.Scale = scale;
-//        }
-//    }
+    
+    if (m_ViewportData.HoveredEntity)
+        IK_INFO("{0}", (uint32_t)(*m_ViewportData.HoveredEntity));
 }

@@ -54,7 +54,6 @@ namespace Chess {
         bool OnWindowResize(WindowResizeEvent& e);
         
         void UpdateHoveredEntity();
-        void OnImguizmoUpdate();
         
         // Member variabls
         std::shared_ptr<Scene> m_Scene;

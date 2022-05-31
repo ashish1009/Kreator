@@ -93,6 +93,15 @@ void OpenGLRendererAPI::SetViewPortSize(uint32_t widht, uint32_t height) const {
     glViewport(0, 0, widht, height);
 }
 
+/// Get the Pixel ID from Frame buffer
+/// @param mx x pixel
+/// @param my y pixel
+/// @param pixelData pixel value
+void OpenGLRendererAPI::GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData) const {
+    glReadBuffer(GL_COLOR_ATTACHMENT1);
+    glReadPixels(mx, my, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+}
+
 /// Draw Indexed Vertex Array
 /// @param pipeline pipeline having vertex buffer and index buffer
 /// @param count number of Indices (if 0 then use index buffer of Vertex array)

@@ -75,6 +75,12 @@ namespace iKan {
         /// @param height new heughr
         static void SetViewportSize(float width, float height);
         
+        /// Get the Pixel ID from Viewport
+        /// @param mx x Pixel of Viewport
+        /// @param my y Pizel of Viewport
+        /// @param pixelData Pizel Value returned
+        static void GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData);
+        
         // --------------------------- Draw API -------------------------------------
         /// Draw Vertex Array with indexed count
         /// @param pipeline pipeline ref pointer

@@ -102,6 +102,14 @@ void Renderer::SetViewportSize(float width, float height) {
     s_RendererAPI->SetViewPortSize(width, height);
 }
 
+/// Get the Pixel ID from Viewport
+/// @param mx x Pixel of Viewport
+/// @param my y Pizel of Viewport
+/// @param pixelData Pizel Value returned
+void Renderer::GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData) {
+    s_RendererAPI->GetEntityIdFromPixels(mx, my, pixelData);
+}
+
 /// Draw Vertex Array with indexed cound
 /// @param pipeline vertex array ref pointer
 /// @param count count
