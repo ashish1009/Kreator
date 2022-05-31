@@ -52,6 +52,9 @@ namespace iKan {
         /// Update the porition of Viewport bound
         /// To call each frame
         void UpdateBound();
+        
+        /// render Imgui
+        void RenderImgui();
     };
     
 }

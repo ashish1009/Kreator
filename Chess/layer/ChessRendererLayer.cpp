@@ -112,6 +112,8 @@ void ChessRendererLayer::Update(Timestep ts) {
         m_ViewportData.FrameBuffer->Resize((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
         m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
     }
+    
+    Renderer::ResetStatsEachFrame();
 
     m_ViewportData.FrameBuffer->Bind();
 
@@ -147,7 +149,15 @@ void ChessRendererLayer::RenderGui() {
     ImGui::PopID();
     ImGui::End(); // Viewport
     
+    {
+        ImguiAPI::FrameRate();
+        Renderer::ImguiRendererStats();
+        m_ViewportData.RenderImgui();
+    }
+    
     ImGui::Begin("Debug Window");
+    
+    ImGui::End(); // Debug Window
     
     ImguiAPI::EndDcocking();
 }

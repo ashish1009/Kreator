@@ -110,7 +110,6 @@ void RendererLayer::RenderGui() {
         
         size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
         PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
-        ImGui::PopStyleVar();
 
         m_VpData.UpdateBound();
 
