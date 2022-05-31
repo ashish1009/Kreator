@@ -27,6 +27,8 @@
 		3E2FA108283920CF00EE289A /* OpenGLTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E2FA106283920CF00EE289A /* OpenGLTexture.hpp */; };
 		3E2FA10B283920DA00EE289A /* OpenGLFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2FA109283920DA00EE289A /* OpenGLFrameBuffer.cpp */; };
 		3E2FA10C283920DA00EE289A /* OpenGLFrameBuffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E2FA10A283920DA00EE289A /* OpenGLFrameBuffer.hpp */; };
+		3E4D74A42846432C0053D366 /* Viewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D74A22846432C0053D366 /* Viewport.cpp */; };
+		3E4D74A52846432C0053D366 /* Viewport.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E4D74A32846432C0053D366 /* Viewport.hpp */; };
 		3E6575C428378FB1006B0C81 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C228378FB1006B0C81 /* Window.cpp */; };
 		3E6575C528378FB1006B0C81 /* Window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575C328378FB1006B0C81 /* Window.hpp */; };
 		3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C828378FD8006B0C81 /* MacWindow.cpp */; };
@@ -163,6 +165,8 @@
 		3E2FA106283920CF00EE289A /* OpenGLTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLTexture.hpp; sourceTree = "<group>"; };
 		3E2FA109283920DA00EE289A /* OpenGLFrameBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLFrameBuffer.cpp; sourceTree = "<group>"; };
 		3E2FA10A283920DA00EE289A /* OpenGLFrameBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLFrameBuffer.hpp; sourceTree = "<group>"; };
+		3E4D74A22846432C0053D366 /* Viewport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; };
+		3E4D74A32846432C0053D366 /* Viewport.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Viewport.hpp; sourceTree = "<group>"; };
 		3E6575C228378FB1006B0C81 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		3E6575C328378FB1006B0C81 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
 		3E6575C828378FD8006B0C81 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
@@ -620,6 +624,7 @@
 				3EF2AA0D283CFC15009764F8 /* Entity.hpp */,
 				3EF2AA11283CFC22009764F8 /* Component.hpp */,
 				3EF2AE52283D2742009764F8 /* SceneSerialiser.hpp */,
+				3E4D74A32846432C0053D366 /* Viewport.hpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -632,6 +637,7 @@
 				3EF2AA0C283CFC15009764F8 /* Entity.cpp */,
 				3EF2AA10283CFC22009764F8 /* Component.cpp */,
 				3EF2AE51283D2742009764F8 /* SceneSerialiser.cpp */,
+				3E4D74A22846432C0053D366 /* Viewport.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -742,6 +748,7 @@
 				3E6576032837BA08006B0C81 /* OpenGLRendererAPI.hpp in Headers */,
 				3E65763C2837C785006B0C81 /* Buffer.hpp in Headers */,
 				3E6575FE2837B8E1006B0C81 /* RendererAPI.hpp in Headers */,
+				3E4D74A52846432C0053D366 /* Viewport.hpp in Headers */,
 				3E2FA0FC2839209A00EE289A /* Texture.hpp in Headers */,
 				3E6576332837BF09006B0C81 /* RendererContext.hpp in Headers */,
 				3E6576402837CA95006B0C81 /* Input.hpp in Headers */,
@@ -899,6 +906,7 @@
 				3E6575FD2837B8E1006B0C81 /* RendererAPI.cpp in Sources */,
 				3EE244AB283A8E1900640481 /* AssetManager.cpp in Sources */,
 				3E65762E2837BEDA006B0C81 /* OpenGLRendererContext.cpp in Sources */,
+				3E4D74A42846432C0053D366 /* Viewport.cpp in Sources */,
 				3EE244BA283A936B00640481 /* StringUtils.cpp in Sources */,
 				3E2FA0F32839208200EE289A /* Buffers.cpp in Sources */,
 				3E2FA0FF283920AA00EE289A /* FrameBuffer.cpp in Sources */,
@@ -1075,6 +1083,7 @@
 					"${PROJECT_DIR}/vendors/assimp/include",
 					"${PROJECT_DIR}/vendors/enTT/include",
 					"${PROJECT_DIR}/vendors/yamlSerialiser/yaml/include",
+					"${PROJECT_DIR}/vendors/gui/guizmo",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1109,6 +1118,7 @@
 					"${PROJECT_DIR}/vendors/assimp/include",
 					"${PROJECT_DIR}/vendors/enTT/include",
 					"${PROJECT_DIR}/vendors/yamlSerialiser/yaml/include",
+					"${PROJECT_DIR}/vendors/gui/guizmo",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

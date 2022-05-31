@@ -61,6 +61,19 @@ namespace iKan {
         /// Edit the Scene
         void EditScene();
         
+        /// Set the Selected Entity by UI
+        /// @param selectedEntity new selected Entity Reference pointer
+        void SetSelectedEntity(const std::shared_ptr<Entity>& selectedEntity);
+        
+        /// Get the number of Entities stored in Scene
+        uint32_t GetNumEntities() const;
+        /// Get the Max Entity ID given to scene
+        uint32_t GetMaxEntityId() const;
+        
+        /// return the Entity pointer from Entity ID Map
+        /// @param id Entity ID
+        const std::shared_ptr<Entity>& GetEnitityFromId(int32_t id) const;
+        
         /// Create Scene instance
         static std::shared_ptr<Scene> Create();
         
@@ -85,6 +98,9 @@ namespace iKan {
 
         // Store the entity ID Map
         std::unordered_map<UUID, std::shared_ptr<Entity>> m_EntityIDMap;
+        
+        // Selected Entity
+        std::shared_ptr<Entity> m_SelectedEntity;
 
         // Number of Entity stored in Scene and Max ID given to Entity
         uint32_t m_NumEntities = 0, m_MaxEntityId = 0;

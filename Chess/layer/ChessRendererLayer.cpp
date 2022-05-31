@@ -23,6 +23,19 @@ ChessRendererLayer::~ChessRendererLayer() {
 void ChessRendererLayer::Attach() {
     IK_INFO("Attaching '{0}'", m_Name);
     
+    // Viewport Data setup
+    FrameBuffer::Specification spec;
+    spec.Width = 2100;
+    spec.Height = 900;
+    spec.Color = { 0.1, 0.1, 0.1, 1.0 };
+    spec.Attachments = {
+        FrameBuffer::Attachment::TextureFormat::RGBA8,
+        FrameBuffer::Attachment::TextureFormat::R32I,
+        FrameBuffer::Attachment::TextureFormat::Depth24Stencil,
+    };
+    m_ViewportData.FrameBuffer = FrameBuffer::Create(spec);
+    
+    // Create scene
     m_Scene = Scene::Create();
     m_Scene->PlayScene();
     
@@ -92,12 +105,50 @@ void ChessRendererLayer::Attach() {
 
 /// Update the renderer Layer each frame
 void ChessRendererLayer::Update(Timestep ts) {
+    // If resize the window call the update the Scene View port and Frame buffer should be resized
+    if (const FrameBuffer::Specification& spec = m_ViewportData.FrameBuffer->GetSpecification();
+        (uint32_t)m_ViewportData.Size.x > 0 && (uint32_t)m_ViewportData.Size.y > 0 && // zero sized framebuffer is invalid
+        (spec.Width != (uint32_t)m_ViewportData.Size.x || spec.Height != (uint32_t)m_ViewportData.Size.y)) {
+        m_ViewportData.FrameBuffer->Resize((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
+        m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
+    }
+
+    m_ViewportData.FrameBuffer->Bind();
+
     Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
     m_Scene->Update(ts);
+    
+    m_ViewportData.UpdateMousePos();
+    UpdateHoveredEntity();
+
+    m_ViewportData.FrameBuffer->Bind();
 }
 
 /// Render ; for Renderer Layer
 void ChessRendererLayer::RenderGui() {
+    ImguiAPI::StartDcocking();
+    
+    // Viewport
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+    ImGui::Begin("Chess Viewport");
+    ImGui::PushID("Chess Viewport");
+    
+    m_ViewportData.Focused = ImGui::IsWindowFocused();
+    m_ViewportData.Hovered = ImGui::IsWindowHovered();
+    
+    ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+    m_ViewportData.Size = { viewportPanelSize.x, viewportPanelSize.y };
+    
+    size_t textureID = m_ViewportData.FrameBuffer->GetColorAttachmentIds()[0];
+    PropertyGrid::Image((void*)textureID, { m_ViewportData.Size.x, m_ViewportData.Size.y }, { 0, 1 }, { 1, 0 });
+    ImGui::PopStyleVar();
+
+    OnImguizmoUpdate();
+    m_ViewportData.UpdateBound();
+
+    ImGui::PopID();
+    ImGui::End();
+    ImguiAPI::EndDcocking();
 }
 
 /// Detach the Renderer Lyer
@@ -132,4 +183,60 @@ bool ChessRendererLayer::OnKeyPressed(KeyPressedEvent& event) {
 bool ChessRendererLayer::OnWindowResize(WindowResizeEvent& e) {
     Renderer::SetViewportSize(e.GetWidth(), e.GetHeight());
     return false;
+}
+
+/// Update Hovered Entity
+void ChessRendererLayer::UpdateHoveredEntity() {
+    if (m_ViewportData.Hovered) {
+//        Renderer::GetEntityIdFromPixels(m_ViewportData.MousePosX, m_ViewportData.MousePosY, m_ViewportData.HoveredEntityID);
+        IK_INFO("{0}", m_ViewportData.HoveredEntityID);
+        m_ViewportData.HoveredEntity = (m_ViewportData.HoveredEntityID > m_Scene->GetMaxEntityId()) ? nullptr : m_Scene->GetEnitityFromId(m_ViewportData.HoveredEntityID);
+    }
+}
+
+/// Update Imnguizmo
+void ChessRendererLayer::OnImguizmoUpdate() {
+//    const std::shared_ptr<Entity>& selectedEntity = m_SHP->GetSelectedEntity();
+//    if (selectedEntity && m_VpData.GizmoType != -1) {
+//        ImGuizmo::SetOrthographic(false);
+//        ImGuizmo::SetDrawlist();
+//        
+//        float windowWidth = (float)ImGui::GetWindowWidth();
+//        float windowHeight = (float)ImGui::GetWindowHeight();
+//        ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+//        
+//        // Camera
+//        const std::shared_ptr<EditorCamera>& editorCamera = m_ActiveScene->GetEditorCamera();
+//        
+//        glm::mat4 cameraProjection = editorCamera->GetProjectionMatrix();
+//        glm::mat4 cameraView       = editorCamera->GetViewMatrix();
+//        
+//        // Entity transform
+//        auto& tc = selectedEntity->GetComponent<TransformComponent>();
+//        glm::mat4 transform = tc.GetTransform();
+//        
+//        // Snapping
+//        bool snap = Input::IsKeyPressed(KeyCode::LeftControl);
+//        float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+//        
+//        // Snap to 45 degrees for rotation
+//        if (m_VpData.GizmoType == ImGuizmo::OPERATION::ROTATE)
+//            snapValue = 45.0f;
+//        
+//        float snapValues[3] = { snapValue, snapValue, snapValue };
+//        
+//        ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+//                             (ImGuizmo::OPERATION)m_VpData.GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+//                             nullptr, snap ? snapValues : nullptr);
+//        
+//        if (ImGuizmo::IsUsing()) {
+//            glm::vec3 translation, rotation, scale;
+//            Math::DecomposeTransform(transform, translation, rotation, scale);
+//            
+//            glm::vec3 deltaRotation = rotation - tc.Rotation;
+//            tc.Translation = translation;
+//            tc.Rotation += deltaRotation;
+//            tc.Scale = scale;
+//        }
+//    }
 }

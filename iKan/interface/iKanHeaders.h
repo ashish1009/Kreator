@@ -69,9 +69,12 @@
 #include <Scene/Scene.hpp>
 #include <Scene/Entity.hpp>
 #include <Scene/Component.hpp>
+#include <Scene/Viewport.hpp>
 
 // Editor Files
 #include <Editor/EditorCamera.hpp>
+#include <Editor/PropertyGrid.hpp>
 
 // Gui Files
 #include <Gui/ImguiAPI.hpp>
+#include <ImGuizmo.h>

@@ -20,6 +20,13 @@ namespace iKan {
         /// @param sameLine check for same line icon or in new line
         static void HelpMarker(const char* desc, const char* iconChar = "(?)", bool sameLine = true);
         
+        /// Create Imgae in current Imgui window
+        /// @param textureID Texture id of Image to be rendered
+        /// @param size size of image need to be rendered inside Imgui window (this size will be visible as texture)
+        /// @param uv0 Left
+        /// @param uv1 Right
+        static void Image(void* textureID, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1);
+        
     private:
         PropertyGrid() = default;
         MAKE_SINGLETON(PropertyGrid);

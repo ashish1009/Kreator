@@ -334,6 +334,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/glm",
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
+					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR/../iKan/vendors/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -350,6 +351,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/glm",
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
+					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR/../iKan/vendors/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";

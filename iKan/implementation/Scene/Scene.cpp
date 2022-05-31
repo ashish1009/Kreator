@@ -136,6 +136,19 @@ void Scene::EditScene() {
     m_EventHandler = std::bind(&Scene::EventHandlerEditor, this, std::placeholders::_1);
 }
 
+/// Set the Selected Entity by UI
+/// @param selectedEntity new selected Entity Reference pointer
+void Scene::SetSelectedEntity(const std::shared_ptr<Entity>& selectedEntity) {
+    m_SelectedEntity = selectedEntity;
+}
+
+/// Get the entiyt ftom Id map
+/// @param id ID
+const std::shared_ptr<Entity>& Scene::GetEnitityFromId(int32_t id) const {
+    auto ID = m_Registry.get<IDComponent>((entt::entity)id).ID;
+    return m_EntityIDMap.at(ID);
+}
+
 /// Handle the events
 /// @param event event instance
 void Scene::EventHandler(Event& event) {
@@ -205,3 +218,6 @@ std::shared_ptr<Entity> Scene::GetPrimaryCameraEntity() {
     }
     return nullptr;
 }
+
+uint32_t Scene::GetNumEntities() const { return m_NumEntities; }
+uint32_t Scene::GetMaxEntityId() const { return m_MaxEntityId; }

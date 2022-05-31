@@ -53,6 +53,9 @@ namespace Chess {
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
         
+        void UpdateHoveredEntity();
+        void OnImguizmoUpdate();
+        
         // Member variabls
         std::shared_ptr<Scene> m_Scene;
         
@@ -61,6 +64,9 @@ namespace Chess {
         
         // Camera Entity
         std::shared_ptr<Entity> m_CameraEntity;
+        
+        // Viewport Data
+        Viewport m_ViewportData;
     };
 
 }
