@@ -10,7 +10,8 @@
 using namespace Chess;
 
 /// Chess Renderer Layer Constructor
-ChessRendererLayer::ChessRendererLayer() : Layer("Chess Renderer Layer") {
+ChessRendererLayer::ChessRendererLayer(const std::string& playerName_1, const std::string& playerName_2)
+: Layer("Chess Renderer Layer"), m_PlayerData({ playerName_1, playerName_2 }) {
     IK_INFO("Creating '{0}' ...", m_Name);
 }
 
@@ -54,57 +55,8 @@ void ChessRendererLayer::Attach() {
     tc.Translation = { 3.5f, 3.5f, 0.0f };
     tc.Scale = { 8.5f, 8.5f, 1.0f };
 
-    // Initialize the Block data
-    // NOTE: Row Index is the Y position of Renderer Screen
-    //       Column Index is the X Position of Renderer Screen
-    for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
-        for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
-            // Create Block for each Entity
-            Block block;
-            
-            // Stores the Index of each block
-            block.BlockIndex = rowIdx * MAX_ROWS + colIdx;
-            
-            // Stores the Position of Blocks
-            block.X = colIdx;
-            block.Y = rowIdx;
-            
-            // Create Entity for each Block
-            std::string blockName = "Block " + std::to_string(block.BlockIndex);
-            std::shared_ptr<Entity> entity = m_Scene->CreateEntity(blockName);
-            
-            // Add the Quad Component in block for rendering quad
-            auto& qc = entity->AddComponent<QuadComponent>();
-            
-            // Assign color to each block alternative
-            // First check alternate rows.
-            if (rowIdx % 2 == 0) {
-                // Then check each alternate columns
-                if (block.BlockIndex % 2 == 0)
-                    // If rows % 2 is 0 then first block of row is bright
-                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
-                else
-                    // else first block of row is dark
-                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
-            }
-            else {
-                // Then check each alternate columns
-                if (block.BlockIndex % 2 == 0)
-                    // If rows % 2 is NOT 0 then first block of row is dark
-                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
-                else
-                    // else first block of row is bright
-                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
-            }
-
-            // Update the block position as Entity Position
-            auto& blockPosition = entity->GetComponent<TransformComponent>().Translation;
-            blockPosition.x = block.X;
-            blockPosition.y = block.Y;
-            
-            m_BlockEntityMap[entity] = block;
-        }
-    }
+    InitBlockData();
+    InitPlayerData();
     
     // Before starting Game loop Update the Scene viewport
     m_Scene->SetViewport(1200, 800);
@@ -168,8 +120,8 @@ void ChessRendererLayer::RenderGui() {
             ImGui::Text("Hovered Entity : %s", entity->GetComponent<TagComponent>().Tag.c_str());
             
             const Block& block = m_BlockEntityMap[entity];
-            ImGui::Text("Block Index    : %d", block.BlockIndex);
-            ImGui::Text("Position       : %d | %d", block.X, block.Y);
+            ImGui::Text("Block Index    : %d", block.m_BlockIndex);
+            ImGui::Text("Position       : %d | %d", block.m_X, block.m_Y);
             
             ImGui::Separator();
         }
@@ -225,4 +177,91 @@ void ChessRendererLayer::UpdateHoveredEntity() {
         Renderer::GetEntityIdFromPixels(m_ViewportData.MousePosX, m_ViewportData.MousePosY, m_ViewportData.HoveredEntityID);
         m_ViewportData.HoveredEntity = (m_ViewportData.HoveredEntityID > m_Scene->GetMaxEntityId()) ? nullptr : m_Scene->GetEnitityFromId(m_ViewportData.HoveredEntityID);
     }
+}
+
+/// Initialize the Block data
+void ChessRendererLayer::InitBlockData() {
+    // NOTE: Row Index is the Y position of Renderer Screen
+    //       Column Index is the X Position of Renderer Screen
+    for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
+        for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
+            // Create Block for each Entity
+            Block block;
+            
+            // Stores the Index of each block
+            block.m_BlockIndex = rowIdx * MAX_ROWS + colIdx;
+            
+            // Stores the Position of Blocks
+            block.m_X = colIdx;
+            block.m_Y = rowIdx;
+            
+            // Create Entity for each Block
+            std::string blockName = "Block " + std::to_string(block.m_BlockIndex);
+            std::shared_ptr<Entity> entity = m_Scene->CreateEntity(blockName);
+            
+            // Add the Quad Component in block for rendering quad
+            auto& qc = entity->AddComponent<QuadComponent>();
+            
+            // Assign color to each block alternative
+            // First check alternate rows.
+            if (rowIdx % 2 == 0) {
+                // Then check each alternate columns
+                if (block.m_BlockIndex % 2 == 0)
+                    // If rows % 2 is 0 then first block of row is bright
+                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
+                else
+                    // else first block of row is dark
+                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
+            }
+            else {
+                // Then check each alternate columns
+                if (block.m_BlockIndex % 2 == 0)
+                    // If rows % 2 is NOT 0 then first block of row is dark
+                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f };
+                else
+                    // else first block of row is bright
+                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f };
+            }
+
+            // Update the block position as Entity Position
+            auto& blockPosition = entity->GetComponent<TransformComponent>().Translation;
+            blockPosition.x = block.m_X;
+            blockPosition.y = block.m_Y;
+            
+            m_BlockEntityMap[entity] = block;
+        }
+    }
+}
+
+/// Initialize the Piece data
+void ChessRendererLayer::InitPlayerData() {
+    // Setup Player Data
+    {
+        // Black Data
+        for (uint8_t playerIdx = 0; playerIdx < MAX_PLAYERS; playerIdx++) {
+            auto& player = m_PlayerData[(Piece::Color)playerIdx];
+            player.m_Color = (Piece::Color)playerIdx;
+            
+            auto pawnPosition = PAWN_INIT_POSITION[playerIdx];
+            for (uint8_t pawnIdx = 0; pawnIdx < MAX_PAWNS; pawnIdx++)
+                player.m_Pawns.emplace_back(Piece::Create(Piece::Name::Pawn, player.m_Color, pawnPosition, pawnIdx));
+            
+            auto otherPiecePosition = OTHER_PIECE_INIT_POSITION[playerIdx];
+            player.m_King = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 3);
+            player.m_Queen = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 4);
+            
+            // Bishops
+            player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 0));
+            player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 7));
+            
+            // Knight
+            player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 1));
+            player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 6));
+            
+            // Rook
+            player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 2));
+            player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 4));
+        }
+    }
+
 }
