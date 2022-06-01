@@ -11,35 +11,35 @@ using namespace Chess;
 
 namespace ChessUtils {
     
-//    std::string ColorNameString(Piece::Color color) {
-//        switch (color) {
-//            case Piece::Color::Black:  return "Black";
-//            case Piece::Color::White:  return "White";
-//            case Piece::Color::Max:
-//            default:
-//                IK_ASSERT(false, "Invalid Color");
-//        }
-//    }
-//
-//    std::string PieceNameString(Piece::Name name) {
-//        switch (name) {
-//            case Piece::Name::Pawn: return "Pawn";
-//            case Piece::Name::King: return "King";
-//            case Piece::Name::Queen: return "Queen";
-//            case Piece::Name::Knight: return "Knight";
-//            case Piece::Name::Bishop: return "Bishop";
-//            case Piece::Name::Rook: return "Rook";
-//            case Piece::Name::Invalid:
-//            default:
-//                IK_ASSERT(false, "Invalid Color");
-//        }
-//    }
+    std::string ColorNameString(Piece::Color color) {
+        switch (color) {
+            case Piece::Color::Black:  return "Black";
+            case Piece::Color::White:  return "White";
+            case Piece::Color::Max:
+            default:
+                IK_ASSERT(false, "Invalid Color");
+        }
+    }
+
+    std::string PieceNameString(Piece::Name name) {
+        switch (name) {
+            case Piece::Name::Pawn: return "Pawn";
+            case Piece::Name::King: return "King";
+            case Piece::Name::Queen: return "Queen";
+            case Piece::Name::Knight: return "Knight";
+            case Piece::Name::Bishop: return "Bishop";
+            case Piece::Name::Rook: return "Rook";
+            case Piece::Name::Invalid:
+            default:
+                IK_ASSERT(false, "Invalid Color");
+        }
+    }
     
 }
 
 /// Chess Renderer Layer Constructor
 ChessRendererLayer::ChessRendererLayer(const std::string& playerName_1, const std::string& playerName_2)
-: Layer("Chess Renderer Layer") {//, m_PlayerData({ playerName_1, playerName_2 }) {
+: Layer("Chess Renderer Layer"), m_PlayerData({ playerName_1, playerName_2 }) {
     IK_INFO("Creating '{0}' ...", m_Name);
 }
 
@@ -77,7 +77,7 @@ void ChessRendererLayer::Attach() {
     camPosition = { 3.5f, 3.5f, 0.0f };
 
     InitBlockData();
-//    InitPlayerData();
+    InitPlayerData();
     
     // Before starting Game loop Update the Scene viewport
     m_Scene->SetViewport(1200, 800);
@@ -139,13 +139,16 @@ void ChessRendererLayer::RenderGui() {
         if (m_ViewportData.HoveredEntity) {
             const auto& entity = m_ViewportData.HoveredEntity;
             ImGui::Text("Hovered Entity : %s", entity->GetComponent<TagComponent>().Tag.c_str());
-            
-            const Block& block = m_BlockEntityMap[entity];
-            ImGui::Text("Block Index    : %d", block.m_Index);
-            ImGui::Text("Row            : %d", block.m_Row);
-            ImGui::Text("Col            : %d", block.m_Col);
-            
             ImGui::Separator();
+
+            if (m_BlockEntityMap.find(entity) != m_BlockEntityMap.end()) {
+                const Block& block = m_BlockEntityMap[entity];
+                ImGui::Text("Block Index    : %d", block.m_Index);
+                ImGui::Text("Row            : %d", block.m_Row);
+                ImGui::Text("Col            : %d", block.m_Col);
+                
+                ImGui::Separator();
+            }
         }
         
         ImGui::End(); // Debug Window
@@ -221,23 +224,17 @@ void ChessRendererLayer::InitBlockData() {
             // Create Entity for each Block
             std::string blockName = "Block " + std::to_string(block.m_Index);
             std::shared_ptr<Entity> entity = m_Scene->CreateEntity(blockName);
-            
-            // Add the Quad Component in block for rendering quad
-            auto& qc = entity->AddComponent<QuadComponent>();
-            
+                        
             // Assign color to each block alternative
-            if (rowIdx % 2 == 0) { // First check alternate rows.
-                if (block.m_Index % 2 == 0) // Then check each alternate columns
-                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f }; // If rows % 2 is 0 then first block of row is bright
-                else
-                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f }; // else first block of row is dark
-            }
-            else {
-                if (block.m_Index % 2 == 0) // Then check each alternate column
-                    qc.Color = { 0.7f, 0.1f, 0.1f, 1.0f }; // If rows % 2 is NOT 0 then first block of row is dark
-                else
-                    qc.Color = { 1.0f , 1.0f, 1.0f, 1.0f }; // else first block of row is bright
-            }
+            static const glm::vec4 whiteColor = { 0.5f, 0.5f, 0.5f, 1.0f };
+            static const glm::vec4 darkColor = { 0.7f, 0.1f, 0.1f, 1.0f };
+            glm::vec4 blockColor = glm::vec4(0.0f);
+            if (rowIdx % 2 == 0)    
+                blockColor = (block.m_Index % 2 == 0) ? whiteColor : darkColor;
+            else
+                blockColor = (block.m_Index % 2 == 0) ? darkColor : whiteColor;
+
+            entity->AddComponent<QuadComponent>(blockColor);
 
             // Update the block position as Entity Position
             auto& blockPosition = entity->GetComponent<TransformComponent>().Translation;
@@ -251,39 +248,45 @@ void ChessRendererLayer::InitBlockData() {
 
 /// Initialize the Piece data
 void ChessRendererLayer::InitPlayerData() {
-//    for (uint8_t playerIdx = 0; playerIdx < MAX_PLAYERS; playerIdx++) {
-//        auto& player = m_PlayerData[(Piece::Color)playerIdx];
-//        player.m_Color = (Piece::Color)playerIdx;
-//
-//        auto pawnPosition = PAWN_INIT_POSITION[playerIdx];
-//        for (uint8_t pawnIdx = 0; pawnIdx < MAX_PAWNS; pawnIdx++) {
-//            std::shared_ptr<Piece> pawnPice = Piece::Create(Piece::Name::Pawn, player.m_Color, pawnPosition, pawnIdx);
-//            player.m_Pawns.emplace_back(pawnPice);
-//
-//            // Create Entity
-//            auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Pawn) + std::to_string(pawnIdx);
-//            std::shared_ptr<Entity> entity = m_Scene->CreateEntity(entityName);
-//
-//            auto& pawnEntityPosition = entity->GetComponent<TransformComponent>().Translation;
-////            pawnEntityPosition.x =
-//
-//            player.m_PieceEntityMap[entity] = pawnPice;
-//        }
-//
-//        auto otherPiecePosition = OTHER_PIECE_INIT_POSITION[playerIdx];
-//        player.m_King = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 3);
-//        player.m_Queen = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 4);
-//
-//        // Bishops
-//        player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 0));
-//        player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 7));
-//
-//        // Knight
-//        player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 1));
-//        player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 6));
-//
-//        // Rook
-//        player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 2));
-//        player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 4));
-//    }
+    for (uint8_t playerIdx = 0; playerIdx < MAX_PLAYERS; playerIdx++) {
+        auto& player = m_PlayerData[(Piece::Color)playerIdx];
+        player.m_Color = (Piece::Color)playerIdx;
+
+        auto pawnRowPosition = PAWN_INIT_ROW_POSITION[playerIdx];
+        for (uint8_t pawnIdx = 0; pawnIdx < MAX_PAWNS; pawnIdx++) {
+            std::shared_ptr<Piece> pawnPice = Piece::Create(Piece::Name::Pawn, player.m_Color, pawnRowPosition, pawnIdx);
+            player.m_Pawns.emplace_back(pawnPice);
+
+            // Create Entity
+            auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Pawn) + std::to_string(pawnIdx);
+            std::shared_ptr<Entity> entity = m_Scene->CreateEntity(entityName);
+            
+            // Add texture file
+            std::shared_ptr<Texture> pawnTexture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackPawn : m_PieceTexture.c_WhitePawn;
+            entity->AddComponent<QuadComponent>(pawnTexture);
+
+            // Update the position of Pawn
+            auto& tc = entity->GetComponent<TransformComponent>();
+            tc.Translation = { pawnIdx, pawnRowPosition, 0.0f }; // pawn index is the y postion of pawn
+            tc.Scale = glm::vec3(0.5f, 0.5f, 1.0f);
+            
+            player.m_PieceEntityMap[entity] = pawnPice;
+        }
+
+        auto otherPiecePosition = OTHER_PIECE_INIT_ROW_POSITION[playerIdx];
+        player.m_King = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 3);
+        player.m_Queen = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 4);
+
+        // Bishops
+        player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 0));
+        player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 7));
+
+        // Knight
+        player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 1));
+        player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 6));
+
+        // Rook
+        player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 2));
+        player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 4));
+    }
 }
