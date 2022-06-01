@@ -162,6 +162,25 @@ void ChessRendererLayer::RenderGui() {
                 
                 ImGui::Separator();
             }
+            
+            else if (m_PlayerData[0].m_PieceEntityMap.find(entity) != m_PlayerData[0].m_PieceEntityMap.end()) {
+                const std::shared_ptr<Piece>& piece = m_PlayerData[0].m_PieceEntityMap[entity];
+                ImGui::Text("Name    : %s", ChessUtils::PieceNameString(piece->m_Name).c_str());
+                ImGui::Text("Color   : %s", ChessUtils::ColorNameString(piece->m_Color).c_str());
+                ImGui::Text("Row     : %d", piece->m_Row);
+                ImGui::Text("Col     : %d", piece->m_Col);
+                
+                ImGui::Separator();
+            }
+            if (m_PlayerData[1].m_PieceEntityMap.find(entity) != m_PlayerData[1].m_PieceEntityMap.end()) {
+                const std::shared_ptr<Piece>& piece = m_PlayerData[1].m_PieceEntityMap[entity];
+                ImGui::Text("Name    : %s", ChessUtils::PieceNameString(piece->m_Name).c_str());
+                ImGui::Text("Color   : %s", ChessUtils::ColorNameString(piece->m_Color).c_str());
+                ImGui::Text("Row     : %d", piece->m_Row);
+                ImGui::Text("Col     : %d", piece->m_Col);
+                
+                ImGui::Separator();
+            }
         }
         
         ImGui::End(); // Debug Window
@@ -288,6 +307,10 @@ void ChessRendererLayer::InitPlayerData() {
    }
 }
 
+/// create entity for Piece
+/// @param entityName name of entity
+/// @param texture texture to be loaded
+/// @param position position of entity
 std::shared_ptr<Entity> ChessRendererLayer::CreatePieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position) {
     std::shared_ptr<Entity> entity = m_Scene->CreateEntity(entityName);
     entity->AddComponent<QuadComponent>(texture);
