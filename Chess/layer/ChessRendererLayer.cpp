@@ -229,7 +229,7 @@ void ChessRendererLayer::InitBlockData() {
             static const glm::vec4 whiteColor = { 0.5f, 0.5f, 0.5f, 1.0f };
             static const glm::vec4 darkColor = { 0.7f, 0.1f, 0.1f, 1.0f };
             glm::vec4 blockColor = glm::vec4(0.0f);
-            if (rowIdx % 2 == 0)    
+            if (rowIdx % 2 == 0)
                 blockColor = (block.m_Index % 2 == 0) ? whiteColor : darkColor;
             else
                 blockColor = (block.m_Index % 2 == 0) ? darkColor : whiteColor;
@@ -254,39 +254,109 @@ void ChessRendererLayer::InitPlayerData() {
 
         auto pawnRowPosition = PAWN_INIT_ROW_POSITION[playerIdx];
         for (uint8_t pawnIdx = 0; pawnIdx < MAX_PAWNS; pawnIdx++) {
-            std::shared_ptr<Piece> pawnPice = Piece::Create(Piece::Name::Pawn, player.m_Color, pawnRowPosition, pawnIdx);
-            player.m_Pawns.emplace_back(pawnPice);
+            std::shared_ptr<Piece> piece = player.m_Pawns.emplace_back(Piece::Create(Piece::Name::Pawn, player.m_Color, pawnRowPosition, pawnIdx));
 
-            // Create Entity
             auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Pawn) + std::to_string(pawnIdx);
-            std::shared_ptr<Entity> entity = m_Scene->CreateEntity(entityName);
-            
-            // Add texture file
-            std::shared_ptr<Texture> pawnTexture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackPawn : m_PieceTexture.c_WhitePawn;
-            entity->AddComponent<QuadComponent>(pawnTexture);
+            std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackPawn : m_PieceTexture.c_WhitePawn;
 
-            // Update the position of Pawn
-            auto& tc = entity->GetComponent<TransformComponent>();
-            tc.Translation = { pawnIdx, pawnRowPosition, 0.0f }; // pawn index is the y postion of pawn
-            tc.Scale = glm::vec3(0.5f, 0.5f, 1.0f);
-            
-            player.m_PieceEntityMap[entity] = pawnPice;
+            player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { pawnIdx, pawnRowPosition, 0.0f })] = piece;
         }
 
         auto otherPiecePosition = OTHER_PIECE_INIT_ROW_POSITION[playerIdx];
-        player.m_King = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 3);
-        player.m_Queen = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 4);
+        // King
+        {
+            std::shared_ptr<Piece> piece = player.m_King = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 3);
+            
+            auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::King);
+            std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackKing : m_PieceTexture.c_WhiteKing;
 
+            player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 3.0f, otherPiecePosition, 0.0f })] = piece;
+        }
+        
+        {
+            std::shared_ptr<Piece> piece = player.m_Queen = Piece::Create(Piece::Name::King, player.m_Color, otherPiecePosition, 4);
+
+            auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Queen);
+            std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackQuuen : m_PieceTexture.c_WhiteQuuen;
+
+            player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 4.0f, otherPiecePosition, 0.0f })] = piece;
+        }
         // Bishops
-        player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 0));
-        player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 7));
+        {
+            // 1
+            {
+                std::shared_ptr<Piece> piece = player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 2));
+
+                auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Bishop);
+                std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackBishop : m_PieceTexture.c_WhiteBishop;
+
+                player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 2.0f, otherPiecePosition, 0.0f })] = piece;
+            }
+            // 2
+            {
+                std::shared_ptr<Piece> piece = player.m_Bishop.emplace_back(Piece::Create(Piece::Name::Bishop, player.m_Color, otherPiecePosition, 5));
+
+                auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Bishop);
+                std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackBishop : m_PieceTexture.c_WhiteBishop;
+
+                player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 5.0f, otherPiecePosition, 0.0f })] = piece;
+            }
+        }
 
         // Knight
-        player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 1));
-        player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 6));
+        {
+            // 1
+            {
+                std::shared_ptr<Piece> piece = player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 1));
+                
+                auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Knight);
+                std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackKnight : m_PieceTexture.c_WhiteKnight;
+
+                player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 1.0f, otherPiecePosition, 0.0f })] = piece;
+            }
+            // 2
+            {
+                std::shared_ptr<Piece> piece = player.m_Knight.emplace_back(Piece::Create(Piece::Name::Knight, player.m_Color, otherPiecePosition, 6));
+                
+                auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Knight);
+                std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackKnight : m_PieceTexture.c_WhiteKnight;
+
+                player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 6.0f, otherPiecePosition, 0.0f })] = piece;
+            }
+        }
 
         // Rook
-        player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 2));
-        player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 4));
+        {
+            // 1
+            {
+                std::shared_ptr<Piece> piece = player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 0));
+                
+                auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Rook);
+                std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackRook : m_PieceTexture.c_WhiteRook;
+
+                player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 0.0f, otherPiecePosition, 0.0f })] = piece;
+            }
+            // 2
+            {
+                std::shared_ptr<Piece> piece = player.m_Rook.emplace_back(Piece::Create(Piece::Name::Rook, player.m_Color, otherPiecePosition, 7));
+                
+                auto entityName = ChessUtils::ColorNameString((Piece::Color)playerIdx) + ChessUtils::PieceNameString(Piece::Name::Knight);
+                std::shared_ptr<Texture> texture = ((Piece::Color)playerIdx == Piece::Color::Black) ? m_PieceTexture.c_BlackRook : m_PieceTexture.c_WhiteRook;
+
+                player.m_PieceEntityMap[AddPieceEntity(entityName, texture, { 7.0f, otherPiecePosition, 0.0f })] = piece;
+            }
+        }
     }
+}
+
+std::shared_ptr<Entity> ChessRendererLayer::AddPieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position) {
+    std::shared_ptr<Entity> entity = m_Scene->CreateEntity(entityName);
+    entity->AddComponent<QuadComponent>(texture);
+
+    // Update the position of Pawn
+    auto& tc = entity->GetComponent<TransformComponent>();
+    tc.Translation = position;
+    tc.Scale = glm::vec3(0.5f, 0.5f, 1.0f);
+    
+    return entity;
 }

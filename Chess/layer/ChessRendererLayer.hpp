@@ -134,6 +134,8 @@ namespace Chess {
         void InitBlockData();
         void InitPlayerData();
         
+        std::shared_ptr<Entity> AddPieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position);
+        
         bool OnKeyPressed(KeyPressedEvent& e);
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
