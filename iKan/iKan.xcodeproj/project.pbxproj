@@ -96,6 +96,8 @@
 		3E8200A4283B8A3A0024DF91 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E8200A2283B8A3A0024DF91 /* Camera.cpp */; };
 		3E8200A8283B8F750024DF91 /* EditorCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E8200A6283B8F750024DF91 /* EditorCamera.cpp */; };
 		3E8200A9283B8F750024DF91 /* EditorCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E8200A7283B8F750024DF91 /* EditorCamera.hpp */; };
+		3E96196A2847DE4700C74F6D /* TextureLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9619682847DE4700C74F6D /* TextureLibrary.cpp */; };
+		3E96196B2847DE4700C74F6D /* TextureLibrary.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E9619692847DE4700C74F6D /* TextureLibrary.hpp */; };
 		3EB1C88E283BBA200098836F /* stb_image.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EB1C88A283BBA200098836F /* stb_image.h */; };
 		3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1C88B283BBA200098836F /* stb_image.cpp */; };
 		3EB1C89C283BCB4D0098836F /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1C89A283BCB4D0098836F /* Mesh.cpp */; };
@@ -238,6 +240,8 @@
 		3E8200A2283B8A3A0024DF91 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		3E8200A6283B8F750024DF91 /* EditorCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorCamera.cpp; sourceTree = "<group>"; };
 		3E8200A7283B8F750024DF91 /* EditorCamera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorCamera.hpp; sourceTree = "<group>"; };
+		3E9619682847DE4700C74F6D /* TextureLibrary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureLibrary.cpp; sourceTree = "<group>"; };
+		3E9619692847DE4700C74F6D /* TextureLibrary.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureLibrary.hpp; sourceTree = "<group>"; };
 		3EB1C88A283BBA200098836F /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		3EB1C88B283BBA200098836F /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		3EB1C890283BCAB10098836F /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = vendors/assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
@@ -390,6 +394,8 @@
 				3E8200A2283B8A3A0024DF91 /* Camera.cpp */,
 				3EB1C89A283BCB4D0098836F /* Mesh.cpp */,
 				3E803911283CCD870034F547 /* Material.cpp */,
+				3E9619682847DE4700C74F6D /* TextureLibrary.cpp */,
+				3E9619692847DE4700C74F6D /* TextureLibrary.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -761,6 +767,7 @@
 				3E6A4D8C28369025003578F4 /* Layer.hpp in Headers */,
 				3E6575FA2837B662006B0C81 /* Renderer.hpp in Headers */,
 				3E6A4D7D28364303003578F4 /* Asserts.h in Headers */,
+				3E96196B2847DE4700C74F6D /* TextureLibrary.hpp in Headers */,
 				3E8200A9283B8F750024DF91 /* EditorCamera.hpp in Headers */,
 				3E6575E128379C0E006B0C81 /* Timestep.hpp in Headers */,
 				3E2FA104283920C400EE289A /* OpenGLShader.hpp in Headers */,
@@ -918,6 +925,7 @@
 				3E2FA0F72839209000EE289A /* Shader.cpp in Sources */,
 				3E6575F92837B662006B0C81 /* Renderer.cpp in Sources */,
 				3EF2AA12283CFC22009764F8 /* Component.cpp in Sources */,
+				3E96196A2847DE4700C74F6D /* TextureLibrary.cpp in Sources */,
 				3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */,
 				3E820090283B61220024DF91 /* OpenGLShaderUniform.cpp in Sources */,
 				3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */,

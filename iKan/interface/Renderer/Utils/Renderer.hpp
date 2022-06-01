@@ -19,6 +19,7 @@ namespace iKan {
     // Forward declaration
     class RendererAPI;
     class Shader;
+    class Texture;
     class Pipeline;
     
     /// Interface class to handle ALL Renderer API to be used by client
@@ -117,6 +118,9 @@ namespace iKan {
         
         // ---------------- Shader Manager ----------------------------
         static std::shared_ptr<Shader> GetShader(const std::string& path);
+        
+        // ---------------- Texture Manager ----------------------------
+        static std::shared_ptr<Texture> GetTexture(const std::string& path);
         
     private:
         Renderer() = default;

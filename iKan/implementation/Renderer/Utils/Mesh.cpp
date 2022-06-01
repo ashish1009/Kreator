@@ -487,7 +487,7 @@ void Mesh::UploadMaterials() {
                     IK_CORE_INFO("            Name : {0}", s_Texname[texIdx]);
                     IK_CORE_INFO("            Path : {0}", texturePath);
 
-                    auto texture = Texture::Create(texturePath);
+                    auto texture = Renderer::GetTexture(texturePath);
                     m_MeshMaterials[i].Textures[texIdx] = { texture, true };
 
                     auto textureShaderName = "u_" + s_Texname[texIdx] + "Texture";

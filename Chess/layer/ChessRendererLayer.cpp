@@ -39,7 +39,7 @@ namespace ChessUtils {
     /// @param color name of color (should be same as folder name where piece stored)
     /// @param name name of piece (should be same as file name of piece without .png)
     std::shared_ptr<Texture> GetTexture(const std::string& color, const std::string& name) {
-        return Texture::Create(AssetManager::GetClientAsset("/texture/" + color + "/" + name + ".png"));
+        return Renderer::GetTexture(AssetManager::GetClientAsset("/texture/" + color + "/" + name + ".png"));
     }
     
 }

@@ -10,6 +10,7 @@
 #include "Renderer/Utils/BatchRenderer.hpp"
 #include "Renderer/Utils/RendererStats.hpp"
 #include "Renderer/Utils/ShaderLibrary.hpp"
+#include "Renderer/Utils/TextureLibrary.hpp"
 #include "Renderer/Graphics/Pipeline.hpp"
 
 using namespace iKan;
@@ -170,4 +171,11 @@ void Renderer::RemoveRendererIDs(RendererID rendererId) {
 /// @param path Shader file path
 std::shared_ptr<Shader> Renderer::GetShader(const std::string& path) {
     return ShaderLibrary::GetShader(path);
+}
+
+// ---------------- Texture Manager ----------------------------
+/// Generate and store a new Texture if not created already. Else return already created Texture
+/// @param path Texture file path
+std::shared_ptr<Texture> Renderer::GetTexture(const std::string& path) {
+    return TextureLibrary::GetTexture(path);
 }
