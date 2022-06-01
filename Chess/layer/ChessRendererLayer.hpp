@@ -101,15 +101,18 @@ namespace Chess {
         Piece::Color m_Color = Piece::Color::Max;    // Color of Player Piece. By default None is taken
 
         std::unordered_map<std::shared_ptr<Entity>, std::shared_ptr<Piece>> m_PieceEntityMap; // Stores the Piece data of chess with Entity map
+    };
 
-        // Piece Data
-        std::vector<std::shared_ptr<Piece>> m_Pawns;  // Vector of all Pawns
-        std::vector<std::shared_ptr<Piece>> m_Rook;   // Vector of both Rook
-        std::vector<std::shared_ptr<Piece>> m_Bishop; // Vector of both Bishop
-        std::vector<std::shared_ptr<Piece>> m_Knight; // Vector of both Knight
-
-        std::shared_ptr<Piece> m_King;
-        std::shared_ptr<Piece> m_Queen;
+    /// Stores the column position of power piece (other than pawns)
+    static const Piece::Name PowerPiecePosition[MAX_COLUMNS] = {
+        Piece::Name::Rook,
+        Piece::Name::Knight,
+        Piece::Name::Bishop,
+        Piece::Name::Queen,
+        Piece::Name::King,
+        Piece::Name::Bishop,
+        Piece::Name::Knight,
+        Piece::Name::Rook
     };
     
     // TODO: Seprate all date from renderer class to some other class
@@ -134,7 +137,7 @@ namespace Chess {
         void InitBlockData();
         void InitPlayerData();
         
-        std::shared_ptr<Entity> AddPieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position);
+        std::shared_ptr<Entity> CreatePieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position);
         
         bool OnKeyPressed(KeyPressedEvent& e);
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
@@ -148,29 +151,6 @@ namespace Chess {
         std::shared_ptr<Entity> m_CameraEntity;                                 // Camera Entity
         std::unordered_map<std::shared_ptr<Entity>, Block> m_BlockEntityMap;    // Stores the blocks data of chess with Entity map
         std::array<Player, MAX_PLAYERS> m_PlayerData;                           // Stores the Player Data
-        
-        // Texture Constants
-        // TODO: move some other place.
-        struct PieceTexture {
-            // Pawns
-            const std::shared_ptr<Texture> c_BlackPawn = Texture::Create(AssetManager::GetClientAsset("/texture/black/pawn.png"));
-            const std::shared_ptr<Texture> c_WhitePawn = Texture::Create(AssetManager::GetClientAsset("/texture/white/pawn.png"));
-
-            // Whites
-            const std::shared_ptr<Texture> c_WhiteKing = Texture::Create(AssetManager::GetClientAsset("/texture/white/king.png"));
-            const std::shared_ptr<Texture> c_WhiteQuuen = Texture::Create(AssetManager::GetClientAsset("/texture/white/queen.png"));
-            const std::shared_ptr<Texture> c_WhiteRook = Texture::Create(AssetManager::GetClientAsset("/texture/white/rook.png"));
-            const std::shared_ptr<Texture> c_WhiteBishop = Texture::Create(AssetManager::GetClientAsset("/texture/white/bishop.png"));
-            const std::shared_ptr<Texture> c_WhiteKnight = Texture::Create(AssetManager::GetClientAsset("/texture/white/knight.png"));
-
-            // Blacks
-            const std::shared_ptr<Texture> c_BlackKing = Texture::Create(AssetManager::GetClientAsset("/texture/black/king.png"));
-            const std::shared_ptr<Texture> c_BlackQuuen = Texture::Create(AssetManager::GetClientAsset("/texture/black/queen.png"));
-            const std::shared_ptr<Texture> c_BlackRook = Texture::Create(AssetManager::GetClientAsset("/texture/black/rook.png"));
-            const std::shared_ptr<Texture> c_BlackBishop = Texture::Create(AssetManager::GetClientAsset("/texture/black/bishop.png"));
-            const std::shared_ptr<Texture> c_BlackKnight = Texture::Create(AssetManager::GetClientAsset("/texture/black/knight.png"));
-        };
-        PieceTexture m_PieceTexture;
     };
 
 }
