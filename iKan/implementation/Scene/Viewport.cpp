@@ -48,11 +48,11 @@ void Viewport::RenderImgui() {
     ImGui::SetNextWindowContentSize(ImVec2(585.0f, 0.0f));
     ImGui::BeginChild("##Renderer Version", ImVec2(0, ImGui::GetFontSize() * 2), false, ImGuiWindowFlags_HorizontalScrollbar);
     ImGui::Columns(6);
-    ImGui::SetColumnWidth(0, 85);  ImGui::Text("%d x %d", MousePosX, MousePosY); ImGui::NextColumn();
+    ImGui::SetColumnWidth(0, 90);  ImGui::Text("%d x %d", MousePosX, MousePosY); ImGui::NextColumn();
     
-    ImGui::SetColumnWidth(1, 80);  ImGui::Text("Focused : %d", Focused); ImGui::NextColumn();
-    ImGui::SetColumnWidth(2, 80);  ImGui::Text("Hovered : %d", Hovered); ImGui::NextColumn();
-    ImGui::SetColumnWidth(3, 80);  ImGui::Text("%d x %d", (int32_t)Size.x, (int32_t)Size.y); ImGui::NextColumn();
+    ImGui::SetColumnWidth(1, 90);  ImGui::Text("Focused : %d", Focused); ImGui::NextColumn();
+    ImGui::SetColumnWidth(2, 90);  ImGui::Text("Hovered : %d", Hovered); ImGui::NextColumn();
+    ImGui::SetColumnWidth(3, 90);  ImGui::Text("%d x %d", (int32_t)Size.x, (int32_t)Size.y); ImGui::NextColumn();
     
     if (HoveredEntity) {
         std::string entityName = HoveredEntity->GetComponent<TagComponent>().Tag;

@@ -14,8 +14,8 @@
             filePath = "Chess/layer/ChessRendererLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "ChessRendererLayer::Attach()"
             landmarkType = "7">
          </BreakpointContent>
