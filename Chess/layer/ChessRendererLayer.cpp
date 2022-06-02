@@ -155,10 +155,18 @@ void ChessRendererLayer::RenderGui() {
             ImGui::Separator();
 
             if (m_BlockEntityMap.find(entity) != m_BlockEntityMap.end()) {
-                const Block& block = m_BlockEntityMap[entity];
-                ImGui::Text("Block Index    : %d", block.m_Index);
-                ImGui::Text("Row            : %d", block.m_Row);
-                ImGui::Text("Col            : %d", block.m_Col);
+                const std::shared_ptr<Block> block = m_BlockEntityMap[entity];
+                ImGui::Text("Block Index    : %d", block->m_Index);
+                ImGui::Text("Row            : %d", block->m_Row);
+                ImGui::Text("Col            : %d", block->m_Col);
+                
+                if (block->m_Piece) {
+                    ImGui::Text("Piece Name     : %s", ChessUtils::PieceNameString(block->m_Piece->m_Name).c_str());
+                    ImGui::Text("Piece Color    : %s", ChessUtils::ColorNameString(block->m_Piece->m_Color).c_str());
+                }
+                else {
+                    ImGui::Text("Empty : No Piece");
+                }
                 
                 ImGui::Separator();
             }
@@ -248,13 +256,13 @@ void ChessRendererLayer::InitBlockData() {
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
         for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
             // Create Block for each Entity
-            Block block(rowIdx, colIdx);
+            m_Block[rowIdx][colIdx] = std::make_shared<Block>(rowIdx, colIdx);
             
             // Stores the Index of each block
-            block.m_Index = rowIdx * MAX_ROWS + colIdx;
+            m_Block[rowIdx][colIdx]->m_Index = rowIdx * MAX_ROWS + colIdx;
 
             // Create Entity for each Block
-            std::string blockName = "Block " + std::to_string(block.m_Index);
+            std::string blockName = "Block " + std::to_string(m_Block[rowIdx][colIdx]->m_Index);
             std::shared_ptr<Entity> entity = m_Scene->CreateEntity(blockName);
                         
             // Assign color to each block alternative
@@ -262,18 +270,18 @@ void ChessRendererLayer::InitBlockData() {
             static const glm::vec4 darkColor = { 0.7f, 0.1f, 0.1f, 1.0f };
             glm::vec4 blockColor = glm::vec4(0.0f);
             if (rowIdx % 2 == 0)
-                blockColor = (block.m_Index % 2 == 0) ? whiteColor : darkColor;
+                blockColor = (m_Block[rowIdx][colIdx]->m_Index % 2 == 0) ? whiteColor : darkColor;
             else
-                blockColor = (block.m_Index % 2 == 0) ? darkColor : whiteColor;
+                blockColor = (m_Block[rowIdx][colIdx]->m_Index % 2 == 0) ? darkColor : whiteColor;
 
             entity->AddComponent<QuadComponent>(blockColor);
 
             // Update the block position as Entity Position
             auto& blockPosition = entity->GetComponent<TransformComponent>().Translation;
-            blockPosition.x = block.m_Col;
-            blockPosition.y = block.m_Row;
+            blockPosition.x = m_Block[rowIdx][colIdx]->m_Col;
+            blockPosition.y = m_Block[rowIdx][colIdx]->m_Row;
             
-            m_BlockEntityMap[entity] = block;
+            m_BlockEntityMap[entity] = m_Block[rowIdx][colIdx];
         }
     }
 }
@@ -292,6 +300,8 @@ void ChessRendererLayer::InitPlayerData() {
             std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], "pawn");
 
             player.m_PieceEntityMap[CreatePieceEntity(entityName, texture, { pawnIdx, pawnRowPosition, 0.0f })] = piece;
+            
+            m_Block[pawnRowPosition][pawnIdx]->m_Piece = piece;
         }
 
         auto otherPiecePosition = OTHER_PIECE_INIT_ROW_POSITION[playerIdx];
@@ -303,6 +313,8 @@ void ChessRendererLayer::InitPlayerData() {
             
             std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], FileName[colIdx]);
             player.m_PieceEntityMap[CreatePieceEntity(entityName, texture, { colIdx, otherPiecePosition, 0.0f })] = piece;
+
+            m_Block[otherPiecePosition][colIdx]->m_Piece = piece;
         }
    }
 }

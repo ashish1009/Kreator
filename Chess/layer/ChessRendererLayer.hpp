@@ -27,32 +27,6 @@ namespace Chess {
     
     static constexpr uint8_t PAWN_INIT_ROW_POSITION[2] = { 1, 6 };
     static constexpr uint8_t OTHER_PIECE_INIT_ROW_POSITION[2] = { 0, 7 };
-        
-    /// Block Data
-    class Block {
-    public:
-        /// Position of block relative to Row and Column
-        /// X{ 0 : 7} | Y{ 0 : 7 }
-        /// 0 x 0 means Bottom Left
-        POSITION m_Row, m_Col;
-        
-        /// Block Index. e.g. Block at [2][3] is 2 * 8 + 3 = 19
-        int8_t m_Index = -1;
-        
-        /// Default constructor
-        Block() = default;
-        
-        /// Construct the Block instance
-        /// @param row row assigned to block
-        /// @param col column of block
-        /// @param idx block index. from 0 - 63 for row : 2 and Col : 4 , Index will be
-        /// row * 8 + col = 20
-        Block(POSITION row, POSITION col) : m_Row(row), m_Col(col) {}
-        
-        /// Copy the block data
-        /// @param other other block data
-        Block(const Block& other) : m_Row(other.m_Row), m_Col(other.m_Col), m_Index(other.m_Index) { }
-    };
     
     /// Each Piece Data
     struct Piece {
@@ -89,6 +63,35 @@ namespace Chess {
         static std::shared_ptr<Piece> Create(enum Name name, enum Color color, POSITION x, POSITION y) {
             return std::make_shared<Piece>(name, color, x, y);
         }
+    };
+        
+    /// Block Data
+    class Block {
+    public:
+        /// Position of block relative to Row and Column
+        /// X{ 0 : 7} | Y{ 0 : 7 }
+        /// 0 x 0 means Bottom Left
+        POSITION m_Row, m_Col;
+        
+        /// Block Index. e.g. Block at [2][3] is 2 * 8 + 3 = 19
+        int8_t m_Index = -1;
+        
+        /// Store the pice on current blocks
+        std::shared_ptr<Piece> m_Piece;
+        
+        /// Default constructor
+        Block() = default;
+        
+        /// Construct the Block instance
+        /// @param row row assigned to block
+        /// @param col column of block
+        /// @param idx block index. from 0 - 63 for row : 2 and Col : 4 , Index will be
+        /// row * 8 + col = 20
+        Block(POSITION row, POSITION col) : m_Row(row), m_Col(col) {}
+        
+        /// Copy the block data
+        /// @param other other block data
+        Block(const Block& other) : m_Row(other.m_Row), m_Col(other.m_Col), m_Index(other.m_Index) { }
     };
 
     /// Structure to store Player Information (2 Players in Chess Game)
@@ -149,8 +152,10 @@ namespace Chess {
         Viewport m_ViewportData;                                                // Viewport Data
         std::shared_ptr<Scene> m_Scene;                                         // Stores the Scene
         std::shared_ptr<Entity> m_CameraEntity;                                 // Camera Entity
-        std::unordered_map<std::shared_ptr<Entity>, Block> m_BlockEntityMap;    // Stores the blocks data of chess with Entity map
         std::array<Player, MAX_PLAYERS> m_PlayerData;                           // Stores the Player Data
+        
+        std::shared_ptr<Block> m_Block[MAX_ROWS][MAX_COLUMNS];
+        std::unordered_map<std::shared_ptr<Entity>, std::shared_ptr<Block>> m_BlockEntityMap;    // Stores the blocks data of chess with Entity map
     };
 
 }
