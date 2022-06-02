@@ -14,7 +14,7 @@
 		3EF2AAC2283D0179009764F8 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AAC1283D0179009764F8 /* IOKit.framework */; };
 		3EF2AAC4283D017D009764F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AAC3283D017D009764F8 /* Cocoa.framework */; };
 		3EF2AB16283D0248009764F8 /* ChessApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AAD3283D0247009764F8 /* ChessApp.cpp */; };
-		3EF2AB17283D0248009764F8 /* ChessRendererLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AAD6283D0247009764F8 /* ChessRendererLayer.cpp */; };
+		3EF2AB17283D0248009764F8 /* ChessLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AAD6283D0247009764F8 /* ChessLayer.cpp */; };
 		3EF2AB18283D0248009764F8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AAD8283D0247009764F8 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -39,8 +39,8 @@
 		3EF2AAC1283D0179009764F8 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		3EF2AAC3283D017D009764F8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3EF2AAD3283D0247009764F8 /* ChessApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChessApp.cpp; sourceTree = "<group>"; };
-		3EF2AAD5283D0247009764F8 /* ChessRendererLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ChessRendererLayer.hpp; sourceTree = "<group>"; };
-		3EF2AAD6283D0247009764F8 /* ChessRendererLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChessRendererLayer.cpp; sourceTree = "<group>"; };
+		3EF2AAD5283D0247009764F8 /* ChessLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ChessLayer.hpp; sourceTree = "<group>"; };
+		3EF2AAD6283D0247009764F8 /* ChessLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChessLayer.cpp; sourceTree = "<group>"; };
 		3EF2AAD8283D0247009764F8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3EF2AB61283D0D60009764F8 /* king.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = king.png; sourceTree = "<group>"; };
 		3EF2AB62283D0D60009764F8 /* queen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = queen.png; sourceTree = "<group>"; };
@@ -121,8 +121,8 @@
 		3EF2AAD4283D0247009764F8 /* layer */ = {
 			isa = PBXGroup;
 			children = (
-				3EF2AAD6283D0247009764F8 /* ChessRendererLayer.cpp */,
-				3EF2AAD5283D0247009764F8 /* ChessRendererLayer.hpp */,
+				3EF2AAD6283D0247009764F8 /* ChessLayer.cpp */,
+				3EF2AAD5283D0247009764F8 /* ChessLayer.hpp */,
 			);
 			path = layer;
 			sourceTree = "<group>";
@@ -247,7 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EF2AB16283D0248009764F8 /* ChessApp.cpp in Sources */,
-				3EF2AB17283D0248009764F8 /* ChessRendererLayer.cpp in Sources */,
+				3EF2AB17283D0248009764F8 /* ChessLayer.cpp in Sources */,
 				3EF2AB18283D0248009764F8 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

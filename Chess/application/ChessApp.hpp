@@ -8,7 +8,7 @@
 #pragma once
 
 #include <iKanHeaders.h>
-#include "ChessRendererLayer.hpp"
+#include "ChessLayer.hpp"
 
 using namespace iKan;
 
