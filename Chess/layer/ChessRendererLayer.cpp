@@ -156,37 +156,56 @@ void ChessRendererLayer::RenderGui() {
 
             if (m_BlockEntityMap.find(entity) != m_BlockEntityMap.end()) {
                 const std::shared_ptr<Block> block = m_BlockEntityMap[entity];
+                ImGui::Text("Hovered Block");
                 ImGui::Text("Block Index    : %d", block->m_Index);
                 ImGui::Text("Row            : %d", block->m_Row);
                 ImGui::Text("Col            : %d", block->m_Col);
-                
+                ImGui::Separator();
+
                 if (block->m_Piece) {
-                    ImGui::Text("Piece Name     : %s", ChessUtils::PieceNameString(block->m_Piece->m_Name).c_str());
-                    ImGui::Text("Piece Color    : %s", ChessUtils::ColorNameString(block->m_Piece->m_Color).c_str());
+                    ImGui::Text("Hovered Piece");
+                    ImGui::Text("Name    : %s", ChessUtils::PieceNameString(block->m_Piece->m_Name).c_str());
+                    ImGui::Text("Color   : %s", ChessUtils::ColorNameString(block->m_Piece->m_Color).c_str());
+                    ImGui::Text("Row     : %d", block->m_Piece->m_Row);
+                    ImGui::Text("Col     : %d", block->m_Piece->m_Col);
                 }
                 else {
                     ImGui::Text("Empty : No Piece");
                 }
-                
+
                 ImGui::Separator();
             }
-            
+
             else if (m_PlayerData[0].m_PieceEntityMap.find(entity) != m_PlayerData[0].m_PieceEntityMap.end()) {
                 const std::shared_ptr<Piece>& piece = m_PlayerData[0].m_PieceEntityMap[entity];
+                ImGui::Text("Hovered Block");
+                ImGui::Text("Block Index    : %d", m_Block[piece->m_Row][piece->m_Col]->m_Index);
+                ImGui::Text("Row            : %d", m_Block[piece->m_Row][piece->m_Col]->m_Row);
+                ImGui::Text("Col            : %d", m_Block[piece->m_Row][piece->m_Col]->m_Col);
+                ImGui::Separator();
+
+                ImGui::Text("Hovered Piece");
                 ImGui::Text("Name    : %s", ChessUtils::PieceNameString(piece->m_Name).c_str());
                 ImGui::Text("Color   : %s", ChessUtils::ColorNameString(piece->m_Color).c_str());
                 ImGui::Text("Row     : %d", piece->m_Row);
                 ImGui::Text("Col     : %d", piece->m_Col);
-                
                 ImGui::Separator();
+
             }
             if (m_PlayerData[1].m_PieceEntityMap.find(entity) != m_PlayerData[1].m_PieceEntityMap.end()) {
                 const std::shared_ptr<Piece>& piece = m_PlayerData[1].m_PieceEntityMap[entity];
+                ImGui::Text("Hovered Block");
+                ImGui::Text("Block Index    : %d", m_Block[piece->m_Row][piece->m_Col]->m_Index);
+                ImGui::Text("Row            : %d", m_Block[piece->m_Row][piece->m_Col]->m_Row);
+                ImGui::Text("Col            : %d", m_Block[piece->m_Row][piece->m_Col]->m_Col);
+                ImGui::Separator();
+
+                ImGui::Text("Hovered Piece");
                 ImGui::Text("Name    : %s", ChessUtils::PieceNameString(piece->m_Name).c_str());
                 ImGui::Text("Color   : %s", ChessUtils::ColorNameString(piece->m_Color).c_str());
                 ImGui::Text("Row     : %d", piece->m_Row);
                 ImGui::Text("Col     : %d", piece->m_Col);
-                
+
                 ImGui::Separator();
             }
         }
@@ -242,6 +261,18 @@ void ChessRendererLayer::UpdateHoveredEntity() {
         Renderer::GetEntityIdFromPixels(m_ViewportData.MousePosX, m_ViewportData.MousePosY, m_ViewportData.HoveredEntityID);
         m_ViewportData.HoveredEntity = (m_ViewportData.HoveredEntityID > m_Scene->GetMaxEntityId()) ? nullptr : m_Scene->GetEnitityFromId(m_ViewportData.HoveredEntityID);
     }
+    
+    if (m_ViewportData.HoveredEntity && (m_BlockEntityMap.find(m_ViewportData.HoveredEntity) != m_BlockEntityMap.end())) {
+        const auto& block = m_BlockEntityMap.at(m_ViewportData.HoveredEntity);
+        
+        if (!m_HoveredBlockEntity->HasComponent<QuadComponent>())
+            m_HoveredBlockEntity->AddComponent<QuadComponent>(m_HoveredOutlineTexture);
+        
+        if (block) {
+            auto& position = m_HoveredBlockEntity->GetComponent<TransformComponent>().Translation;
+            position = { block->m_Col, block->m_Row, 0.0f };
+        }
+    }
 }
 
 /// Initialize the Block data
@@ -253,6 +284,7 @@ void ChessRendererLayer::InitBlockData() {
     tc.Translation = { 3.5f, 3.5f, 0.0f };
     tc.Scale = { 8.5f, 8.5f, 1.0f };
 
+    // Setup all blocks
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
         for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
             // Create Block for each Entity
@@ -284,6 +316,13 @@ void ChessRendererLayer::InitBlockData() {
             m_BlockEntityMap[entity] = m_Block[rowIdx][colIdx];
         }
     }
+    
+    // Setup the outline data
+    m_HoveredOutlineTexture = Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/hoveredBlock.png"));
+    m_HoveredBlockEntity = m_Scene->CreateEntity("Hovered Block");
+    
+    m_SelectedOutlineTexture = Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/selectedBlock.png"));
+    m_HoveredBlockEntity = m_Scene->CreateEntity("Selected Block");
 }
 
 /// Initialize the Piece data

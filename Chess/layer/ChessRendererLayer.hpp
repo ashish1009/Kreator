@@ -152,10 +152,14 @@ namespace Chess {
         Viewport m_ViewportData;                                                // Viewport Data
         std::shared_ptr<Scene> m_Scene;                                         // Stores the Scene
         std::shared_ptr<Entity> m_CameraEntity;                                 // Camera Entity
+        std::shared_ptr<Entity> m_HoveredBlockEntity;                           // Entity to show hovered block. Render a outline
+        std::shared_ptr<Entity> m_SelectedBlockEntity;                          // Entity to show Selected block. Render a outline
         std::array<Player, MAX_PLAYERS> m_PlayerData;                           // Stores the Player Data
         
-        std::shared_ptr<Block> m_Block[MAX_ROWS][MAX_COLUMNS];
+        std::shared_ptr<Block> m_Block[MAX_ROWS][MAX_COLUMNS];                  // Store all blocks
         std::unordered_map<std::shared_ptr<Entity>, std::shared_ptr<Block>> m_BlockEntityMap;    // Stores the blocks data of chess with Entity map
+        
+        std::shared_ptr<Texture> m_HoveredOutlineTexture, m_SelectedOutlineTexture;
     };
 
 }
