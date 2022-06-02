@@ -39,7 +39,7 @@ using namespace Chess;
 /// @param spec Core application specification
 ChessApp::ChessApp(const Application::Specification& spec) : Application(spec) {
     IK_INFO("Creating Chess Application ...");
-    m_RendererLayer = std::make_shared<ChessRendererLayer>("Player 1", "Player 2");
+    m_RendererLayer = std::make_shared<ChessRendererLayer>();
     PushLayer(m_RendererLayer);
 }
 
