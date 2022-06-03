@@ -156,12 +156,14 @@ void ChessLayer::RenderGui() {
         
         for (uint8_t playerIdx = 0; playerIdx < MAX_PLAYER; playerIdx++) {
             const auto& player = m_Players[playerIdx];
-            std::string playerIdxString = "Color : " + ChessUtils::ColorString(player.Color);
+            std::string playerIdxString = ChessUtils::ColorString(player.Color) + " : " + player.Name;
             ImGui::Text("%s", playerIdxString.c_str());
-            ImGui::Text("Name  : %s", player.Name.c_str());
             ImGui::Separator();
         }
         
+        ImGui::Text("TURN  : %s", ChessUtils::ColorString(m_Turn).c_str());
+        ImGui::Separator();
+
         if (m_ViewportData.HoveredEntity) {
             const auto& entity = m_ViewportData.HoveredEntity;
             const auto& entityName = entity->GetComponent<TagComponent>().Tag;
@@ -207,6 +209,7 @@ void ChessLayer::RenderGui() {
         ImGui::Begin("Selected Piece");
         if (m_SelectedPiece) {
             ImGui::Text("Selected Piece");
+            ImGui::Separator();
             ImGui::Text("Name    : %s", ChessUtils::PieceString(m_SelectedPiece->Name).c_str());
             ImGui::Text("Color   : %s", ChessUtils::ColorString(m_SelectedPiece->Color).c_str());
             ImGui::Text("Row     : %d", m_SelectedPiece->Row);
@@ -250,8 +253,10 @@ bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
     // If Hovered Block is not Empty
     else {
         if (!m_SelectedPiece) {
-            // TODO: Check player turn
             // If no Piece is selected the Update selected piece and return
+            if (m_HoveredBlock->Piece->Color != m_Turn)
+                return false;
+            
             UpdateSelectedPiece(m_HoveredBlock);
             return false;
         }
@@ -434,7 +439,10 @@ void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
     FillBlock(m_HoveredBlock, m_SelectedPiece);
     
     // Deselect the block piece
-    DeSelectPiece();    
+    DeSelectPiece();
+    
+    // Update the turn of player
+    m_Turn = (m_Turn == Color::Black) ? Color::White : Color::Black;
 }
 
 /// Check if block is empty or not
