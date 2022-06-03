@@ -11,6 +11,8 @@ using namespace Chess;
 
 namespace ChessUtils {
     
+    /// return the color name as string
+    /// @param color color name as enum
     std::string ColorString(Color color) {
         switch (color) {
             case Color::Black: return "Black";
@@ -21,8 +23,37 @@ namespace ChessUtils {
         }
     }
     
+    /// return the Piece Name as string
+    /// @param name piece name as enum
+    std::string PieceString(enum Piece::Name name) {
+        switch (name) {
+            case Piece::Name::Pawn: return "Pawn";
+            case Piece::Name::King: return "King";
+            case Piece::Name::Queen: return "Queen";
+            case Piece::Name::Knight: return "Knight";
+            case Piece::Name::Bishop: return "Bishop";
+            case Piece::Name::Rook: return "Rook";
+            default:
+                IK_ASSERT(false, "Invalid Color");
+        }
+    }
+    
+    /// create texture for specific peice
+    /// @param color name of color (should be same as folder name where piece stored)
+    /// @param name name of piece (should be same as file name of piece without .png)
+    std::shared_ptr<Texture> GetTexture(const std::string& color, const std::string& name) {
+        return Renderer::GetTexture(AssetManager::GetClientAsset("/texture/" + color + "/" + name + ".png"));
+    }
+
 }
 
+/// Map the folder name with the color of piece (black should be at 0th position and white at 1)
+static const std::string FolderName[MAX_PLAYER] = { "black", "white" };
+
+/// Map the file name with the column index of piece (should be same as PowerPiecePosition)
+static const std::string FileName[MAX_COLUMNS] = { "rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook" };
+
+// Static Member of Plaery class
 uint32_t Player::NumPlayerCreated = 0;
 
 /// Chess Renderer Layer Constructor
@@ -65,6 +96,7 @@ void ChessLayer::Attach() {
     camPosition = { 3.5f, 3.5f, 0.0f };
 
     InitBlocksData();
+    InitPlayerData();
 }
 
 /// Update the renderer Layer each frame
@@ -245,4 +277,51 @@ void ChessLayer::InitBlocksData() {
             blockPosition.y = m_Blocks[rowIdx][colIdx]->Row; // Y pixel is equivalent to Row
         }
     }
+}
+
+/// Initialize the Player data
+void ChessLayer::InitPlayerData() {
+    for (uint8_t playerIdx = 0; playerIdx < MAX_PLAYER; playerIdx++) {
+        auto& player = m_Players[playerIdx];
+        auto pawnRowPosition = PAWN_INIT_ROW_POSITION[playerIdx];
+        
+        // Create the Pawn for each Player
+        for (uint8_t pawnIdx = 0; pawnIdx < MAX_PAWNS; pawnIdx++) {
+            std::shared_ptr<Piece> piece = Piece::Create(Piece::Name::Pawn, player.Color, pawnRowPosition, pawnIdx);
+            
+            auto entityName = ChessUtils::ColorString((Chess::Color)playerIdx) + ChessUtils::PieceString(Piece::Name::Pawn) + std::to_string(pawnIdx);
+            std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], "pawn");
+            
+            CreatePieceEntity(entityName, texture, { pawnIdx, pawnRowPosition, 0.1f });
+        }
+
+        // Create all the power piece for each player
+        auto otherPiecePosition = POWER_PIECE_INIT_ROW_POSITION[playerIdx];
+        for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
+            auto pieceName = PowerPiecePosition[colIdx];
+            
+            std::shared_ptr<Piece> piece = Piece::Create(pieceName, player.Color, otherPiecePosition, colIdx);
+            auto entityName = ChessUtils::ColorString((Chess::Color)playerIdx) + ChessUtils::PieceString(pieceName);
+            
+            std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], FileName[colIdx]);
+            CreatePieceEntity(entityName, texture, { colIdx, otherPiecePosition, 0.0f });
+        }
+
+    }
+}
+
+/// create entity for Piece
+/// @param entityName name of entity
+/// @param texture texture to be loaded
+/// @param position position of entity
+std::shared_ptr<Entity> ChessLayer::CreatePieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position) {
+    std::shared_ptr<Entity> entity = m_Scene->CreateEntity(entityName);
+    entity->AddComponent<QuadComponent>(texture);
+
+    // Update the position of Pawn
+    auto& tc = entity->GetComponent<TransformComponent>();
+    tc.Translation = position;
+    tc.Scale = glm::vec3(0.5f, 0.5f, 1.0f);
+    
+    return entity;
 }
