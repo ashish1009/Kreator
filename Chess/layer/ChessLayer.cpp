@@ -184,7 +184,15 @@ void ChessLayer::RenderGui() {
                 ImGui::Separator();
                 if (!block->Piece)
                     ImGui::Text("Piece : Empty");
-                ImGui::Separator();
+                else {
+                    const std::shared_ptr<Piece>& piece = block->Piece;
+                    ImGui::Text("Piece");
+                    ImGui::Text("Name    : %s", ChessUtils::PieceString(piece->Name).c_str());
+                    ImGui::Text("Color   : %s", ChessUtils::ColorString(piece->Color).c_str());
+                    ImGui::Text("Row     : %d", piece->Row);
+                    ImGui::Text("Col     : %d", piece->Col);
+                    ImGui::Separator();
+                }
             }
         }
         
@@ -293,6 +301,9 @@ void ChessLayer::InitPlayerData() {
             std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], "pawn");
             
             CreatePieceEntity(entityName, texture, { pawnIdx, pawnRowPosition, 0.1f });
+            
+            // Store the current piece in Block
+            m_Blocks[pawnRowPosition][pawnIdx]->Piece = piece;
         }
 
         // Create all the power piece for each player
@@ -305,6 +316,9 @@ void ChessLayer::InitPlayerData() {
             
             std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], FileName[colIdx]);
             CreatePieceEntity(entityName, texture, { colIdx, otherPiecePosition, 0.0f });
+
+            // Store the current piece in Block
+            m_Blocks[otherPiecePosition][colIdx]->Piece = piece;
         }
 
     }
