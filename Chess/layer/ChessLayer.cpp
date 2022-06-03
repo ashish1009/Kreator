@@ -129,22 +129,31 @@ void ChessLayer::RenderGui() {
         
         if (m_ViewportData.HoveredEntity) {
             const auto& entity = m_ViewportData.HoveredEntity;
-            ImGui::Text("Hovered Block : %s", entity->GetComponent<TagComponent>().Tag.c_str());
-            ImGui::Separator();
-                
-            // get the position of Block as Row and Column
-            const auto& entityPosition = entity->GetComponent<TransformComponent>().Translation;
-            int8_t rowIdx = (int8_t)entityPosition.y;
-            int8_t colIdx = (int8_t)entityPosition.x;
+            const auto& entityName = entity->GetComponent<TagComponent>().Tag;
 
-            // Extract Block from hovered Block Row and column
-            const auto& block = m_Blocks[rowIdx][colIdx];
-            ImGui::Text("Row : %d", block->Row);
-            ImGui::Text("Col : %d", block->Col);
-            ImGui::Separator();
-            if (!block->Piece)
-                ImGui::Text("Piece : Empty");
-            ImGui::Separator();
+            // If entity curesor reached outside the board
+            // TODO: Fix this later as it will still work outside th border
+            if (entityName != "Border") { // Should be same as Border entity name
+                // get the position of Block as Row and Column
+                const auto& entityPosition = entity->GetComponent<TransformComponent>().Translation;
+                const int8_t rowIdx = (int8_t)entityPosition.y;
+                const int8_t colIdx = (int8_t)entityPosition.x;
+                
+                // Extract Block from hovered Block Row and column
+                const auto& block = m_Blocks[rowIdx][colIdx];
+
+                // Update the position of Entity that render outline over block
+                auto& HoveredEntityPos = m_EntityForOutlineHoveredBlock->GetComponent<TransformComponent>().Translation;
+                HoveredEntityPos = { colIdx, rowIdx, 0.1f };
+
+                ImGui::Text("Hovered Block");
+                ImGui::Text("Row : %d", block->Row);
+                ImGui::Text("Col : %d", block->Col);
+                ImGui::Separator();
+                if (!block->Piece)
+                    ImGui::Text("Piece : Empty");
+                ImGui::Separator();
+            }
         }
         
         ImGui::End(); // Debug Window
@@ -195,13 +204,18 @@ void ChessLayer::UpdateHoveredEntity() {
     }
 }
 
+/// Initialize the Block data
 void ChessLayer::InitBlocksData() {
     // Render the Outline board of Chess
-    std::shared_ptr<Entity> backgroundEntity = m_Scene->CreateEntity("Background");
+    std::shared_ptr<Entity> backgroundEntity = m_Scene->CreateEntity("Border");
     backgroundEntity->AddComponent<QuadComponent>(glm::vec4(0.5f, 0.6f, 0.8f, 1.0f));
     auto& tc = backgroundEntity->GetComponent<TransformComponent>();
     tc.Translation = { 3.5f, 3.5f, 0.0f };
     tc.Scale = { 8.5f, 8.5f, 1.0f };
+    
+    // Create Entity to render outline over hovered Block
+    m_EntityForOutlineHoveredBlock = m_Scene->CreateEntity("EntityForOutlineHoveredBlock");
+    m_EntityForOutlineHoveredBlock->AddComponent<QuadComponent>(Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/hoveredBlock.png")));
 
     // Initialize the Chess Board block
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {

@@ -99,7 +99,10 @@ namespace Chess {
         // Member variabls
         Viewport m_ViewportData;
         std::shared_ptr<Scene> m_Scene;
+        
         std::shared_ptr<Entity> m_CameraEntity;
+        std::shared_ptr<Entity> m_EntityForOutlineHoveredBlock;
+
         std::shared_ptr<Block> m_Blocks[MAX_ROWS][MAX_COLUMNS];
 
         // Stores all the block data mapped with Entity Handler

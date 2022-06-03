@@ -43,8 +43,9 @@ void Renderer::Shutdown() {
     }
     BatchRenderer::Shutdown();
     
-    // Destorry the Shader library
+    // Destorry the Shader library and Texture
     ShaderLibrary::ResetShaders();
+    TextureLibrary::ResetTextures();
 }
 
 /// Return the current active Renderer API
