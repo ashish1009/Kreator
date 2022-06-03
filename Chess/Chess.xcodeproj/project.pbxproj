@@ -57,6 +57,10 @@
 		3EF2AB6E283D0D60009764F8 /* bishop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bishop.png; sourceTree = "<group>"; };
 		3EF2AB6F283D0D60009764F8 /* pawn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pawn.png; sourceTree = "<group>"; };
 		3EF2AB70283D1090009764F8 /* ChessApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChessApp.hpp; sourceTree = "<group>"; };
+		3EF689B7284A4717001E1883 /* Common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Common.hpp; sourceTree = "<group>"; };
+		3EF689BA284A4721001E1883 /* Block.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
+		3EF689BD284A472B001E1883 /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
+		3EF689C0284A4732001E1883 /* Piece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Piece.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,10 +83,8 @@
 		3EF2AA7F283D0111009764F8 = {
 			isa = PBXGroup;
 			children = (
+				3EF689C2284A4798001E1883 /* src */,
 				3EF2AAD9283D0247009764F8 /* assets */,
-				3EF2AAD2283D0247009764F8 /* application */,
-				3EF2AAD4283D0247009764F8 /* layer */,
-				3EF2AAD7283D0247009764F8 /* main */,
 				3EF2AA89283D0111009764F8 /* Products */,
 				3EF2AAB8283D015B009764F8 /* Frameworks */,
 			);
@@ -186,6 +188,28 @@
 				3EF2AB6F283D0D60009764F8 /* pawn.png */,
 			);
 			path = white;
+			sourceTree = "<group>";
+		};
+		3EF689B5284A46FD001E1883 /* chess */ = {
+			isa = PBXGroup;
+			children = (
+				3EF689B7284A4717001E1883 /* Common.hpp */,
+				3EF689BA284A4721001E1883 /* Block.hpp */,
+				3EF689BD284A472B001E1883 /* Player.hpp */,
+				3EF689C0284A4732001E1883 /* Piece.hpp */,
+			);
+			path = chess;
+			sourceTree = "<group>";
+		};
+		3EF689C2284A4798001E1883 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3EF2AAD2283D0247009764F8 /* application */,
+				3EF689B5284A46FD001E1883 /* chess */,
+				3EF2AAD4283D0247009764F8 /* layer */,
+				3EF2AAD7283D0247009764F8 /* main */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,6 +405,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
+					"${PROJECT_DIR}/src",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -398,6 +423,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
+					"${PROJECT_DIR}/src",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
