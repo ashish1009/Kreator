@@ -234,44 +234,39 @@ void ChessLayer::EventHandler(Event& event) {
 /// Mouse button Event
 /// @param e Mouse Button event handler
 bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
-    if (e.GetMouseButton() == MouseButton::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt)) {
-        if (m_HoveredBlock) {
-            if (IsBlockEmpty(m_HoveredBlock)) {
-                if (m_SelectedPiece) {
-                    auto prevblockPtr = m_Blocks[m_SelectedPiece->Row][m_SelectedPiece->Col];
-                    if (m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, BLOCK_EMPTY)) {
-                        EmptyBlock(prevblockPtr);
-                        FillBlock(m_HoveredBlock, m_SelectedPiece);
-                        DeSelectPiece();
-                    }
-                    else {
-                        // DO NOTHING
-                    }
-                }
-                else {
-                    // DO NOTHING
-                }
-            }
-            else { // If Hovered Block is not Empty
-                if (m_SelectedPiece) {
-                    // If Selecting Same Piece then deselect the current Piece and do nothing
-                    if (m_SelectedPiece == m_HoveredBlock->Piece) {
-                        DeSelectPiece();
-                        // DO NOTHING
-                    }
-                    else {
-                        // TODO: Check if entity at hovered Block is of same color?
-                        //       if No the Validate the Move If Valid then uodate the position of selected Piece and Delete older piece at new positon
-                        //       else DO NOTHING
-                    }
-                }
-                else {
-                    // Just select the Piece
-                    UpdateSelectedPiece(m_HoveredBlock);
-                    // DO NOTHING
-                }
-            }
+    // Take Action only if Hovered block is not null then return
+    if (!m_HoveredBlock)
+        return false;
+    
+    // If block is Empty
+    if (IsBlockEmpty(m_HoveredBlock)) {
+        // Take Action only of Selected Piece is not null then return
+        if (!m_SelectedPiece)
+            return false;
+        
+        /// Validate the new Move and if Valid then Update the Hovered and Selected Block
+        ValidateAndUpdateMove(BLOCK_EMPTY);
+    }
+    // If Hovered Block is not Empty
+    else {
+        if (!m_SelectedPiece) {
+            // TODO: Check player turn
+            // If no Piece is selected the Update selected piece and return
+            UpdateSelectedPiece(m_HoveredBlock);
+            return false;
         }
+
+        // If Selecting Same Piece then deselect the current Piece and return
+        if (m_SelectedPiece == m_HoveredBlock->Piece) {
+            DeSelectPiece();
+            return false;
+        }
+        
+        if (m_SelectedPiece->Color == m_HoveredBlock->Piece->Color)
+            return false;
+        
+        /// Validate the new Move and if Valid then Update the Hovered and Selected Block
+        ValidateAndUpdateMove(BLOCK_NOT_EMPTY);
     }
     return false;
 }
@@ -419,6 +414,28 @@ void ChessLayer::FillBlock(std::shared_ptr<Block> block, std::shared_ptr<Piece> 
     block->Piece = piece;
 }
 
+/// Validate the new Move and if Valid then Update the Hovered and Selected Block
+/// @param isBlockEmpty flag to get is block empty
+void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
+    auto prevblockPtr = m_Blocks[m_SelectedPiece->Row][m_SelectedPiece->Col];
+    // if Validation of new postion fails then return
+    if (!m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, isBlockEmpty))
+        return;
+    
+    // Store the Piece entity before Updating the piece
+    std::shared_ptr<Entity> entityToBeDeleted;
+    if (!isBlockEmpty) {
+        entityToBeDeleted = m_HoveredBlock->Piece->Entity;
+        m_Scene->DestroyEntity(entityToBeDeleted);
+    }
+    
+    // If validate result is true then update Selected Block and new hovered block Piece
+    EmptyBlock(prevblockPtr);
+    FillBlock(m_HoveredBlock, m_SelectedPiece);
+    
+    // Deselect the block piece
+    DeSelectPiece();    
+}
 
 /// Check if block is empty or not
 /// @param block block pointer

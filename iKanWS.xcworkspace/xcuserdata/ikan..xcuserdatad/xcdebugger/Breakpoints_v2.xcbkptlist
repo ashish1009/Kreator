@@ -87,15 +87,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "72064E98-AC2A-4235-ABAE-218727EB7CE8"
+            uuid = "AF127501-D69B-4741-9215-5F93DFBECD74"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Chess/src/layer/ChessLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "ChessLayer::OnMouseButtonPressed(e)"
             landmarkType = "7">
          </BreakpointContent>

@@ -42,6 +42,9 @@ namespace Chess {
         
         void EmptyBlock(std::shared_ptr<Block> block);
         void FillBlock(std::shared_ptr<Block> block, std::shared_ptr<Piece> piece);
+        
+        void ValidateAndUpdateMove(bool isBlockEmpty);
+        
         bool IsBlockEmpty(std::shared_ptr<Block> block);
         
         std::shared_ptr<Entity> CreatePieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position);
