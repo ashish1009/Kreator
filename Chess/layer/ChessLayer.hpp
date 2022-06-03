@@ -55,6 +55,7 @@ namespace Chess {
     
     /// Each block information of Chess
     struct Block {
+        int32_t Row = -1, Col = -1;
         std::shared_ptr<Piece> Piece;
     };
     

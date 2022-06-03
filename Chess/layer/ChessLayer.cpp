@@ -176,9 +176,40 @@ void ChessLayer::UpdateHoveredEntity() {
 }
 
 void ChessLayer::InitBlocksData() {
+    // Render the Outline board of Chess
+    std::shared_ptr<Entity> backgroundEntity = m_Scene->CreateEntity("Background");
+    backgroundEntity->AddComponent<QuadComponent>(glm::vec4(0.5f, 0.6f, 0.8f, 1.0f));
+    auto& tc = backgroundEntity->GetComponent<TransformComponent>();
+    tc.Translation = { 3.5f, 3.5f, 0.0f };
+    tc.Scale = { 8.5f, 8.5f, 1.0f };
+
+    // Initialize the Chess Board block
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
         for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
+            m_Blocks[rowIdx][colIdx].Row = rowIdx;
+            m_Blocks[rowIdx][colIdx].Col = colIdx;
             
+            uint8_t blockIndex = rowIdx * MAX_ROWS + colIdx;
+            
+            // Create Entity for each Block
+            std::string blockName = "Block " + std::to_string(blockIndex);
+            std::shared_ptr<Entity> blockEntity = m_Scene->CreateEntity(blockName);
+
+            // Assign color to each block alternative
+            static const glm::vec4 whiteColor = { 0.5f, 0.5f, 0.5f, 1.0f };
+            static const glm::vec4 darkColor = { 0.7f, 0.1f, 0.1f, 1.0f };
+            glm::vec4 blockColor = glm::vec4(0.0f);
+            if (rowIdx % 2 == 0)
+                blockColor = (blockIndex % 2 == 0) ? whiteColor : darkColor;
+            else
+                blockColor = (blockIndex % 2 == 0) ? darkColor : whiteColor;
+
+            blockEntity->AddComponent<QuadComponent>(blockColor);
+            
+            // Update the block position as Entity Position
+            auto& blockPosition = blockEntity->GetComponent<TransformComponent>().Translation;
+            blockPosition.x = m_Blocks[rowIdx][colIdx].Col; // X pixel is equivalent to Column
+            blockPosition.y = m_Blocks[rowIdx][colIdx].Row; // Y pixel is equivalent to Row
         }
     }
 }
