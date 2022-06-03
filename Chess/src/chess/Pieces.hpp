@@ -9,6 +9,8 @@
 
 #include "chess/Common.hpp"
 
+using namespace iKan;
+
 namespace Chess {
     
     // Max number of pawns at the init time fo each player
@@ -25,8 +27,11 @@ namespace Chess {
         /// Name of Piece
         enum Name { Pawn = 0, King = 1, Queen = 2, Bishop = 3, Knight = 4, Rook = 5 };
         
+        // Change with time
         int8_t Row = -1, Col = -1;
 
+        std::shared_ptr<Entity> Entity;
+        
         // Name and Color to be initialised at Constructor
         Name Name;
         Color Color;
@@ -44,8 +49,13 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        virtual bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) = 0;
-
+        virtual bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) = 0;
+        
+        /// Update the position of Piece
+        /// @param rowIdx new Row
+        /// @param colIdx new Column
+        void UpdatePosition(int8_t rowIdx, int8_t colIdx);
+        
         /// Construtor of Piece
         /// @param name Name / Type of Piece
         /// @param color Color of Piece
@@ -74,7 +84,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
         
         // Variables
         bool MoveForward = true;
@@ -93,7 +103,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Queen class derived from base Piece
@@ -109,7 +119,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Bishop class derived from base Piece
@@ -125,7 +135,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Knight class derived from base Piece
@@ -141,7 +151,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Rook class derived from base Piece
@@ -157,7 +167,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
     
     /// Stores the Power Piece Name (Type) at initial colum position

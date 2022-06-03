@@ -238,7 +238,15 @@ bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
         if (m_HoveredBlock) {
             if (IsBlockEmpty(m_HoveredBlock)) {
                 if (m_SelectedPiece) {
-                    // TODO: Validate the Move and Update the position of selected Piece
+                    auto prevblockPtr = m_Blocks[m_SelectedPiece->Row][m_SelectedPiece->Col];
+                    if (m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, BLOCK_EMPTY)) {
+                        EmptyBlock(prevblockPtr);
+                        FillBlock(m_HoveredBlock, m_SelectedPiece);
+                        DeSelectPiece();
+                    }
+                    else {
+                        // DO NOTHING
+                    }
                 }
                 else {
                     // DO NOTHING
@@ -353,7 +361,7 @@ void ChessLayer::InitPlayerData() {
             auto entityName = ChessUtils::ColorString((Chess::Color)playerIdx) + ChessUtils::PieceString(Piece::Name::Pawn) + std::to_string(pawnIdx);
             std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], "pawn");
             
-            CreatePieceEntity(entityName, texture, { pawnIdx, pawnRowPosition, 0.1f });
+            piece->Entity = CreatePieceEntity(entityName, texture, { pawnIdx, pawnRowPosition, 0.1f });
             
             // Store the current piece in Block
             m_Blocks[pawnRowPosition][pawnIdx]->Piece = piece;
@@ -368,7 +376,7 @@ void ChessLayer::InitPlayerData() {
             auto entityName = ChessUtils::ColorString((Chess::Color)playerIdx) + ChessUtils::PieceString(pieceName);
             
             std::shared_ptr<Texture> texture = ChessUtils::GetTexture(FolderName[playerIdx], FileName[colIdx]);
-            CreatePieceEntity(entityName, texture, { colIdx, otherPiecePosition, 0.0f });
+            piece->Entity = CreatePieceEntity(entityName, texture, { colIdx, otherPiecePosition, 0.0f });
 
             // Store the current piece in Block
             m_Blocks[otherPiecePosition][colIdx]->Piece = piece;
@@ -396,6 +404,21 @@ void ChessLayer::DeSelectPiece() {
     if (m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
         m_EntityForOutlineSelectedBlock->RemoveComponent<QuadComponent>();
 }
+
+/// Make the block empty by removing the piece
+/// @param block current Block
+void ChessLayer::EmptyBlock(std::shared_ptr<Block> block) {
+    IK_INFO("Emptying {0} {1}", block->Row, block->Col);
+    block->Piece = nullptr;
+}
+
+/// update the piece value of Block
+/// @param block current Block
+/// @param piece new piece
+void ChessLayer::FillBlock(std::shared_ptr<Block> block, std::shared_ptr<Piece> piece) {
+    block->Piece = piece;
+}
+
 
 /// Check if block is empty or not
 /// @param block block pointer

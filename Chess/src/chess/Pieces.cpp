@@ -27,30 +27,45 @@ std::shared_ptr<Piece> Piece::Create(enum Piece::Name name, Chess::Color color, 
     }
 }
 
+/// Update the position of Piece
+/// @param rowIdx new Row
+/// @param colIdx new Column
+void Piece::UpdatePosition(int8_t rowIdx, int8_t colIdx) {
+    Row = rowIdx;
+    Col = colIdx;
+    auto& position = Entity->GetComponent<TransformComponent>().Translation;
+    position = { Col, Row, 0.1f };
+}
+
+
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Pawn_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     if (isNewBlockEmpty) {
         if (MoveForward) {
-            if (Col == colIdx && Row - rowIdx == 1) {
+            if (Col == colIdx && rowIdx - Row == 1) {
+                UpdatePosition(rowIdx, colIdx);
                 return true;
             }
         }
         else {
-            if (Col == colIdx && rowIdx - Row == 1) {
+            if (Col == colIdx && Row - rowIdx == 1) {
+                UpdatePosition(rowIdx, colIdx);
                 return true;
             }
         }
     }
     else {
         if (MoveForward) {
-            if (Col - colIdx == 1 && Row - rowIdx == 1) {
+            if (Col - colIdx == 1 && rowIdx - Row == 1) {
+                UpdatePosition(rowIdx, colIdx);
                 return true;
             }
         }
         else {
-            if (colIdx - Col == 1 && rowIdx - Row == 1) {
+            if (colIdx - Col == 1 && Row - rowIdx == 1) {
+                UpdatePosition(rowIdx, colIdx);
                 return true;
             }
         }
@@ -61,34 +76,34 @@ bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool King_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool King_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Queen_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Queen_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Bishop_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Knight_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Knight_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Rook_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Rook_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
