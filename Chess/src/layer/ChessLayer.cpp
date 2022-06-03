@@ -9,6 +9,9 @@
 
 using namespace Chess;
 
+#define BLOCK_EMPTY true
+#define BLOCK_NOT_EMPTY false
+
 namespace ChessUtils {
     
     /// return the color name as string
@@ -238,20 +241,10 @@ bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
             m_Scene->SetSelectedEntity(m_ViewportData.HoveredEntity);
 
             if (m_HoveredBlock && m_HoveredBlock->Piece) {
-                if (!m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
-                    m_EntityForOutlineSelectedBlock->AddComponent<QuadComponent>(m_SelectedOutlineTexture);
-
-                auto& position = m_EntityForOutlineSelectedBlock->GetComponent<TransformComponent>().Translation;
-                position = { m_HoveredBlock->Col, m_HoveredBlock->Row, 0.1f };
-                
-                m_SelectedPiece = m_HoveredBlock->Piece;
+                UpdateSelectedPiece();
             }
             else {
-                // Deselecting the selected Piece
-                m_SelectedPiece = nullptr;
-                
-                if (m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
-                    m_EntityForOutlineSelectedBlock->RemoveComponent<QuadComponent>();
+                DeSelectPiece();
             }
         }
     }
@@ -362,6 +355,26 @@ void ChessLayer::InitPlayerData() {
         }
 
     }
+}
+
+/// Update the Selected Piece
+void ChessLayer::UpdateSelectedPiece() {
+    m_SelectedPiece = m_HoveredBlock->Piece;
+    
+    if (!m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
+        m_EntityForOutlineSelectedBlock->AddComponent<QuadComponent>(m_SelectedOutlineTexture);
+
+    auto& position = m_EntityForOutlineSelectedBlock->GetComponent<TransformComponent>().Translation;
+    position = { m_HoveredBlock->Col, m_HoveredBlock->Row, 0.1f };
+}
+
+/// Deselect the Selectd Piece
+void ChessLayer::DeSelectPiece() {
+    // Deselecting the selected Piece
+    m_SelectedPiece = nullptr;
+    
+    if (m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
+        m_EntityForOutlineSelectedBlock->RemoveComponent<QuadComponent>();
 }
 
 /// create entity for Piece

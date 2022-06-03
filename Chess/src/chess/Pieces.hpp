@@ -44,7 +44,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        virtual bool Validate(int8_t rowIdx, int8_t colIdx) = 0;
+        virtual bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) = 0;
 
         /// Construtor of Piece
         /// @param name Name / Type of Piece
@@ -62,12 +62,22 @@ namespace Chess {
         /// @param rowIdx Row Index
         /// @param colIdx Column Index
         Pawn_ (Chess::Color color, int32_t rowIdx, int8_t colIdx)
-        : Piece(Piece::Name::Pawn, color, rowIdx, colIdx) {}
+        : Piece(Piece::Name::Pawn, color, rowIdx, colIdx) {
+            if (Row == PAWN_INIT_ROW_POSITION[0])
+                MoveForward = true;
+            else if (Row == PAWN_INIT_ROW_POSITION[1])
+                MoveForward = false;
+            else
+                IK_ASSERT(false, "Invalid Init Raw for Pawn")
+        }
         
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        
+        // Variables
+        bool MoveForward = true;
     };
     
     /// King class derived from base Piece
@@ -83,7 +93,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Queen class derived from base Piece
@@ -99,7 +109,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Bishop class derived from base Piece
@@ -115,7 +125,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Knight class derived from base Piece
@@ -131,7 +141,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Rook class derived from base Piece
@@ -147,7 +157,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
     
     /// Stores the Power Piece Name (Type) at initial colum position

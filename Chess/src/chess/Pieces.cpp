@@ -30,41 +30,41 @@ std::shared_ptr<Piece> Piece::Create(enum Piece::Name name, Chess::Color color, 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx) {
+bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool King_::Validate(int8_t rowIdx, int8_t colIdx) {
+bool King_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Queen_::Validate(int8_t rowIdx, int8_t colIdx) {
+bool Queen_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx) {
+bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Knight_::Validate(int8_t rowIdx, int8_t colIdx) {
+bool Knight_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Rook_::Validate(int8_t rowIdx, int8_t colIdx) {
+bool Rook_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
