@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <iKanHeaders.h>
+
 namespace Chess {
     
     /// Color of player and Pieces

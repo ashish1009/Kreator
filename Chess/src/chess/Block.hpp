@@ -8,7 +8,7 @@
 #pragma once
 
 #include "chess/Common.hpp"
-#include "chess/Piece.hpp"
+#include "chess/Pieces.hpp"
 
 namespace Chess {
     

@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <iKanHeaders.h>
-
 #include "chess/Player.hpp"
 #include "chess/Block.hpp"
 

@@ -16,6 +16,7 @@
 		3EF2AB16283D0248009764F8 /* ChessApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AAD3283D0247009764F8 /* ChessApp.cpp */; };
 		3EF2AB17283D0248009764F8 /* ChessLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AAD6283D0247009764F8 /* ChessLayer.cpp */; };
 		3EF2AB18283D0248009764F8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AAD8283D0247009764F8 /* main.cpp */; };
+		3EF689C9284A4BBE001E1883 /* Pieces.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF689C7284A4BBE001E1883 /* Pieces.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,7 +61,8 @@
 		3EF689B7284A4717001E1883 /* Common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Common.hpp; sourceTree = "<group>"; };
 		3EF689BA284A4721001E1883 /* Block.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
 		3EF689BD284A472B001E1883 /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
-		3EF689C0284A4732001E1883 /* Piece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Piece.hpp; sourceTree = "<group>"; };
+		3EF689C7284A4BBE001E1883 /* Pieces.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pieces.cpp; sourceTree = "<group>"; };
+		3EF689C8284A4BBE001E1883 /* Pieces.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Pieces.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,7 +198,8 @@
 				3EF689B7284A4717001E1883 /* Common.hpp */,
 				3EF689BA284A4721001E1883 /* Block.hpp */,
 				3EF689BD284A472B001E1883 /* Player.hpp */,
-				3EF689C0284A4732001E1883 /* Piece.hpp */,
+				3EF689C7284A4BBE001E1883 /* Pieces.cpp */,
+				3EF689C8284A4BBE001E1883 /* Pieces.hpp */,
 			);
 			path = chess;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EF689C9284A4BBE001E1883 /* Pieces.cpp in Sources */,
 				3EF2AB16283D0248009764F8 /* ChessApp.cpp in Sources */,
 				3EF2AB17283D0248009764F8 /* ChessLayer.cpp in Sources */,
 				3EF2AB18283D0248009764F8 /* main.cpp in Sources */,
