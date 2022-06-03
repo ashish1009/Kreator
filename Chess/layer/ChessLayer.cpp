@@ -121,9 +121,29 @@ void ChessLayer::RenderGui() {
         
         for (uint8_t playerIdx = 0; playerIdx < MAX_PLAYER; playerIdx++) {
             const auto& player = m_Players[playerIdx];
-            std::string playerIdxString = "Player " + ChessUtils::ColorString(player.Color);
+            std::string playerIdxString = "Color : " + ChessUtils::ColorString(player.Color);
             ImGui::Text("%s", playerIdxString.c_str());
-            ImGui::Text("Name : %s", player.Name.c_str());
+            ImGui::Text("Name  : %s", player.Name.c_str());
+            ImGui::Separator();
+        }
+        
+        if (m_ViewportData.HoveredEntity) {
+            const auto& entity = m_ViewportData.HoveredEntity;
+            ImGui::Text("Hovered Block : %s", entity->GetComponent<TagComponent>().Tag.c_str());
+            ImGui::Separator();
+                
+            // get the position of Block as Row and Column
+            const auto& entityPosition = entity->GetComponent<TransformComponent>().Translation;
+            int8_t rowIdx = (int8_t)entityPosition.y;
+            int8_t colIdx = (int8_t)entityPosition.x;
+
+            // Extract Block from hovered Block Row and column
+            const auto& block = m_Blocks[rowIdx][colIdx];
+            ImGui::Text("Row : %d", block->Row);
+            ImGui::Text("Col : %d", block->Col);
+            ImGui::Separator();
+            if (!block->Piece)
+                ImGui::Text("Piece : Empty");
             ImGui::Separator();
         }
         
@@ -186,8 +206,7 @@ void ChessLayer::InitBlocksData() {
     // Initialize the Chess Board block
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
         for (uint8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
-            m_Blocks[rowIdx][colIdx].Row = rowIdx;
-            m_Blocks[rowIdx][colIdx].Col = colIdx;
+            m_Blocks[rowIdx][colIdx] = Block::Create(rowIdx, colIdx);
             
             uint8_t blockIndex = rowIdx * MAX_ROWS + colIdx;
             
@@ -208,8 +227,11 @@ void ChessLayer::InitBlocksData() {
             
             // Update the block position as Entity Position
             auto& blockPosition = blockEntity->GetComponent<TransformComponent>().Translation;
-            blockPosition.x = m_Blocks[rowIdx][colIdx].Col; // X pixel is equivalent to Column
-            blockPosition.y = m_Blocks[rowIdx][colIdx].Row; // Y pixel is equivalent to Row
+            blockPosition.x = m_Blocks[rowIdx][colIdx]->Col; // X pixel is equivalent to Column
+            blockPosition.y = m_Blocks[rowIdx][colIdx]->Row; // Y pixel is equivalent to Row
+            
+            // Store the blcok in the Entity Map;
+            m_BlockEntityMap[blockEntity] = m_Blocks[rowIdx][colIdx];
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Chess {
     
     /// Player information wrapper
     struct Player {
+    public:
         /// Stores the number of player crerted in the game
         static uint32_t NumPlayerCreated;
     
@@ -42,6 +43,7 @@ namespace Chess {
     
     /// Store information about each piece of Chess
     struct Piece {
+    public:
         /// Name of Piece
         enum Name { Pawn = 0, King = 1, Queen = 2, Bishop = 3, Knight = 4, Rook = 5 };
         
@@ -55,8 +57,20 @@ namespace Chess {
     
     /// Each block information of Chess
     struct Block {
+    public:
         int32_t Row = -1, Col = -1;
         std::shared_ptr<Piece> Piece;
+                
+        /// Construct the Block instance
+        /// @param row row assigned to block
+        /// @param col column of block
+        /// @param idx block index. from 0 - 63 for row : 2 and Col : 4 , Index will be
+        /// row * 8 + col = 20
+        static std::shared_ptr<Block> Create(int32_t row, int32_t col) {
+            return std::make_shared<Block>(row, col);
+        }
+        
+        Block(int32_t row, int32_t col) : Row(row), Col(col) {}
     };
     
     /// Chess Renderer Layer
@@ -86,9 +100,12 @@ namespace Chess {
         Viewport m_ViewportData;
         std::shared_ptr<Scene> m_Scene;
         std::shared_ptr<Entity> m_CameraEntity;
+        std::shared_ptr<Block> m_Blocks[MAX_ROWS][MAX_COLUMNS];
+
+        // Stores all the block data mapped with Entity Handler
+        std::unordered_map<std::shared_ptr<Entity>, std::shared_ptr<Block>> m_BlockEntityMap;
 
         Player m_Players[MAX_PLAYER];
-        Block m_Blocks[MAX_ROWS][MAX_COLUMNS];
     };
 
 }
