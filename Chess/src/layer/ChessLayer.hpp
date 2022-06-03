@@ -37,8 +37,10 @@ namespace Chess {
         
         void InitBlocksData();
         void InitPlayerData();
-        void UpdateSelectedPiece();
+        void UpdateSelectedPiece(std::shared_ptr<Block> block);
         void DeSelectPiece();
+        
+        bool IsBlockEmpty(std::shared_ptr<Block> block);
         
         std::shared_ptr<Entity> CreatePieceEntity(const std::string& entityName, std::shared_ptr<Texture> texture, const glm::vec3& position);
 

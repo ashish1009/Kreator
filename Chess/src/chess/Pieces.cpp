@@ -31,6 +31,30 @@ std::shared_ptr<Piece> Piece::Create(enum Piece::Name name, Chess::Color color, 
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+    if (isNewBlockEmpty) {
+        if (MoveForward) {
+            if (Col == colIdx && Row - rowIdx == 1) {
+                return true;
+            }
+        }
+        else {
+            if (Col == colIdx && rowIdx - Row == 1) {
+                return true;
+            }
+        }
+    }
+    else {
+        if (MoveForward) {
+            if (Col - colIdx == 1 && Row - rowIdx == 1) {
+                return true;
+            }
+        }
+        else {
+            if (colIdx - Col == 1 && rowIdx - Row == 1) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 

@@ -229,22 +229,39 @@ void ChessLayer::EventHandler(Event& event) {
     dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(ChessLayer::OnKeyPressed));
     dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(ChessLayer::OnMouseButtonPressed));
     dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(ChessLayer::OnWindowResize));
-
-    m_Scene->EventHandler(event);
 }
 
 /// Mouse button Event
 /// @param e Mouse Button event handler
 bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
     if (e.GetMouseButton() == MouseButton::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt)) {
-        if (m_ViewportData.Hovered) {
-            m_Scene->SetSelectedEntity(m_ViewportData.HoveredEntity);
-
-            if (m_HoveredBlock && m_HoveredBlock->Piece) {
-                UpdateSelectedPiece();
+        if (m_HoveredBlock) {
+            if (IsBlockEmpty(m_HoveredBlock)) {
+                if (m_SelectedPiece) {
+                    // TODO: Validate the Move and Update the position of selected Piece
+                }
+                else {
+                    // DO NOTHING
+                }
             }
-            else {
-                DeSelectPiece();
+            else { // If Hovered Block is not Empty
+                if (m_SelectedPiece) {
+                    // If Selecting Same Piece then deselect the current Piece and do nothing
+                    if (m_SelectedPiece == m_HoveredBlock->Piece) {
+                        DeSelectPiece();
+                        // DO NOTHING
+                    }
+                    else {
+                        // TODO: Check if entity at hovered Block is of same color?
+                        //       if No the Validate the Move If Valid then uodate the position of selected Piece and Delete older piece at new positon
+                        //       else DO NOTHING
+                    }
+                }
+                else {
+                    // Just select the Piece
+                    UpdateSelectedPiece(m_HoveredBlock);
+                    // DO NOTHING
+                }
             }
         }
     }
@@ -254,6 +271,9 @@ bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
 /// Kwy Press Event
 /// @param event Key Press event handler
 bool ChessLayer::OnKeyPressed(KeyPressedEvent& event) {
+    if (event.GetKeyCode() == KeyCode::Escape) {
+        DeSelectPiece();
+    }
     return false;
 }
 
@@ -358,14 +378,14 @@ void ChessLayer::InitPlayerData() {
 }
 
 /// Update the Selected Piece
-void ChessLayer::UpdateSelectedPiece() {
-    m_SelectedPiece = m_HoveredBlock->Piece;
+void ChessLayer::UpdateSelectedPiece(std::shared_ptr<Block> block) {
+    m_SelectedPiece = block->Piece;
     
     if (!m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
         m_EntityForOutlineSelectedBlock->AddComponent<QuadComponent>(m_SelectedOutlineTexture);
 
     auto& position = m_EntityForOutlineSelectedBlock->GetComponent<TransformComponent>().Translation;
-    position = { m_HoveredBlock->Col, m_HoveredBlock->Row, 0.1f };
+    position = { block->Col, block->Row, 0.1f };
 }
 
 /// Deselect the Selectd Piece
@@ -375,6 +395,12 @@ void ChessLayer::DeSelectPiece() {
     
     if (m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
         m_EntityForOutlineSelectedBlock->RemoveComponent<QuadComponent>();
+}
+
+/// Check if block is empty or not
+/// @param block block pointer
+bool ChessLayer::IsBlockEmpty(std::shared_ptr<Block> block) {
+    return block->Piece == nullptr;
 }
 
 /// create entity for Piece
