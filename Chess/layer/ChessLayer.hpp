@@ -143,9 +143,16 @@ namespace Chess {
         
         std::shared_ptr<Entity> m_CameraEntity;
         std::shared_ptr<Entity> m_EntityForOutlineHoveredBlock;
+        std::shared_ptr<Entity> m_EntityForOutlineSelectedBlock;
 
         std::shared_ptr<Block> m_Blocks[MAX_ROWS][MAX_COLUMNS];
+        
+        std::shared_ptr<Texture> m_HoveredOutlineTexture, m_SelectedOutlineTexture;
 
+        // Store the pointer of Hovered Block
+        std::shared_ptr<Block> m_HoveredBlock;
+        std::shared_ptr<Piece> m_SelectedPiece;
+        
         Player m_Players[MAX_PLAYER];
     };
 

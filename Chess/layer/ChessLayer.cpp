@@ -172,20 +172,17 @@ void ChessLayer::RenderGui() {
                 const int8_t colIdx = (int8_t)entityPosition.x;
                 
                 // Extract Block from hovered Block Row and column
-                const auto& block = m_Blocks[rowIdx][colIdx];
+                m_HoveredBlock = m_Blocks[rowIdx][colIdx];
 
                 // Update the position of Entity that render outline over block
                 auto& HoveredEntityPos = m_EntityForOutlineHoveredBlock->GetComponent<TransformComponent>().Translation;
                 HoveredEntityPos = { colIdx, rowIdx, 0.1f };
 
                 ImGui::Text("Hovered Block");
-                ImGui::Text("Row : %d", block->Row);
-                ImGui::Text("Col : %d", block->Col);
+                ImGui::Text("Row : %d", m_HoveredBlock->Row);
+                ImGui::Text("Col : %d", m_HoveredBlock->Col);
                 ImGui::Separator();
-                if (!block->Piece)
-                    ImGui::Text("Piece : Empty");
-                else {
-                    const std::shared_ptr<Piece>& piece = block->Piece;
+                if (const std::shared_ptr<Piece>& piece = m_HoveredBlock->Piece) {
                     ImGui::Text("Piece");
                     ImGui::Text("Name    : %s", ChessUtils::PieceString(piece->Name).c_str());
                     ImGui::Text("Color   : %s", ChessUtils::ColorString(piece->Color).c_str());
@@ -193,10 +190,26 @@ void ChessLayer::RenderGui() {
                     ImGui::Text("Col     : %d", piece->Col);
                     ImGui::Separator();
                 }
+                else
+                    ImGui::Text("Piece : Empty");
             }
+        }
+        else {
+            // deselecting Hovered Block
+            m_HoveredBlock = nullptr;
         }
         
         ImGui::End(); // Debug Window
+        
+        ImGui::Begin("Selected Piece");
+        if (m_SelectedPiece) {
+            ImGui::Text("Selected Piece");
+            ImGui::Text("Name    : %s", ChessUtils::PieceString(m_SelectedPiece->Name).c_str());
+            ImGui::Text("Color   : %s", ChessUtils::ColorString(m_SelectedPiece->Color).c_str());
+            ImGui::Text("Row     : %d", m_SelectedPiece->Row);
+            ImGui::Text("Col     : %d", m_SelectedPiece->Col);
+        }
+        ImGui::End(); // Selected Piece
     }
         
     ImguiAPI::EndDcocking();
@@ -220,6 +233,28 @@ void ChessLayer::EventHandler(Event& event) {
 /// Mouse button Event
 /// @param e Mouse Button event handler
 bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
+    if (e.GetMouseButton() == MouseButton::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt)) {
+        if (m_ViewportData.Hovered) {
+            m_Scene->SetSelectedEntity(m_ViewportData.HoveredEntity);
+
+            if (m_HoveredBlock && m_HoveredBlock->Piece) {
+                if (!m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
+                    m_EntityForOutlineSelectedBlock->AddComponent<QuadComponent>(m_SelectedOutlineTexture);
+
+                auto& position = m_EntityForOutlineSelectedBlock->GetComponent<TransformComponent>().Translation;
+                position = { m_HoveredBlock->Col, m_HoveredBlock->Row, 0.1f };
+                
+                m_SelectedPiece = m_HoveredBlock->Piece;
+            }
+            else {
+                // Deselecting the selected Piece
+                m_SelectedPiece = nullptr;
+                
+                if (m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
+                    m_EntityForOutlineSelectedBlock->RemoveComponent<QuadComponent>();
+            }
+        }
+    }
     return false;
 }
 
@@ -255,7 +290,12 @@ void ChessLayer::InitBlocksData() {
     
     // Create Entity to render outline over hovered Block
     m_EntityForOutlineHoveredBlock = m_Scene->CreateEntity("EntityForOutlineHoveredBlock");
-    m_EntityForOutlineHoveredBlock->AddComponent<QuadComponent>(Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/hoveredBlock.png")));
+    m_HoveredOutlineTexture = Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/hoveredBlock.png"));
+    m_EntityForOutlineHoveredBlock->AddComponent<QuadComponent>(m_HoveredOutlineTexture);
+
+    // Create Entity to render outline over Selected Block
+    m_EntityForOutlineSelectedBlock = m_Scene->CreateEntity("EntityForOutlineSelectedBlock");
+    m_SelectedOutlineTexture = Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/selectedBlock.png"));
 
     // Initialize the Chess Board block
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
