@@ -243,9 +243,6 @@ void ChessLayer::InitBlocksData() {
             auto& blockPosition = blockEntity->GetComponent<TransformComponent>().Translation;
             blockPosition.x = m_Blocks[rowIdx][colIdx]->Col; // X pixel is equivalent to Column
             blockPosition.y = m_Blocks[rowIdx][colIdx]->Row; // Y pixel is equivalent to Row
-            
-            // Store the blcok in the Entity Map;
-            m_BlockEntityMap[blockEntity] = m_Blocks[rowIdx][colIdx];
         }
     }
 }

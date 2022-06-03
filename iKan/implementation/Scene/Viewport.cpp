@@ -45,7 +45,7 @@ void Viewport::RenderImgui() {
     ImGui::Begin("Viewport Data",nullptr, ImGuiWindowFlags_NoScrollbar);
     ImGui::PushID("Viewport Data");
 
-    ImGui::SetNextWindowContentSize(ImVec2(585.0f, 0.0f));
+//    ImGui::SetNextWindowContentSize(ImVec2(585.0f, 0.0f));
     ImGui::BeginChild("##Renderer Version", ImVec2(0, ImGui::GetFontSize() * 2), false, ImGuiWindowFlags_HorizontalScrollbar);
     ImGui::Columns(6);
     ImGui::SetColumnWidth(0, 90);  ImGui::Text("%d x %d", MousePosX, MousePosY); ImGui::NextColumn();
@@ -60,8 +60,8 @@ void Viewport::RenderImgui() {
         ImGui::SetColumnWidth(5, 200);  ImGui::Text("Name : %s ", entityName.c_str()); ImGui::NextColumn();
     }
     else {
-        ImGui::SetColumnWidth(4, 50);  PropertyGrid::HelpMarker("Hovered Entity ID to be shows here");     ImGui::NextColumn();
-        ImGui::SetColumnWidth(5, 50);  PropertyGrid::HelpMarker("Hovered Entity Name to be shows here");   ImGui::NextColumn();
+        ImGui::SetColumnWidth(4, 50);  PropertyGrid::HelpMarker("Hovered Entity ID to be shows here", "?", false);     ImGui::NextColumn();
+        ImGui::SetColumnWidth(5, 50);  PropertyGrid::HelpMarker("Hovered Entity Name to be shows here", "?", false);   ImGui::NextColumn();
     }
     
     ImGui::EndChild();

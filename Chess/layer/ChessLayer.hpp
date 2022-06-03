@@ -105,9 +105,6 @@ namespace Chess {
 
         std::shared_ptr<Block> m_Blocks[MAX_ROWS][MAX_COLUMNS];
 
-        // Stores all the block data mapped with Entity Handler
-        std::unordered_map<std::shared_ptr<Entity>, std::shared_ptr<Block>> m_BlockEntityMap;
-
         Player m_Players[MAX_PLAYER];
     };
 

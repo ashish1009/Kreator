@@ -18,7 +18,7 @@ namespace iKan {
         /// @param desc String to be used as hint
         /// @param iconChar Icon to be printed as Help Marker (By default (?) will be renderes)
         /// @param sameLine check for same line icon or in new line
-        static void HelpMarker(const char* desc, const char* iconChar = "(?)", bool sameLine = true);
+        static void HelpMarker(const char* desc, const char* iconChar = "?", bool sameLine = true);
         
         /// Create Imgae in current Imgui window
         /// @param textureID Texture id of Image to be rendered
