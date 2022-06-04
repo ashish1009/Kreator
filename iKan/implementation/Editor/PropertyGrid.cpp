@@ -18,6 +18,431 @@ void PropertyGrid::Init() {
     s_SearchTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/search.png"));
 }
 
+/// Drag slider Float
+/// @param label string to be printed
+/// @param value float reference that will be modified with drag Slider
+/// @param checkboxFlag Flag to have checkbox (conditional slider)
+/// @param delta sgtep to be slided
+/// @param resetValue Value after pressing the reset button
+/// @param columnWidth width of column 1
+/// @param columnWidth2 width of column 2
+bool PropertyGrid::Float1(const char* label, float& value, bool* checkboxFlag, float delta, float resetValue, float columnWidth1, float columnWidth2) {
+    bool modified = false;
+    ImGuiIO& io   = ImGui::GetIO();
+    auto boldFont = io.Fonts->Fonts[0];
+    
+    ImGui::PushID(label);
+    
+    ImGui::Columns(2);
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(0, columnWidth1);
+    
+    // this flag is to check we need to have slider float or not
+    bool propFlag;
+    if (checkboxFlag) {
+        ImGui::Checkbox(label, checkboxFlag);
+        propFlag = *checkboxFlag;
+    }
+    else {
+        ImGui::Text(label);
+        propFlag = true;
+    }
+    ImGui::PopItemWidth();
+    
+    if (propFlag) {
+        ImGui::NextColumn();
+        ImGui::PushItemWidth(-1);
+        
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+        
+        float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+        ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+        
+        ImGui::PushFont(boldFont);
+        if (ImGui::Button("X", buttonSize)) {
+            value = resetValue;
+            modified = true;
+        }
+        
+        ImGui::PopFont();
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##X", &value, delta, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+        
+        ImGui::PopStyleVar();
+    }
+    ImGui::PopItemWidth();
+    
+    ImGui::Columns(1);
+    ImGui::PopID();
+    
+    return modified;
+}
+
+/// Drag slider Float 2
+/// @param label is string to be printed
+/// @param value is glm::vec2 (2 float reference) that will be modified with drag slider
+/// @param checkboxFlag Flag to have checkbox (conditional slider)
+/// @param delta Step of modificaiton
+/// @param resetValue Value after pressing the reset button
+/// @param columnWidth width of column
+bool PropertyGrid::Float2(const char* label, glm::vec2& value, bool* checkboxFlag, float delta, float resetValue, float columnWidth) {
+    bool modified   = false;
+    ImGuiIO& io     = ImGui::GetIO();
+    auto boldFont   = io.Fonts->Fonts[0];
+    
+    ImGui::PushID(label);
+    
+    ImGui::Columns(2);
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(0, columnWidth);
+    
+    // this flag is to check we need to have slider float or not
+    bool propFlag;
+    if (checkboxFlag) {
+        ImGui::Checkbox(label, checkboxFlag);
+        propFlag = *checkboxFlag;
+    }
+    else {
+        ImGui::Text(label);
+        propFlag = true;
+    }
+    ImGui::PopItemWidth();
+    
+    if (propFlag) {
+        ImGui::NextColumn();
+        
+        ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+        
+        float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+        ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+        
+        ImGui::PushFont(boldFont);
+        if (ImGui::Button("X", buttonSize)) {
+            value.x = resetValue;
+            modified = true;
+        }
+        ImGui::PopFont();
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##X", &value.x, delta, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+        
+        ImGui::PopItemWidth();
+        ImGui::SameLine();
+        
+        ImGui::PushFont(boldFont);
+        if (ImGui::Button("Y", buttonSize)) {
+            value.y = resetValue;
+            modified = true;
+        }
+        ImGui::PopFont();
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##Y", &value.y, delta, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+        
+        ImGui::PopItemWidth();
+        ImGui::PopStyleVar();
+    }
+    
+    ImGui::Columns(1);
+    ImGui::PopID();
+    
+    return modified;
+}
+
+/// Drag slider Float 3
+/// @param label is string to be printed
+/// @param value is glm::vec2 (2 float reference) that will be modified with drag slider
+/// @param checkboxFlag Flag to have checkbox (conditional slider)
+/// @param delta Delta value of modification
+/// @param resetValue Value after pressing the reset button
+/// @param columnWidth width of column
+bool PropertyGrid::Float3(const char* label, glm::vec3& value, bool* checkboxFlag, float delta, float resetValue, float columnWidth) {
+    bool modified = false;
+    ImGuiIO& io   = ImGui::GetIO();
+    auto boldFont = io.Fonts->Fonts[0];
+    
+    ImGui::PushID(label);
+    
+    ImGui::Columns(2);
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(0, columnWidth);
+    
+    // this flag is to check we need to have slider float or not
+    bool propFlag;
+    if (checkboxFlag) {
+        ImGui::Checkbox(label, checkboxFlag);
+        propFlag = *checkboxFlag;
+    }
+    else {
+        ImGui::Text(label);
+        propFlag = true;
+    }
+    ImGui::PopItemWidth();
+    
+    if (propFlag) {
+        ImGui::NextColumn();
+        
+        ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+        
+        float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+        ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+        
+        ImGui::PushFont(boldFont);
+        if (ImGui::Button("X", buttonSize)) {
+            value.x = resetValue;
+            modified = true;
+        }
+        ImGui::PopFont();
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##X", &value.x, delta, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+        
+        ImGui::PopItemWidth();
+        ImGui::SameLine();
+        
+        ImGui::PushFont(boldFont);
+        if (ImGui::Button("Y", buttonSize)) {
+            value.y = resetValue;
+            modified = true;
+        }
+        ImGui::PopFont();
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##Y", &value.y, delta, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+        
+        ImGui::PopItemWidth();
+        ImGui::SameLine();
+        
+        ImGui::PushFont(boldFont);
+        if (ImGui::Button("Z", buttonSize)) {
+            value.z = resetValue;
+            modified = true;
+        }
+        ImGui::PopFont();
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##Z", &value.z, delta, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+        
+        ImGui::PopItemWidth();
+        
+        ImGui::PopStyleVar();
+    }
+    
+    ImGui::Columns(1);
+    ImGui::PopID();
+    
+    return modified;
+}
+
+/// Read and write the String without lable. Modify the value if Modifiable is true then we can modify the value
+/// Hint will be printed to String path
+/// @param value Lable of Tag
+/// @param hint Hint string to pring in Writable space
+/// @param modifiable flag to check is it const or not
+/// @param multiple flag to check multiple lines needed in strimg
+/// @param numLines if multiple line supported then number of rows
+/// @param error For red color
+bool PropertyGrid::String(std::string& value, const char* hint, bool modifiable, bool multiple, int numLines, bool error) {
+    bool modified = false;
+    ImGui::PushID("String No Lable");
+    
+    if (hint) {
+        ImGui::SameLine();
+        HelpMarker(hint);
+    }
+    
+    ImGui::PushItemWidth(-1);
+    
+    // Copy the Name of entity to buffer that will be dumy text in property pannel
+    char buffer[256];
+    strcpy(buffer, value.c_str());
+    
+    std::string UIContextId = "##" + (std::string)"String With No Lable";
+    
+    // To make string Red in case error flag is true
+    if (error)
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.2f, 1.0f));
+    
+    if (modifiable) {
+        // Take input text from User in Property pannel. that will be name(Tag) of Selected Entity
+        if (multiple) {
+            if (ImGui::InputTextEx(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer), ImVec2(50.0f, numLines * 20.0f), ImGuiInputTextFlags_Multiline)) {
+                value    = buffer;
+                modified = true;
+            }
+        }
+        else {
+            if (ImGui::InputTextWithHint(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
+                value    = buffer;
+                modified = true;
+            }
+        }
+    }
+    else
+        ImGui::InputText(UIContextId.c_str(), (char*)value.c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+    
+    // Pop red color if error is enabled
+    if (error)
+        ImGui::PopStyleColor();
+
+    ImGui::PopItemWidth();
+    ImGui::PopID();
+    
+    return modified;
+}
+
+/// Read and write the String. Modify the value if Modifiable is true then we can modify the value
+/// Hint will be printed to String path
+/// @param label Lable of Tag
+/// @param value Modifyable string
+/// @param columnWidth Width of each Column
+/// @param column2Width Width of each Column 2
+/// @param hint Hint string to pring in Writable space
+/// @param modifiable flag to check is it const or not
+/// @param multiple flag to check multiple lines needed in strimg
+/// @param numLines if multiple line supported then number of rows
+/// @param error For red color
+bool PropertyGrid::String(const char* label, std::string& value, float columnWidth, float column2Width, const char* hint, bool modifiable, bool multiple, int32_t numLines, bool error) {
+    bool modified = false;
+    ImGui::PushID(label);
+    
+    ImGui::Columns(2);
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(0, columnWidth);
+    ImGui::Text(label);
+    ImGui::PopItemWidth();
+    
+    if (hint) {
+        ImGui::SameLine();
+        HelpMarker(hint);
+    }
+    
+    ImGui::NextColumn();
+    
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(1, column2Width);
+    
+    // Copy the Name of entity to buffer that will be dumy text in property pannel
+    char buffer[256];
+    strcpy(buffer, value.c_str());
+    
+    std::string UIContextId = "##" + (std::string)label;
+    
+    // To make string Red in case error flag is true
+    if (error)
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.2f, 1.0f));
+    
+    if (modifiable) {
+        // Take input text from User in Property pannel. that will be name(Tag) of Selected Entity
+        if (multiple) {
+            if (ImGui::InputTextEx(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer), ImVec2(column2Width, numLines * 20.0f), ImGuiInputTextFlags_Multiline)) {
+                value    = buffer;
+                modified = true;
+            }
+        }
+        else {
+            if (ImGui::InputTextWithHint(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
+                value    = buffer;
+                modified = true;
+            }
+        }
+    }
+    else
+        ImGui::InputText(UIContextId.c_str(), (char*)value.c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+    
+    // Pop red color if error is enabled
+    if (error)
+        ImGui::PopStyleColor();
+    
+    ImGui::PopItemWidth();
+    ImGui::NextColumn();
+    ImGui::Columns(1);
+    
+    ImGui::PopID();
+    
+    return modified;
+}
+
+/// Read and write the String
+/// @param label Lable of Tag
+/// @param value Modifyable string
+/// @param hint Hint string to pring in Writable space
+/// @param columnWidth Width of each Column
+bool PropertyGrid::String(const char* label, const std::string& value, const char* hint, float columnWidth) {
+    bool modified = false;
+    ImGui::PushID(label);
+    
+    ImGui::Columns(2);
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(0, columnWidth);
+    ImGui::Text(label);
+    ImGui::PopItemWidth();
+    
+    if (hint) {
+        ImGui::SameLine();
+        HelpMarker(hint);
+    }
+    
+    ImGui::NextColumn();
+    
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(1, 300.0f);
+    
+    // Copy the Name of entity to buffer that will be dumy text in property pannel
+    char buffer[256];
+    strcpy(buffer, value.c_str());
+    
+    std::string UIContextId = "##" + (std::string)label;
+    
+    ImGui::InputText(UIContextId.c_str(), (char*)value.c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+    
+    ImGui::PopItemWidth();
+    ImGui::NextColumn();
+    ImGui::Columns(1);
+    
+    ImGui::PopID();
+    
+    return modified;
+}
+
+/// CheckBox
+/// @param label is string to be printed
+/// @param value is bool that will be modified with check box
+/// @param columnWidth width of column
+/// @param columnWidth2 width of column 2
+bool PropertyGrid::CheckBox(const char* label, bool& value, float columnWidth, float columnWidth2) {
+    bool modified = false;
+    
+    ImGui::Columns(2);
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(0, columnWidth);
+    ImGui::Text(label);
+    ImGui::PopItemWidth();
+    
+    ImGui::NextColumn();
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(1, columnWidth2);
+    std::string UIContextId = "##" + (std::string)label;
+    
+    if (ImGui::Checkbox(UIContextId.c_str(), &value))
+        modified = true;
+    
+    ImGui::PopItemWidth();
+    ImGui::NextColumn();
+    ImGui::Columns(1);
+    
+    return modified;
+}
+
 /// Helper to display a little (?) mark which shows a tooltip when hovered. In your own code you may want to display an
 /// actual icon if you are using a merged icon fonts (see docs/FONTS.txt)
 /// @param desc Helper string
