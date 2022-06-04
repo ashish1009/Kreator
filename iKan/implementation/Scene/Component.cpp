@@ -6,6 +6,7 @@
 //
 
 #include "Component.hpp"
+#include "Editor/PropertyGrid.hpp"
 
 using namespace iKan;
 
@@ -20,7 +21,13 @@ glm::mat4 TransformComponent::GetTransform() const {
     return glm::translate(glm::mat4(1.0f), Translation) * rotation * glm::scale(glm::mat4(1.0f), Scale);
 }
 void TransformComponent::RenderImgui() {
+    PropertyGrid::Float3("Translation", Translation, nullptr, 0.25f, 0.0f, 80.0f);
     
+    glm::vec3 rotation = glm::degrees(Rotation);
+    PropertyGrid::Float3("Rotation", rotation, nullptr, 0.25f, 0.0f, 80.0f);
+    Rotation = glm::radians(rotation);
+    
+    PropertyGrid::Float3("Scale", Scale, nullptr, 0.25f, 1.0f, 80.0f);
 }
 
 // Camera Component

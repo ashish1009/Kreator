@@ -110,6 +110,8 @@ void Scene::Update(Timestep ts) {
 /// @param ts Time step
 void Scene::UpdateEditor(Timestep ts) {
     m_EditorCamera->Update(ts);
+    
+    Render2DComponents(m_EditorCamera->GetViewProjection());
 }
 
 /// Update the Scene at runtime
