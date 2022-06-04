@@ -31,6 +31,7 @@ void Renderer::Init() {
     }
     s_RendererAPI->Init();
     BatchRenderer::Init();
+    PropertyGrid::Init();
 }
 
 /// Shutdown the Engine Renderer Renderer

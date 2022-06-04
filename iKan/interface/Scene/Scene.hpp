@@ -28,7 +28,7 @@ namespace iKan {
         enum State : uint8_t { Play = 0, Edit = 1 };
 
         /// Scene Constructor
-        Scene();
+        Scene(const std::string& path = "Unsaved Scene");
         /// Scene Destructor
         ~Scene();
         
@@ -68,6 +68,15 @@ namespace iKan {
         /// @param selectedEntity new selected Entity Reference pointer
         void SetSelectedEntity(const std::shared_ptr<Entity>& selectedEntity);
         
+        /// Update the File Path
+        /// @param filepath new path of file
+        void SetFilePath(const std::string& filepath);
+        
+        /// Get the Scene name
+        const std::string& GetName() const;
+        /// Get the Saved Scene File path
+        const std::string& GetFilePath() const;
+
         /// Get the number of Entities stored in Scene
         uint32_t GetNumEntities() const;
         /// Get the Max Entity ID given to scene
@@ -91,8 +100,8 @@ namespace iKan {
         const std::shared_ptr<EditorCamera>& GetEditorCamera() const;
         
         /// Create Scene instance
-        static std::shared_ptr<Scene> Create();
-        
+        static std::shared_ptr<Scene> Create(const std::string& path = "Unsaved Scene");
+
     private:
         // Member functions
         void UpdateEditor(Timestep ts);
@@ -135,7 +144,8 @@ namespace iKan {
         
         // Utils Memebers
         std::shared_ptr<Texture> m_PlayTexture, m_PauseTexture;
-        
+        std::string m_FilePath = "Unsaved Scene", m_Name = "Unsaved Scene";
+
         friend class Entity;
         friend class SceneHierarchyPannel;
         friend class SceneSerializer;

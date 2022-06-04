@@ -11,9 +11,14 @@
 
 namespace iKan {
     
+    class Texture;
+    
     /// Store the Wrapper API for showing Data in Imgui window
     class PropertyGrid {
     public:
+        /// Initialize the Proeprty Grid.
+        static void Init();
+        
         /// Render a hint icon (?) and on hovered A hint string will be shown
         /// @param desc String to be used as hint
         /// @param iconChar Icon to be printed as Help Marker (By default (?) will be renderes)
@@ -40,10 +45,18 @@ namespace iKan {
         /// @param texId Texture ID
         /// @param size size of textire
         static bool ImageButton(const int32_t lableId, uint32_t texId, const glm::vec2& size);
+        
+        /// Read and write the String. Modify the value if Modifiable is true then we can modify the value
+        /// Hint will be printed to String path
+        /// @param value search string
+        /// @param hint Hint string to pring in Writable space
+        static bool Search(char* value, const char* hint);
 
     private:
         PropertyGrid() = default;
         MAKE_SINGLETON(PropertyGrid);
+
+        static std::shared_ptr<Texture> s_SearchTexture;
     };
     
 }

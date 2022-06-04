@@ -87,13 +87,15 @@ void RendererLayer::RenderGui() {
         ImguiAPI::FrameRate();
         Renderer::ImguiRendererStats();
         m_VpData.RenderImgui();
+        
+        m_SHP->RenderImgui();
     }
         
     // Viewport
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Kreator Viewport");
-        ImGui::PushID("Chess Viewport");
+        ImGui::PushID("Kreator Viewport");
         
         m_VpData.Focused = ImGui::IsWindowFocused();
         m_VpData.Hovered = ImGui::IsWindowHovered();

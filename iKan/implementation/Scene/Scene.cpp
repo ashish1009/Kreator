@@ -21,14 +21,15 @@ template<typename Component> static void CopyComponentIfExist(Entity& dst, const
 }
 
 /// Create Secne Reference instance
-std::shared_ptr<Scene> Scene::Create() {
+std::shared_ptr<Scene> Scene::Create(const std::string& path) {
     return std::make_shared<Scene>();
 }
 
 /// Scene Constructor
-Scene::Scene() {
+Scene::Scene(const std::string& path) : m_FilePath(path), m_Name(StringUtils::GetNameFromFilePath(path)) {
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Scene ...");
+    IK_CORE_INFO("    Name : {0}", m_Name);
 
     m_EditorCamera = EditorCamera::Create();
     
@@ -47,6 +48,7 @@ Scene::Scene() {
 Scene::~Scene() {
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Scene!!!");
+    IK_CORE_WARN("    Name : {0}", m_Name);
 }
 
 /// Create New Entity to scene
@@ -272,6 +274,16 @@ std::shared_ptr<Entity> Scene::GetPrimaryCameraEntity() {
     }
     return nullptr;
 }
+
+/// Update Scene File path and name
+/// @param filepath file path
+void Scene::SetFilePath(const std::string& filepath) {
+    m_FilePath = filepath;
+    m_Name = StringUtils::GetNameFromFilePath(m_FilePath);
+}
+
+const std::string& Scene::GetName() const { return m_Name; }
+const std::string& Scene::GetFilePath() const { return m_FilePath; }
 
 uint32_t Scene::GetNumEntities() const { return m_NumEntities; }
 uint32_t Scene::GetMaxEntityId() const { return m_MaxEntityId; }

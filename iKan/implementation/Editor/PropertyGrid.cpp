@@ -6,8 +6,17 @@
 //
 
 #include "PropertyGrid.hpp"
+#include "Renderer/Utils/Renderer.hpp"
+#include "Renderer/Graphics/Texture.hpp"
 
 using namespace iKan;
+
+std::shared_ptr<Texture> PropertyGrid::s_SearchTexture;
+
+/// Initialize the Property Grid
+void PropertyGrid::Init() {
+    s_SearchTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/search.png"));
+}
 
 /// Helper to display a little (?) mark which shows a tooltip when hovered. In your own code you may want to display an
 /// actual icon if you are using a merged icon fonts (see docs/FONTS.txt)
@@ -64,4 +73,33 @@ bool PropertyGrid::ImageButton(int32_t lableId, uint32_t texId, const glm::vec2&
     ImGui::PopID();
     
     return result;
+}
+
+/// Read and write the String. Modify the value if Modifiable is true then we can modify the value
+/// Hint will be printed to String path
+/// @param value search string
+/// @param hint Hint string to pring in Writable space
+bool PropertyGrid::Search(char* value, const char* hint) {
+    bool modified = false;
+    ImGui::PushID("Search");
+    ImGui::PushItemWidth(-1);
+    
+    PropertyGrid::ImageButton("Search", s_SearchTexture->GetRendererID(), { 20.0f, 20.0f });
+    ImGui::SameLine();
+    
+    // Copy the Name of entity to buffer that will be dumy text in property pannel
+    char buffer[256];
+    strcpy(buffer, value);
+    
+    std::string UIContextId = "##" + std::string("Search");
+    
+    if (ImGui::InputTextWithHint("", hint, buffer, IM_ARRAYSIZE(buffer))) {
+        strcpy(value, buffer);
+        modified = true;
+    }
+    
+    ImGui::PopItemWidth();
+    ImGui::PopID();
+    
+    return modified;
 }
