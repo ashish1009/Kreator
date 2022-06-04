@@ -82,35 +82,35 @@ void RendererLayer::RenderGui() {
     if (m_ActiveScene)
         m_ActiveScene->RenderImgui();
 
-//    // Debug Window
-//    {
-//        ImguiAPI::FrameRate();
-//        Renderer::ImguiRendererStats();
-//        m_VpData.RenderImgui();
-//    }
-//        
-//    // Viewport
-//    {
-//        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-//        ImGui::Begin("Kreator Viewport");
-//        ImGui::PushID("Chess Viewport");
-//        
-//        m_VpData.Focused = ImGui::IsWindowFocused();
-//        m_VpData.Hovered = ImGui::IsWindowHovered();
-//        
-//        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-//        m_VpData.Size = { viewportPanelSize.x, viewportPanelSize.y };
-//        
-//        size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
-//        PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
-//
-//        m_VpData.UpdateBound();
-//
-//        ImGui::PopID();
-//        ImGui::End(); // ImGui::Begin("Kreator Viewport");
-//        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-//    }
-//    
+    // Debug Window
+    if (m_ActiveScene->IsEditing()) {
+        ImguiAPI::FrameRate();
+        Renderer::ImguiRendererStats();
+        m_VpData.RenderImgui();
+    }
+        
+    // Viewport
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::Begin("Kreator Viewport");
+        ImGui::PushID("Chess Viewport");
+        
+        m_VpData.Focused = ImGui::IsWindowFocused();
+        m_VpData.Hovered = ImGui::IsWindowHovered();
+        
+        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+        m_VpData.Size = { viewportPanelSize.x, viewportPanelSize.y };
+        
+        size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
+        PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
+
+        m_VpData.UpdateBound();
+
+        ImGui::PopID();
+        ImGui::End(); // ImGui::Begin("Kreator Viewport");
+        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+    }
+    
     ImguiAPI::EndDcocking();
 }
 
