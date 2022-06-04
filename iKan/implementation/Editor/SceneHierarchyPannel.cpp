@@ -12,6 +12,47 @@
 
 using namespace iKan;
 
+/// Draw the components in property pannel. Takes the function pointer in argument
+template<typename T, typename UIFunction> static void DrawComponent(const std::string& name, const std::shared_ptr<Entity>& entity, UIFunction uiFunction) {
+    const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen |
+    ImGuiTreeNodeFlags_Framed |
+    ImGuiTreeNodeFlags_SpanAvailWidth |
+    ImGuiTreeNodeFlags_AllowItemOverlap |
+    ImGuiTreeNodeFlags_FramePadding;
+    
+    if (entity->HasComponent<T>()) {
+        auto& component               = entity->GetComponent<T>();
+        ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
+        
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+        float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+        ImGui::Separator();
+        bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+        
+        ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
+        if (ImGui::Button("...", ImVec2{ lineHeight, lineHeight }))
+            ImGui::OpenPopup("ComponentSettings");
+        
+        bool removeComponent = false;
+        if (ImGui::BeginPopup("ComponentSettings")) {
+            if (ImGui::MenuItem("Remove component"))
+                removeComponent = true;
+            
+            ImGui::EndPopup();
+        }
+        
+        if (open) {
+            uiFunction(component);
+            ImGui::TreePop();
+        }
+        
+        if (removeComponent)
+            entity->RemoveComponent<T>();
+    }
+}
+
+
 /// Create instance of Scene Hierarchy pannel
 /// @param context context reference pointer
 std::shared_ptr<SceneHierarchyPannel> SceneHierarchyPannel::Create(const std::shared_ptr<Scene>& context) {
@@ -129,7 +170,8 @@ void SceneHierarchyPannel::RenderImgui() {
     ImGui::Begin("Entity Property");
     ImGui::PushID("Entity Property");
     
-    
+    if (m_SelectedEntity)
+        DrawComponents();
     
     ImGui::PopID();
     ImGui::End(); // ImGui::Begin("Scene Hierarchy");
@@ -182,6 +224,78 @@ void SceneHierarchyPannel::GroupEntities(const std::shared_ptr<Entity>& entity) 
     
     if (std::find(m_EntityGroups[group].begin(), m_EntityGroups[group].end(), entity) == m_EntityGroups[group].end())
         m_EntityGroups[group].emplace_back(entity);
+}
+
+/// Render Property of the selected Entity
+void SceneHierarchyPannel::DrawComponents() {
+    auto& group = m_SelectedEntity->GetComponent<TagComponent>().Group;
+    static std::string olderGroup = group;
+    static bool groupOpened = false;
+    if (groupOpened) {
+        ImGui::SameLine();
+        if (PropertyGrid::String(group)) {
+            groupOpened = false;
+
+            // if this entity was present in some group then just remove the entiry
+            auto& entities = m_EntityGroups[olderGroup];
+            auto pos = std::find(entities.begin(), entities.end(), m_SelectedEntity);
+
+            if (pos != entities.end())
+                entities.erase(pos);
+        }
+    }
+    else {
+        if (PropertyGrid::ImageButton("Group Edit", c_EditTexture->GetRendererID(), { 20.0f, 20.0f })) {
+            olderGroup = group;
+            groupOpened = true;
+        }
+
+        ImGui::SameLine();
+        ImGui::Text(group.c_str());
+        ImGui::Separator();
+    }
+
+    auto& tag = m_SelectedEntity->GetComponent<TagComponent>().Tag;
+    PropertyGrid::String((std::to_string((uint32_t)*m_SelectedEntity.get())).c_str(), tag, 50.0f, 300.0f);
+    ImGui::SameLine();
+    
+    ImGui::PushItemWidth(-1);
+    ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.95f));
+    
+    if (PropertyGrid::ImageButton("Add", c_AddTexture->GetRendererID(), { 20.0f, 20.0f }))
+        ImGui::OpenPopup("AddComponent");
+    
+    if (ImGui::BeginPopup("AddComponent")) {
+        AddComponent();
+        ImGui::EndPopup();
+    }
+    
+    ImGui::PopItemWidth();
+    
+    DrawComponent<TransformComponent>("Transform", m_SelectedEntity, [](auto& tc) { tc.RenderImgui(); });
+    DrawComponent<QuadComponent>("Quad", m_SelectedEntity, [this](auto& qc) { qc.RenderImgui(); });
+    DrawComponent<CameraComponent>("Camera", m_SelectedEntity, [](auto& cc) { cc.RenderImgui(); });
+}
+
+/// Add Component
+void SceneHierarchyPannel::AddComponent() {
+    if (ImGui::BeginMenu("Camera")) {
+        if (ImGui::MenuItem("Perspective")) {
+            m_SelectedEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Perspective);
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Orthographics")) {
+            m_SelectedEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndMenu();
+    }
+    ImGui::Separator();
+    
+    if (ImGui::MenuItem("Quad")) {
+        m_SelectedEntity->AddComponent<QuadComponent>();
+        ImGui::CloseCurrentPopup();
+    }
 }
 
 void SceneHierarchyPannel::SetSelectedEntity(const std::shared_ptr<Entity>& entity) { m_SelectedEntity = entity; }

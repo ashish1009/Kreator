@@ -36,6 +36,8 @@ namespace iKan {
         
         TransformComponent(const glm::vec3& translation = { 0.0f, 0.0f, 0.0f });
         glm::mat4 GetTransform() const;
+        
+        void RenderImgui();
     };
 
     /// Scene Camera
@@ -45,6 +47,7 @@ namespace iKan {
         std::shared_ptr<SceneCamera> Camera;
         
         CameraComponent(SceneCamera::ProjectionType projType);
+        
         void RenderImgui();
     };
     
@@ -59,6 +62,8 @@ namespace iKan {
         QuadComponent(const std::shared_ptr<iKan::Texture>& texture);
         QuadComponent(const std::string& texturePath);
         QuadComponent(const glm::vec4& color);
+        
+        void RenderImgui();
     };
     
 }

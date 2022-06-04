@@ -7,14 +7,21 @@
 
 #pragma once
 
+#include "Renderer/Utils/Renderer.hpp"
+
 namespace iKan {
     
     class Scene;
+    class Texture;
     class Entity;
     
     /// A wrapper only to render Active Scene's Information in Imgui
     class SceneHierarchyPannel {
     public:
+        const std::shared_ptr<Texture> c_EditTexture    = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/edit.png"));
+        const std::shared_ptr<Texture> c_AddTexture     = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/add.png"));
+        const std::shared_ptr<Texture> c_DefaultTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/default/noTexture.png"));
+
         /// Construct Scene Hierarchy pannel
         /// @param context Scene context pointer
         SceneHierarchyPannel(const std::shared_ptr<Scene>& context);
@@ -44,6 +51,8 @@ namespace iKan {
         // Member functions
         void DrawEntityTreeNode(const std::shared_ptr<Entity>& entity);
         void GroupEntities(const std::shared_ptr<Entity>& entity);
+        void DrawComponents();
+        void AddComponent();
         
         // Member variables
         std::shared_ptr<Entity> m_SelectedEntity, m_EntityToBeDeleted;
