@@ -87,6 +87,9 @@ namespace iKan {
         /// check is scene is in editing state
         bool IsEditing() const;
         
+        /// return the Editor camera Instance
+        const std::shared_ptr<EditorCamera>& GetEditorCamera() const;
+        
         /// Create Scene instance
         static std::shared_ptr<Scene> Create();
         
@@ -121,6 +124,8 @@ namespace iKan {
         // Number of Entity stored in Scene and Max ID given to Entity
         uint32_t m_NumEntities = 0, m_MaxEntityId = 0;
         
+        std::shared_ptr<EditorCamera> m_EditorCamera;
+
         // Function pointers
         std::function<void(Timestep)> m_Update;
         std::function<void(Event&)> m_EventHandler;

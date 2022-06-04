@@ -29,6 +29,8 @@ std::shared_ptr<Scene> Scene::Create() {
 Scene::Scene() {
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Scene ...");
+
+    m_EditorCamera = EditorCamera::Create();
     
     m_PlayTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/play.png"));
     m_PauseTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/pause.png"));
@@ -105,6 +107,7 @@ void Scene::Update(Timestep ts) {
 /// Update the Scene while editing
 /// @param ts Time step
 void Scene::UpdateEditor(Timestep ts) {
+    m_EditorCamera->Update(ts);
 }
 
 /// Update the Scene at runtime
@@ -166,6 +169,7 @@ void Scene::EventHandler(Event& event) {
 /// Handle the events while editing
 /// @param event event instance
 void Scene::EventHandlerEditor(Event& event) {
+    m_EditorCamera->EventHandler(event);
 }
 
 /// Handle the events runtime
@@ -220,6 +224,7 @@ void Scene::RenderImguiRuntime() {
 /// @param width new width
 /// @param height new height
 void Scene::SetViewport(uint32_t width, uint32_t height) {
+    m_EditorCamera->SetViewportSize(width, height);
     ResizeCameraEntity(width, height);
 }
 
@@ -274,3 +279,5 @@ uint32_t Scene::GetMaxEntityId() const { return m_MaxEntityId; }
 Scene::State Scene::GetState() const { return m_State; }
 void Scene::SetState(Scene::State state) { m_State = state; }
 bool Scene::IsEditing() const { return m_State == Scene::State::Edit; }
+
+const std::shared_ptr<EditorCamera>& Scene::GetEditorCamera() const { return m_EditorCamera; }
