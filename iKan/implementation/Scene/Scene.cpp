@@ -8,6 +8,7 @@
 #include "Scene.hpp"
 #include "Scene/Entity.hpp"
 #include "Renderer/Utils/BatchRenderer.hpp"
+#include "Editor/PropertyGrid.hpp"
 
 using namespace iKan;
 
@@ -28,6 +29,9 @@ std::shared_ptr<Scene> Scene::Create() {
 Scene::Scene() {
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Scene ...");
+    
+    m_PlayTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/play.png"));
+    m_PauseTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/pause.png"));
     
     if (m_State == State::Edit)
         EditScene();
@@ -124,6 +128,7 @@ void Scene::PlayScene() {
     m_State = State::Play;
     m_Update = std::bind(&Scene::UpdateRuntime, this, std::placeholders::_1);
     m_EventHandler = std::bind(&Scene::EventHandlerRuntime, this, std::placeholders::_1);
+    m_RenderImgui = std::bind(&Scene::RenderImguiRuntime, this);
 }
 
 /// Set scene to Edit mode
@@ -134,6 +139,7 @@ void Scene::EditScene() {
     m_State = State::Edit;
     m_Update = std::bind(&Scene::UpdateEditor, this, std::placeholders::_1);
     m_EventHandler = std::bind(&Scene::EventHandlerEditor, this, std::placeholders::_1);
+    m_RenderImgui = std::bind(&Scene::RenderImguiEditor, this);
 }
 
 /// Set the Selected Entity by UI
@@ -165,6 +171,49 @@ void Scene::EventHandlerEditor(Event& event) {
 /// Handle the events runtime
 /// @param event event instance
 void Scene::EventHandlerRuntime(Event& event) {
+}
+
+/// Render Secne Imgui
+void Scene::RenderImgui() {
+    m_RenderImgui();
+    
+    // Play Pause Buttom
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    
+    auto& colors = ImGui::GetStyle().Colors;
+    const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+    
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+    const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+    
+    ImGui::Begin("Play/Pause", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+    
+    uint32_t texIdx = m_State == State::Edit ? m_PlayTexture->GetRendererID() : m_PauseTexture->GetRendererID();
+    float size = ImGui::GetWindowHeight() - 4.0f; // 4 just random number
+    ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+    if (PropertyGrid::ImageButton("Play/Pause", texIdx, { size, size })) {
+        if (m_State == State::Edit)
+            PlayScene();
+        else
+            EditScene();
+    }
+    
+    ImGui::PopStyleVar(2);
+    ImGui::PopStyleColor(3);
+    ImGui::End();
+
+}
+
+/// Render Scene imgui while editing
+void Scene::RenderImguiEditor() {
+}
+
+/// Render Secne Imgui runtime
+void Scene::RenderImguiRuntime() {
+    
 }
 
 /// Update the Scene Viewport size
@@ -221,3 +270,7 @@ std::shared_ptr<Entity> Scene::GetPrimaryCameraEntity() {
 
 uint32_t Scene::GetNumEntities() const { return m_NumEntities; }
 uint32_t Scene::GetMaxEntityId() const { return m_MaxEntityId; }
+
+Scene::State Scene::GetState() const { return m_State; }
+void Scene::SetState(Scene::State state) { m_State = state; }
+bool Scene::IsEditing() const { return m_State == Scene::State::Edit; }

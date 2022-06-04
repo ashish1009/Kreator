@@ -51,6 +51,9 @@ namespace iKan {
         /// @param event event instance
         void EventHandler(Event& event);
         
+        /// Render the Imgui
+        void RenderImgui();
+        
         /// Update the Scene Viewport size
         /// @param width new width
         /// @param height new height
@@ -73,6 +76,16 @@ namespace iKan {
         /// return the Entity pointer from Entity ID Map
         /// @param id Entity ID
         const std::shared_ptr<Entity>& GetEnitityFromId(int32_t id) const;
+
+        /// Return the current state of Scene
+        State GetState() const;
+        
+        /// Set the State of Scebe
+        /// @param state current scene
+        void SetState(State state);
+        
+        /// check is scene is in editing state
+        bool IsEditing() const;
         
         /// Create Scene instance
         static std::shared_ptr<Scene> Create();
@@ -84,6 +97,9 @@ namespace iKan {
         
         void EventHandlerEditor(Event& event);
         void EventHandlerRuntime(Event& event);
+        
+        void RenderImguiEditor();
+        void RenderImguiRuntime();
         
         bool WindowResizeEventHandler(WindowResizeEvent& event);
 
@@ -108,8 +124,12 @@ namespace iKan {
         // Function pointers
         std::function<void(Timestep)> m_Update;
         std::function<void(Event&)> m_EventHandler;
-        
+        std::function<void()> m_RenderImgui;
+
         State m_State = State::Edit;
+        
+        // Utils Memebers
+        std::shared_ptr<Texture> m_PlayTexture, m_PauseTexture;
         
         friend class Entity;
         friend class SceneHierarchyPannel;

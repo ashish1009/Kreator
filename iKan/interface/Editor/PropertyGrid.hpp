@@ -27,6 +27,20 @@ namespace iKan {
         /// @param uv1 Right
         static void Image(void* textureID, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1);
         
+        /// img Button
+        /// @param lableId image lable string
+        /// @param texId texture id
+        /// @param size size of image
+        /// @param bgColor background color
+        /// @param padding padding
+        static bool ImageButton(const std::string& lableId, uint32_t texId, const glm::vec2& size, const glm::vec4& bgColor = glm::vec4(0.0f), int32_t padding = 0);
+
+        /// img Button
+        /// @param lableId lable ID
+        /// @param texId Texture ID
+        /// @param size size of textire
+        static bool ImageButton(const int32_t lableId, uint32_t texId, const glm::vec2& size);
+
     private:
         PropertyGrid() = default;
         MAKE_SINGLETON(PropertyGrid);

@@ -120,6 +120,8 @@
 		3EF2AA17283CFD84009764F8 /* UUID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AA15283CFD84009764F8 /* UUID.hpp */; };
 		3EF2AE53283D2742009764F8 /* SceneSerialiser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AE51283D2742009764F8 /* SceneSerialiser.cpp */; };
 		3EF2AE54283D2742009764F8 /* SceneSerialiser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2AE52283D2742009764F8 /* SceneSerialiser.hpp */; };
+		3EF689CF284A8443001E1883 /* SceneHierarchyPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF689CD284A8443001E1883 /* SceneHierarchyPannel.cpp */; };
+		3EF689D0284A8443001E1883 /* SceneHierarchyPannel.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EF689CE284A8443001E1883 /* SceneHierarchyPannel.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -268,6 +270,8 @@
 		3EF2AB8F283D1FBC009764F8 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = yamlSerialiser/yaml.xcodeproj; sourceTree = "<group>"; };
 		3EF2AE51283D2742009764F8 /* SceneSerialiser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerialiser.cpp; sourceTree = "<group>"; };
 		3EF2AE52283D2742009764F8 /* SceneSerialiser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneSerialiser.hpp; sourceTree = "<group>"; };
+		3EF689CD284A8443001E1883 /* SceneHierarchyPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneHierarchyPannel.cpp; sourceTree = "<group>"; };
+		3EF689CE284A8443001E1883 /* SceneHierarchyPannel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneHierarchyPannel.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -463,6 +467,7 @@
 			children = (
 				3E6578EE2837DE49006B0C81 /* PropertyGrid.hpp */,
 				3E8200A7283B8F750024DF91 /* EditorCamera.hpp */,
+				3EF689CE284A8443001E1883 /* SceneHierarchyPannel.hpp */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -472,6 +477,7 @@
 			children = (
 				3E6578ED2837DE49006B0C81 /* PropertyGrid.cpp */,
 				3E8200A6283B8F750024DF91 /* EditorCamera.cpp */,
+				3EF689CD284A8443001E1883 /* SceneHierarchyPannel.cpp */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -795,6 +801,7 @@
 				3E2FA108283920CF00EE289A /* OpenGLTexture.hpp in Headers */,
 				3EB1C88E283BBA200098836F /* stb_image.h in Headers */,
 				3E6575DF283798B5006B0C81 /* iKanCommon.h in Headers */,
+				3EF689D0284A8443001E1883 /* SceneHierarchyPannel.hpp in Headers */,
 				3E6575D828379414006B0C81 /* ApplicationEvent.h in Headers */,
 				3E2FA0EC2839205700EE289A /* OpenGLRendererBuffer.hpp in Headers */,
 				3E6578F02837DE49006B0C81 /* PropertyGrid.hpp in Headers */,
@@ -920,6 +927,7 @@
 				3E6A4D7728362759003578F4 /* Logger.cpp in Sources */,
 				3E6578DB2837D10B006B0C81 /* ImguiLayer.cpp in Sources */,
 				3EF2AA0E283CFC15009764F8 /* Entity.cpp in Sources */,
+				3EF689CF284A8443001E1883 /* SceneHierarchyPannel.cpp in Sources */,
 				3E2FA10B283920DA00EE289A /* OpenGLFrameBuffer.cpp in Sources */,
 				3E6578FB2837E892006B0C81 /* BatchRenderer.cpp in Sources */,
 				3E2FA0F72839209000EE289A /* Shader.cpp in Sources */,

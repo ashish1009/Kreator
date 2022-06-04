@@ -36,16 +36,11 @@ void RendererLayer::Attach() {
     // Temp TODO: Create Scene using UI
     // Create scene
     m_ActiveScene = Scene::Create();
-    m_ActiveScene->PlayScene();
+    m_SHP = SceneHierarchyPannel::Create(m_ActiveScene);
     
     // Temp Init
     m_SceneCamera = SceneCamera::Create(SceneCamera::ProjectionType::Orthographic);
     m_EditorCamera = EditorCamera::Create();
-    
-    m_Textures[0] = Renderer::GetTexture(AssetManager::GetClientAsset("texture/basicTextures/checkerboard.png"));
-    
-    m_Vampire = Mesh::Create(AssetManager::GetClientAsset("models/vampire/dancing_vampire.dae"), 0);
-    m_BagPack = Mesh::Create(AssetManager::GetClientAsset("models/backpack/backpack.obj"), 1);
 }
 
 /// Renderer Layer Detach
@@ -76,16 +71,6 @@ void RendererLayer::Update(Timestep ts) {
         
         m_ActiveScene->Update(ts);
         m_VpData.UpdateMousePos();
-        
-        glm::mat4 rotation = glm::toMat4(glm::quat(glm::vec3(0.0f)));
-        glm::mat4 cameraTransform = glm::translate(glm::mat4(1.0f), CameraTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
-        
-//        BatchRenderer::BeginBatch(m_SceneCamera->GetProjectionMatrix() * glm::inverse(cameraTransform));
-        
-        glm::mat4 quadTransform = glm::translate(glm::mat4(1.0f), QuadTranslation) * rotation * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));;
-//        BatchRenderer::DrawQuad(quadTransform, m_Textures[0], { 1.0, 1.0, 1.0, 1.0 });
-//        BatchRenderer::EndBatch();
-        m_BagPack->Draw({ CameraTranslation, cameraTransform }, quadTransform);
     }
     m_VpData.FrameBuffer->Unbind();
 }
@@ -93,40 +78,45 @@ void RendererLayer::Update(Timestep ts) {
 /// Render GUI Window each frame for Renderer Layer
 void RendererLayer::RenderGui() {
     ImguiAPI::StartDcocking();
-    // Debug Window
-    {
-        ImguiAPI::FrameRate();
-        Renderer::ImguiRendererStats();
-        m_VpData.RenderImgui();
-    }
-        
-    // Viewport
-    {
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Kreator Viewport");
-        ImGui::PushID("Chess Viewport");
-        
-        m_VpData.Focused = ImGui::IsWindowFocused();
-        m_VpData.Hovered = ImGui::IsWindowHovered();
-        
-        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        m_VpData.Size = { viewportPanelSize.x, viewportPanelSize.y };
-        
-        size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
-        PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
-
-        m_VpData.UpdateBound();
-
-        ImGui::PopID();
-        ImGui::End(); // ImGui::Begin("Kreator Viewport");
-        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-    }
     
+    if (m_ActiveScene)
+        m_ActiveScene->RenderImgui();
+
+//    // Debug Window
+//    {
+//        ImguiAPI::FrameRate();
+//        Renderer::ImguiRendererStats();
+//        m_VpData.RenderImgui();
+//    }
+//        
+//    // Viewport
+//    {
+//        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+//        ImGui::Begin("Kreator Viewport");
+//        ImGui::PushID("Chess Viewport");
+//        
+//        m_VpData.Focused = ImGui::IsWindowFocused();
+//        m_VpData.Hovered = ImGui::IsWindowHovered();
+//        
+//        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+//        m_VpData.Size = { viewportPanelSize.x, viewportPanelSize.y };
+//        
+//        size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
+//        PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
+//
+//        m_VpData.UpdateBound();
+//
+//        ImGui::PopID();
+//        ImGui::End(); // ImGui::Begin("Kreator Viewport");
+//        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+//    }
+//    
     ImguiAPI::EndDcocking();
 }
 
 /// Handle Event interupt for Renderer Layer
 /// @param event Event base class Instance.
 void RendererLayer::EventHandler(Event& event) {
-
+    if (m_ActiveScene)
+        m_ActiveScene->EventHandler(event);
 }
