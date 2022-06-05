@@ -443,6 +443,46 @@ bool PropertyGrid::CheckBox(const char* label, bool& value, float columnWidth, f
     return modified;
 }
 
+/// ComboDrop: Selectable drop option created
+/// @param label is string to be printed
+/// @param options option of drop box
+/// @param currentValue current selection value (index of option vector)
+/// @param colWidth1 column width 1
+/// @param colWidth2 column width 1
+uint32_t PropertyGrid::ComboDrop(const char* label, const std::vector<std::string>& options, uint32_t currentValue, float colWidth1, float colWidth2) {
+    uint32_t result = currentValue;
+    
+    ImGui::Columns(2);
+    ImGui::Text(label);
+    
+    ImGui::NextColumn();
+    ImGui::PushItemWidth(-1);
+    ImGui::SetColumnWidth(1, colWidth2);
+    
+    std::string UIContextId = "##" + (std::string)label;
+    
+    const char* currentType = options[(int32_t)currentValue].c_str();
+    if (ImGui::BeginCombo(UIContextId.c_str(), currentType)) {
+        for (int32_t i = 0; i < options.size(); i++) {
+            bool bIsSelected = currentType == options[i];
+            if (ImGui::Selectable(options[i].c_str(), bIsSelected)) {
+                currentType = options[i].c_str();
+                result = i;
+            }
+            
+            if (bIsSelected)
+                ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
+    ImGui::PopItemWidth();
+    
+    ImGui::Columns(1);
+    ImGui::Separator();
+    
+    return result;
+}
+
 /// Helper to display a little (?) mark which shows a tooltip when hovered. In your own code you may want to display an
 /// actual icon if you are using a merged icon fonts (see docs/FONTS.txt)
 /// @param desc Helper string

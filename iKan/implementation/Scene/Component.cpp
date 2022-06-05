@@ -33,7 +33,20 @@ void TransformComponent::RenderImgui() {
 // Camera Component
 CameraComponent::CameraComponent(SceneCamera::ProjectionType projType) : Camera(std::make_shared<SceneCamera>(projType)) { }
 void CameraComponent::RenderImgui() {
+    auto columnWidth = ImGui::GetWindowContentRegionMax().x / 2;
+    ImGui::Columns(2);
     
+    ImGui::SetColumnWidth(0, columnWidth);
+    ImGui::Checkbox("Primary", &Primary); ImGui::SameLine();
+    
+    ImGui::NextColumn();
+    ImGui::SetColumnWidth(1, columnWidth);
+    ImGui::Checkbox("Fixed Aspect Ratio", &FixedAspectRatio);
+    
+    ImGui::Columns(1);
+    ImGui::Separator();
+    
+    Camera->RenderImgui(true);
 }
 
 // Quad Component

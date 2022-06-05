@@ -29,6 +29,11 @@ namespace iKan {
         /// Desctructorr
         virtual ~SceneCamera();
         
+        /// Render Imgui pannel for Scene Camera
+        /// @param isTitlePredefined Check is there predefined title present. (if true means called this function between Imgui::Begin and Imgui::End)
+        /// @param pIsOpen check is window to be open or close (valid only if isTitlePredefined is false)
+        void RenderImgui(bool isTitlePredefined = false, bool* pIsOpen = nullptr);
+        
         // ----------------------------------- Setters ------------------------------------------
         /// Set the Near Plane Overriden Method to update the Projection view matrix
         /// @param near new Near plane

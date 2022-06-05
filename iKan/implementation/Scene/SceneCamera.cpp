@@ -6,6 +6,7 @@
 //
 
 #include "SceneCamera.hpp"
+#include "Editor/PropertyGrid.hpp"
 
 using namespace iKan;
 
@@ -91,6 +92,54 @@ SceneCamera::~SceneCamera() {
         IK_CORE_ASSERT(false, "Invalid Projection Type");
     }
     IK_LOG_SEPARATOR();
+}
+
+/// Render Imgui pannel for Scene Camera
+/// @param isTitlePredefined Check is there predefined title present. (if true means called this function between Imgui::Begin and Imgui::End)
+/// @param pIsOpen check is window to be open or close (valid only if isTitlePredefined is false)
+void SceneCamera::RenderImgui(bool isTitlePredefined, bool* pIsOpen) {
+    if (!isTitlePredefined) {
+        ImGui::Begin("Scene Camera");
+        ImGui::PushID("Scene Camera");
+    }
+    
+    ProjectionType newProjType = ProjectionType(PropertyGrid::ComboDrop("Projection Type", { "Perspective" , "Orthographic" }, (uint32_t)m_ProjectionType));
+    if (newProjType != m_ProjectionType)
+        SetProjectionType(newProjType);
+    
+    if (m_ProjectionType == SceneCamera::ProjectionType::Perspective) {
+        float fov = glm::degrees(m_PerspectiveFOV);
+        if (PropertyGrid::Float1("Vertical FOV", fov, nullptr, 1.0f, 45.0f))
+            SetPerspectiveFOV(glm::radians(fov));
+#if 0
+        if (PropertyGrid::Float1("Near", m_Near, nullptr, 0.01f, 0.01f))
+            RecalculateProjection();
+        
+        if (PropertyGrid::Float1("Far", m_Far, nullptr, 1.0f, 10000.0f))
+            RecalculateProjection();
+#endif
+    }
+    else if (m_ProjectionType == SceneCamera::ProjectionType::Orthographic) {
+        if (PropertyGrid::Float1("Size", m_OrthographicSize, nullptr, 1.0f, 10.0f))
+            RecalculateProjection();
+        
+#if 0
+        if (PropertyGrid::Float1("Near", m_Near, nullptr, 0.1f, -1.0f))
+            RecalculateProjection();
+        
+        if (PropertyGrid::Float1("Far", m_Far, nullptr, 0.1f, 1.0f))
+            RecalculateProjection();
+#endif
+    }
+    else {
+        IK_CORE_ASSERT(false, "Invalid Projection Type");
+    }
+    ImGui::Separator();
+    
+    if (!isTitlePredefined) {
+        ImGui::PopID();
+        ImGui::End();
+    }
 }
 
 /// Overriden Method to update Near plane

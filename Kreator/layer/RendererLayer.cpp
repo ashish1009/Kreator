@@ -37,10 +37,6 @@ void RendererLayer::Attach() {
     // Create scene
     m_ActiveScene = Scene::Create();
     m_SHP = SceneHierarchyPannel::Create(m_ActiveScene);
-    
-    // Temp Init
-    m_SceneCamera = SceneCamera::Create(SceneCamera::ProjectionType::Orthographic);
-    m_EditorCamera = EditorCamera::Create();
 }
 
 /// Renderer Layer Detach

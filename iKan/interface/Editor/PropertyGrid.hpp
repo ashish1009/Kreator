@@ -77,6 +77,14 @@ namespace iKan {
         /// @param columnWidth width of column of lable
         /// @param columnWidth2 width of column of Value
         static bool CheckBox(const char* label, bool& value, float columnWidth = 100.0f, float columnWidth2 = 300.0f);
+        
+        /// ComboDrop: Selectable drop option created
+        /// @param label is string to be printed
+        /// @param options option of drop box
+        /// @param currentValue current selection value (index of option vector)
+        /// @param colWidth1 column width 1
+        /// @param colWidth2 column width 1
+        static uint32_t ComboDrop(const char* label, const std::vector<std::string>& options, uint32_t currentValue, float colWidth1 = 100.0f, float colWidth2 = 200.0f);
 
         /// Render a hint icon (?) and on hovered A hint string will be shown
         /// @param desc String to be used as hint
