@@ -105,6 +105,7 @@ void RendererLayer::RenderGui() {
         size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
         PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
 
+        OnImguizmoUpdate();
         m_VpData.UpdateBound();
 
         ImGui::PopID();
@@ -123,6 +124,7 @@ void RendererLayer::EventHandler(Event& event) {
 
     EventDispatcher dispatcher(event);
     dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(RendererLayer::OnMouseButtonPressed));
+    dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(RendererLayer::OnKeyPressed));
 }
 
 /// Mouse button Event
@@ -132,7 +134,7 @@ bool RendererLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
         return false;
     
     if (e.GetMouseButton() == MouseButton::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt)) {
-        if (m_VpData.MousePosX >= 0 && m_VpData.MousePosY >= 0 && m_VpData.MousePosX <= m_VpData.Width && m_VpData.MousePosY <= m_VpData.Height ) 
+        if (m_VpData.MousePosX >= 0 && m_VpData.MousePosY >= 0 && m_VpData.MousePosX <= m_VpData.Width && m_VpData.MousePosY <= m_VpData.Height )
             m_SHP->SetSelectedEntity(m_VpData.HoveredEntity);
         else
             m_VpData.GizmoType = -1;
@@ -140,10 +142,83 @@ bool RendererLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
     return false;
 }
 
+/// Kwy Press Event
+/// @param event Key Press event handler
+bool RendererLayer::OnKeyPressed(KeyPressedEvent& event) {
+    // Shortcuts
+    if (event.GetRepeatCount() > 0)
+        return false;
+    
+    bool ctrl = Input::IsKeyPressed(KeyCode::LeftControl) || Input::IsKeyPressed(KeyCode::RightControl);
+
+    switch (event.GetKeyCode()) {
+        // Gizmos
+        case KeyCode::Q:    if (ctrl)    m_VpData.GizmoType = -1;                               break;
+        case KeyCode::W:    if (ctrl)    m_VpData.GizmoType = ImGuizmo::OPERATION::TRANSLATE;   break;
+        case KeyCode::E:    if (ctrl)    m_VpData.GizmoType = ImGuizmo::OPERATION::ROTATE;      break;
+        case KeyCode::R:    if (ctrl)    m_VpData.GizmoType = ImGuizmo::OPERATION::SCALE;       break;
+        default:
+            break;
+    }
+    return false;
+}
+
 /// Update Hovered Entity
 void RendererLayer::UpdateHoveredEntity() {
+    if (ImGuizmo::IsOver()) {
+        m_VpData.HoveredEntity = m_SHP->GetSelectedEntity();
+        return;
+    }
+    
     if (m_VpData.Hovered) {
         Renderer::GetEntityIdFromPixels(m_VpData.MousePosX, m_VpData.MousePosY, m_VpData.HoveredEntityID);
         m_VpData.HoveredEntity = (m_VpData.HoveredEntityID > m_ActiveScene->GetMaxEntityId()) ? nullptr : m_ActiveScene->GetEnitityFromId(m_VpData.HoveredEntityID);
+    }
+}
+
+/// Update Imguizmo renderer
+void RendererLayer::OnImguizmoUpdate() {
+    std::shared_ptr<Entity> selectedEntity = m_SHP->GetSelectedEntity();
+    if (selectedEntity && m_VpData.GizmoType != -1) {
+        ImGuizmo::SetOrthographic(false);
+        ImGuizmo::SetDrawlist();
+        
+        float windowWidth = (float)ImGui::GetWindowWidth();
+        float windowHeight = (float)ImGui::GetWindowHeight();
+        ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+        
+        // Camera
+        const std::shared_ptr<EditorCamera>& editorCamera = m_ActiveScene->GetEditorCamera();
+        
+        glm::mat4 cameraProjection = editorCamera->GetProjectionMatrix();
+        glm::mat4 cameraView       = editorCamera->GetViewMatrix();
+        
+        // Entity transform
+        auto& tc = selectedEntity->GetComponent<TransformComponent>();
+        glm::mat4 transform = tc.GetTransform();
+        
+        // Snapping
+        bool snap = Input::IsKeyPressed(KeyCode::LeftControl);
+        float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+        
+        // Snap to 45 degrees for rotation
+        if (m_VpData.GizmoType == ImGuizmo::OPERATION::ROTATE)
+            snapValue = 45.0f;
+        
+        float snapValues[3] = { snapValue, snapValue, snapValue };
+        
+        ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+                             (ImGuizmo::OPERATION)m_VpData.GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+                             nullptr, snap ? snapValues : nullptr);
+        
+        if (ImGuizmo::IsUsing()) {
+            glm::vec3 translation, rotation, scale;
+            Math::DecomposeTransform(transform, translation, rotation, scale);
+            
+            glm::vec3 deltaRotation = rotation - tc.Rotation;
+            tc.Translation = translation;
+            tc.Rotation += deltaRotation;
+            tc.Scale = scale;
+        }
     }
 }

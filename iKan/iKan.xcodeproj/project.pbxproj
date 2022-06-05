@@ -31,6 +31,8 @@
 		3E4D74A52846432C0053D366 /* Viewport.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E4D74A32846432C0053D366 /* Viewport.hpp */; };
 		3E567D61284CF3C500F44800 /* ContentBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E567D5F284CF3C500F44800 /* ContentBrowserPannel.cpp */; };
 		3E567D62284CF3C500F44800 /* ContentBrowserPannel.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E567D60284CF3C500F44800 /* ContentBrowserPannel.hpp */; };
+		3E567D6B284CFE7600F44800 /* Maths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E567D69284CFE7600F44800 /* Maths.cpp */; };
+		3E567D6C284CFE7600F44800 /* Maths.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E567D6A284CFE7600F44800 /* Maths.hpp */; };
 		3E6575C428378FB1006B0C81 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C228378FB1006B0C81 /* Window.cpp */; };
 		3E6575C528378FB1006B0C81 /* Window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575C328378FB1006B0C81 /* Window.hpp */; };
 		3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C828378FD8006B0C81 /* MacWindow.cpp */; };
@@ -175,6 +177,8 @@
 		3E4D74A32846432C0053D366 /* Viewport.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Viewport.hpp; sourceTree = "<group>"; };
 		3E567D5F284CF3C500F44800 /* ContentBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContentBrowserPannel.cpp; sourceTree = "<group>"; };
 		3E567D60284CF3C500F44800 /* ContentBrowserPannel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ContentBrowserPannel.hpp; sourceTree = "<group>"; };
+		3E567D69284CFE7600F44800 /* Maths.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maths.cpp; sourceTree = "<group>"; };
+		3E567D6A284CFE7600F44800 /* Maths.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maths.hpp; sourceTree = "<group>"; };
 		3E6575C228378FB1006B0C81 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		3E6575C328378FB1006B0C81 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
 		3E6575C828378FD8006B0C81 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
@@ -674,6 +678,7 @@
 			children = (
 				3EB1C8A0283BD5020098836F /* AABB.hpp */,
 				3EF2AA15283CFD84009764F8 /* UUID.hpp */,
+				3E567D6A284CFE7600F44800 /* Maths.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -683,6 +688,7 @@
 			children = (
 				3EF2AA14283CFD84009764F8 /* UUID.cpp */,
 				3EB1C89F283BD5020098836F /* AABB.cpp */,
+				3E567D69284CFE7600F44800 /* Maths.cpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -760,6 +766,7 @@
 				3EE244BB283A936B00640481 /* StringUtils.hpp in Headers */,
 				3E2FA100283920AA00EE289A /* FrameBuffer.hpp in Headers */,
 				3EB1C8A2283BD5020098836F /* AABB.hpp in Headers */,
+				3E567D6C284CFE7600F44800 /* Maths.hpp in Headers */,
 				3E6575D928379414006B0C81 /* MouseEvent.h in Headers */,
 				3E6A4D942836979C003578F4 /* LayerStack.hpp in Headers */,
 				3EF2AA09283CFC0B009764F8 /* Scene.hpp in Headers */,
@@ -943,6 +950,7 @@
 				3EF2AA12283CFC22009764F8 /* Component.cpp in Sources */,
 				3E96196A2847DE4700C74F6D /* TextureLibrary.cpp in Sources */,
 				3E6576022837BA08006B0C81 /* OpenGLRendererAPI.cpp in Sources */,
+				3E567D6B284CFE7600F44800 /* Maths.cpp in Sources */,
 				3E820090283B61220024DF91 /* OpenGLShaderUniform.cpp in Sources */,
 				3E6576322837BF09006B0C81 /* RendererContext.cpp in Sources */,
 				3EE244B6283A92D400640481 /* ShaderLibrary.cpp in Sources */,

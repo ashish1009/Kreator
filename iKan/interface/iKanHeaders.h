@@ -45,6 +45,7 @@
 #include <Core/Utils/StringUtils.hpp>
 
 #include <Core/Math/AABB.hpp>
+#include <Core/Math/Maths.hpp>
 
 #include <Core/Event/ApplicationEvent.h>
 #include <Core/Event/KeyEvent.h>

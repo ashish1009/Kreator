@@ -29,7 +29,9 @@ public:
 private:
     // Methods
     void UpdateHoveredEntity();
+    void OnImguizmoUpdate();
     bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+    bool OnKeyPressed(KeyPressedEvent& event);
     
     // variables
     Viewport m_VpData;
