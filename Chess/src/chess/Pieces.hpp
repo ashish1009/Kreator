@@ -49,19 +49,22 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        virtual bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) = 0;
+        virtual bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) = 0;
         
-        /// Update the position of Piece
-        /// @param rowIdx new Row
-        /// @param colIdx new Column
-        void UpdatePosition(int8_t rowIdx, int8_t colIdx);
-        
+        /// Validate the move and Update the position of Piece at new position
+        /// @param rowIdx new row position of Piece
+        /// @param colIdx new row column position of Piece
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty);
+
         /// Construtor of Piece
         /// @param name Name / Type of Piece
         /// @param color Color of Piece
         /// @param rowIdx Row Index
         /// @param colIdx Column Index
         static std::shared_ptr<Piece> Create(enum Name name, Chess::Color color, int8_t rowIdx, int8_t colIdx);
+        
+    protected:
+        void UpdatePosition(int8_t rowIdx, int8_t colIdx);
     };
     
     /// Pawn class derived from base Piece
@@ -80,11 +83,11 @@ namespace Chess {
             else
                 IK_ASSERT(false, "Invalid Init Raw for Pawn")
         }
-        
+
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
         
         // Variables
         bool MoveForward = true;
@@ -103,7 +106,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Queen class derived from base Piece
@@ -119,7 +122,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Bishop class derived from base Piece
@@ -135,7 +138,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Knight class derived from base Piece
@@ -151,7 +154,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
 
     /// Rook class derived from base Piece
@@ -167,7 +170,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
     };
     
     /// Stores the Power Piece Name (Type) at initial colum position

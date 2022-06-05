@@ -430,7 +430,7 @@ void ChessLayer::FillBlock(std::shared_ptr<Block> block, std::shared_ptr<Piece> 
 void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
     auto prevblockPtr = m_Blocks[m_SelectedPiece->Row][m_SelectedPiece->Col];
     // if Validation of new postion fails then return
-    if (!m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, isBlockEmpty))
+    if (!m_SelectedPiece->ValidateAndUpdatePostion_(m_HoveredBlock->Row, m_HoveredBlock->Col, isBlockEmpty))
         return;
     
     // Store the Piece entity before Updating the piece
