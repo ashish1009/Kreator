@@ -54,6 +54,32 @@ QuadComponent::QuadComponent(const TextureComponent& texComp, const glm::vec4& c
 QuadComponent::QuadComponent(const std::shared_ptr<iKan::Texture>& texture) { Texture.Component = texture; }
 QuadComponent::QuadComponent(const std::string& texturePath) { Texture.Component = Renderer::GetTexture(texturePath);}
 QuadComponent::QuadComponent(const glm::vec4& color) : Color(color) {  }
-void QuadComponent::RenderImgui() {
+void QuadComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture) {
+    // Change the color of the Entity
+    ImGui::PushID("Texture");
+    ImGui::Columns(2);
     
+    ImGui::SetColumnWidth(0, 100);
+    size_t texId = (Texture.Component ? Texture.Component->GetRendererID() : defaultTexture->GetRendererID());
+    ImGui::Image((void*)texId, ImVec2(40.0f, 40.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+    PropertyGrid::DropConent([this](const std::string& path){
+        Texture.Component = Texture::Create(path);
+    });
+    
+    ImGui::NextColumn();
+    ImGui::Checkbox("Albedo Texture", &Texture.Use);
+    ImGui::SameLine();
+    PropertyGrid::HelpMarker("Drop the Texture file in the Image Button to upload the texture or Select already stored texture from the scene (Option can be available by right click on image)");
+    
+    ImGui::ColorEdit4("Color", glm::value_ptr(Color), ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+    if (Texture.Component && Texture.Use) {
+        ImGui::SameLine();
+        ImGui::DragFloat("", &TilingFactor, 1.0f, 1.0f, 1000.0f);
+    }
+    
+    ImGui::Separator();
+    
+    ImGui::Columns(1);
+    ImGui::PopID();
+
 }

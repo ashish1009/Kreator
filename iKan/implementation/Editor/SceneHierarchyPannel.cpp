@@ -273,7 +273,7 @@ void SceneHierarchyPannel::DrawComponents() {
     ImGui::PopItemWidth();
     
     DrawComponent<TransformComponent>("Transform", m_SelectedEntity, [](auto& tc) { tc.RenderImgui(); });
-    DrawComponent<QuadComponent>("Quad", m_SelectedEntity, [this](auto& qc) { qc.RenderImgui(); });
+    DrawComponent<QuadComponent>("Quad", m_SelectedEntity, [this](auto& qc) { qc.RenderImgui(c_DefaultTexture); });
     DrawComponent<CameraComponent>("Camera", m_SelectedEntity, [](auto& cc) { cc.RenderImgui(); });
 }
 

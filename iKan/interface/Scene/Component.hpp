@@ -61,7 +61,7 @@ namespace iKan {
         QuadComponent(const std::string& texturePath);
         QuadComponent(const glm::vec4& color);
         
-        void RenderImgui();
+        void RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture);
     };
     
 }

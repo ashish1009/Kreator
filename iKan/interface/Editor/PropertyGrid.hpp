@@ -118,6 +118,22 @@ namespace iKan {
         /// @param value search string
         /// @param hint Hint string to pring in Writable space
         static bool Search(char* value, const char* hint);
+        
+        /// Drop content from content prowser pannel and call the function
+        /// @param uiFunction Function
+        template<typename UIFunction> static void DropConent(UIFunction uiFunction) {
+            if (ImGui::BeginDragDropTarget() && !ImGui::IsMouseDragging(0) && ImGui::IsMouseReleased(0)) {
+                if (const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery)) {
+                    char* filePath = new char[data->DataSize + 1];
+                    memcpy(filePath, (char*)data->Data, data->DataSize);
+                    filePath[data->DataSize] = '\0';
+                    
+                    uiFunction(filePath);
+                    delete[] filePath;
+                }
+                ImGui::EndDragDropTarget();
+            }
+        }
 
     private:
         PropertyGrid() = default;
