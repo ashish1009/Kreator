@@ -76,6 +76,7 @@
 #include <Editor/EditorCamera.hpp>
 #include <Editor/PropertyGrid.hpp>
 #include <Editor/SceneHierarchyPannel.hpp>
+#include <Editor/ContentBrowserPannel.hpp>
 
 // Gui Files
 #include <Gui/ImguiAPI.hpp>

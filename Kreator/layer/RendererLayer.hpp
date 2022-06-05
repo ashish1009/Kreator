@@ -28,6 +28,8 @@ public:
     
 private:
     Viewport m_VpData;
+    ContentBrowserPannel m_CBP;
+    
     std::shared_ptr<Scene> m_ActiveScene;
     std::shared_ptr<SceneHierarchyPannel> m_SHP;
     

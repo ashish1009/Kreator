@@ -13,8 +13,6 @@
 
 namespace iKan {
     
-    class SceneCamera;
-    
     /// Store the unique ID of Entity
     struct IDComponent {
         UUID ID = 0;

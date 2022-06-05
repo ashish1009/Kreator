@@ -11,7 +11,7 @@ glm::vec3 CameraTranslation = { 0.0f, 0.0f, 0.1f };
 glm::vec3 QuadTranslation = { 0.0f, 0.0f, 0.1f };
 
 /// Renderer Layer Constructor
-RendererLayer::RendererLayer() : Layer("Renderer") {
+RendererLayer::RendererLayer() : Layer("Renderer"), m_CBP("../../../../../../../iKan./iKan/Github/Product/iKan") {
     IK_INFO("Creating {0} Layer ...", m_Name);
 }
 
@@ -89,6 +89,7 @@ void RendererLayer::RenderGui() {
         m_VpData.RenderImgui();
         
         m_SHP->RenderImgui();
+        m_CBP.RenderImgui();
     }
         
     // Viewport

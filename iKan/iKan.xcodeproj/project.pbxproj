@@ -29,6 +29,8 @@
 		3E2FA10C283920DA00EE289A /* OpenGLFrameBuffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E2FA10A283920DA00EE289A /* OpenGLFrameBuffer.hpp */; };
 		3E4D74A42846432C0053D366 /* Viewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D74A22846432C0053D366 /* Viewport.cpp */; };
 		3E4D74A52846432C0053D366 /* Viewport.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E4D74A32846432C0053D366 /* Viewport.hpp */; };
+		3E567D61284CF3C500F44800 /* ContentBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E567D5F284CF3C500F44800 /* ContentBrowserPannel.cpp */; };
+		3E567D62284CF3C500F44800 /* ContentBrowserPannel.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E567D60284CF3C500F44800 /* ContentBrowserPannel.hpp */; };
 		3E6575C428378FB1006B0C81 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C228378FB1006B0C81 /* Window.cpp */; };
 		3E6575C528378FB1006B0C81 /* Window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575C328378FB1006B0C81 /* Window.hpp */; };
 		3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C828378FD8006B0C81 /* MacWindow.cpp */; };
@@ -171,6 +173,8 @@
 		3E2FA10A283920DA00EE289A /* OpenGLFrameBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLFrameBuffer.hpp; sourceTree = "<group>"; };
 		3E4D74A22846432C0053D366 /* Viewport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; };
 		3E4D74A32846432C0053D366 /* Viewport.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Viewport.hpp; sourceTree = "<group>"; };
+		3E567D5F284CF3C500F44800 /* ContentBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContentBrowserPannel.cpp; sourceTree = "<group>"; };
+		3E567D60284CF3C500F44800 /* ContentBrowserPannel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ContentBrowserPannel.hpp; sourceTree = "<group>"; };
 		3E6575C228378FB1006B0C81 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		3E6575C328378FB1006B0C81 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
 		3E6575C828378FD8006B0C81 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
@@ -468,6 +472,7 @@
 				3E6578EE2837DE49006B0C81 /* PropertyGrid.hpp */,
 				3E8200A7283B8F750024DF91 /* EditorCamera.hpp */,
 				3EF689CE284A8443001E1883 /* SceneHierarchyPannel.hpp */,
+				3E567D60284CF3C500F44800 /* ContentBrowserPannel.hpp */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				3E6578ED2837DE49006B0C81 /* PropertyGrid.cpp */,
 				3E8200A6283B8F750024DF91 /* EditorCamera.cpp */,
 				3EF689CD284A8443001E1883 /* SceneHierarchyPannel.cpp */,
+				3E567D5F284CF3C500F44800 /* ContentBrowserPannel.cpp */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -784,6 +790,7 @@
 				3EB1C89D283BCB4D0098836F /* Mesh.hpp in Headers */,
 				3EE244B7283A92D400640481 /* ShaderLibrary.hpp in Headers */,
 				3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */,
+				3E567D62284CF3C500F44800 /* ContentBrowserPannel.hpp in Headers */,
 				3E82009B283B88B40024DF91 /* Camera.hpp in Headers */,
 				3E82008B283B551C0024DF91 /* ShaderUniform.hpp in Headers */,
 				3E6575C528378FB1006B0C81 /* Window.hpp in Headers */,
@@ -930,6 +937,7 @@
 				3EF689CF284A8443001E1883 /* SceneHierarchyPannel.cpp in Sources */,
 				3E2FA10B283920DA00EE289A /* OpenGLFrameBuffer.cpp in Sources */,
 				3E6578FB2837E892006B0C81 /* BatchRenderer.cpp in Sources */,
+				3E567D61284CF3C500F44800 /* ContentBrowserPannel.cpp in Sources */,
 				3E2FA0F72839209000EE289A /* Shader.cpp in Sources */,
 				3E6575F92837B662006B0C81 /* Renderer.cpp in Sources */,
 				3EF2AA12283CFC22009764F8 /* Component.cpp in Sources */,
