@@ -32,11 +32,6 @@ void RendererLayer::Attach() {
         FrameBuffer::Attachment::TextureFormat::R32I
     };
     m_VpData.FrameBuffer = FrameBuffer::Create(spec);
-    
-    // Temp TODO: Create Scene using UI
-    // Create scene
-    m_ActiveScene = Scene::Create();
-    m_SHP = SceneHierarchyPannel::Create(m_ActiveScene);
 }
 
 /// Renderer Layer Detach
@@ -63,7 +58,7 @@ void RendererLayer::Update(Timestep ts) {
     
     m_VpData.FrameBuffer->Bind();
     {
-        Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
+        Renderer::Clear({ 0.1f, 0.2f, 0.3f, 1.0f });
         
         m_ActiveScene->Update(ts);
         m_VpData.UpdateMousePos();
@@ -76,24 +71,10 @@ void RendererLayer::Update(Timestep ts) {
 /// Render GUI Window each frame for Renderer Layer
 void RendererLayer::RenderGui() {
     ImguiAPI::StartDcocking();
-    
-    if (m_ActiveScene)
-        m_ActiveScene->RenderImgui();
+    ImguiAPI::FrameRate();
 
-    // Debug Window
-    if (m_ActiveScene->IsEditing()) {
-        ImguiAPI::FrameRate();
-        Renderer::ImguiRendererStats();
-        m_VpData.RenderImgui();
-        
-        m_SHP->RenderImgui();
-        m_CBP.RenderImgui();
-        
-        SaveScene();
-    }
-        
-    // Viewport
-    {
+    if (m_ActiveScene) {
+        // Viewport
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Kreator Viewport");
         ImGui::PushID("Kreator Viewport");
@@ -106,22 +87,30 @@ void RendererLayer::RenderGui() {
         
         size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
         PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
-        PropertyGrid::DropConent([this](const std::string& path)
-                                          {
-            if (StringUtils::GetExtensionFromFilePath(path) == "Kreator")
-                OpenScene(path);
-            else
-                IK_WARN("Invalid file for Scene {0}", path.c_str());
-        });
-        
-        OnImguizmoUpdate();
-        m_VpData.UpdateBound();
+        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        if (m_ActiveScene->IsEditing()) {
 
+            PropertyGrid::DropConent([this](const std::string& path)
+                                              {
+                if (StringUtils::GetExtensionFromFilePath(path) == "Kreator")
+                    OpenScene(path);
+                else
+                    IK_WARN("Invalid file for Scene {0}", path.c_str());
+            });
+            
+            Renderer::ImguiRendererStats();
+            m_VpData.RenderImgui();
+            
+            m_SHP->RenderImgui();
+            m_CBP.RenderImgui();
+            
+            SaveScene();
+        }
+        
         ImGui::PopID();
         ImGui::End(); // ImGui::Begin("Kreator Viewport");
-        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
     }
-    
+
     ImguiAPI::EndDcocking();
 }
 

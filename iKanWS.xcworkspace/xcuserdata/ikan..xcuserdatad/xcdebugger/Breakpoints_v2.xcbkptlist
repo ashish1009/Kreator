@@ -119,16 +119,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E5CDAB12-60F7-476E-ADD4-73374A8C09E4"
+            uuid = "BFF31AFE-70F3-47E6-8C49-7DFE81AC8BBB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Kreator/layer/RendererLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "RendererLayer::RenderGui()"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "RendererLayer::CloseScene()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

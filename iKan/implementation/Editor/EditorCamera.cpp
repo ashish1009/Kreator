@@ -7,6 +7,7 @@
 
 #include "EditorCamera.hpp"
 #include "Core/Input.hpp"
+#include "Editor/PropertyGrid.hpp"
 
 using namespace iKan;
 
@@ -187,6 +188,28 @@ float EditorCamera::ZoomSpeed() const {
 
 /// Render Imgui Window for Editor camera
 void EditorCamera::RendererGui() {
+    ImGui::Begin("Editor Camera");
+    ImGui::PushID("Editor Camera");
+
+    static float fovAngle = 75.0f;
+    if (PropertyGrid::Float1("FOV", fovAngle, nullptr, 1.0f, 10.0f, 80.0f, 300.0f)) {
+        m_FOV = glm::radians(fovAngle);
+        m_Projection = glm::perspective(m_FOV, m_AspectRatio, m_Near, m_Far);
+    }
+    ImGui::Separator();
+    
+    PropertyGrid::Float3("Focal Point", m_FocalPoint, nullptr, 0.1f, 0.0f, 80.0f);
+    PropertyGrid::Float1("Distance", m_Distance, nullptr, 0.1f, 0.0f, 80.0f);
+    
+#if 0
+    if (PropertyGrid::Float1("Near", m_Near, nullptr, 0.01f, 0.01f, 80.0f))
+        m_Projection = glm::perspective(m_FOV, m_AspectRatio, m_Near, m_Far);
+        
+    if (PropertyGrid::Float1("Far", m_Far, nullptr, 1.0f, 10000.0f, 80.0f))
+        m_Projection = glm::perspective(m_FOV, m_AspectRatio, m_Near, m_Far);
+#endif
+    ImGui::PopID();
+    ImGui::End();
 }
 
 /// getters

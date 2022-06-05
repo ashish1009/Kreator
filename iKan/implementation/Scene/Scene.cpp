@@ -217,6 +217,7 @@ void Scene::RenderImgui() {
 
 /// Render Scene imgui while editing
 void Scene::RenderImguiEditor() {
+    m_EditorCamera->RendererGui();
 }
 
 /// Render Secne Imgui runtime
