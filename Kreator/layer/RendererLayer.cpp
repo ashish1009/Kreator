@@ -88,6 +88,8 @@ void RendererLayer::RenderGui() {
         
         m_SHP->RenderImgui();
         m_CBP.RenderImgui();
+        
+        SaveScene();
     }
         
     // Viewport
@@ -104,7 +106,14 @@ void RendererLayer::RenderGui() {
         
         size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
         PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
-
+        PropertyGrid::DropConent([this](const std::string& path)
+                                          {
+            if (StringUtils::GetExtensionFromFilePath(path) == "Kreator")
+                OpenScene(path);
+            else
+                IK_WARN("Invalid file for Scene {0}", path.c_str());
+        });
+        
         OnImguizmoUpdate();
         m_VpData.UpdateBound();
 
@@ -149,9 +158,13 @@ bool RendererLayer::OnKeyPressed(KeyPressedEvent& event) {
     if (event.GetRepeatCount() > 0)
         return false;
     
+    bool cmd = Input::IsKeyPressed(KeyCode::LeftSuper) || Input::IsKeyPressed(KeyCode::RightSuper);
     bool ctrl = Input::IsKeyPressed(KeyCode::LeftControl) || Input::IsKeyPressed(KeyCode::RightControl);
 
     switch (event.GetKeyCode()) {
+        case KeyCode::N:    if (cmd)    NewScene();             break;
+        case KeyCode::X:    if (cmd)    CloseScene();           break;
+            
         // Gizmos
         case KeyCode::Q:    if (ctrl)    m_VpData.GizmoType = -1;                               break;
         case KeyCode::W:    if (ctrl)    m_VpData.GizmoType = ImGuizmo::OPERATION::TRANSLATE;   break;
@@ -221,4 +234,79 @@ void RendererLayer::OnImguizmoUpdate() {
             tc.Scale = scale;
         }
     }
+}
+
+/// Create New scene
+const std::shared_ptr<Scene>& RendererLayer::NewScene() {
+    CloseScene();
+    // TODO: Save scene if already saved
+
+    m_ActiveScene = Scene::Create();
+    m_ActiveScene->SetViewport((uint32_t)m_VpData.Size.x, (uint32_t)m_VpData.Size.y);
+
+    m_SHP = SceneHierarchyPannel::Create(m_ActiveScene);
+
+    return m_ActiveScene;
+}
+
+/// Open Scene
+/// @param path Path of saved scene
+const std::shared_ptr<Scene>& RendererLayer::OpenScene(const std::string& path) {
+    IK_INFO("Opening saved scene from {0}", path.c_str());
+
+    m_SHP->SetSelectedEntity(nullptr);
+    NewScene();
+    m_ActiveScene->SetFilePath(path);
+
+    SceneSerializer serializer(m_ActiveScene);
+    serializer.Deserialize(path);
+
+    return m_ActiveScene;
+}
+
+/// Save the scene
+const std::shared_ptr<Scene>& RendererLayer::SaveScene() {
+    ImGui::Begin("Save File");
+    ImGui::PushID("Save File");
+
+    const auto& relativePath = (std::filesystem::relative(m_CBP.GetCurrentDir(), m_CBP.GetRootDir())).string();
+    PropertyGrid::String("Scene Directory", relativePath, "File will be saved at the Current directory in the active scene", 150.0f);
+
+    static std::string fileName = "";
+    bool modified = PropertyGrid::String("Scene Name", fileName, 150.0f);
+
+    if (modified) {
+        std::string filepath = m_CBP.GetCurrentDir().string() + "/" + fileName + ".Kreator";
+        IK_INFO("Saving Scene at {0}", filepath.c_str());
+        if (!filepath.empty()) {
+            m_ActiveScene->SetFilePath(filepath);
+            SceneSerializer serializer(m_ActiveScene);
+            serializer.Serialize(filepath);
+        }
+    }
+
+    ImGui::PopID();
+    ImGui::End();
+    return m_ActiveScene;
+}
+
+/// Close current open scene
+void RendererLayer::CloseScene() {
+    if (!m_ActiveScene)
+        return;
+
+    if (m_ActiveScene->GetFilePath() != "Unsaved Scene") {
+        SceneSerializer serializer(m_ActiveScene);
+        serializer.Serialize(m_ActiveScene->GetFilePath());
+    }
+    else {
+        SceneSerializer serializer(m_ActiveScene);
+        serializer.Serialize("../../Kreator/assets/scenes/unsavedScene/unsavedScene.Kreator");
+    }
+
+    m_ActiveScene.reset();
+    m_ActiveScene = nullptr;
+
+    m_SHP.reset();
+    m_SHP = nullptr;
 }

@@ -72,6 +72,7 @@
 #include <Scene/Entity.hpp>
 #include <Scene/Component.hpp>
 #include <Scene/Viewport.hpp>
+#include <Scene/SceneSerialiser.hpp>
 
 // Editor Files
 #include <Editor/EditorCamera.hpp>

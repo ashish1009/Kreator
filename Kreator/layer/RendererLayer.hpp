@@ -33,6 +33,12 @@ private:
     bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
     bool OnKeyPressed(KeyPressedEvent& event);
     
+    // Scene Handler
+    const std::shared_ptr<Scene>& NewScene();
+    const std::shared_ptr<Scene>& OpenScene(const std::string& path);
+    const std::shared_ptr<Scene>& SaveScene();
+    void CloseScene();
+    
     // variables
     Viewport m_VpData;
     ContentBrowserPannel m_CBP;
