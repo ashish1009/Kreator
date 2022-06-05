@@ -58,13 +58,13 @@ bool Pawn_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlo
     }
     else {
         if (MoveForward) {
-            if ((Col - colIdx == 1 || Col - colIdx == -1) && rowIdx - Row == 1) {
+            if (abs(Col - colIdx) == 1 && rowIdx - Row == 1) {
                 UpdatePosition(rowIdx, colIdx);
                 return true;
             }
         }
         else {
-            if ((colIdx - Col == 1 || colIdx - Col == -1) && Row - rowIdx == 1) {
+            if (abs(colIdx - Col) == 1 && Row - rowIdx == 1) {
                 UpdatePosition(rowIdx, colIdx);
                 return true;
             }
@@ -98,6 +98,10 @@ bool Bishop_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewB
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Knight_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+    if ((abs(Row - rowIdx) == 2 && abs(Col - colIdx) == 1) || (abs(Row - rowIdx) == 1 && abs(Col - colIdx) == 2)) {
+        UpdatePosition(rowIdx, colIdx);
+        return true;
+    }
     return false;
 }
 
