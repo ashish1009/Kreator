@@ -58,13 +58,13 @@ bool Pawn_::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlo
     }
     else {
         if (MoveForward) {
-            if (Col - colIdx == 1 && rowIdx - Row == 1) {
+            if ((Col - colIdx == 1 || Col - colIdx == -1) && rowIdx - Row == 1) {
                 UpdatePosition(rowIdx, colIdx);
                 return true;
             }
         }
         else {
-            if (colIdx - Col == 1 && Row - rowIdx == 1) {
+            if ((colIdx - Col == 1 || colIdx - Col == -1) && Row - rowIdx == 1) {
                 UpdatePosition(rowIdx, colIdx);
                 return true;
             }

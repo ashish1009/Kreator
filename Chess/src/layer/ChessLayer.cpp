@@ -252,26 +252,32 @@ bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
     }
     // If Hovered Block is not Empty
     else {
-        if (!m_SelectedPiece) {
-            // If no Piece is selected the Update selected piece and return
+        // If Piece is selected then  Validate the new Move and
+        // if Valid then Update the Hovered and Selected Block
+        if (m_SelectedPiece) {
+            // If Selecting Same Piece then deselect the current Piece and return
+            if (m_SelectedPiece == m_HoveredBlock->Piece) {
+                DeSelectPiece();
+                return false;
+            }
+            // If selected Piece is of same color but other then current Selected Piece
+            // Then update the selected Piece
+            else if (m_SelectedPiece->Color == m_HoveredBlock->Piece->Color) {
+                UpdateSelectedPiece(m_HoveredBlock);
+            }
+            // Validate if Hovered Piece of different color
+            else {
+                ValidateAndUpdateMove(BLOCK_NOT_EMPTY);
+            }
+        }
+        // If no Piece is selected the Update selected piece and return
+        else {
+            // Check is it turn of right player
             if (m_HoveredBlock->Piece->Color != m_Turn)
                 return false;
             
             UpdateSelectedPiece(m_HoveredBlock);
-            return false;
         }
-
-        // If Selecting Same Piece then deselect the current Piece and return
-        if (m_SelectedPiece == m_HoveredBlock->Piece) {
-            DeSelectPiece();
-            return false;
-        }
-        
-        if (m_SelectedPiece->Color == m_HoveredBlock->Piece->Color)
-            return false;
-        
-        /// Validate the new Move and if Valid then Update the Hovered and Selected Block
-        ValidateAndUpdateMove(BLOCK_NOT_EMPTY);
     }
     return false;
 }
