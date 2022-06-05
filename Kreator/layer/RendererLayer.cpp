@@ -67,6 +67,8 @@ void RendererLayer::Update(Timestep ts) {
         
         m_ActiveScene->Update(ts);
         m_VpData.UpdateMousePos();
+
+        UpdateHoveredEntity();
     }
     m_VpData.FrameBuffer->Unbind();
 }
@@ -118,4 +120,30 @@ void RendererLayer::RenderGui() {
 void RendererLayer::EventHandler(Event& event) {
     if (m_ActiveScene)
         m_ActiveScene->EventHandler(event);
+
+    EventDispatcher dispatcher(event);
+    dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(RendererLayer::OnMouseButtonPressed));
+}
+
+/// Mouse button Event
+/// @param e Mouse Button event handler
+bool RendererLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
+    if (!m_ActiveScene)
+        return false;
+    
+    if (e.GetMouseButton() == MouseButton::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt)) {
+        if (m_VpData.MousePosX >= 0 && m_VpData.MousePosY >= 0 && m_VpData.MousePosX <= m_VpData.Width && m_VpData.MousePosY <= m_VpData.Height ) 
+            m_SHP->SetSelectedEntity(m_VpData.HoveredEntity);
+        else
+            m_VpData.GizmoType = -1;
+    }
+    return false;
+}
+
+/// Update Hovered Entity
+void RendererLayer::UpdateHoveredEntity() {
+    if (m_VpData.Hovered) {
+        Renderer::GetEntityIdFromPixels(m_VpData.MousePosX, m_VpData.MousePosY, m_VpData.HoveredEntityID);
+        m_VpData.HoveredEntity = (m_VpData.HoveredEntityID > m_ActiveScene->GetMaxEntityId()) ? nullptr : m_ActiveScene->GetEnitityFromId(m_VpData.HoveredEntityID);
+    }
 }

@@ -126,8 +126,8 @@
             filePath = "Kreator/layer/RendererLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "RendererLayer::RenderGui()"
             landmarkType = "7">
          </BreakpointContent>

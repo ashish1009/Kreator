@@ -298,7 +298,11 @@ void SceneHierarchyPannel::AddComponent() {
     }
 }
 
-void SceneHierarchyPannel::SetSelectedEntity(const std::shared_ptr<Entity>& entity) { m_SelectedEntity = entity; }
+void SceneHierarchyPannel::SetSelectedEntity(const std::shared_ptr<Entity>& entity) {
+    m_SelectedEntity = entity;
+    m_Context->SetSelectedEntity(entity);
+}
+
 std::shared_ptr<Entity> SceneHierarchyPannel::GetSelectedEntity() const { return m_SelectedEntity; }
 
 void SceneHierarchyPannel::SetContext(const std::shared_ptr<Scene>& context) { m_Context = context; }

@@ -27,6 +27,11 @@ public:
     const std::string& GetName() const override { return m_Name; }
     
 private:
+    // Methods
+    void UpdateHoveredEntity();
+    bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+    
+    // variables
     Viewport m_VpData;
     ContentBrowserPannel m_CBP;
     
