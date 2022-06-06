@@ -143,6 +143,31 @@ bool Knight_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
 /// Get the possible block postion where block can be moved
 std::vector<BLOCK_ROW_COL> Knight_::GetPossibleMovePosition() const {
     std::vector<BLOCK_ROW_COL> result;
+    if (Row > 1) {
+        if (Col > 0)
+            result.emplace_back(std::make_pair(Row - 2, Col - 1));
+        if (Col < MAX_COLUMNS - 1)
+            result.emplace_back(std::make_pair(Row - 2, Col + 1));
+    }
+    if (Row < MAX_ROWS - 2) {
+        if (Col > 0)
+            result.emplace_back(std::make_pair(Row + 2, Col - 1));
+        if (Col < MAX_COLUMNS - 1)
+            result.emplace_back(std::make_pair(Row + 2, Col + 1));
+    }
+
+    if (Col > 1) {
+        if (Row > 0)
+            result.emplace_back(std::make_pair(Row - 1, Col - 2));
+        if (Row < MAX_ROWS - 1)
+            result.emplace_back(std::make_pair(Row + 1, Col - 2));
+    }
+    if (Col < MAX_COLUMNS - 2) {
+        if (Row > 0)
+            result.emplace_back(std::make_pair(Row - 1, Col + 2));
+        if (Row < MAX_ROWS - 1)
+            result.emplace_back(std::make_pair(Row + 1, Col + 2));
+    }
     return result;
 }
 

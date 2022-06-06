@@ -340,7 +340,7 @@ void ChessLayer::InitBlocksData() {
 
             // Assign color to each block alternative
             static const glm::vec4 whiteColor = { 0.5f, 0.5f, 0.5f, 1.0f };
-            static const glm::vec4 darkColor = { 0.7f, 0.1f, 0.1f, 1.0f };
+            static const glm::vec4 darkColor = { 0.1f, 0.3f, 0.5f, 1.0f };
             glm::vec4 blockColor = glm::vec4(0.0f);
             if (rowIdx % 2 == 0)
                 blockColor = (blockIndex % 2 == 0) ? whiteColor : darkColor;
