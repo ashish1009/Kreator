@@ -6,6 +6,7 @@
 //
 
 #include "ChessLayer.hpp"
+#include "chess/Pieces.hpp"
 
 using namespace Chess;
 
@@ -440,7 +441,7 @@ void ChessLayer::FillBlock(std::shared_ptr<Block> block, std::shared_ptr<Piece> 
 void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
     auto prevblockPtr = m_Blocks[m_SelectedPiece->Row][m_SelectedPiece->Col];
     // if Validation of new postion fails then return
-    if (!m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, isBlockEmpty))
+    if (!m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, m_Blocks))
         return;
     
     // Store the Piece entity before Updating the piece
@@ -468,7 +469,7 @@ void ChessLayer::ShowPossibleMoves() {
     for (const auto& [row, col] : possibleBlocks) {
         const auto& block = m_Blocks[row][col];
         // Validate the move block
-        if (m_SelectedPiece->Validate(row, col, block->Piece == nullptr)) {
+        if (m_SelectedPiece->Validate(row, col, m_Blocks)) {
             // TODO: Might remove continue in future
             if (block->Piece && block->Piece->Color == m_SelectedPiece->Color)
                 continue;

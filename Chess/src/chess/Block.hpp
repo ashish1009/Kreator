@@ -8,10 +8,10 @@
 #pragma once
 
 #include "chess/Common.hpp"
-#include "chess/Pieces.hpp"
 
 namespace Chess {
     
+    struct Piece;
     /// Each block information of Chess
     struct Block {
     public:

@@ -8,6 +8,7 @@
 #pragma once
 
 #include "chess/Common.hpp"
+#include "chess/Block.hpp"
 
 using namespace iKan;
 
@@ -52,7 +53,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        virtual bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) = 0;
+        virtual bool Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) = 0;
         
         /// Get the possible block postion where block can be moved
         virtual std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const = 0;
@@ -60,7 +61,7 @@ namespace Chess {
         /// Validate the move and Update the position of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty);
+        bool ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]);
 
         /// Construtor of Piece
         /// @param name Name / Type of Piece
@@ -93,7 +94,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) override;
 
         /// Get the possible block postion where block can be moved
         std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
@@ -115,7 +116,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) override;
 
         /// Get the possible block postion where block can be moved
         std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
@@ -134,7 +135,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) override;
 
         /// Get the possible block postion where block can be moved
         std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
@@ -153,7 +154,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) override;
 
         /// Get the possible block postion where block can be moved
         std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
@@ -172,7 +173,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) override;
 
         /// Get the possible block postion where block can be moved
         std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
@@ -191,7 +192,7 @@ namespace Chess {
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
-        bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+        bool Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) override;
 
         /// Get the possible block postion where block can be moved
         std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;

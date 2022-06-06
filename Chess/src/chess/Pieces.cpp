@@ -40,11 +40,11 @@ void Piece::UpdatePosition(int8_t rowIdx, int8_t colIdx) {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
     if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
         return false;
     
-    if (isNewBlockEmpty) {
+    if (!blocks[rowIdx][colIdx]->Piece) {
         if (MoveForward) {
             if (Col == colIdx && rowIdx - Row == 1)
                 return true;
@@ -97,7 +97,7 @@ std::vector<BLOCK_ROW_COL> Pawn_::GetPossibleMovePosition() const {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool King_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool King_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
     if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
         return false;
     
@@ -142,7 +142,7 @@ std::vector<BLOCK_ROW_COL> King_::GetPossibleMovePosition() const {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Queen_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Queen_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
     if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
         return false;
     
@@ -158,7 +158,7 @@ std::vector<BLOCK_ROW_COL> Queen_::GetPossibleMovePosition() const {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
     if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
         return false;
     
@@ -174,7 +174,7 @@ std::vector<BLOCK_ROW_COL> Bishop_::GetPossibleMovePosition() const {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Knight_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Knight_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
     if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
         return false;
     
@@ -218,7 +218,7 @@ std::vector<BLOCK_ROW_COL> Knight_::GetPossibleMovePosition() const {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Rook_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
+bool Rook_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
     if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
         return false;
     
@@ -231,8 +231,8 @@ std::vector<BLOCK_ROW_COL> Rook_::GetPossibleMovePosition() const {
     return result;
 }
 
-bool Piece::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
-    if (Validate(rowIdx, colIdx, isNewBlockEmpty)) {
+bool Piece::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
+    if (Validate(rowIdx, colIdx, blocks)) {
         UpdatePosition(rowIdx, colIdx);
         return true;
     }
