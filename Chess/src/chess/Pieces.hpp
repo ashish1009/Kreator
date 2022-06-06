@@ -13,6 +13,9 @@ using namespace iKan;
 
 namespace Chess {
     
+    // Row, Column
+    typedef std::pair<int8_t , int8_t> BLOCK_ROW_COL;
+    
     // Max number of pawns at the init time fo each player
     static constexpr uint8_t MAX_PAWNS = 8;
     
@@ -51,6 +54,9 @@ namespace Chess {
         /// @param colIdx new row column position of Piece
         virtual bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) = 0;
         
+        /// Get the possible block postion where block can be moved
+        virtual std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const = 0;
+        
         /// Validate the move and Update the position of Piece at new position
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
@@ -88,7 +94,10 @@ namespace Chess {
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
         bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
-        
+
+        /// Get the possible block postion where block can be moved
+        std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
+
         // Variables
         bool MoveForward = true;
     };
@@ -107,6 +116,9 @@ namespace Chess {
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
         bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+
+        /// Get the possible block postion where block can be moved
+        std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
     };
 
     /// Queen class derived from base Piece
@@ -123,6 +135,9 @@ namespace Chess {
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
         bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+
+        /// Get the possible block postion where block can be moved
+        std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
     };
 
     /// Bishop class derived from base Piece
@@ -139,6 +154,9 @@ namespace Chess {
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
         bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+
+        /// Get the possible block postion where block can be moved
+        std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
     };
 
     /// Knight class derived from base Piece
@@ -155,6 +173,9 @@ namespace Chess {
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
         bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+
+        /// Get the possible block postion where block can be moved
+        std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
     };
 
     /// Rook class derived from base Piece
@@ -171,6 +192,9 @@ namespace Chess {
         /// @param rowIdx new row position of Piece
         /// @param colIdx new row column position of Piece
         bool Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) override;
+
+        /// Get the possible block postion where block can be moved
+        std::vector<BLOCK_ROW_COL> GetPossibleMovePosition() const override;
     };
     
     /// Stores the Power Piece Name (Type) at initial colum position

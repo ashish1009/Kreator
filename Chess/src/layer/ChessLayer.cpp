@@ -323,6 +323,9 @@ void ChessLayer::InitBlocksData() {
     // Create Entity to render outline over Selected Block
     m_EntityForOutlineSelectedBlock = m_Scene->CreateEntity("EntityForOutlineSelectedBlock");
     m_SelectedOutlineTexture = Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/selectedBlock.png"));
+    
+    // Possible Move outline Texture
+    m_PossibleMoveOutlineTexture = Renderer::GetTexture(AssetManager::GetClientAsset("texture/common/possibleMove.png"));
 
     // Initialize the Chess Board block
     for (uint8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
@@ -387,12 +390,14 @@ void ChessLayer::InitPlayerData() {
             // Store the current piece in Block
             m_Blocks[otherPiecePosition][colIdx]->Piece = piece;
         }
-
     }
 }
 
 /// Update the Selected Piece
 void ChessLayer::UpdateSelectedPiece(std::shared_ptr<Block> block) {
+    // delete possible move block entity before Selecting Block
+    DeletePossibleMovesEntities();
+    
     m_SelectedPiece = block->Piece;
     
     if (!m_EntityForOutlineSelectedBlock->HasComponent<QuadComponent>())
@@ -400,10 +405,15 @@ void ChessLayer::UpdateSelectedPiece(std::shared_ptr<Block> block) {
 
     auto& position = m_EntityForOutlineSelectedBlock->GetComponent<TransformComponent>().Translation;
     position = { block->Col, block->Row, 0.1f };
+    
+    ShowPossibleMoves();
 }
 
 /// Deselect the Selectd Piece
 void ChessLayer::DeSelectPiece() {
+    // delete possible move block entity before deselecing block
+    DeletePossibleMovesEntities();
+    
     // Deselecting the selected Piece
     m_SelectedPiece = nullptr;
     
@@ -430,7 +440,7 @@ void ChessLayer::FillBlock(std::shared_ptr<Block> block, std::shared_ptr<Piece> 
 void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
     auto prevblockPtr = m_Blocks[m_SelectedPiece->Row][m_SelectedPiece->Col];
     // if Validation of new postion fails then return
-    if (!m_SelectedPiece->ValidateAndUpdatePostion_(m_HoveredBlock->Row, m_HoveredBlock->Col, isBlockEmpty))
+    if (!m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, isBlockEmpty))
         return;
     
     // Store the Piece entity before Updating the piece
@@ -449,6 +459,36 @@ void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
     
     // Update the turn of player
     m_Turn = (m_Turn == Color::Black) ? Color::White : Color::Black;
+}
+
+/// Show and render outline for possible move of current Piece
+void ChessLayer::ShowPossibleMoves() {
+    std::vector possibleBlocks = m_SelectedPiece->GetPossibleMovePosition();
+    // Create entity for each possible Move
+    for (const auto& [row, col] : possibleBlocks) {
+        const auto& block = m_Blocks[row][col];
+        // Validate the move block
+        if (m_SelectedPiece->Validate(row, col, block->Piece == nullptr)) {
+            // TODO: Might remove continue in future
+            if (block->Piece && block->Piece->Color == m_SelectedPiece->Color)
+                continue;
+            std::string name = std::to_string(row * MAX_ROWS + col);
+            const std::shared_ptr<Entity>& entity = m_PossibleOutlineEntities.emplace_back(m_Scene->CreateEntity(name));
+            auto& position = entity->GetComponent<TransformComponent>().Translation;
+            position = { col, row, 0.1f };
+            
+            // Setup quad component with texture
+            entity->AddComponent<QuadComponent>(m_PossibleMoveOutlineTexture);
+        }
+    }
+}
+
+/// Delete the possible mpve block entities
+void ChessLayer::DeletePossibleMovesEntities() {
+    for (auto& entity : m_PossibleOutlineEntities)
+        m_Scene->DestroyEntity(entity);
+    
+    m_PossibleOutlineEntities.clear();
 }
 
 /// Check if block is empty or not

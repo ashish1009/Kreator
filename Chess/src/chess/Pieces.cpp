@@ -64,11 +64,44 @@ bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
+/// Get the possible block postion where block can be moved
+std::vector<BLOCK_ROW_COL> Pawn_::GetPossibleMovePosition() const {
+    std::vector<BLOCK_ROW_COL> result;
+    // Max possible move for pawn is 3
+    if (MoveForward) {
+        // Diagonal Left
+        if (Col > 0)
+            result.emplace_back(std::make_pair(Row + 1, Col - 1));
+        // Diagonal Right
+        if (Col < MAX_COLUMNS)
+            result.emplace_back(std::make_pair(Row + 1, Col + 1));
+        // Straight
+        result.emplace_back(std::make_pair(Row + 1, Col));
+    }
+    else {
+        // Diagonal Left
+        if (Col > 0)
+            result.emplace_back(std::make_pair(Row - 1, Col - 1));
+        // Diagonal Right
+        if (Col < MAX_COLUMNS)
+            result.emplace_back(std::make_pair(Row - 1, Col + 1));
+        // Straight
+        result.emplace_back(std::make_pair(Row - 1, Col));
+    }
+    return result;
+}
+
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool King_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
+}
+
+/// Get the possible block postion where block can be moved
+std::vector<BLOCK_ROW_COL> King_::GetPossibleMovePosition() const {
+    std::vector<BLOCK_ROW_COL> result;
+    return result;
 }
 
 /// Validate the move of Piece at new position
@@ -78,11 +111,23 @@ bool Queen_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
+/// Get the possible block postion where block can be moved
+std::vector<BLOCK_ROW_COL> Queen_::GetPossibleMovePosition() const {
+    std::vector<BLOCK_ROW_COL> result;
+    return result;
+}
+
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
+}
+
+/// Get the possible block postion where block can be moved
+std::vector<BLOCK_ROW_COL> Bishop_::GetPossibleMovePosition() const {
+    std::vector<BLOCK_ROW_COL> result;
+    return result;
 }
 
 /// Validate the move of Piece at new position
@@ -95,11 +140,23 @@ bool Knight_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
 }
 
+/// Get the possible block postion where block can be moved
+std::vector<BLOCK_ROW_COL> Knight_::GetPossibleMovePosition() const {
+    std::vector<BLOCK_ROW_COL> result;
+    return result;
+}
+
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Rook_::Validate(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {
     return false;
+}
+
+/// Get the possible block postion where block can be moved
+std::vector<BLOCK_ROW_COL> Rook_::GetPossibleMovePosition() const {
+    std::vector<BLOCK_ROW_COL> result;
+    return result;
 }
 
 bool Piece::ValidateAndUpdatePostion(int8_t rowIdx, int8_t colIdx, bool isNewBlockEmpty) {

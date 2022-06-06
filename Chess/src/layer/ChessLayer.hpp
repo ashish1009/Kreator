@@ -46,6 +46,8 @@ namespace Chess {
         void EmptyBlock(std::shared_ptr<Block> block);
         void FillBlock(std::shared_ptr<Block> block, std::shared_ptr<Piece> piece);
         void ValidateAndUpdateMove(bool isBlockEmpty);
+        void ShowPossibleMoves();
+        void DeletePossibleMovesEntities();
         bool IsBlockEmpty(std::shared_ptr<Block> block);
         
         // Member variabls
@@ -55,10 +57,11 @@ namespace Chess {
         
         // Chess Data
         std::shared_ptr<Entity> m_CameraEntity;
-        std::shared_ptr<Entity> m_EntityForOutlineHoveredBlock;
-        std::shared_ptr<Entity> m_EntityForOutlineSelectedBlock;
         std::shared_ptr<Block> m_Blocks[MAX_ROWS][MAX_COLUMNS];
-        std::shared_ptr<Texture> m_HoveredOutlineTexture, m_SelectedOutlineTexture;
+        std::shared_ptr<Entity> m_EntityForOutlineHoveredBlock, m_EntityForOutlineSelectedBlock;
+        std::shared_ptr<Texture> m_HoveredOutlineTexture, m_SelectedOutlineTexture, m_PossibleMoveOutlineTexture;
+        
+        std::vector<std::shared_ptr<Entity>> m_PossibleOutlineEntities;
 
         // Store the pointer of Hovered Block
         std::shared_ptr<Block> m_HoveredBlock;
