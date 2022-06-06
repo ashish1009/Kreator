@@ -162,12 +162,69 @@ bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> bloc
     if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
         return false;
     
+    // Check is destination is diagonal or not?
+    if (abs(Row - rowIdx) != abs(Col - colIdx))
+        return false;
+    
+    const auto& destBlock = blocks[rowIdx][colIdx];
+    if (Row > rowIdx) rowIdx++; else rowIdx--;
+    if (Col > colIdx) colIdx++; else colIdx--;
+
+    // Do either for Row or colum as they iterate same in diagonal
+    while (abs(Row - rowIdx) >= 1) {
+        // Update the pointer at new block based on the value of desitation Block
+        if (blocks[rowIdx][colIdx]->Piece)
+            break;        
+
+        if (Row > rowIdx) rowIdx++; else rowIdx--;
+        if (Col > colIdx) colIdx++; else colIdx--;
+    }
+    
+    // If No piece is found in path
+    if (rowIdx == Row) {
+        // Check the destination block in the end
+        if (destBlock->Piece && destBlock->Piece->Color == Color)
+            return false;
+        else
+            return true;
+    }
+        
     return false;
+    
 }
 
 /// Get the possible block postion where block can be moved
 std::vector<BLOCK_ROW_COL> Bishop_::GetPossibleMovePosition() const {
     std::vector<BLOCK_ROW_COL> result;
+    int8_t row, col;
+    // Top Right
+    if (Col < MAX_COLUMNS - 1 && Row < MAX_ROWS - 1) {
+        row = Row + 1; col = Col + 1;
+        while (row < MAX_ROWS && col < MAX_COLUMNS)
+            result.emplace_back(std::make_pair(row++, col++));
+    }
+    
+    // Top Left
+    if (Col > 0 && Row < MAX_ROWS - 1) {
+        row = Row + 1; col = Col - 1;
+        while (row < MAX_ROWS && col >= 0)
+            result.emplace_back(std::make_pair(row++, col--));
+    }
+    
+    // Bottom Right
+    if (Col < MAX_COLUMNS - 1 && Row > 0) {
+        row = Row - 1; col = Col + 1;
+        while (row >=0 && col < MAX_COLUMNS)
+            result.emplace_back(std::make_pair(row--, col++));
+    }
+    
+    // Bottom Left
+    if (Col > 0 && Row > 0) {
+        row = Row - 1; col = Col - 1;
+        while (row >= 0 && col >= 0)
+            result.emplace_back(std::make_pair(row--, col--));
+    }
+    
     return result;
 }
 

@@ -473,6 +473,7 @@ void ChessLayer::ShowPossibleMoves() {
             // TODO: Might remove continue in future
             if (block->Piece && block->Piece->Color == m_SelectedPiece->Color)
                 continue;
+            
             std::string name = std::to_string(row * MAX_ROWS + col);
             const std::shared_ptr<Entity>& entity = m_PossibleOutlineEntities.emplace_back(m_Scene->CreateEntity(name));
             auto& position = entity->GetComponent<TransformComponent>().Translation;
