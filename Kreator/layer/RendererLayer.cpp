@@ -117,8 +117,9 @@ void RendererLayer::RenderGui() {
             m_SHP->RenderImgui();
             m_CBP.RenderImgui();
             
-            SaveScene();
+            ImguiAPI::RendererVersion();
             
+            SaveScene();
             OnImguizmoUpdate();
         }
         

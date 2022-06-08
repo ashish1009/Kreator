@@ -523,11 +523,26 @@ void PropertyGrid::Image(void* textureID, const glm::vec2& size, const glm::vec2
 /// @param bgColor background color
 /// @param padding padding
 bool PropertyGrid::ImageButton(const std::string& lableId, uint32_t texId, const glm::vec2& size, const glm::vec4& bgColor, int32_t padding) {
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    
+    auto& colors = ImGui::GetStyle().Colors;
+    const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+    
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+    const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+    
     bool result = false;
     ImTextureID myTexId = (ImTextureID)((size_t)texId);
     ImGui::PushID(lableId.c_str());
     result = ImGui::ImageButton(myTexId, { size.x, size.y }, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), padding, { bgColor.r, bgColor.g, bgColor.b, bgColor.a });
     ImGui::PopID();
+    
+    ImGui::PopStyleVar(2);
+    ImGui::PopStyleColor(3);
+
     return result;
 }
 

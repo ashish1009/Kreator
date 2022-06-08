@@ -191,21 +191,10 @@ void Scene::RenderImgui() {
     m_RenderImgui();
     
     // Play Pause Buttom
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-    
-    auto& colors = ImGui::GetStyle().Colors;
-    const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
-    
-    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
-    const auto& buttonActive = colors[ImGuiCol_ButtonActive];
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
-    
     ImGui::Begin("Play/Pause", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
     
     uint32_t texIdx = m_State == State::Edit ? m_PlayTexture->GetRendererID() : m_PauseTexture->GetRendererID();
-    float size = ImGui::GetWindowHeight() - 4.0f; // 4 just random number
+    float size = ImGui::GetWindowHeight() - 16.0f; // 4 just random number
     ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
     if (PropertyGrid::ImageButton("Play/Pause", texIdx, { size, size })) {
         if (m_State == State::Edit)
@@ -214,8 +203,6 @@ void Scene::RenderImgui() {
             EditScene();
     }
     
-    ImGui::PopStyleVar(2);
-    ImGui::PopStyleColor(3);
     ImGui::End();
 
 }

@@ -68,10 +68,10 @@ namespace iKan {
             const std::shared_ptr<Texture> C          = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/c.png"));
             const std::shared_ptr<Texture> H          = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/h.png"));
 
-            const std::shared_ptr<Texture> Back       = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/back.png"));
-            const std::shared_ptr<Texture> Forward    = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/forward.png"));
+            const std::shared_ptr<Texture> Back       = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/back.png"));
+            const std::shared_ptr<Texture> Forward    = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/forward.png"));
 
-            const std::shared_ptr<Texture> Home       = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/home.png"));
+            const std::shared_ptr<Texture> Home       = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/home.png"));
             
             const std::shared_ptr<Texture> Search     = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/search.png"));
         };

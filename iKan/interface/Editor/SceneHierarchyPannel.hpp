@@ -19,7 +19,7 @@ namespace iKan {
     class SceneHierarchyPannel {
     public:
         const std::shared_ptr<Texture> c_EditTexture    = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/edit.png"));
-        const std::shared_ptr<Texture> c_AddTexture     = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/add.png"));
+        const std::shared_ptr<Texture> c_AddTexture     = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/plus.png"));
         const std::shared_ptr<Texture> c_DefaultTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/default/noTexture.png"));
 
         /// Construct Scene Hierarchy pannel

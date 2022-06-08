@@ -19,6 +19,8 @@ namespace iKan {
         // Window to show stats and data
         /// Show the frame rate of Renderer
         static void FrameRate();
+        /// RendererVersion
+        static void RendererVersion();
         
         // Theme
         /// Set the Grey theme of Imgui

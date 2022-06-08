@@ -6,6 +6,7 @@
 //
 
 #include "ImguiAPI.hpp"
+#include "Renderer/Utils/RendererAPI.hpp"
 
 using namespace iKan;
 
@@ -63,6 +64,29 @@ void ImguiAPI::FrameRate() {
     ImGui::SetNextWindowContentSize(ImVec2(45, 0.0f));
     ImGui::BeginChild("##Frame Rate", ImVec2(0, ImGui::GetFontSize() * 2), false, ImGuiWindowFlags_HorizontalScrollbar);
     ImGui::Text("%.1f FPS", ImGui::GetIO().Framerate);
+    ImGui::EndChild();
+
+    ImGui::PopID();
+    ImGui::End();
+}
+
+/// RendererVersion
+/// @param pIsOpen flag to check presence
+void ImguiAPI::RendererVersion() {
+    static const RendererAPI::Capabilities& s_RendererCapability = RendererAPI::Capabilities::Get();
+    ImGui::Begin("Renderer Version", nullptr, ImGuiWindowFlags_NoScrollbar);
+    ImGui::PushID("Renderer Version");
+
+    ImGui::SetNextWindowContentSize(ImVec2(450.0f, 0.0f));
+    ImGui::BeginChild("##Renderer Version", ImVec2(0, ImGui::GetFontSize() * 2), false, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::Columns(3);
+
+    // NOTE: These column width is based on the font style used as "{...}/assets/fonts/OpenSans/OpenSans-Light.ttf"
+    ImGui::SetColumnWidth(0, 100); ImGui::Text("Vendor : %s", s_RendererCapability.Vendor.c_str()); ImGui::NextColumn();
+    ImGui::SetColumnWidth(1, 200); ImGui::Text("Renderer : %s", s_RendererCapability.Renderer.c_str()); ImGui::NextColumn();
+    ImGui::SetColumnWidth(2, 150); ImGui::Text("Version : %s", s_RendererCapability.Version.c_str()); ImGui::NextColumn();
+
+    ImGui::Columns(1);
     ImGui::EndChild();
 
     ImGui::PopID();
