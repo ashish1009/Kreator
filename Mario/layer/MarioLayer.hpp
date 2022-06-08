@@ -31,6 +31,10 @@ namespace Mario {
         // Layer API
         bool OnKeyPressed(KeyPressedEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
+        void UpdateHoveredEntity();
+        
+        // Mario API
+        void InitBackgroundData();
         
         // Member variabls
         // Layer Data

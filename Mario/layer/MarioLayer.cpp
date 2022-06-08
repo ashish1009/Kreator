@@ -9,6 +9,13 @@
 
 using namespace Mario;
 
+/// Background data storage
+struct BgData {
+    // Texture to store tile sprite sheet
+    std::shared_ptr<Texture> Texture;
+};
+static BgData s_Data;
+
 /// Chess Renderer Layer Constructor
 MarioLayer::MarioLayer()
 : Layer("Mario Renderer Layer") {
@@ -26,7 +33,7 @@ void MarioLayer::Attach() {
     
     // Change the Imgui Font
     auto& imguiLayer = Application::Get().GetImGuiLayer();
-    imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"), AssetManager::GetClientAsset("fonts/OpenSans/OpenSans-Bold.ttf"));
+    imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/Mario.ttf"), AssetManager::GetClientAsset("fonts/Mario.ttf"));
     
     // Setup the Theme
     ImguiAPI::SetGreyThemeColors();
@@ -54,6 +61,9 @@ void MarioLayer::Attach() {
     // Shifiting the camera and Border block as {0, 0} is our first block (bottom left) which is at the center
     auto& camPosition = m_CameraEntity->GetComponent<TransformComponent>().Translation;
     camPosition = { 3.5f, 3.5f, 0.0f };
+    
+    // Initialize tha Mario Data
+    InitBackgroundData();
 }
 
 /// Update the renderer Layer each frame
@@ -72,6 +82,7 @@ void MarioLayer::Update(Timestep ts) {
     Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
     m_Scene->Update(ts);
     m_ViewportData.UpdateMousePos();
+    UpdateHoveredEntity();
 
     m_ViewportData.FrameBuffer->Unbind();
 }
@@ -95,8 +106,17 @@ void MarioLayer::RenderGui() {
     PropertyGrid::Image((void*)textureID, { m_ViewportData.Size.x, m_ViewportData.Size.y }, { 0, 1 }, { 1, 0 });
     ImGui::PopStyleVar();
 
+    m_ViewportData.UpdateBound();
+
     ImGui::PopID();
     ImGui::End(); // Viewport
+    
+    // TODO: Debug
+    {
+        ImguiAPI::FrameRate();
+        Renderer::ImguiRendererStats();
+        m_ViewportData.RenderImgui();
+    }
         
     ImguiAPI::EndDcocking();
 }
@@ -124,4 +144,24 @@ bool MarioLayer::OnKeyPressed(KeyPressedEvent& event) {
 bool MarioLayer::OnWindowResize(WindowResizeEvent& e) {
     Renderer::SetViewportSize(e.GetWidth(), e.GetHeight());
     return false;
+}
+
+/// Update Hovered Entity
+void MarioLayer::UpdateHoveredEntity() {
+    if (m_ViewportData.Hovered) {
+        Renderer::GetEntityIdFromPixels(m_ViewportData.MousePosX, m_ViewportData.MousePosY, m_ViewportData.HoveredEntityID);
+        m_ViewportData.HoveredEntity = (m_ViewportData.HoveredEntityID > m_Scene->GetMaxEntityId()) ? nullptr : m_Scene->GetEnitityFromId(m_ViewportData.HoveredEntityID);
+    }
+}
+
+/// Initialize the Mario Background
+void MarioLayer::InitBackgroundData() {
+    s_Data.Texture = Renderer::GetTexture(AssetManager::GetClientAsset("textures/MarioTile.png"));
+    
+    {
+        auto entity = m_Scene->CreateEntity("Entity");
+        auto& sc = entity->AddComponent<SpriteComponent>();
+        
+        sc.SubTexture = SubTexture::CreateFromCoords(s_Data.Texture, { 0.0f, 27.0f });
+    }
 }

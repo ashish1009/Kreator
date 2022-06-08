@@ -266,6 +266,16 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
         else
             BatchRenderer::DrawCircle(transform.GetTransform(), circleComp.Color, circleComp.Thickness, circleComp.Fade, (int32_t)entity);
     }
+    
+    // Sprites
+    auto spriteView = m_Registry.view<TransformComponent, SpriteComponent>();
+    for (const auto& entity : spriteView) {
+        const auto& [transform, spriteComp] = spriteView.get<TransformComponent, SpriteComponent>(entity);
+        if (spriteComp.SubTexture)
+            BatchRenderer::DrawQuad(transform.GetTransform(), spriteComp.SubTexture, (int32_t)entity);
+        else
+            BatchRenderer::DrawQuad(transform.GetTransform(), glm::vec4(1.0f), (int32_t)entity); // TODO: Store color in sprite renderer Later
+    }
 
     BatchRenderer::EndBatch();    
 }

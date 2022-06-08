@@ -147,3 +147,5 @@ Add the following library search paths
 - TODO: In Renderer.hpp : Create Texture Library for storing already Loaded Textures and their ID
 - TODO: In RendererStats.h and Viewport.cpp : Make column widht size acc to font of Imgui
 - TODO: In ContentBrowserPanne.h : Move some other place.
+- TODO: In Component.hpp : Make Color and TextureComponent in base class
+- TODO: In Scene.cpp : Store color in sprite renderer Later

@@ -52,6 +52,7 @@ namespace iKan {
         void RenderImgui();
     };
     
+    // TODO: Make Color and TextureComponent in base class
     /// Stores the Quad Component
     struct QuadComponent {
         TextureComponent Texture;
@@ -91,6 +92,12 @@ namespace iKan {
         MeshComponent() = default;
         MeshComponent(const MeshComponent& other);
         void RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture, const std::shared_ptr<Entity>& entity);
+    };
+    
+    /// Sprite component for storing the subtexture
+    // TODO: Add ImguiRenderer, Scene Serializer and Scene Hierarcy pannel later
+    struct SpriteComponent {
+        std::shared_ptr<iKan::SubTexture> SubTexture;
     };
 
 }

@@ -406,6 +406,16 @@ void BatchRenderer::DrawQuad(const glm::mat4& transform, const std::shared_ptr<T
     DrawTextureQuad(transform, texture, textureCoords, tilingFactor, tintColor, entID);
 }
 
+/// Draw Quad API with sprite subtexture
+/// @param transform Transformation matrix of Quad
+/// @param subTexture Subtexture component
+/// @param entID entity ID of Quad
+void BatchRenderer::DrawQuad(const glm::mat4& transform, const std::shared_ptr<SubTexture>& subTexture, int32_t entID) {
+    const glm::vec2* textureCoords = subTexture->GetTexCoord();
+    DrawTextureQuad(transform, subTexture->GetTexture(), textureCoords, 1.0f, glm::vec4(1.0f), entID);
+}
+
+
 /// Draw Circle API with color
 /// @param transform Transformation of Circle
 /// @param color Clor of Circle

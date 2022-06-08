@@ -16,7 +16,8 @@ namespace iKan {
     
     // Forward Declaration
     class Texture;
-    
+    class SubTexture;
+
     /// Wrapper class for storing Batch Renderer API
     class BatchRenderer {
     public:
@@ -44,6 +45,12 @@ namespace iKan {
         /// @param tintColor Color of Quad
         /// @param entID Pixel ID of Quad
         static void DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor = glm::vec4(1.0f), float tilingFactor = 1.0f, int32_t entID = -1 );
+        
+        /// Draw Quad API with sprite subtexture
+        /// @param transform Transformation matrix of Quad
+        /// @param subTexture Subtexture component
+        /// @param entID entity ID of Quad
+        static void DrawQuad(const glm::mat4& transform, const std::shared_ptr<SubTexture>& subTexture, int32_t entID);
         
         /// Draw Circle API with color
         /// @param transform Transformation matrix of Circle
