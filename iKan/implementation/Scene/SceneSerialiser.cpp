@@ -8,6 +8,7 @@
 #include "SceneSerialiser.hpp"
 #include "Scene/Entity.hpp"
 #include "Scene/Component.hpp"
+#include "Renderer/Utils/Mesh.hpp"
 #include <yaml-cpp/yaml.h>
 
 namespace YAML {
@@ -194,6 +195,52 @@ static void SerializeEntity(YAML::Emitter& out, std::shared_ptr<Entity> entity) 
         out << YAML::EndMap; // CircleComponent
     }
     
+    if (entity->HasComponent<MeshComponent>()) {
+        out << YAML::Key << "MeshComponent";
+        out << YAML::BeginMap; // MeshComponent
+        
+        auto& mesh = entity->GetComponent<MeshComponent>().Mesh;
+        if (mesh) {
+            out << YAML::Key << "FilePath" << YAML::Value << mesh->GetPath();
+            out << YAML::Key << "ActiveMaterial" << YAML::Value << mesh->GetActiveMaterialIndex();
+            
+            // Mesh Materials
+            const auto& meshMaterials = mesh->GetMaterials();
+            uint32_t matIdx = 0;
+            for (const auto& mat : meshMaterials) {
+                auto matIStr = std::to_string(matIdx);
+                out << YAML::Key << "Material Name " + matIStr << YAML::Value << mat.Name;
+                out << YAML::Key << "Material InvertX " + matIStr << YAML::Value << mat.InvertTextureX;
+                out << YAML::Key << "Material InvertY " + matIStr << YAML::Value << mat.InvertTextureY;
+
+                // Material Property
+                const auto& prop = mat.Property;
+                out << YAML::Key << "Material Proeprty Color " + mat.Name << YAML::Value << prop.AlbedoColor;
+                out << YAML::Key << "Material Proeprty Metalness " + mat.Name << YAML::Value << prop.Metalness;
+                out << YAML::Key << "Material Proeprty Roughness " + mat.Name << YAML::Value << prop.Roughness;
+                out << YAML::Key << "Material Proeprty TilinghFactor " + mat.Name << YAML::Value << prop.TilinghFactor;
+                
+                // Textures
+                uint32_t texIdx = 0;
+                for (const auto& texComp : mat.Textures) {
+                    auto texIStr = std::to_string(texIdx);
+                    out << YAML::Key << "Use " + mat.Name + texIStr << YAML::Value << texComp.Use;
+                    if (texComp.Component)
+                        out << YAML::Key << "Path " + mat.Name + texIStr << YAML::Value << texComp.Component->GetfilePath();
+                    else
+                        out << YAML::Key << "Path " + mat.Name + texIStr << YAML::Value << "";
+                    texIdx++;
+                }
+                matIdx++;
+            }
+            out << YAML::Key << "Num Materials" << YAML::Value << matIdx;
+        }
+        else {
+            out << YAML::Key << "FilePath" << YAML::Value << "";
+        }
+        out << YAML::EndMap; // MeshComponent
+    }
+    
     out << YAML::EndMap; // Entity
 }
 
@@ -211,7 +258,7 @@ SceneSerializer::~SceneSerializer() {
 void SceneSerializer::Serialize(const std::string& filepath) {
     IK_CORE_INFO("Serialising a Scene");
     IK_CORE_INFO("    Path : {0}", filepath);
-    IK_CORE_INFO("    Path : {0}", m_Scene->GetName());
+    IK_CORE_INFO("    Name : {0}", m_Scene->GetName());
     
     YAML::Emitter out;
     out << YAML::BeginMap;
@@ -361,6 +408,58 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 if (cc.Texture.Component) {
                     IK_CORE_INFO("        Texture Use: {0}", cc.Texture.Use);
                     IK_CORE_INFO("        Texture Path: {0}", cc.Texture.Component->GetfilePath());
+                }
+            }
+            
+            auto meshComponent = entity["MeshComponent"];
+            if (meshComponent) {
+                const auto& path = meshComponent["FilePath"].as<std::string>();
+
+                if(path != "") {
+                    auto& mc = deserializedEntity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(path, (uint32_t)(*deserializedEntity.get()), false);
+                    mc.Mesh->SetActiveMaterialIndex(meshComponent["ActiveMaterial"].as<uint32_t>());
+                    
+                    uint32_t numMaterials = meshComponent["Num Materials"].as<uint32_t>();
+                    IK_CORE_INFO("        Mesh Component:");
+                    IK_CORE_INFO("            File Path: {0}", mc.Mesh->GetPath());
+                    IK_CORE_INFO("            Number of Materials: {0}", numMaterials);
+
+                    for (uint32_t matIdx = 0; matIdx < numMaterials; matIdx++) {
+                        auto matIStr = std::to_string(matIdx);
+                        auto name = meshComponent["Material Name " + matIStr].as<std::string>();
+                        auto invertX = meshComponent["Material InvertX " + matIStr].as<bool>();
+                        auto invertY = meshComponent["Material InvertY " + matIStr].as<bool>();
+                        IK_CORE_INFO("                Name: {0}", name);
+                        
+                        MaterialProperty prop;
+                        prop.AlbedoColor = meshComponent["Material Proeprty Color " + name].as<glm::vec3>();
+                        prop.Metalness = meshComponent["Material Proeprty Metalness " + name].as<float>();
+                        prop.Roughness = meshComponent["Material Proeprty Roughness " + name].as<float>();
+                        prop.TilinghFactor = meshComponent["Material Proeprty TilinghFactor " + name].as<float>();
+
+                        IK_CORE_INFO("                    Color: {0}, {1}, {2}", prop.AlbedoColor.r, prop.AlbedoColor.g, prop.AlbedoColor.b);
+                        IK_CORE_INFO("                    Metalness: {0}", prop.Metalness);
+                        IK_CORE_INFO("                    Roughness: {0}", prop.Roughness);
+                        IK_CORE_INFO("                    Tiling Factor: {0}", prop.TilinghFactor);
+
+                        std::array<TextureComponent, MaxPBRTextureSupported> textures;
+                        for (uint32_t texIdx = 0; texIdx < MaxPBRTextureSupported; texIdx++) {
+                            auto texIStr = std::to_string(texIdx);
+                            textures[texIdx].Use = meshComponent["Use " + name + texIStr].as<bool>();
+                            auto path = meshComponent["Path " + name + texIStr].as<std::string>();
+                            if (path != "")
+                                textures[texIdx].Component = Texture::Create(path);
+                            else
+                                textures[texIdx].Component = nullptr;
+                            
+                            if (textures[texIdx].Component) {
+                                IK_CORE_INFO("                        Texture Use: {0}", textures[texIdx].Use);
+                                IK_CORE_INFO("                        Texture Path: {0}", textures[texIdx].Component->GetfilePath());
+                            }
+                        }
+                        mc.Mesh->AddMaterial(name, prop, textures, invertX, invertY);
+                    }
                 }
             }
         }

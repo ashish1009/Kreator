@@ -13,6 +13,9 @@
 
 namespace iKan {
     
+    class Entity;
+    class Mesh;
+    
     /// Store the unique ID of Entity
     struct IDComponent {
         UUID ID = 0;
@@ -80,5 +83,14 @@ namespace iKan {
         
         void RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTextur);
     };
-    
+
+    /// Mesh
+    struct MeshComponent {
+        std::shared_ptr<Mesh> Mesh = nullptr;
+        
+        MeshComponent() = default;
+        MeshComponent(const MeshComponent& other);
+        void RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture, const std::shared_ptr<Entity>& entity);
+    };
+
 }

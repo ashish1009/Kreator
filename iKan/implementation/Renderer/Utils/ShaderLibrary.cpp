@@ -19,6 +19,9 @@ std::shared_ptr<Shader> ShaderLibrary::GetShader(const std::string& path) {
         IK_CORE_INFO("Adding Shader '{0}' to Shdaer Library", StringUtils::GetNameFromFilePath(path));
         s_ShaderLibrary[path] = Shader::Create(path);
     }
+    else {
+        IK_CORE_INFO("Returning Pre loaded Shader '{0}' from Shdaer Library", StringUtils::GetNameFromFilePath(path));
+    }
     
     return s_ShaderLibrary[path];
 }

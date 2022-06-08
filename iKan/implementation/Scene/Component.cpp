@@ -7,7 +7,9 @@
 
 #include "Component.hpp"
 #include "Editor/PropertyGrid.hpp"
+#include "Scene/Entity.hpp"
 #include "Renderer/Utils/Renderer.hpp"
+#include "Renderer/Utils/Mesh.hpp"
 
 using namespace iKan;
 
@@ -122,4 +124,33 @@ void CircleComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultT
     PropertyGrid::Float1("Fade", Fade, nullptr, 0.001f, 0.005f);
     ImGui::Separator();
     ImGui::PopID();
+}
+
+// Mesh Component
+MeshComponent::MeshComponent(const MeshComponent& other) : Mesh(other.Mesh) { IK_CORE_INFO("Copying Mesh Component"); }
+void MeshComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture, const std::shared_ptr<Entity>& entity) {
+    std::string curerentMesh = Mesh ? Mesh->GetName() : "EMPTY";
+    
+    ImGui::Columns(2);
+    ImGui::SetColumnWidth(0, 100);
+    ImGui::Text("Current Mesh");
+    
+    ImGui::NextColumn();
+    
+    ImGui::PushID("Mesh");
+    ImGui::InputText("", (char*)curerentMesh.c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+    
+    PropertyGrid::DropConent([this, entity](const std::string& path)
+                             {
+        Mesh = iKan::Mesh::Create(path, (uint32_t)(*entity.get()));
+    });
+    ImGui::PopID();
+    ImGui::Separator();
+    ImGui::Columns(1);
+    
+    if (Mesh)
+        Mesh->RenderImgui(defaultTexture);
+    
+    ImGui::Separator();
+    ImGui::Columns(1);
 }

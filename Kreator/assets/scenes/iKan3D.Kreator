@@ -1,0 +1,60 @@
+Scene: Untitled
+Entities:
+  - Entity: 16059117986812657210
+    TagComponent:
+      Tag: Mesh
+      Group: Meshes
+    TransformComponent:
+      Translation: [1.27071071, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/Cube.fbx
+      ActiveMaterial: 0
+      Material Name 0: DefaultMaterial
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness DefaultMaterial: 0
+      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty TilinghFactor DefaultMaterial: 1
+      Use DefaultMaterial0: false
+      Path DefaultMaterial0: ""
+      Use DefaultMaterial1: false
+      Path DefaultMaterial1: ""
+      Use DefaultMaterial2: false
+      Path DefaultMaterial2: ""
+      Use DefaultMaterial3: false
+      Path DefaultMaterial3: ""
+      Use DefaultMaterial4: false
+      Path DefaultMaterial4: ""
+      Num Materials: 1
+  - Entity: 17712339661155851350
+    TagComponent:
+      Tag: Mesh
+      Group: Meshes
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/Sphere.fbx
+      ActiveMaterial: 0
+      Material Name 0: Material.001
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color Material.001: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness Material.001: 1
+      Material Proeprty Roughness Material.001: 0.199999988
+      Material Proeprty TilinghFactor Material.001: 1
+      Use Material.0010: false
+      Path Material.0010: ""
+      Use Material.0011: false
+      Path Material.0011: ""
+      Use Material.0012: false
+      Path Material.0012: ""
+      Use Material.0013: false
+      Path Material.0013: ""
+      Use Material.0014: false
+      Path Material.0014: ""
+      Num Materials: 1

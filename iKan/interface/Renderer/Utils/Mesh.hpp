@@ -116,6 +116,28 @@ namespace iKan {
         /// @param ts time step of each frame
         void Update(Timestep ts);
         
+        /// Render the Imgui Window for Mesh proeprty
+        /// @param defaultTexture default texrure for Imgui window
+        void RenderImgui(const std::shared_ptr<Texture>& defaultTexture);
+        
+        /// Return all the material of Mesh
+        const std::vector<MeshMaterial>& GetMaterials() const;
+        /// Add a material in the mesh
+        /// @param name Name of Material
+        /// @param prop Property of Material
+        /// @param texComp Array of texture for material
+        /// @param invertX is inverted the textures Horizonally
+        /// @param invertY is inverted the textures Vertically
+        void AddMaterial(const std::string& name, const MaterialProperty& prop, const std::array<TextureComponent, MaxPBRTextureSupported>& texComp, bool invertX, bool invertY);
+        
+        /// return the Mesh Name
+        const std::string& GetName() const;
+        /// return the File path
+        const std::string& GetPath() const;
+        
+        const uint32_t GetActiveMaterialIndex() const;
+        void SetActiveMaterialIndex(uint32_t currMatIndex);
+        
         /// Create instance of Mesh
         /// @param path Path of Mesh to be loaded
         /// @param entityId Entity ID of Mesh

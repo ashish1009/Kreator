@@ -118,6 +118,7 @@ namespace iKan {
         void ResizeCameraEntity(uint32_t width, uint32_t height);
         
         void Render2DComponents(const glm::mat4& viewProj);
+        void Render3DComponents(const glm::vec3& cameraosition, const glm::mat4& cameraViewProj, Timestep ts);
         
         std::shared_ptr<Entity> GetPrimaryCameraEntity();
 

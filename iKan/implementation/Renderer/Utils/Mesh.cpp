@@ -701,3 +701,176 @@ void Mesh::CopyRootNode(const aiNode* pSrcNode, aiNode** pDstNode) {
     for (uint32_t i = 0; i < pSrcNode->mNumChildren; i++)
         CopyRootNode(pSrcNode->mChildren[i], &(*pDstNode)->mChildren[i]);
 }
+
+/// Add a material in the mesh
+/// @param name Name of Material
+/// @param prop Property of Material
+/// @param texComp Array of texture for material
+/// @param invertX is inverted the textures Horizonally
+/// @param invertY is inverted the textures Vertically
+void Mesh::AddMaterial(const std::string& name, const MaterialProperty& prop, const std::array<TextureComponent, MaxPBRTextureSupported>& texComp, bool invertX, bool invertY) {
+    if (std::find(m_MaterialNames.begin(), m_MaterialNames.end(), name) != m_MaterialNames.end())
+        return;
+    
+    MeshMaterial meshMaterial;
+    meshMaterial.Name = name;
+    meshMaterial.Property = prop;
+    meshMaterial.Textures = texComp;
+    
+    meshMaterial.InvertTextureX = invertX;
+    meshMaterial.InvertTextureY = invertY;
+    
+    meshMaterial.MaterialInstance = MaterialInstance::Create(m_BaseMaterial, name);
+    meshMaterial.MaterialInstance->Set("u_Material", meshMaterial.Property);
+    meshMaterial.MaterialInstance->Set("u_TextureInvertHorizontal", (float)meshMaterial.InvertTextureX);
+    meshMaterial.MaterialInstance->Set("u_TextureInvertVertical", (float)meshMaterial.InvertTextureY);
+        
+    for (uint32_t texIdx = 0; texIdx < MaxPBRTextureSupported; texIdx++) {
+        auto textureShaderName = "u_" + s_Texname[texIdx] + "Texture";
+
+        meshMaterial.MaterialInstance->Set(textureShaderName, texComp[texIdx].Component);
+        meshMaterial.MaterialInstance->Set(textureShaderName + "Toggle", (float)texComp[texIdx].Use);
+    }
+
+    m_MeshMaterials.emplace_back(meshMaterial);
+    m_MaterialNames.emplace_back(name);
+}
+
+/// Redner Imgui for Mesh
+/// @param defaultTexture Default Texture
+void Mesh::RenderImgui(const std::shared_ptr<Texture>& defaultTexture) {
+    ImGui::PushID(m_Path.c_str());
+    
+    // Add or remove the material from Mesh
+    static bool addMaterial = false, removeMaterial = false;
+    if (addMaterial) {
+        MeshMaterial meshMaterial;
+        meshMaterial.MaterialInstance = MaterialInstance::Create(m_BaseMaterial, "Unnamed Material");
+        meshMaterial.MaterialInstance->Set("u_Material", meshMaterial.Property);
+        
+        m_MeshMaterials.emplace_back(meshMaterial);
+        m_MaterialNames.emplace_back("Unnamed Material");
+        
+        addMaterial = false;
+    }
+    if (removeMaterial) {
+        m_MaterialNames.erase(m_MaterialNames.begin() + m_CurrentMaterialIndex);
+        m_MeshMaterials.erase(m_MeshMaterials.begin() + m_CurrentMaterialIndex);
+        
+        m_CurrentMaterialIndex = 0;
+        removeMaterial = false;
+    }
+
+    // Drop option to set active material
+    m_CurrentMaterialIndex = PropertyGrid::ComboDrop("Active Material", m_MaterialNames, m_CurrentMaterialIndex);
+    
+    MeshMaterial& meshMaterialProp = m_MeshMaterials[m_CurrentMaterialIndex];
+        
+    // Shoes tree node of current selected material
+    static const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+    bool opened = ImGui::TreeNodeEx((void*)m_Path.c_str(), treeNodeFlags, m_MaterialNames[m_CurrentMaterialIndex].c_str());
+
+    // Button to show option to Add or Remove Materials from mesh
+    float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+    ImGui::SameLine(ImGui::GetContentRegionAvail().x - lineHeight * 0.5f);
+    if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
+        ImGui::OpenPopup("Material Setting");
+    
+    if (ImGui::BeginPopup("Material Setting")) {
+        if (ImGui::MenuItem("Add Material"))
+            addMaterial = true;
+        ImGui::Separator();
+        if (ImGui::MenuItem("Remove Material", nullptr, false, (m_MeshMaterials.size() > 1)))
+            removeMaterial = true;
+        ImGui::EndPopup();
+    }
+    
+    // Show Material conentns
+    if (opened) {
+        auto& material = meshMaterialProp.MaterialInstance;
+        
+        // Rename the material
+        if (PropertyGrid::String("Material Name", meshMaterialProp.Name, 100.0f, 300.0f)) {
+            m_MaterialNames[m_CurrentMaterialIndex] = meshMaterialProp.Name.c_str();
+            m_MeshMaterials[m_CurrentMaterialIndex].MaterialInstance->SetName(meshMaterialProp.Name.c_str());
+        }
+        
+        ImGui::Separator();
+
+        // Invert the texture
+        ImGui::Columns(3);
+        ImGui::Text("Invert Texture");
+        ImGui::NextColumn();
+        if (ImGui::Checkbox("X", &meshMaterialProp.InvertTextureX))
+            material->Set("u_TextureInvertHorizontal", (float)meshMaterialProp.InvertTextureX);
+        ImGui::NextColumn();
+        if (ImGui::Checkbox("Y", &meshMaterialProp.InvertTextureY))
+            material->Set("u_TextureInvertVertical", (float)meshMaterialProp.InvertTextureY);
+        ImGui::Columns(1);
+        
+        ImGui::Separator();
+
+        // Shows all the texture info for current material
+        int32_t textureIndex = 0;
+        for (const auto& name : s_Texname) {
+            ImGui::PushID(textureIndex);
+            ImGui::Columns(2);
+            
+            ImGui::SetColumnWidth(0, 100);
+            auto& texture = meshMaterialProp.Textures[textureIndex];
+
+            size_t texId = ((texture.Component) ? texture.Component->GetRendererID() : defaultTexture->GetRendererID());
+            ImGui::Image((void*)texId, ImVec2(40.0f, 40.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+            PropertyGrid::DropConent([&texture, &material, textureIndex](const std::string& path)
+                                     {
+                texture.Component.reset();
+                texture.Component = Texture::Create(path);
+                material->Set(s_ShaderTextureName[textureIndex], texture.Component);
+            });
+            
+            ImGui::NextColumn();
+            
+            if (ImGui::Checkbox(name.c_str(), &texture.Use)) {
+                auto textureShaderName = s_ShaderTextureName[textureIndex] + "Toggle";
+                material->Set(textureShaderName, (float)texture.Use);
+            }
+            
+            ImGui::SameLine();
+            PropertyGrid::HelpMarker("Drop the Texture file in the Image Button to upload the texture or Select already stored texture from the scene (Option can be available by right click on image)");
+            
+            // If Texture is not enale then show prperty data else show Invert texture flag
+            if (!texture.Use) {
+                bool modified = false;
+                if (name == "Albedo")
+                    modified = ImGui::ColorEdit4("Color ", glm::value_ptr(meshMaterialProp.Property.AlbedoColor), ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                else if (name == "Roughness")
+                    modified = ImGui::DragFloat("", &meshMaterialProp.Property.Roughness, 0.01f, 0.0f, 1.0f);
+                else if (name == "Metallic")
+                    modified = ImGui::DragFloat("", &meshMaterialProp.Property.Metalness, 0.01f, 0.0f, 1.0f);
+                else
+                    ImGui::NewLine();
+                
+                if (modified)
+                    material->Set("u_Material", meshMaterialProp.Property);
+            }
+            else {
+                ImGui::NewLine();
+            }
+            
+            ImGui::Separator();
+
+            ImGui::PopID();
+            ImGui::Columns(1);
+            textureIndex++;
+        }
+        
+        ImGui::TreePop();
+    }
+    ImGui::PopID();
+}
+
+const std::string& Mesh::GetName() const { return m_Name; }
+const std::string& Mesh::GetPath() const { return m_Path; }
+const std::vector<MeshMaterial>& Mesh::GetMaterials() const { return m_MeshMaterials; }
+const uint32_t Mesh::GetActiveMaterialIndex() const { return m_CurrentMaterialIndex; }
+void Mesh::SetActiveMaterialIndex(uint32_t currMatIndex) { m_CurrentMaterialIndex = currMatIndex; }

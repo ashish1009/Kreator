@@ -146,6 +146,11 @@ void SceneHierarchyPannel::RenderImgui() {
             }
             
             if (ImGui::BeginMenu("3D Entity")) {
+                if (ImGui::MenuItem("Empty Mesh")) {
+                    auto entity = m_Context->CreateEntity("Mesh");
+                    entity->GetComponent<TagComponent>().Group = "Meshes";
+                    entity->AddComponent<MeshComponent>();
+                }
                 ImGui::EndMenu();
             }
 
@@ -281,6 +286,7 @@ void SceneHierarchyPannel::DrawComponents() {
     DrawComponent<CameraComponent>("Camera", m_SelectedEntity, [](auto& cc) { cc.RenderImgui(); });
     DrawComponent<QuadComponent>("Quad", m_SelectedEntity, [this](auto& qc) { qc.RenderImgui(c_DefaultTexture); });
     DrawComponent<CircleComponent>("Circle", m_SelectedEntity, [this](auto& cc) { cc.RenderImgui(c_DefaultTexture); });
+    DrawComponent<MeshComponent>("Mesh", m_SelectedEntity, [this](auto& mc) { mc.RenderImgui(c_DefaultTexture, m_SelectedEntity); });
 }
 
 /// Add Component
@@ -304,6 +310,15 @@ void SceneHierarchyPannel::AddComponent() {
         }
         if (ImGui::MenuItem("Circle")) {
             m_SelectedEntity->AddComponent<CircleComponent>();
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndMenu();
+    }
+    ImGui::Separator();
+    ImGui::Separator();
+    if (ImGui::BeginMenu("3D Element")) {
+        if (ImGui::MenuItem("Mesh")) {
+            m_SelectedEntity->AddComponent<MeshComponent>();
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndMenu();

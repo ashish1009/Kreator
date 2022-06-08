@@ -8,6 +8,7 @@
 #include "Scene.hpp"
 #include "Scene/Entity.hpp"
 #include "Renderer/Utils/BatchRenderer.hpp"
+#include "Renderer/Utils/Mesh.hpp"
 #include "Editor/PropertyGrid.hpp"
 
 using namespace iKan;
@@ -114,6 +115,7 @@ void Scene::UpdateEditor(Timestep ts) {
     m_EditorCamera->Update(ts);
     
     Render2DComponents(m_EditorCamera->GetViewProjection());
+    Render3DComponents(m_EditorCamera->GetPosition(), m_EditorCamera->GetViewProjection(), ts);
 }
 
 /// Update the Scene at runtime
@@ -126,6 +128,7 @@ void Scene::UpdateRuntime(Timestep ts) {
         const glm::mat4& cameraTransform = tc.GetTransform();
         
         Render2DComponents(camera->GetProjectionMatrix() * glm::inverse(cameraTransform));
+        Render3DComponents(tc.Translation, camera->GetProjectionMatrix() * glm::inverse(cameraTransform), ts);
     }
 }
 
@@ -278,6 +281,18 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
     }
 
     BatchRenderer::EndBatch();    
+}
+
+/// Render all 3D components
+void Scene::Render3DComponents(const glm::vec3& cameraosition, const glm::mat4& cameraViewProj, Timestep ts) {
+    auto meshView = m_Registry.view<TransformComponent, MeshComponent>();
+    for (const auto& entity : meshView) {
+        const auto& [transform, mesh] = meshView.get<TransformComponent, MeshComponent>(entity);
+        if (mesh.Mesh) {
+            mesh.Mesh->Update(ts);
+            mesh.Mesh->Draw({ cameraosition, cameraViewProj }, transform.GetTransform());
+        }
+    }
 }
 
 /// Get the first primary camera in the scene
