@@ -174,8 +174,8 @@
             filePath = "Chess/src/chess/Pieces.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "Pawn_::GetPossibleMovePosition()"
             landmarkType = "7">
          </BreakpointContent>
@@ -238,9 +238,9 @@
             filePath = "Chess/src/chess/Pieces.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
-            landmarkName = "Knight_::GetPossibleMovePosition()"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "Bishop_::GetPossibleMovePosition()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -254,9 +254,9 @@
             filePath = "Chess/src/chess/Pieces.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "Knight_::GetPossibleMovePosition()"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
+            landmarkName = "Bishop_::GetPossibleMovePosition()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -270,9 +270,9 @@
             filePath = "Chess/src/chess/Pieces.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
-            landmarkName = "Knight_::GetPossibleMovePosition()"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "Bishop_::GetPossibleMovePosition()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -286,40 +286,8 @@
             filePath = "Chess/src/chess/Pieces.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "248"
-            endingLineNumber = "248"
-            landmarkName = "Knight_::GetPossibleMovePosition()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1BF191B6-1B00-403E-8B90-5058BF29614C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Chess/src/chess/Pieces.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "Bishop_::GetPossibleMovePosition()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2E396DBB-79C2-48F4-BD72-28887544B534"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Chess/src/chess/Pieces.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "Bishop_::GetPossibleMovePosition()"
             landmarkType = "7">
          </BreakpointContent>
@@ -338,6 +306,38 @@
             endingLineNumber = "469"
             landmarkName = "ChessLayer::ShowPossibleMoves()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0190D4BD-A7DD-4600-9437-BB0571F8B796"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Chess/src/layer/ChessLayer.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "473"
+            endingLineNumber = "473"
+            landmarkName = "ChessLayer::ShowPossibleMoves()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "39F6724C-8FFC-4F0A-8343-E6A1E4B44CD4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Chess/src/chess/Pieces.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "ValidateDiagonalMove(srcRow, srcCol, dsrRow, dstCol)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

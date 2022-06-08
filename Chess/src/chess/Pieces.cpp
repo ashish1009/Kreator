@@ -9,6 +9,71 @@
 
 using namespace Chess;
 
+/// validate the diagonal move of piece
+/// @param row source row of Piece
+/// @param col source column of piece
+/// @param rowIdx destination row of piece
+/// @param colIdx destination column of piece
+static bool ValidateDiagonalMove(int8_t srcRow, int8_t srcCol, int8_t dsrRow, int8_t dstCol, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
+    if (dsrRow < 0 || dsrRow > MAX_ROWS || dstCol < 0 || dstCol > MAX_COLUMNS)
+        return false;
+
+    // Check is destination is diagonal or not?
+    if (abs(srcRow - dsrRow) != abs(srcCol - dstCol))
+        return false;
+
+    // Do either for Row or colum as they iterate same in diagonal
+    while (abs(srcRow - dsrRow) >= 1) {
+        // Update the pointer at new block based on the value of desitation Block
+        if (srcRow > dsrRow) dsrRow++; else dsrRow--;
+        if (srcCol > dstCol) dstCol++; else dstCol--;
+
+        // if we reached the source block without any obstacle in path then return true
+        if (srcRow == dsrRow)
+            return true;
+        
+        // if any obstacle found in path return false
+        if (blocks[dsrRow][dstCol]->Piece)
+            return false;
+    }
+    return true;
+}
+
+/// store the possible diagonal move from source
+/// @param row source row of Piece
+/// @param col source column of piece
+/// @param possibleBlocks reference of vector where we will store the possible move block
+static void PossibleDiagonalMoveBlock(int8_t srcRow, int8_t srcCol, std::vector<BLOCK_ROW_COL>& possibleBlocks) {
+    int8_t row, col;
+    // Top Right
+    if (srcCol < MAX_COLUMNS - 1 && srcRow < MAX_ROWS - 1) {
+        row = srcRow + 1; col = srcCol + 1;
+        while (row < MAX_ROWS && col < MAX_COLUMNS)
+            possibleBlocks.emplace_back(std::make_pair(row++, col++));
+    }
+    
+    // Top Left
+    if (srcCol > 0 && srcRow < MAX_ROWS - 1) {
+        row = srcRow + 1; col = srcCol - 1;
+        while (row < MAX_ROWS && col >= 0)
+            possibleBlocks.emplace_back(std::make_pair(row++, col--));
+    }
+    
+    // Bottom Right
+    if (srcCol < MAX_COLUMNS - 1 && srcRow > 0) {
+        row = srcRow - 1; col = srcCol + 1;
+        while (row >=0 && col < MAX_COLUMNS)
+            possibleBlocks.emplace_back(std::make_pair(row--, col++));
+    }
+    
+    // Bottom Left
+    if (srcCol > 0 && srcRow > 0) {
+        row = srcRow - 1; col = srcCol - 1;
+        while (row >= 0 && col >= 0)
+            possibleBlocks.emplace_back(std::make_pair(row--, col--));
+    }
+}
+
 /// Construtor of Piece
 /// @param name Name / Type of Piece
 /// @param color Color of Piece
@@ -159,72 +224,20 @@ std::vector<BLOCK_ROW_COL> Queen_::GetPossibleMovePosition() const {
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
-    if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
-        return false;
-    
-    // Check is destination is diagonal or not?
-    if (abs(Row - rowIdx) != abs(Col - colIdx))
-        return false;
-    
     const auto& destBlock = blocks[rowIdx][colIdx];
-    if (Row > rowIdx) rowIdx++; else rowIdx--;
-    if (Col > colIdx) colIdx++; else colIdx--;
 
-    // Do either for Row or colum as they iterate same in diagonal
-    while (abs(Row - rowIdx) >= 1) {
-        // Update the pointer at new block based on the value of desitation Block
-        if (blocks[rowIdx][colIdx]->Piece)
-            break;        
-
-        if (Row > rowIdx) rowIdx++; else rowIdx--;
-        if (Col > colIdx) colIdx++; else colIdx--;
-    }
-    
-    // If No piece is found in path
-    if (rowIdx == Row) {
+    if (ValidateDiagonalMove(Row, Col, rowIdx, colIdx, blocks)) {
+        // If No piece is found in path
         // Check the destination block in the end
-        if (destBlock->Piece && destBlock->Piece->Color == Color)
-            return false;
-        else
-            return true;
+        return (!(destBlock->Piece && destBlock->Piece->Color == Color));
     }
-        
     return false;
-    
 }
 
 /// Get the possible block postion where block can be moved
 std::vector<BLOCK_ROW_COL> Bishop_::GetPossibleMovePosition() const {
     std::vector<BLOCK_ROW_COL> result;
-    int8_t row, col;
-    // Top Right
-    if (Col < MAX_COLUMNS - 1 && Row < MAX_ROWS - 1) {
-        row = Row + 1; col = Col + 1;
-        while (row < MAX_ROWS && col < MAX_COLUMNS)
-            result.emplace_back(std::make_pair(row++, col++));
-    }
-    
-    // Top Left
-    if (Col > 0 && Row < MAX_ROWS - 1) {
-        row = Row + 1; col = Col - 1;
-        while (row < MAX_ROWS && col >= 0)
-            result.emplace_back(std::make_pair(row++, col--));
-    }
-    
-    // Bottom Right
-    if (Col < MAX_COLUMNS - 1 && Row > 0) {
-        row = Row - 1; col = Col + 1;
-        while (row >=0 && col < MAX_COLUMNS)
-            result.emplace_back(std::make_pair(row--, col++));
-    }
-    
-    // Bottom Left
-    if (Col > 0 && Row > 0) {
-        row = Row - 1; col = Col - 1;
-        while (row >= 0 && col >= 0)
-            result.emplace_back(std::make_pair(row--, col--));
-    }
-    
+    PossibleDiagonalMoveBlock(Row, Col, result);
     return result;
 }
 
