@@ -17,8 +17,8 @@ public:
     /// @param spec Core application specification
     KreatorApp(const Application::Specification& spec) : Application(spec) {
         IK_INFO("Creating Kreator Application ...");
-//        m_RendererLayer = std::make_shared<RendererLayer>();
-//        PushLayer(m_RendererLayer);
+        m_RendererLayer = std::make_shared<RendererLayer>();
+        PushLayer(m_RendererLayer);
     }
     
     /// Kreator Application Destructor

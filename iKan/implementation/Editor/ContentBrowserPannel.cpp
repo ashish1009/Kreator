@@ -19,8 +19,9 @@ static std::vector<std::filesystem::path> s_PinedPaths;
 ContentBrowserPannel::ContentBrowserPannel(const std::string& rootPath) : m_RootPath(rootPath), m_CurrentDir(rootPath) {
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Content Browser Pannnel ... ");
-    IK_CORE_INFO("    {0}", m_RootPath.string());
-    
+    IK_CORE_INFO("    Base Path : {0}", m_RootPath.string());
+    IK_LOG_SEPARATOR();
+
     m_PathHierarchy.emplace_back(m_CurrentDir);
     s_PinedPaths.emplace_back("../../../../../../../iKan.");
     s_PinedPaths.emplace_back("../../../../../../../iKan./iKan/Github/Product/iKan/iKan/assets");
@@ -33,7 +34,8 @@ ContentBrowserPannel::ContentBrowserPannel(const std::string& rootPath) : m_Root
 ContentBrowserPannel::~ContentBrowserPannel() {
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Creating Content Browser Pannnel ... ");
-    IK_CORE_WARN("    {0}", m_RootPath.string());
+    IK_CORE_WARN("    Base Path : {0}", m_RootPath.string());
+    IK_LOG_SEPARATOR();
 }
 
 /// ContentBrowserPannel imgui renderer

@@ -32,6 +32,9 @@ void RendererLayer::Attach() {
         FrameBuffer::Attachment::TextureFormat::R32I
     };
     m_VpData.FrameBuffer = FrameBuffer::Create(spec);
+    
+    // TODO: Temp
+    NewScene();
 }
 
 /// Renderer Layer Detach
@@ -74,6 +77,8 @@ void RendererLayer::RenderGui() {
     ImguiAPI::FrameRate();
 
     if (m_ActiveScene) {
+        m_ActiveScene->RenderImgui();
+        
         // Viewport
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Kreator Viewport");
@@ -106,6 +111,8 @@ void RendererLayer::RenderGui() {
             
             SaveScene();
         }
+        
+        m_VpData.UpdateBound();
         
         ImGui::PopID();
         ImGui::End(); // ImGui::Begin("Kreator Viewport");
