@@ -195,7 +195,8 @@ void Application::Run() {
 void Application::EventHandler(Event& event) {
     EventDispatcher dispatcher(event);
     dispatcher.Dispatch<WindowCloseEvent>(IK_BIND_EVENT_FN(Application::WindowClose));
-    
+    dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(Application::WindowResize));
+
     // Event Handler for all layers
     for (auto& layer : *m_LayerStack.get())
         layer->EventHandler(event);
@@ -205,6 +206,13 @@ void Application::EventHandler(Event& event) {
 /// @param event Reference of Window Close event
 bool Application::WindowClose(WindowCloseEvent& event) {
     Close();
+    return false;
+}
+
+/// Mouse button Event
+/// @param e Mouse Button event handler
+bool Application::WindowResize(WindowResizeEvent& e) {
+    Renderer::SetViewportSize(e.GetWidth(), e.GetHeight());
     return false;
 }
 

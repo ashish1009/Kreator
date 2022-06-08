@@ -75,6 +75,13 @@ ChessLayer::~ChessLayer() {
 void ChessLayer::Attach() {
     IK_INFO("Attaching '{0}'", m_Name);
     
+    // Change the Imgui Font
+    auto& imguiLayer = Application::Get().GetImGuiLayer();
+    imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"), AssetManager::GetClientAsset("fonts/OpenSans/OpenSans-Bold.ttf"));
+    
+    // Setup the Theme
+    ImguiAPI::SetGreyThemeColors();
+    
     // Viewport Data setup
     FrameBuffer::Specification spec;
     spec.Width = 2100;

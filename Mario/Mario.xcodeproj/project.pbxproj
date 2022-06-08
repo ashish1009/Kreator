@@ -15,7 +15,7 @@
 		3EF2AA37283CFFE0009764F8 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA36283CFFE0009764F8 /* OpenGL.framework */; };
 		3EF2AA7C283D008F009764F8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA39283D008F009764F8 /* main.cpp */; };
 		3EF2AA7D283D008F009764F8 /* MarioApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA3B283D008F009764F8 /* MarioApp.cpp */; };
-		3EF2AA7E283D008F009764F8 /* MarioRendererLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA3E283D008F009764F8 /* MarioRendererLayer.cpp */; };
+		3EF2AA7E283D008F009764F8 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2AA3E283D008F009764F8 /* MarioLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,8 +40,8 @@
 		3EF2AA36283CFFE0009764F8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		3EF2AA39283D008F009764F8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3EF2AA3B283D008F009764F8 /* MarioApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MarioApp.cpp; sourceTree = "<group>"; };
-		3EF2AA3D283D008F009764F8 /* MarioRendererLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MarioRendererLayer.hpp; sourceTree = "<group>"; };
-		3EF2AA3E283D008F009764F8 /* MarioRendererLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MarioRendererLayer.cpp; sourceTree = "<group>"; };
+		3EF2AA3D283D008F009764F8 /* MarioLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MarioLayer.hpp; sourceTree = "<group>"; };
+		3EF2AA3E283D008F009764F8 /* MarioLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +113,8 @@
 		3EF2AA3C283D008F009764F8 /* layer */ = {
 			isa = PBXGroup;
 			children = (
-				3EF2AA3D283D008F009764F8 /* MarioRendererLayer.hpp */,
-				3EF2AA3E283D008F009764F8 /* MarioRendererLayer.cpp */,
+				3EF2AA3D283D008F009764F8 /* MarioLayer.hpp */,
+				3EF2AA3E283D008F009764F8 /* MarioLayer.cpp */,
 			);
 			path = layer;
 			sourceTree = "<group>";
@@ -202,7 +202,7 @@
 			files = (
 				3EF2AA7D283D008F009764F8 /* MarioApp.cpp in Sources */,
 				3EF2AA7C283D008F009764F8 /* main.cpp in Sources */,
-				3EF2AA7E283D008F009764F8 /* MarioRendererLayer.cpp in Sources */,
+				3EF2AA7E283D008F009764F8 /* MarioLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

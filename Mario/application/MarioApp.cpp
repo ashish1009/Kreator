@@ -6,7 +6,7 @@
 //
 
 #include <iKanHeaders.h>
-#include "MarioRendererLayer.hpp"
+#include "MarioLayer.hpp"
 
 using namespace iKan;
 
@@ -16,6 +16,8 @@ public:
     /// MarioApp Application instance
     /// @param spec Core application specification
     MarioApp(const Application::Specification& spec) : Application(spec) {
+        m_RendererLayer = std::make_shared<Mario::MarioLayer>();
+        PushLayer(m_RendererLayer);
         IK_INFO("Creating Mario Application ...");
     }
     

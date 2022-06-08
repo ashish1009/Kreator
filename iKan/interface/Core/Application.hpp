@@ -15,6 +15,7 @@ namespace iKan {
     
     // Forward Declarations
     class WindowCloseEvent;
+    class WindowResizeEvent;
     class LayerStack;
     class Layer;
     class ImguiLayer;
@@ -106,7 +107,8 @@ namespace iKan {
         void Init();
         void Shutdown();
         bool WindowClose(WindowCloseEvent& windowEvent);
-
+        bool WindowResize(WindowResizeEvent& e);
+        
         // Member variable
         bool m_IsRunning = true;
         Specification m_Specification;
