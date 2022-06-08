@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3EB6448E2850F555001C5E61 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6448C2850F555001C5E61 /* Background.cpp */; };
 		3EF2AA2D283CFFBD009764F8 /* libiKan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2C283CFFBD009764F8 /* libiKan.a */; };
 		3EF2AA30283CFFCB009764F8 /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2E283CFFCB009764F8 /* libassimp.5.dylib */; };
 		3EF2AA31283CFFCB009764F8 /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2F283CFFCB009764F8 /* libIrrXML.dylib */; };
@@ -31,6 +32,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3EB6448C2850F555001C5E61 /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
+		3EB6448D2850F555001C5E61 /* Background.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Background.hpp; sourceTree = "<group>"; };
 		3EF2AA21283CFF7F009764F8 /* Mario */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Mario; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2AA2C283CFFBD009764F8 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2AA2E283CFFCB009764F8 /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../iKan/vendors/assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
@@ -61,13 +64,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3EAD43912850F8C8004C7447 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3EF2AA3A283D008F009764F8 /* application */,
+				3EB6448B2850F530001C5E61 /* mario */,
+				3EF2AA3C283D008F009764F8 /* layer */,
+				3EF2AA38283D008F009764F8 /* main */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		3EB6448B2850F530001C5E61 /* mario */ = {
+			isa = PBXGroup;
+			children = (
+				3EB6448C2850F555001C5E61 /* Background.cpp */,
+				3EB6448D2850F555001C5E61 /* Background.hpp */,
+			);
+			path = mario;
+			sourceTree = "<group>";
+		};
 		3EF2AA18283CFF7F009764F8 = {
 			isa = PBXGroup;
 			children = (
+				3EAD43912850F8C8004C7447 /* src */,
 				3EF2AA3F283D008F009764F8 /* assets */,
-				3EF2AA3A283D008F009764F8 /* application */,
-				3EF2AA3C283D008F009764F8 /* layer */,
-				3EF2AA38283D008F009764F8 /* main */,
 				3EF2AA22283CFF7F009764F8 /* Products */,
 				3EF2AA2B283CFFBD009764F8 /* Frameworks */,
 			);
@@ -203,6 +224,7 @@
 				3EF2AA7D283D008F009764F8 /* MarioApp.cpp in Sources */,
 				3EF2AA7C283D008F009764F8 /* main.cpp in Sources */,
 				3EF2AA7E283D008F009764F8 /* MarioLayer.cpp in Sources */,
+				3EB6448E2850F555001C5E61 /* Background.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +357,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
+					"${PROJECT_DIR}/src",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -352,6 +375,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
+					"${PROJECT_DIR}/src",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";

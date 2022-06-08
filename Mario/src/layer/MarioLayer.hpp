@@ -32,11 +32,7 @@ namespace Mario {
         bool OnKeyPressed(KeyPressedEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
         void UpdateHoveredEntity();
-        
-        // Mario API
-        void InitBackgroundData();
-        void StoreSubtextureOfEachTile();
-        
+                
         // Member variabls
         // Layer Data
         Viewport m_ViewportData;
