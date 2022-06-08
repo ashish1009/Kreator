@@ -18,6 +18,11 @@ void PropertyGrid::Init() {
     s_SearchTexture = Renderer::GetTexture(AssetManager::GetCoreAsset("textures/icons/search.png"));
 }
 
+/// Initialize the Property Grid
+void PropertyGrid::Shutdown() {
+    s_SearchTexture.reset();
+}
+
 /// Drag slider Float
 /// @param label string to be printed
 /// @param value float reference that will be modified with drag Slider

@@ -7,6 +7,7 @@
 
 #include "Component.hpp"
 #include "Editor/PropertyGrid.hpp"
+#include "Renderer/Utils/Renderer.hpp"
 
 using namespace iKan;
 
@@ -63,7 +64,7 @@ void QuadComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTex
     size_t texId = (Texture.Component ? Texture.Component->GetRendererID() : defaultTexture->GetRendererID());
     ImGui::Image((void*)texId, ImVec2(40.0f, 40.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
     PropertyGrid::DropConent([this](const std::string& path){
-        Texture.Component = Texture::Create(path);
+        Texture.Component = Renderer::GetTexture(path);
     });
     
     ImGui::NextColumn();

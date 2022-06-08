@@ -262,7 +262,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 TextureComponent textComp;
                 textComp.Use = use;
                 if (texFilePath != "")
-                    textComp.Component = Texture::Create(texFilePath);
+                    textComp.Component = Renderer::GetTexture(texFilePath);
 
                 auto& qc = deserializedEntity->AddComponent<QuadComponent>(textComp, color, tilingFactor);
 

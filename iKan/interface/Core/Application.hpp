@@ -104,6 +104,7 @@ namespace iKan {
 
         // Member Methods
         void Init();
+        void Shutdown();
         bool WindowClose(WindowCloseEvent& windowEvent);
 
         // Member variable

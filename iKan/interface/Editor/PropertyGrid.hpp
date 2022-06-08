@@ -16,8 +16,12 @@ namespace iKan {
     /// Store the Wrapper API for showing Data in Imgui window
     class PropertyGrid {
     public:
+        // NOTE : Init should be called at time of initializing the renderers
+        // NOTE : Shutdown should be called at time of Destroying the renderers
         /// Initialize the Proeprty Grid.
         static void Init();
+        /// Shut down the Property Grip APIS.
+        static void Shutdown();
         
         /// Drag Float value
         /// @param label Lable for Variable

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E68F19B2850841D00D3EBC9 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E68F19A2850841D00D3EBC9 /* PrefixHeader.pch */; };
 		3EF2ADF7283D1FCC009764F8 /* traits.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2ACD6283D1FCB009764F8 /* traits.h */; };
 		3EF2ADF8283D1FCC009764F8 /* eventhandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2ACD7283D1FCB009764F8 /* eventhandler.h */; };
 		3EF2ADF9283D1FCC009764F8 /* emitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2ACD8283D1FCB009764F8 /* emitter.h */; };
@@ -100,6 +101,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E68F19A2850841D00D3EBC9 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3EF2AB7B283D1F15009764F8 /* libyaml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libyaml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2ACD6283D1FCB009764F8 /* traits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = traits.h; sourceTree = "<group>"; };
 		3EF2ACD7283D1FCB009764F8 /* eventhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventhandler.h; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		3EF2AB72283D1F15009764F8 = {
 			isa = PBXGroup;
 			children = (
+				3E68F19A2850841D00D3EBC9 /* PrefixHeader.pch */,
 				3EF2AB95283D1FCA009764F8 /* yaml */,
 				3EF2AB7C283D1F15009764F8 /* Products */,
 			);
@@ -428,6 +431,7 @@
 				3EF2AE20283D1FCC009764F8 /* regeximpl.h in Headers */,
 				3EF2AE50283D1FCD009764F8 /* directives.h in Headers */,
 				3EF2AE45283D1FCC009764F8 /* collectionstack.h in Headers */,
+				3E68F19B2850841D00D3EBC9 /* PrefixHeader.pch in Headers */,
 				3EF2AE06283D1FCC009764F8 /* anchordict.h in Headers */,
 				3EF2AE37283D1FCC009764F8 /* nodebuilder.h in Headers */,
 				3EF2AE48283D1FCC009764F8 /* singledocparser.h in Headers */,
@@ -657,6 +661,8 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/yaml/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -670,6 +676,8 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/yaml/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

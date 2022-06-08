@@ -45,7 +45,7 @@ void Viewport::RenderImgui() {
     ImGui::Begin("Viewport Data",nullptr, ImGuiWindowFlags_NoScrollbar);
     ImGui::PushID("Viewport Data");
 
-//    ImGui::SetNextWindowContentSize(ImVec2(585.0f, 0.0f));
+    ImGui::SetNextWindowContentSize(ImVec2(585.0f, 0.0f));
     ImGui::BeginChild("##Renderer Version", ImVec2(0, ImGui::GetFontSize() * 2), false, ImGuiWindowFlags_HorizontalScrollbar);
     ImGui::Columns(6);
     ImGui::SetColumnWidth(0, 90);  ImGui::Text("%d x %d", MousePosX, MousePosY); ImGui::NextColumn();

@@ -17,8 +17,8 @@ public:
     /// @param spec Core application specification
     KreatorApp(const Application::Specification& spec) : Application(spec) {
         IK_INFO("Creating Kreator Application ...");
-        m_RendererLayer = std::make_shared<RendererLayer>();
-        PushLayer(m_RendererLayer);
+//        m_RendererLayer = std::make_shared<RendererLayer>();
+//        PushLayer(m_RendererLayer);
     }
     
     /// Kreator Application Destructor
@@ -52,5 +52,6 @@ std::unique_ptr<Application> iKan::CreateApplication() {
     specification.WindowSpec.Decorated = true;
     specification.WindowSpec.Fullscreen = false;
 
-    return std::make_unique<KreatorApp>(specification);
+    auto app = std::make_unique<KreatorApp>(specification);
+    return app;
 }

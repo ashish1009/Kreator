@@ -43,6 +43,7 @@ void Renderer::Shutdown() {
         s_RendererAPI.reset();
     }
     BatchRenderer::Shutdown();
+    PropertyGrid::Shutdown();
     
     // Destorry the Shader library and Texture
     ShaderLibrary::ResetShaders();

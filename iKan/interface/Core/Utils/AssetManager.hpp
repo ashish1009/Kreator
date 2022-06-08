@@ -33,6 +33,9 @@ namespace iKan {
         static std::string GetClientAsset(const std::string& assetPath);
         
     private:
+        AssetManager() = default;
+        MAKE_SINGLETON(AssetManager);
+
         static std::string m_ClientAssetPath;
         static std::string m_CoreAssetPath;
     };

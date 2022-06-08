@@ -1,0 +1,13 @@
+//
+//  PrefixHeader.pch
+//  yaml
+//
+//  Created by iKan on 08/06/22.
+//
+
+#pragma once
+
+// To remove documentation warning
+#pragma clang diagnostic ignored "-Wdocumentation"
+#pragma clang diagnostic ignored "-Wformat-security"
+

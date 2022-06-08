@@ -113,6 +113,26 @@ Application::Application(const Specification& spec)
     Init();
 }
 
+/// Applciation Destructor
+Application::~Application() {
+    PROFILE();
+    
+    Shutdown();
+
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("Destroying Core Application Instance !!!");
+    IK_CORE_WARN("    Name                          : {0}", m_Specification.Name);
+    IK_CORE_WARN("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
+    IK_CORE_WARN("    Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
+    IK_CORE_WARN("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
+    IK_CORE_WARN("    Window Resizable              : {0}", m_Specification.Resizable);
+    IK_CORE_WARN("    Enable GUI                    : {0}", m_Specification.EnableGui);
+    IK_CORE_WARN("    Core Asset Path               : {0}", m_Specification.CoreAssetPath);
+    IK_CORE_WARN("    Client Asset Path             : {0}", m_Specification.ClientAssetPath);
+
+    IK_LOG_SEPARATOR();
+}
+
 /// Initialize the Application data
 void Application::Init() {
     m_LayerStack = std::make_unique<LayerStack>();
@@ -143,23 +163,8 @@ void Application::Init() {
     Renderer::Init();
 }
 
-/// Applciation Destructor
-Application::~Application() {
-    PROFILE();
-
-    IK_LOG_SEPARATOR();
-    IK_CORE_WARN("Destroying Core Application Instance !!!");
-    IK_CORE_WARN("    Name                          : {0}", m_Specification.Name);
-    IK_CORE_WARN("    Operating System              : {0}", Utils::GetOsNameAsString(m_Specification.Os));
-    IK_CORE_WARN("    Renderer API                  : {0}", Utils::GetRendererAPINameAsString(m_Specification.RendererAPI));
-    IK_CORE_WARN("    Window Maximized at startup   : {0}", m_Specification.StartMaximized);
-    IK_CORE_WARN("    Window Resizable              : {0}", m_Specification.Resizable);
-    IK_CORE_WARN("    Enable GUI                    : {0}", m_Specification.EnableGui);
-    IK_CORE_WARN("    Core Asset Path               : {0}", m_Specification.CoreAssetPath);
-    IK_CORE_WARN("    Client Asset Path             : {0}", m_Specification.ClientAssetPath);
-
-    IK_LOG_SEPARATOR();
-
+/// Shutdown the base appplication
+void Application::Shutdown() {
     Renderer::Shutdown();
 }
 
@@ -167,7 +172,7 @@ Application::~Application() {
 void Application::Run() {
     PROFILE();
     IK_CORE_INFO(" -----------------------------------------  Starting Game Loop  -----------------------------------------------");
-    
+
     while (m_IsRunning) {
         // Store the frame time difference
         m_Timestep = m_Window->GerTimestep();
@@ -175,10 +180,10 @@ void Application::Run() {
         // Updating all the attached layer
         for (auto& layer : *m_LayerStack.get())
             layer->Update(m_Timestep);
-        
+
         if (m_Specification.EnableGui)
             RenderGui();
-        
+
         // Window update each frame
         m_Window->Update();
     }
@@ -206,7 +211,7 @@ bool Application::WindowClose(WindowCloseEvent& event) {
 /// Render GUI Window
 void Application::RenderGui() {
     m_ImguiLayer->Begin();
-    
+
     // Render Imgui for all layers
     for (auto& layer : *m_LayerStack.get())
         layer->RenderGui();
