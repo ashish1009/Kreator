@@ -79,8 +79,7 @@ static bool ValidateStraightMove(int8_t srcRow, int8_t srcCol, int8_t dstRow, in
                 return false;
         }
     }
-    
-    return true;
+    return false;
 }
 
 /// store the possible diagonal move from source
@@ -184,29 +183,20 @@ void Piece::UpdatePosition(int8_t rowIdx, int8_t colIdx) {
 /// Validate the move of Piece at new position
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
-bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
-    if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
-        return false;
-    
+bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {\
+    // if destination block is EMPTY
     if (!blocks[rowIdx][colIdx]->Piece) {
-        if (MoveForward) {
-            if (Col == colIdx && rowIdx - Row == 1)
-                return true;
-        }
-        else {
-            if (Col == colIdx && Row - rowIdx == 1)
-                return true;
-        }
+        return ValidateStraightMove(Row, Col, rowIdx, colIdx, blocks);
     }
+    // if destination block is NOT Empty
     else {
-        if (MoveForward) {
-            if (abs(Col - colIdx) == 1 && rowIdx - Row == 1)
-                return true;
+        const auto& destBlock = blocks[rowIdx][colIdx];
+        if (ValidateDiagonalMove(Row, Col, rowIdx, colIdx, blocks)) {
+            // If No piece is found in path
+            // Check the destination block in the end
+            return (!(destBlock->Piece && destBlock->Piece->Color == Color));
         }
-        else {
-            if (abs(colIdx - Col) == 1 && Row - rowIdx == 1)
-                return true;
-        }
+        return false;
     }
     return false;
 }
