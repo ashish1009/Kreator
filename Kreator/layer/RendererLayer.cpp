@@ -29,6 +29,10 @@ void RendererLayer::Attach() {
     auto& imguiLayer = Application::Get().GetImGuiLayer();
     imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"), AssetManager::GetClientAsset("fonts/OpenSans/OpenSans-Bold.ttf"));
     
+    // Setup the Theme
+    ImguiAPI::SetGreyThemeColors();
+    
+    // Update the Viewport Data
     FrameBuffer::Specification spec;
     spec.Attachments = {
         FrameBuffer::Attachment::TextureFormat::RGBA8,
