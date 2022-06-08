@@ -112,6 +112,12 @@ struct BgData {
     struct Tile {
         bool IsRigid = true;
         std::shared_ptr<SubTexture> SubTexture;
+        
+        Tile(const std::shared_ptr<iKan::SubTexture>& subTexture, bool isRigid) : IsRigid(isRigid),  SubTexture(subTexture) {}
+        
+        static std::shared_ptr<Tile> Create(std::shared_ptr<iKan::SubTexture> subTexture, bool isRigid = true) {
+            return std::make_shared<Tile>(subTexture, isRigid);
+        }
     };
     
     ThemeColor CurrentTheme = ThemeColor::Brown;
@@ -131,7 +137,7 @@ struct BgData {
     // that will be rendered in background
     // NOTE: s_BgData->TilesColorMapWithChar is just storing all the colors. These are not
     // getting rendered at all
-    std::unordered_map<char, Tile> TileMap;
+    std::unordered_map<char, std::shared_ptr<Tile>> TileMap;
 };
 static BgData* s_BgData;
 
@@ -180,8 +186,9 @@ void MarioLayer::Attach() {
 
     // Setup the scene Camera Entity
     m_CameraEntity = m_Scene->CreateEntity("Camera");
-    m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
-
+    auto& cameraComponent = m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
+    cameraComponent.Camera->SetOrthographicSize(18.0f);
+    
     // Initialize tha Mario Data
     InitBackgroundData();
 }
@@ -298,7 +305,7 @@ void MarioLayer::InitBackgroundData() {
             // Create entity if we have sub texture for the character we found in map
             if (char tileType = s_MapTiles[x + y * mapWidth]; s_BgData->TileMap.find(tileType) != s_BgData->TileMap.end()) {
                 auto entity = m_Scene->CreateEntity(GetEntityNameFromChar(tileType));
-                const auto& spriteEntity = entity->AddComponent<SpriteComponent>(s_BgData->TileMap[tileType].SubTexture);
+                const auto& spriteEntity = entity->AddComponent<SpriteComponent>(s_BgData->TileMap[tileType]->SubTexture);
                 const auto& spriteSize   = spriteEntity.SubTexture->GetSpriteSize();
 
                 auto& tc = entity->GetComponent<TransformComponent>();
@@ -325,7 +332,7 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['G'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 23.0f })); // Grey
         s_BgData->TilesColorMapWithChar['G'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 21.0f })); // Green
         
-        s_BgData->TileMap['G'].SubTexture = s_BgData->TilesColorMapWithChar.at('G')[s_BgData->CurrentTheme];
+        s_BgData->TileMap['G'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['G'][s_BgData->CurrentTheme]);
     }
     
     // Bricks SubTextures
@@ -335,7 +342,7 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['X'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 17.0f, 23.0f })); // Grey;
         s_BgData->TilesColorMapWithChar['X'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 17.0f, 21.0f })); // green;
         
-        s_BgData->TileMap['X'].SubTexture = s_BgData->TilesColorMapWithChar['X'][s_BgData->CurrentTheme];
+        s_BgData->TileMap['X'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['X'][s_BgData->CurrentTheme]);
     }
     
     // Bonus SubTextures
@@ -352,7 +359,7 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['B'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 27.0f, 23.0f })); // Grey
         s_BgData->TilesColorMapWithChar['B'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 27.0f, 21.0f })); // Green
         
-        s_BgData->TileMap['B'].SubTexture = s_BgData->TilesColorMapWithChar['B'][s_BgData->CurrentTheme];
+        s_BgData->TileMap['B'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['B'][s_BgData->CurrentTheme]);
     }
     
     // Steps SubTextures
@@ -362,7 +369,7 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['S'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 22.0f })); // Grey
         s_BgData->TilesColorMapWithChar['S'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 20.0f })); // Green
         
-        s_BgData->TileMap['S'].SubTexture = s_BgData->TilesColorMapWithChar['S'][s_BgData->CurrentTheme];
+        s_BgData->TileMap['S'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['S'][s_BgData->CurrentTheme]);
     }
     
     // Bridge SubTexture
@@ -372,7 +379,7 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['-'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 15.0f, 10.5f })); // Grey
         s_BgData->TilesColorMapWithChar['-'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 15.0f,  8.5f })); // Pink
         
-        s_BgData->TileMap['-'].SubTexture = s_BgData->TilesColorMapWithChar['-'][s_BgData->CurrentTheme];
+        s_BgData->TileMap['-'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['-'][s_BgData->CurrentTheme]);
     }
     
     // Pipes
@@ -383,7 +390,7 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['Y'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 13.0f }, { 2.0f, 1.0f })); // Grey
         s_BgData->TilesColorMapWithChar['Y'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f,  9.0f }, { 2.0f, 1.0f })); // Pink
         
-        s_BgData->TileMap['Y'].SubTexture = s_BgData->TilesColorMapWithChar['Y'][s_BgData->CurrentTheme];
+        s_BgData->TileMap['Y'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['Y'][s_BgData->CurrentTheme]);
         
         // Base
         s_BgData->TilesColorMapWithChar['!'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 18.0f }, { 2.0f, 1.0f })); // Green
@@ -391,7 +398,7 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['!'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 12.0f }, { 2.0f, 1.0f })); // Grey
         s_BgData->TilesColorMapWithChar['!'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f,  8.0f }, { 2.0f, 1.0f })); // Pink
         
-        s_BgData->TileMap['!'].SubTexture = s_BgData->TilesColorMapWithChar['!'][s_BgData->CurrentTheme];
+        s_BgData->TileMap['!'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['!'][s_BgData->CurrentTheme]);
     }
     
     // Grass
@@ -401,24 +408,21 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['<'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 11.0f, 12.0f })); // Grey
         s_BgData->TilesColorMapWithChar['<'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 11.0f,  8.0f })); // Pink
         
-        s_BgData->TileMap['<'].SubTexture = s_BgData->TilesColorMapWithChar['<'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['<'].IsRigid = false;
+        s_BgData->TileMap['<'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['<'][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar['v'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 12.0f, 18.0f })); // Green
         s_BgData->TilesColorMapWithChar['v'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 12.0f, 14.0f })); // Orange
         s_BgData->TilesColorMapWithChar['v'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 12.0f, 12.0f })); // Grey
         s_BgData->TilesColorMapWithChar['v'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 12.0f,  8.0f })); // Pink
         
-        s_BgData->TileMap['v'].SubTexture = s_BgData->TilesColorMapWithChar['v'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['v'].IsRigid = false;
+        s_BgData->TileMap['v'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['v'][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar['>'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 13.0f, 18.0f })); // Green
         s_BgData->TilesColorMapWithChar['>'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 13.0f, 14.0f })); // Orange
         s_BgData->TilesColorMapWithChar['>'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 13.0f, 12.0f })); // Grey
         s_BgData->TilesColorMapWithChar['>'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 13.0f, 8.0f  })); // Pink
         
-        s_BgData->TileMap['>'].SubTexture = s_BgData->TilesColorMapWithChar['>'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['>'].IsRigid = false;
+        s_BgData->TileMap['>'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['>'][s_BgData->CurrentTheme], false);
     }
     
     // Forest Grass
@@ -428,16 +432,14 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['{'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 8.0f, 13.0f })); // Grey
         s_BgData->TilesColorMapWithChar['{'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 8.0f,  9.0f })); // Pink
         
-        s_BgData->TileMap['{'].SubTexture = s_BgData->TilesColorMapWithChar['{'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['{'].IsRigid = false;
+        s_BgData->TileMap['{'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['{'][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar['}'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f, 19.0f })); // Green
         s_BgData->TilesColorMapWithChar['}'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f, 15.0f })); // Orange
         s_BgData->TilesColorMapWithChar['}'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f, 13.0f })); // Grey
         s_BgData->TilesColorMapWithChar['}'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f,  9.0f })); // Pink
         
-        s_BgData->TileMap['}'].SubTexture = s_BgData->TilesColorMapWithChar['}'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['}'].IsRigid = false;
+        s_BgData->TileMap['}'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['}'][s_BgData->CurrentTheme], false);
         
         
         s_BgData->TilesColorMapWithChar['*'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 9.0f, 19.0f })); // Green
@@ -445,32 +447,28 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['*'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 9.0f, 13.0f })); // Grey
         s_BgData->TilesColorMapWithChar['*'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 9.0f,  9.0f })); // Pink
         
-        s_BgData->TileMap['*'].SubTexture = s_BgData->TilesColorMapWithChar['*'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['*'].IsRigid = false;
+        s_BgData->TileMap['*'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['*'][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar['1'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 8.0f, 18.0f })); // Green
         s_BgData->TilesColorMapWithChar['1'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 8.0f, 14.0f })); // Orange
         s_BgData->TilesColorMapWithChar['1'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 8.0f, 12.0f })); // Grey
         s_BgData->TilesColorMapWithChar['1'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 8.0f,  8.0f })); // Pink
         
-        s_BgData->TileMap['1'].SubTexture = s_BgData->TilesColorMapWithChar['1'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['1'].IsRigid = false;
+        s_BgData->TileMap['1'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['1'][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar['2'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 9.0f, 18.0f })); // Green
         s_BgData->TilesColorMapWithChar['2'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 9.0f, 14.0f })); // Orange
         s_BgData->TilesColorMapWithChar['2'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 9.0f, 12.0f })); // Grey
         s_BgData->TilesColorMapWithChar['2'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 9.0f,  8.0f })); // Pink
         
-        s_BgData->TileMap['2'].SubTexture = s_BgData->TilesColorMapWithChar['2'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['2'].IsRigid = false;
+        s_BgData->TileMap['2'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['2'][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar['3'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f, 18.0f })); // Green
         s_BgData->TilesColorMapWithChar['3'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f, 14.0f })); // Orange
         s_BgData->TilesColorMapWithChar['3'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f, 12.0f })); // Grey
         s_BgData->TilesColorMapWithChar['3'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 10.0f,  8.0f })); // Pink
         
-        s_BgData->TileMap['3'].SubTexture = s_BgData->TilesColorMapWithChar['3'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['3'].IsRigid = false;
+        s_BgData->TileMap['3'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['3'][s_BgData->CurrentTheme], false);
     }
     
     // Cloud
@@ -480,44 +478,30 @@ void MarioLayer::StoreSubtextureOfEachTile() {
         s_BgData->TilesColorMapWithChar['('][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Grey
         s_BgData->TilesColorMapWithChar['('][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 0.0f, 2.0f }, { 1.0f, 2.0f })); // Blue
         
-        s_BgData->TileMap['('].SubTexture = s_BgData->TilesColorMapWithChar['('][s_BgData->CurrentTheme];
-        s_BgData->TileMap['('].IsRigid = false;
+        s_BgData->TileMap['('] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['('][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar['^'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Red
         s_BgData->TilesColorMapWithChar['^'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Red
         s_BgData->TilesColorMapWithChar['^'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Grey
         s_BgData->TilesColorMapWithChar['^'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Blue
         
-        s_BgData->TileMap['^'].SubTexture = s_BgData->TilesColorMapWithChar['^'][s_BgData->CurrentTheme];
-        s_BgData->TileMap['^'].IsRigid = false;
+        s_BgData->TileMap['^'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar['^'][s_BgData->CurrentTheme], false);
         
         s_BgData->TilesColorMapWithChar[')'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Red
         s_BgData->TilesColorMapWithChar[')'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Red
         s_BgData->TilesColorMapWithChar[')'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Grey
         s_BgData->TilesColorMapWithChar[')'][ThemeColor::Green] = (SubTexture::CreateFromCoords(s_BgData->Sprite, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Blue
         
-        s_BgData->TileMap[')'].SubTexture = s_BgData->TilesColorMapWithChar[')'][s_BgData->CurrentTheme];
-        s_BgData->TileMap[')'].IsRigid = false;
+        s_BgData->TileMap[')'] = BgData::Tile::Create(s_BgData->TilesColorMapWithChar[')'][s_BgData->CurrentTheme], false);
     }
     
     // Castel
     {
-        s_BgData->TileMap['.'].SubTexture = SubTexture::CreateFromCoords(s_BgData->Sprite, { 19.0f, 25.0f });
-        s_BgData->TileMap['.'].IsRigid = false;
-
-        s_BgData->TileMap['u'].SubTexture = SubTexture::CreateFromCoords(s_BgData->Sprite, { 20.0f, 24.0f });
-        s_BgData->TileMap['u'].IsRigid = false;
-
-        s_BgData->TileMap['o'].SubTexture = SubTexture::CreateFromCoords(s_BgData->Sprite, { 21.0f, 24.0f });
-        s_BgData->TileMap['o'].IsRigid = false;
-
-        s_BgData->TileMap['|'].SubTexture = SubTexture::CreateFromCoords(s_BgData->Sprite, { 21.0f, 25.0f });
-        s_BgData->TileMap['|'].IsRigid = false;
-
-        s_BgData->TileMap['l'].SubTexture = SubTexture::CreateFromCoords(s_BgData->Sprite, { 20.0f, 25.0f });
-        s_BgData->TileMap['l'].IsRigid = false;
-
-        s_BgData->TileMap['r'].SubTexture = SubTexture::CreateFromCoords(s_BgData->Sprite, { 22.0f, 25.0f });
-        s_BgData->TileMap['r'].IsRigid = false;
+        s_BgData->TileMap['.'] = BgData::Tile::Create(SubTexture::CreateFromCoords(s_BgData->Sprite, { 19.0f, 25.0f }), false);
+        s_BgData->TileMap['u'] = BgData::Tile::Create(SubTexture::CreateFromCoords(s_BgData->Sprite, { 20.0f, 24.0f }), false);
+        s_BgData->TileMap['o'] = BgData::Tile::Create(SubTexture::CreateFromCoords(s_BgData->Sprite, { 21.0f, 24.0f }), false);
+        s_BgData->TileMap['|'] = BgData::Tile::Create(SubTexture::CreateFromCoords(s_BgData->Sprite, { 21.0f, 25.0f }), false);
+        s_BgData->TileMap['l'] = BgData::Tile::Create(SubTexture::CreateFromCoords(s_BgData->Sprite, { 20.0f, 25.0f }), false);
+        s_BgData->TileMap['r'] = BgData::Tile::Create(SubTexture::CreateFromCoords(s_BgData->Sprite, { 22.0f, 25.0f }), false);
     }
 }
