@@ -133,6 +133,25 @@ static void SerializeEntity(YAML::Emitter& out, std::shared_ptr<Entity> entity) 
         out << YAML::EndMap; // TransformComponent
     }
     
+    if (entity->HasComponent<CameraComponent>()) {
+        out << YAML::Key << "CameraComponent";
+        out << YAML::BeginMap; // CameraComponent
+        
+        auto& cc = entity->GetComponent<CameraComponent>();
+        out << YAML::Key << "FixedAspectRatio" << YAML::Value << cc.FixedAspectRatio;
+        out << YAML::Key << "Primary" << YAML::Value << cc.Primary;
+
+        // Scene Camera
+        const auto& camera = cc.Camera;
+        out << YAML::Key << "ProjectionType" << YAML::Value << (uint32_t)camera->GetProjectionType();
+        out << YAML::Key << "PerspectiveFOV" << YAML::Value << camera->GetPerspectiveFOV();
+        out << YAML::Key << "OrthographicSize" << YAML::Value << camera->GetOrthographicSize();
+        out << YAML::Key << "Near" << YAML::Value << camera->GetNear();
+        out << YAML::Key << "Far" << YAML::Value << camera->GetFar();
+        
+        out << YAML::EndMap; // CameraComponent
+    }
+    
     if (entity->HasComponent<QuadComponent>()) {
         out << YAML::Key << "QuadComponent";
         out << YAML::BeginMap; // QuadComponent
@@ -153,23 +172,26 @@ static void SerializeEntity(YAML::Emitter& out, std::shared_ptr<Entity> entity) 
         out << YAML::EndMap; // QuadComponent
     }
     
-    if (entity->HasComponent<CameraComponent>()) {
-        out << YAML::Key << "CameraComponent";
-        out << YAML::BeginMap; // CameraComponent
+    if (entity->HasComponent<CircleComponent>()) {
+        out << YAML::Key << "CircleComponent";
+        out << YAML::BeginMap; // CircleComponent
         
-        auto& cc = entity->GetComponent<CameraComponent>();
-        out << YAML::Key << "FixedAspectRatio" << YAML::Value << cc.FixedAspectRatio;
-        out << YAML::Key << "Primary" << YAML::Value << cc.Primary;
+        auto& qc = entity->GetComponent<CircleComponent>();
+        out << YAML::Key << "Color" << YAML::Value << qc.Color;
+        out << YAML::Key << "TilingFactor" << YAML::Value << qc.TilingFactor;
+        out << YAML::Key << "Thickness" << YAML::Value << qc.Thickness;
+        out << YAML::Key << "Fade" << YAML::Value << qc.Fade;
 
-        // Scene Camera
-        const auto& camera = cc.Camera;
-        out << YAML::Key << "ProjectionType" << YAML::Value << (uint32_t)camera->GetProjectionType();
-        out << YAML::Key << "PerspectiveFOV" << YAML::Value << camera->GetPerspectiveFOV();
-        out << YAML::Key << "OrthographicSize" << YAML::Value << camera->GetOrthographicSize();
-        out << YAML::Key << "Near" << YAML::Value << camera->GetNear();
-        out << YAML::Key << "Far" << YAML::Value << camera->GetFar();
+        if (qc.Texture.Component) {
+            out << YAML::Key << "Use" << YAML::Value << qc.Texture.Use;
+            out << YAML::Key << "TexturePath" << YAML::Value << qc.Texture.Component->GetfilePath();
+        }
+        else {
+            out << YAML::Key << "Use" << YAML::Value << false;
+            out << YAML::Key << "TexturePath" << YAML::Value << "";
+        }
         
-        out << YAML::EndMap; // CameraComponent
+        out << YAML::EndMap; // CircleComponent
     }
     
     out << YAML::EndMap; // Entity
@@ -251,32 +273,6 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 IK_CORE_INFO("            Scale: {0}, {1}, {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
             }
             
-            auto quadComponent = entity["QuadComponent"];
-            if (quadComponent) {
-                const glm::vec4& color = quadComponent["Color"].as<glm::vec4>();
-                const float tilingFactor = quadComponent["TilingFactor"].as<float>();
-                
-                const std::string texFilePath = quadComponent["TexturePath"].as<std::string>();
-                const bool use = quadComponent["Use"].as<bool>();
-
-                TextureComponent textComp;
-                textComp.Use = use;
-                if (texFilePath != "")
-                    textComp.Component = Renderer::GetTexture(texFilePath);
-
-                auto& qc = deserializedEntity->AddComponent<QuadComponent>(textComp, color, tilingFactor);
-
-                IK_LOG_SEPARATOR();
-                IK_CORE_INFO("        Quad Component:");
-                IK_CORE_INFO("            Color: {0}, {1}, {2}, {3}", qc.Color.r, qc.Color.g, qc.Color.b, qc.Color.a);
-                IK_CORE_INFO("            Rotation: {0}", qc.TilingFactor);
-                
-                if (qc.Texture.Component) {
-                    IK_CORE_INFO("        Texture Use: {0}", qc.Texture.Use);
-                    IK_CORE_INFO("        Texture Path: {0}", qc.Texture.Component->GetfilePath());
-                }
-            }
-  
             auto cameraComponent = entity["CameraComponent"];
             if (cameraComponent) {
                 auto type = cameraComponent["ProjectionType"].as<uint32_t>();
@@ -311,6 +307,61 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 
                 IK_CORE_INFO("            Near: {0}", cc.Camera->GetNear());
                 IK_CORE_INFO("            Far: {0}", cc.Camera->GetFar());
+            }
+            
+            auto quadComponent = entity["QuadComponent"];
+            if (quadComponent) {
+                const glm::vec4& color = quadComponent["Color"].as<glm::vec4>();
+                const float tilingFactor = quadComponent["TilingFactor"].as<float>();
+                
+                const std::string texFilePath = quadComponent["TexturePath"].as<std::string>();
+                const bool use = quadComponent["Use"].as<bool>();
+
+                TextureComponent textComp;
+                textComp.Use = use;
+                if (texFilePath != "")
+                    textComp.Component = Renderer::GetTexture(texFilePath);
+
+                auto& qc = deserializedEntity->AddComponent<QuadComponent>(textComp, color, tilingFactor);
+
+                IK_LOG_SEPARATOR();
+                IK_CORE_INFO("        Quad Component:");
+                IK_CORE_INFO("            Color: {0}, {1}, {2}, {3}", qc.Color.r, qc.Color.g, qc.Color.b, qc.Color.a);
+                IK_CORE_INFO("            Rotation: {0}", qc.TilingFactor);
+                
+                if (qc.Texture.Component) {
+                    IK_CORE_INFO("        Texture Use: {0}", qc.Texture.Use);
+                    IK_CORE_INFO("        Texture Path: {0}", qc.Texture.Component->GetfilePath());
+                }
+            }
+  
+            auto circleComponent = entity["CircleComponent"];
+            if (circleComponent) {
+                const glm::vec4& color = circleComponent["Color"].as<glm::vec4>();
+                const float tilingFactor = circleComponent["TilingFactor"].as<float>();
+                const float thickness = circleComponent["Thickness"].as<float>();
+                const float fade = circleComponent["Fade"].as<float>();
+
+                const std::string texFilePath = circleComponent["TexturePath"].as<std::string>();
+                const bool use = circleComponent["Use"].as<bool>();
+                
+                TextureComponent textComp;
+                textComp.Use = use;
+                if (texFilePath != "")
+                    textComp.Component = Texture::Create(texFilePath);
+                
+                auto& cc = deserializedEntity->AddComponent<CircleComponent>(textComp, thickness, fade, color, tilingFactor);
+                
+                IK_CORE_INFO("        Quad Component:");
+                IK_CORE_INFO("            Color: {0}, {1}, {2}, {3}", cc.Color.r, cc.Color.g, cc.Color.b, cc.Color.a);
+                IK_CORE_INFO("            Rotation: {0}", cc.TilingFactor);
+                IK_CORE_INFO("            Thickness: {0}", cc.Thickness);
+                IK_CORE_INFO("            Fade: {0}", cc.Fade);
+                
+                if (cc.Texture.Component) {
+                    IK_CORE_INFO("        Texture Use: {0}", cc.Texture.Use);
+                    IK_CORE_INFO("        Texture Path: {0}", cc.Texture.Component->GetfilePath());
+                }
             }
         }
     }

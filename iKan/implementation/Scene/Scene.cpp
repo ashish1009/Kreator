@@ -96,7 +96,9 @@ std::shared_ptr<Entity> Scene::DuplicateEntity(const std::shared_ptr<Entity>& en
     // Copy Components
     CopyComponentIfExist<TagComponent>(*newEntity.get(), *entity.get());
     CopyComponentIfExist<TransformComponent>(*newEntity.get(), *entity.get());
-
+    CopyComponentIfExist<CameraComponent>(*newEntity.get(), *entity.get());
+    CopyComponentIfExist<QuadComponent>(*newEntity.get(), *entity.get());
+    CopyComponentIfExist<CircleComponent>(*newEntity.get(), *entity.get());
     return newEntity;
 }
 
@@ -264,7 +266,18 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
         else
             BatchRenderer::DrawQuad(transform.GetTransform(), quadComp.Color, (int32_t)entity);
     }
-    BatchRenderer::EndBatch();
+    
+    // Circles
+    auto circleView = m_Registry.view<TransformComponent, CircleComponent>();
+    for (const auto& entity : circleView) {
+        const auto& [transform, circleComp] = circleView.get<TransformComponent, CircleComponent>(entity);
+        if (circleComp.Texture.Component && circleComp.Texture.Use)
+            BatchRenderer::DrawCircle(transform.GetTransform(), circleComp.Texture.Component, circleComp.Color, circleComp.TilingFactor, circleComp.Thickness, circleComp.Fade, (int32_t)entity);
+        else
+            BatchRenderer::DrawCircle(transform.GetTransform(), circleComp.Color, circleComp.Thickness, circleComp.Fade, (int32_t)entity);
+    }
+
+    BatchRenderer::EndBatch();    
 }
 
 /// Get the first primary camera in the scene

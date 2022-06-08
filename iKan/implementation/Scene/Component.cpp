@@ -84,3 +84,42 @@ void QuadComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTex
     ImGui::PopID();
 
 }
+
+// Circle Component
+CircleComponent::CircleComponent(float thickness, float fade) : Thickness(thickness), Fade(fade) {}
+CircleComponent::CircleComponent(const TextureComponent& texComp, float thickness, float fade, const glm::vec4& color, float tilingFactor) : Texture(texComp), Color(color), TilingFactor(tilingFactor), Thickness(thickness), Fade(fade) {}
+CircleComponent::CircleComponent(const std::shared_ptr<iKan::Texture>& texture) { Texture.Component = texture; }
+CircleComponent::CircleComponent(const std::string& texturePath) { Texture.Component = Texture::Create(texturePath);}
+CircleComponent::CircleComponent(const CircleComponent& other) : Texture(other.Texture), Color(other.Color), TilingFactor(other.TilingFactor), Thickness(other.Thickness), Fade(other.Fade) { IK_CORE_INFO("Copying Circle Component"); }
+/// Render Imgui for Circle Component
+void CircleComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture) {
+    // Change the color of the Entity
+    ImGui::PushID("Texture");
+    ImGui::Columns(2);
+    
+    ImGui::SetColumnWidth(0, 100);
+    size_t texId = (Texture.Component ? Texture.Component->GetRendererID() : defaultTexture->GetRendererID());
+    ImGui::Image((void*)texId, ImVec2(40.0f, 40.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+    PropertyGrid::DropConent([this](const std::string& path){
+        Texture.Component = Texture::Create(path);
+    });
+    
+    ImGui::NextColumn();
+    ImGui::Checkbox("Albedo Texture", &Texture.Use);
+    ImGui::SameLine();
+    PropertyGrid::HelpMarker("Drop the Texture file in the Image Button to upload the texture or Select already stored texture from the scene (Option can be available by right click on image)");
+    
+    ImGui::ColorEdit4("Color", glm::value_ptr(Color), ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+    if (Texture.Component && Texture.Use) {
+        ImGui::SameLine();
+        ImGui::DragFloat("", &TilingFactor, 1.0f, 1.0f, 1000.0f);
+    }
+    
+    ImGui::Separator();
+    ImGui::Columns(1);
+    
+    PropertyGrid::Float1("Thickness", Thickness, nullptr, 0.1f, 1.0f);
+    PropertyGrid::Float1("Fade", Fade, nullptr, 0.001f, 0.005f);
+    ImGui::Separator();
+    ImGui::PopID();
+}

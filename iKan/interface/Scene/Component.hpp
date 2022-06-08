@@ -64,4 +64,21 @@ namespace iKan {
         void RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture);
     };
     
+    /// Stores the Quad Component
+    struct CircleComponent {
+        TextureComponent Texture;
+        glm::vec4 Color = glm::vec4(1.0f);
+        float TilingFactor = 1.0f;
+        float Thickness = 1.0f;
+        float Fade = 0.005f;
+        
+        CircleComponent(const CircleComponent& other);
+        CircleComponent(float thickness = 1.0f, float fade = 0.005);
+        CircleComponent(const TextureComponent& texComp, float thickness = 1.0f, float fade = 0.005, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+        CircleComponent(const std::shared_ptr<iKan::Texture>& texture);
+        CircleComponent(const std::string& texturePath);
+        
+        void RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTextur);
+    };
+    
 }

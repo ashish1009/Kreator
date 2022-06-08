@@ -137,6 +137,11 @@ void SceneHierarchyPannel::RenderImgui() {
                     entity->GetComponent<TagComponent>().Group = "Quads";
                     entity->AddComponent<QuadComponent>();
                 }
+                if (ImGui::MenuItem("Circle")) {
+                    auto entity = m_Context->CreateEntity("Circle");
+                    entity->GetComponent<TagComponent>().Group = "Circles";
+                    entity->AddComponent<CircleComponent>();
+                }
                 ImGui::EndMenu();
             }
             
@@ -273,8 +278,9 @@ void SceneHierarchyPannel::DrawComponents() {
     ImGui::PopItemWidth();
     
     DrawComponent<TransformComponent>("Transform", m_SelectedEntity, [](auto& tc) { tc.RenderImgui(); });
-    DrawComponent<QuadComponent>("Quad", m_SelectedEntity, [this](auto& qc) { qc.RenderImgui(c_DefaultTexture); });
     DrawComponent<CameraComponent>("Camera", m_SelectedEntity, [](auto& cc) { cc.RenderImgui(); });
+    DrawComponent<QuadComponent>("Quad", m_SelectedEntity, [this](auto& qc) { qc.RenderImgui(c_DefaultTexture); });
+    DrawComponent<CircleComponent>("Circle", m_SelectedEntity, [this](auto& cc) { cc.RenderImgui(c_DefaultTexture); });
 }
 
 /// Add Component
@@ -291,11 +297,18 @@ void SceneHierarchyPannel::AddComponent() {
         ImGui::EndMenu();
     }
     ImGui::Separator();
-    
-    if (ImGui::MenuItem("Quad")) {
-        m_SelectedEntity->AddComponent<QuadComponent>();
-        ImGui::CloseCurrentPopup();
+    if (ImGui::BeginMenu("2D Element")) {
+        if (ImGui::MenuItem("Quad")) {
+            m_SelectedEntity->AddComponent<QuadComponent>();
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Circle")) {
+            m_SelectedEntity->AddComponent<CircleComponent>();
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndMenu();
     }
+    ImGui::Separator();
 }
 
 void SceneHierarchyPannel::SetSelectedEntity(const std::shared_ptr<Entity>& entity) {
