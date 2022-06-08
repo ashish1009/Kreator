@@ -6,7 +6,6 @@
 //
 
 // vertex Shader
-
 #type vertex
 #version 330 core
 
@@ -45,9 +44,7 @@ void main()
     gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 }
 
-// ******************************************************************************
 // Fragment Shader
-// ******************************************************************************
 #type fragment
 #version 330 core
 layout(location = 0) out vec4 o_Color;
@@ -97,5 +94,13 @@ void main()
     
     o_Color = texColor;
     o_Color.a *= color;
-    o_IDBuffer = int(fs_in.ObjectID);
+    
+    if (o_Color.a > 0)
+    {
+        o_IDBuffer = int(fs_in.ObjectID);
+    }
+    else
+    {
+        o_IDBuffer = -1;
+    }
 }
