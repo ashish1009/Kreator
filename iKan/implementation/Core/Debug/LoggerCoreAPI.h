@@ -21,6 +21,8 @@
 #define IK_CORE_ERROR(...) ::iKan::Logger::GetCoreLogger()->error(__VA_ARGS__)
 #define IK_CORE_CRITICAL(...) ::iKan::Logger::GetCoreLogger()->critical(__VA_ARGS__)
 
+#define IK_LOG_SEPARATOR() IK_CORE_TRACE("-------------------------------------------------");
+
 #else
 
 // Core log macros

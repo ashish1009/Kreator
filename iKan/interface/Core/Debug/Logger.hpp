@@ -52,7 +52,7 @@ namespace iKan {
 #define IK_ERROR(...) ::iKan::Logger::GetClientLogger()->error(__VA_ARGS__)
 #define IK_CRITICAL(...) ::iKan::Logger::GetClientLogger()->critical(__VA_ARGS__)
 
-#define IK_LOG_SEPARATOR() IK_CORE_TRACE("-------------------------------------------------");
+#define IK_CLIENT_LOG_SEPARATOR() IK_TRACE("-------------------------------------------------");
 
 #else
 

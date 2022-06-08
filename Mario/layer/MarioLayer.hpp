@@ -35,6 +35,7 @@ namespace Mario {
         
         // Mario API
         void InitBackgroundData();
+        void StoreSubtextureOfEachTile();
         
         // Member variabls
         // Layer Data
