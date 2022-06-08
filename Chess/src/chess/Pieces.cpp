@@ -232,19 +232,7 @@ std::vector<BLOCK_ROW_COL> Pawn_::GetPossibleMovePosition() const {
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool King_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
-    if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
-        return false;
-    
-    if (abs(Col - colIdx) == 1 && abs(rowIdx - Row) == 1)
-        return true;
-
-    if (Col == colIdx && abs(rowIdx - Row) == 1)
-        return true;
-
-    if (abs(Col - colIdx) == 1 && rowIdx == Row)
-        return true;
-    
-    return false;
+    return ValidateDiagonalMove(Row, Col, rowIdx, colIdx, blocks) | ValidateStraightMove(Row, Col, rowIdx, colIdx, blocks);
 }
 
 /// Get the possible block postion where block can be moved
