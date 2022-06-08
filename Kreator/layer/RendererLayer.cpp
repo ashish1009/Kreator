@@ -25,6 +25,10 @@ void RendererLayer::Attach() {
     PROFILE();
     IK_INFO("Attaching {0} Layer to Application", m_Name);
     
+    // Change the Imgui Font
+    auto& imguiLayer = Application::Get().GetImGuiLayer();
+    imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"), AssetManager::GetClientAsset("fonts/OpenSans/OpenSans-Bold.ttf"));
+    
     FrameBuffer::Specification spec;
     spec.Attachments = {
         FrameBuffer::Attachment::TextureFormat::RGBA8,

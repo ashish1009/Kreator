@@ -41,6 +41,11 @@ namespace iKan {
         /// Block the Imgui Events if flag is true
         void BlockEvents(bool);
         
+        /// Override font
+        /// @param defaultFont Default font path
+        /// @param boldFont bold Font Path
+        void SetFont(const std::string &defaultFont, const std::string &boldFont);
+        
     private:
         bool m_BlockEvents = true;
     };

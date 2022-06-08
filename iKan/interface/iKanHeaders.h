@@ -82,4 +82,5 @@
 
 // Gui Files
 #include <Gui/ImguiAPI.hpp>
+#include <Gui/ImguiLayer.hpp>
 #include <ImGuizmo.h>

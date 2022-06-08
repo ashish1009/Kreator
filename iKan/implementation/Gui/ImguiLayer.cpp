@@ -57,6 +57,21 @@ void ImguiLayer::Attach() {
     ImGui_ImplOpenGL3_Init("#version 410");
 }
 
+/// Override font
+/// @param defaultFont Default font path
+/// @param boldFont bold Font Path
+void ImguiLayer::SetFont(const std::string &defaultFont, const std::string &boldFont) {
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    
+    // Store the Bold font as well
+    io.Fonts->AddFontFromFileTTF(boldFont.c_str(), 15.0f);
+    
+    // Default font is Regular
+    io.FontDefault = io.Fonts->AddFontFromFileTTF(defaultFont.c_str(), 15.0f);
+    
+    IK_CORE_INFO("Imgui Font chnaged to {0} and bold font to {1}", defaultFont.c_str(), boldFont);
+}
+
 /// Detatch ImGuiLayer
 void ImguiLayer::Detach() {
     IK_CORE_WARN("{0} is detached to application", GetName());
