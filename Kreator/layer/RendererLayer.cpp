@@ -110,6 +110,8 @@ void RendererLayer::RenderGui() {
             m_CBP.RenderImgui();
             
             SaveScene();
+            
+            OnImguizmoUpdate();
         }
         
         m_VpData.UpdateBound();
