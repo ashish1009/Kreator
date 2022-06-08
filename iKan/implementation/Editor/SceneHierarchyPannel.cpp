@@ -171,7 +171,31 @@ void SceneHierarchyPannel::RenderImgui() {
                     auto& mc = entity->AddComponent<MeshComponent>();
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Plane.obj"), (uint32_t)(*entity.get()));
                 }
-                 ImGui::EndMenu();
+                if (ImGui::MenuItem("Capsule")) {
+                    auto entity = m_Context->CreateEntity("Capsule");
+                    entity->GetComponent<TagComponent>().Group = "Capsules";
+                    auto& mc = entity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Capsule.fbx"), (uint32_t)(*entity.get()));
+                }
+                if (ImGui::MenuItem("Cone")) {
+                    auto entity = m_Context->CreateEntity("Cone");
+                    entity->GetComponent<TagComponent>().Group = "Cones";
+                    auto& mc = entity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Cone.fbx"), (uint32_t)(*entity.get()));
+                }
+                if (ImGui::MenuItem("Cylinder")) {
+                    auto entity = m_Context->CreateEntity("Cylinder");
+                    entity->GetComponent<TagComponent>().Group = "Cylinders";
+                    auto& mc = entity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Cylinder.fbx"), (uint32_t)(*entity.get()));
+                }
+                if (ImGui::MenuItem("Torus")) {
+                    auto entity = m_Context->CreateEntity("Torus");
+                    entity->GetComponent<TagComponent>().Group = "Toruses";
+                    auto& mc = entity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Torus.fbx"), (uint32_t)(*entity.get()));
+                }
+                ImGui::EndMenu();
             }
 
             ImGui::EndMenu(); // Create Empty Entity

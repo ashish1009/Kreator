@@ -69,7 +69,7 @@ void RendererLayer::Update(Timestep ts) {
     
     m_VpData.FrameBuffer->Bind();
     {
-        Renderer::Clear({ 0.1f, 0.2f, 0.3f, 1.0f });
+        Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
         
         m_ActiveScene->Update(ts);
         m_VpData.UpdateMousePos();
@@ -102,7 +102,6 @@ void RendererLayer::RenderGui() {
         PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
         ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         if (m_ActiveScene->IsEditing()) {
-
             PropertyGrid::DropConent([this](const std::string& path)
                                               {
                 if (StringUtils::GetExtensionFromFilePath(path) == "Kreator")

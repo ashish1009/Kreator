@@ -32,17 +32,6 @@ Develop the following Games and Editor and Add Fetures as per need in iKan
         - Shadow
         - HDR Environment Map
         - Manager to manage all Environment
-    
-- Editor
-    - Scene Hierarchy pannel : To Grow With Time
-    - Property Grid API For IM GUI
-    - Content Browser pannel : To Optimize With Time
-    - ImGuimzo
-        - Mouse selectable entity
-
-    
-- Project
-    - Serialise and 4 the scene : To Graw With Time
 
 ## Features
 - Fundamentals
@@ -72,9 +61,17 @@ Develop the following Games and Editor and Add Fetures as per need in iKan
     
 - Editor
     - Added Editor 3D camera
+    - Scene Hierarchy pannel : To Grow With Time
+    - Property Grid API For IM GUI
+    - Content Browser pannel : To Optimize With Time
+    - ImGuimzo
+        - Mouse selectable entity
 
 - Scene
     - Added Scene camera
+    
+- Project
+    - Serialise and 4 the scene : To Graw With Time
     
 - Materials
     - Added Shader uniform class
