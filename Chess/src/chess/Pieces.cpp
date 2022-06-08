@@ -14,28 +14,72 @@ using namespace Chess;
 /// @param col source column of piece
 /// @param rowIdx destination row of piece
 /// @param colIdx destination column of piece
-static bool ValidateDiagonalMove(int8_t srcRow, int8_t srcCol, int8_t dsrRow, int8_t dstCol, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
-    if (dsrRow < 0 || dsrRow > MAX_ROWS || dstCol < 0 || dstCol > MAX_COLUMNS)
+static bool ValidateDiagonalMove(int8_t srcRow, int8_t srcCol, int8_t dstRow, int8_t dstCol, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
+    if (dstRow < 0 || dstRow > MAX_ROWS || dstCol < 0 || dstCol > MAX_COLUMNS)
         return false;
 
     // Check is destination is diagonal or not?
-    if (abs(srcRow - dsrRow) != abs(srcCol - dstCol))
+    if (abs(srcRow - dstRow) != abs(srcCol - dstCol))
         return false;
 
     // Do either for Row or colum as they iterate same in diagonal
-    while (abs(srcRow - dsrRow) >= 1) {
+    while (abs(srcRow - dstRow) >= 1) {
         // Update the pointer at new block based on the value of desitation Block
-        if (srcRow > dsrRow) dsrRow++; else dsrRow--;
+        if (srcRow > dstRow) dstRow++; else dstRow--;
         if (srcCol > dstCol) dstCol++; else dstCol--;
 
         // if we reached the source block without any obstacle in path then return true
-        if (srcRow == dsrRow)
+        if (srcRow == dstRow)
             return true;
         
         // if any obstacle found in path return false
-        if (blocks[dsrRow][dstCol]->Piece)
+        if (blocks[dstRow][dstCol]->Piece)
             return false;
     }
+    return true;
+}
+
+/// validate the Straight move of piece
+/// @param row source row of Piece
+/// @param col source column of piece
+/// @param rowIdx destination row of piece
+/// @param colIdx destination column of piece
+static bool ValidateStraightMove(int8_t srcRow, int8_t srcCol, int8_t dstRow, int8_t dstCol, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
+    if (dstRow < 0 || dstRow > MAX_ROWS || dstCol < 0 || dstCol > MAX_COLUMNS)
+        return false;
+
+    if (srcRow == dstRow) {
+        // Do either for Row or colum as they iterate same in diagonal
+        while (dstCol < MAX_COLUMNS && dstCol >= 0) {
+            // Update the pointer at new block based on the value of desitation Block
+            if (srcCol > dstCol) dstCol++; else dstCol--;
+
+            // if we reached the source block without any obstacle in path then return true
+            if (srcCol == dstCol)
+                return true;
+            
+            // if any obstacle found in path return false
+            if (blocks[dstRow][dstCol]->Piece)
+                return false;
+        }
+    }
+    
+    if (srcCol == dstCol) {
+        // Do either for Row or colum as they iterate same in diagonal
+        while (dstRow < MAX_ROWS && dstRow >= 0) {
+            // Update the pointer at new block based on the value of desitation Block
+            if (srcRow > dstRow) dstRow++; else dstRow--;
+
+            // if we reached the source block without any obstacle in path then return true
+            if (srcRow == dstRow)
+                return true;
+            
+            // if any obstacle found in path return false
+            if (blocks[dstRow][dstCol]->Piece)
+                return false;
+        }
+    }
+    
     return true;
 }
 
@@ -71,6 +115,41 @@ static void PossibleDiagonalMoveBlock(int8_t srcRow, int8_t srcCol, std::vector<
         row = srcRow - 1; col = srcCol - 1;
         while (row >= 0 && col >= 0)
             possibleBlocks.emplace_back(std::make_pair(row--, col--));
+    }
+}
+
+/// store the possible Straight move from source
+/// @param row source row of Piece
+/// @param col source column of piece
+/// @param possibleBlocks reference of vector where we will store the possible move block
+static void PossibleStraightMoveBlock(int8_t srcRow, int8_t srcCol, std::vector<BLOCK_ROW_COL>& possibleBlocks) {
+    int8_t row, col;
+    // Right
+    if (srcCol < MAX_COLUMNS - 1) {
+        col = srcCol + 1;
+        while (col < MAX_COLUMNS)
+            possibleBlocks.emplace_back(std::make_pair(srcRow, col++));
+    }
+    
+    // Left
+    if (srcCol > 0) {
+        col = srcCol - 1;
+        while (col >= 0)
+            possibleBlocks.emplace_back(std::make_pair(srcRow, col--));
+    }
+    
+    // Bottom
+    if (srcRow > 0) {
+        row = srcRow - 1;
+        while (row >= 0)
+            possibleBlocks.emplace_back(std::make_pair(row--, srcCol));
+    }
+    
+    // Top
+    if (srcRow < MAX_ROWS - 1) {
+        row = srcRow + 1;
+        while (row < MAX_ROWS)
+            possibleBlocks.emplace_back(std::make_pair(row++, srcCol));
     }
 }
 
@@ -225,7 +304,6 @@ std::vector<BLOCK_ROW_COL> Queen_::GetPossibleMovePosition() const {
 /// @param colIdx new row column position of Piece
 bool Bishop_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
     const auto& destBlock = blocks[rowIdx][colIdx];
-
     if (ValidateDiagonalMove(Row, Col, rowIdx, colIdx, blocks)) {
         // If No piece is found in path
         // Check the destination block in the end
@@ -289,15 +367,19 @@ std::vector<BLOCK_ROW_COL> Knight_::GetPossibleMovePosition() const {
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Rook_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
-    if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
-        return false;
-    
+    const auto& destBlock = blocks[rowIdx][colIdx];
+    if (ValidateStraightMove(Row, Col, rowIdx, colIdx, blocks)) {
+        // If No piece is found in path
+        // Check the destination block in the end
+        return (!(destBlock->Piece && destBlock->Piece->Color == Color));
+    }
     return false;
 }
 
 /// Get the possible block postion where block can be moved
 std::vector<BLOCK_ROW_COL> Rook_::GetPossibleMovePosition() const {
     std::vector<BLOCK_ROW_COL> result;
+    PossibleStraightMoveBlock(Row, Col, result);
     return result;
 }
 
