@@ -265,15 +265,14 @@ std::vector<BLOCK_ROW_COL> King_::GetPossibleMovePosition() const {
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Queen_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
-    if (rowIdx < 0 || rowIdx > MAX_ROWS || colIdx < 0 || colIdx > MAX_COLUMNS)
-        return false;
-    
-    return false;
+    return ValidateDiagonalMove(Row, Col, rowIdx, colIdx, blocks) | ValidateStraightMove(Row, Col, rowIdx, colIdx, blocks);
 }
 
 /// Get the possible block postion where block can be moved
 std::vector<BLOCK_ROW_COL> Queen_::GetPossibleMovePosition() const {
     std::vector<BLOCK_ROW_COL> result;
+    PossibleDiagonalMoveBlock(Row, Col, result);
+    PossibleStraightMoveBlock(Row, Col, result);
     return result;
 }
 
