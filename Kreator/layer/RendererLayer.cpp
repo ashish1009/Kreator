@@ -126,6 +126,9 @@ void RendererLayer::RenderGui() {
 /// Handle Event interupt for Renderer Layer
 /// @param event Event base class Instance.
 void RendererLayer::EventHandler(Event& event) {
+    if (!m_VpData.Hovered)
+        return;
+
     if (m_ActiveScene)
         m_ActiveScene->EventHandler(event);
 
@@ -176,15 +179,16 @@ bool RendererLayer::OnKeyPressed(KeyPressedEvent& event) {
 
 /// Update Hovered Entity
 void RendererLayer::UpdateHoveredEntity() {
+    if (!m_VpData.Hovered)
+        return;
+    
     if (ImGuizmo::IsOver()) {
         m_VpData.HoveredEntity = m_SHP->GetSelectedEntity();
         return;
     }
     
-    if (m_VpData.Hovered) {
-        Renderer::GetEntityIdFromPixels(m_VpData.MousePosX, m_VpData.MousePosY, m_VpData.HoveredEntityID);
-        m_VpData.HoveredEntity = (m_VpData.HoveredEntityID > m_ActiveScene->GetMaxEntityId()) ? nullptr : m_ActiveScene->GetEnitityFromId(m_VpData.HoveredEntityID);
-    }
+    Renderer::GetEntityIdFromPixels(m_VpData.MousePosX, m_VpData.MousePosY, m_VpData.HoveredEntityID);
+    m_VpData.HoveredEntity = (m_VpData.HoveredEntityID > m_ActiveScene->GetMaxEntityId()) ? nullptr : m_ActiveScene->GetEnitityFromId(m_VpData.HoveredEntityID);
 }
 
 /// Update Imguizmo renderer

@@ -75,10 +75,13 @@ void ContentBrowserPannel::MainArea() {
             }
             else {
                 if (".png" == path.extension())         iconTexture = m_TileIconTexture.PngIcon;
-                else if (".jpg" == path.extension())    iconTexture = m_TileIconTexture.JpgIcon;
+                else if (".jpg" == path.extension())    iconTexture = m_TileIconTexture.PngIcon;
                 else if (".cpp" == path.extension())    iconTexture = m_TileIconTexture.Cpp;
                 else if (".h" == path.extension())      iconTexture = m_TileIconTexture.H;
                 else if (".c" == path.extension())      iconTexture = m_TileIconTexture.C;
+                else if (".obj" == path.extension())    iconTexture = m_TileIconTexture.Obj;
+                else if (".fbx" == path.extension())    iconTexture = m_TileIconTexture.Fbx;
+                else if (".ttf" == path.extension())    iconTexture = m_TileIconTexture.Font;
                 else                                    iconTexture = m_TileIconTexture.FileIcon;
                 
                 isDirectory = false;

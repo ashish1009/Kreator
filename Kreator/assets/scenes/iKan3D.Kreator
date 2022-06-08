@@ -1,22 +1,22 @@
 Scene: Untitled
 Entities:
-  - Entity: 16059117986812657210
+  - Entity: 10027750943656859307
     TagComponent:
-      Tag: Mesh
-      Group: Meshes
+      Tag: Plane
+      Group: Planes
     TransformComponent:
-      Translation: [1.27071071, 0, 0]
+      Translation: [-1.4307133, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     MeshComponent:
-      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/Cube.fbx
+      FilePath: ../../iKan/assets/models/Plane.obj
       ActiveMaterial: 0
       Material Name 0: DefaultMaterial
       Material InvertX 0: false
       Material InvertY 0: false
-      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Color DefaultMaterial: [0.823529422, 0.609573245, 0.609573245]
       Material Proeprty Metalness DefaultMaterial: 0
-      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty Roughness DefaultMaterial: 1
       Material Proeprty TilinghFactor DefaultMaterial: 1
       Use DefaultMaterial0: false
       Path DefaultMaterial0: ""
@@ -28,17 +28,34 @@ Entities:
       Path DefaultMaterial3: ""
       Use DefaultMaterial4: false
       Path DefaultMaterial4: ""
-      Num Materials: 1
-  - Entity: 17712339661155851350
+      Material Name 1: None
+      Material InvertX 1: false
+      Material InvertY 1: false
+      Material Proeprty Color None: [1, 0.600000024, 0.600000024]
+      Material Proeprty Metalness None: 0
+      Material Proeprty Roughness None: 1
+      Material Proeprty TilinghFactor None: 1
+      Use None0: false
+      Path None0: ""
+      Use None1: false
+      Path None1: ""
+      Use None2: false
+      Path None2: ""
+      Use None3: false
+      Path None3: ""
+      Use None4: false
+      Path None4: ""
+      Num Materials: 2
+  - Entity: 6915600102934739884
     TagComponent:
-      Tag: Mesh
-      Group: Meshes
+      Tag: Sphere
+      Group: Spheres
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [1.18540549, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     MeshComponent:
-      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/Sphere.fbx
+      FilePath: ../../iKan/assets/models/Sphere.fbx
       ActiveMaterial: 0
       Material Name 0: Material.001
       Material InvertX 0: false
@@ -57,4 +74,33 @@ Entities:
       Path Material.0013: ""
       Use Material.0014: false
       Path Material.0014: ""
+      Num Materials: 1
+  - Entity: 7086695393782489951
+    TagComponent:
+      Tag: Cube
+      Group: Cubes
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../iKan/assets/models/Cube.fbx
+      ActiveMaterial: 0
+      Material Name 0: DefaultMaterial
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness DefaultMaterial: 0
+      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty TilinghFactor DefaultMaterial: 1
+      Use DefaultMaterial0: false
+      Path DefaultMaterial0: ""
+      Use DefaultMaterial1: false
+      Path DefaultMaterial1: ""
+      Use DefaultMaterial2: false
+      Path DefaultMaterial2: ""
+      Use DefaultMaterial3: false
+      Path DefaultMaterial3: ""
+      Use DefaultMaterial4: false
+      Path DefaultMaterial4: ""
       Num Materials: 1

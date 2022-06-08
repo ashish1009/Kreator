@@ -9,6 +9,7 @@
 #include "Scene/Scene.hpp"
 #include "Scene/Entity.hpp"
 #include "Editor/PropertyGrid.hpp"
+#include "Renderer/Utils/Mesh.hpp"
 
 using namespace iKan;
 
@@ -151,7 +152,26 @@ void SceneHierarchyPannel::RenderImgui() {
                     entity->GetComponent<TagComponent>().Group = "Meshes";
                     entity->AddComponent<MeshComponent>();
                 }
-                ImGui::EndMenu();
+                ImGui::Separator();
+                if (ImGui::MenuItem("Cube")) {
+                    auto entity = m_Context->CreateEntity("Cube");
+                    entity->GetComponent<TagComponent>().Group = "Cubes";
+                    auto& mc = entity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Cube.fbx"), (uint32_t)(*entity.get()));
+                }
+                if (ImGui::MenuItem("Sphere")) {
+                    auto entity = m_Context->CreateEntity("Sphere");
+                    entity->GetComponent<TagComponent>().Group = "Spheres";
+                    auto& mc = entity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Sphere.fbx"), (uint32_t)(*entity.get()));
+                }
+                if (ImGui::MenuItem("Plane")) {
+                    auto entity = m_Context->CreateEntity("Plane");
+                    entity->GetComponent<TagComponent>().Group = "Planes";
+                    auto& mc = entity->AddComponent<MeshComponent>();
+                    mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Plane.obj"), (uint32_t)(*entity.get()));
+                }
+                 ImGui::EndMenu();
             }
 
             ImGui::EndMenu(); // Create Empty Entity

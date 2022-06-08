@@ -55,9 +55,14 @@ namespace iKan {
         // TODO: Move some other place.
         struct TileIconTexture {
             const std::shared_ptr<Texture> FolderIcon = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/folder.png"));
-            const std::shared_ptr<Texture> FileIcon   = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/textFile.png"));
+            const std::shared_ptr<Texture> FileIcon   = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/file.png"));
             const std::shared_ptr<Texture> JpgIcon    = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/jpg.png"));
             const std::shared_ptr<Texture> PngIcon    = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/png.png"));
+            
+            const std::shared_ptr<Texture> Obj        = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/obj.png"));
+            const std::shared_ptr<Texture> Fbx        = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/fbx.png"));
+
+            const std::shared_ptr<Texture> Font       = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/font.png"));
 
             const std::shared_ptr<Texture> Cpp        = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/cpp.png"));
             const std::shared_ptr<Texture> C          = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/contentBrowser/c.png"));
