@@ -824,7 +824,7 @@ void Mesh::RenderImgui(const std::shared_ptr<Texture>& defaultTexture) {
             PropertyGrid::DropConent([&texture, &material, textureIndex](const std::string& path)
                                      {
                 texture.Component.reset();
-                texture.Component = Texture::Create(path);
+                texture.Component = Renderer::GetTexture(path);
                 material->Set(s_ShaderTextureName[textureIndex], texture.Component);
             });
             

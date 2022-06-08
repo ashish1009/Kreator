@@ -14,10 +14,10 @@ std::unordered_map<std::string, std::shared_ptr<Texture>> TextureLibrary::s_Text
 
 /// Generate and store a new Texture if not created already. Else return already created Texture
 /// @param path Texture file path
-std::shared_ptr<Texture> TextureLibrary::GetTexture(const std::string& path) {
+std::shared_ptr<Texture> TextureLibrary::GetTexture(const std::string& path, bool minLinear, bool magLinear) {
     if (s_TextureLibrary.find(path) == s_TextureLibrary.end()) {
         IK_CORE_INFO("Adding Texture '{0}' to Texture Library", StringUtils::GetNameFromFilePath(path));
-        s_TextureLibrary[path] = Texture::Create(path);
+        s_TextureLibrary[path] = Texture::Create(path, minLinear, magLinear);
     }
     
     return s_TextureLibrary[path];

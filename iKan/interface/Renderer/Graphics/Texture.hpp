@@ -54,7 +54,7 @@ namespace iKan {
         /// Create the Texture from image file
         /// @param path path of texture file
         /// @param inverted flag to check if we need to load the image vertically inverted
-        static std::shared_ptr<Texture> Create(const std::string& path, bool inverted = true);
+        static std::shared_ptr<Texture> Create(const std::string& path, bool minLinear = true, bool magLinear = true);
     };
     
     /// Wrepper class to load texture and render as sprite

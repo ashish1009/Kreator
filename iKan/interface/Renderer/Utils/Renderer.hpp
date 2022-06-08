@@ -117,10 +117,16 @@ namespace iKan {
         static void RemoveRendererIDs(RendererID rendererId);
         
         // ---------------- Shader Manager ----------------------------
+        /// Return the shader pointer from MAP. If not present then create new shader
+        /// @param path path of shader
         static std::shared_ptr<Shader> GetShader(const std::string& path);
         
         // ---------------- Texture Manager ----------------------------
-        static std::shared_ptr<Texture> GetTexture(const std::string& path);
+        /// Return the texture pointer from MAP. If not present then create new texture
+        /// @param path path of texture
+        /// @param minLinear flag is min filter is linear
+        /// @param magLinear flag is mag filter is linear
+        static std::shared_ptr<Texture> GetTexture(const std::string& path, bool minLinear = true, bool magLinear = true);
         
     private:
         Renderer() = default;

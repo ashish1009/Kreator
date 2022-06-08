@@ -26,9 +26,9 @@ std::shared_ptr<Texture> Texture::Create(uint32_t width, uint32_t height, void* 
 /// Create instance of renderer Texture based on Current Rendere API
 /// @param path Texture file path
 /// @param inverted flag to check if we need to load the image vertically inverted
-std::shared_ptr<Texture> Texture::Create(const std::string& path, bool inverted) {
+std::shared_ptr<Texture> Texture::Create(const std::string& path, bool minLinear, bool magLinear) {
     switch (Renderer::GetAPI()) {
-        case Renderer::API::OpenGL: return std::make_shared<OpenGLTexture>(path, inverted);
+        case Renderer::API::OpenGL: return std::make_shared<OpenGLTexture>(path, minLinear, magLinear);
         case Renderer::API::None:
         default: IK_CORE_ASSERT(false, "Invalid Renderer API (None)"); break;
     }

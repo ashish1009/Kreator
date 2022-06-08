@@ -22,7 +22,10 @@ namespace iKan {
     class Profiler
     {
     public:
+        /// Profiler Constructor
+        /// @param functionName Function name to be profiled
         Profiler(const char* functionName);
+        /// Profiler destructor
         ~Profiler();
         
     private:

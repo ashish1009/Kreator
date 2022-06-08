@@ -24,7 +24,7 @@ namespace TextureUtils {
     class OpenGLTexture : public Texture {
     public:
         // Constructors and Destructors
-        OpenGLTexture(const std::string& path, bool inverted);
+        OpenGLTexture(const std::string& path, bool minLinear, bool magLinear);
         OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32_t size);
         virtual ~OpenGLTexture();
 

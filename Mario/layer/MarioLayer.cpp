@@ -290,7 +290,7 @@ void MarioLayer::InitBackgroundData() {
     IK_CLIENT_LOG_SEPARATOR();
     IK_INFO("    Initializing the background data");
 
-    s_BgData->Sprite = Renderer::GetTexture(AssetManager::GetClientAsset("textures/MarioTile.png"));
+    s_BgData->Sprite = Renderer::GetTexture(AssetManager::GetClientAsset("textures/MarioTile.png"), false, false);
     
     // Initialize all Subtextures for all theme
     StoreSubtextureOfEachTile();

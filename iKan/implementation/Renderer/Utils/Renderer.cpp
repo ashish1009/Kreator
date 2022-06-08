@@ -179,6 +179,8 @@ std::shared_ptr<Shader> Renderer::GetShader(const std::string& path) {
 // ---------------- Texture Manager ----------------------------
 /// Generate and store a new Texture if not created already. Else return already created Texture
 /// @param path Texture file path
-std::shared_ptr<Texture> Renderer::GetTexture(const std::string& path) {
-    return TextureLibrary::GetTexture(path);
+/// @param minLinear flag is min filter is linear
+/// @param magLinear flag is mag filter is linear
+std::shared_ptr<Texture> Renderer::GetTexture(const std::string& path, bool minLinear, bool magLinear) {
+    return TextureLibrary::GetTexture(path, minLinear, magLinear);
 }

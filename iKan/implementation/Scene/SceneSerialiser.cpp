@@ -395,7 +395,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 TextureComponent textComp;
                 textComp.Use = use;
                 if (texFilePath != "")
-                    textComp.Component = Texture::Create(texFilePath);
+                    textComp.Component = Renderer::GetTexture(texFilePath);
                 
                 auto& cc = deserializedEntity->AddComponent<CircleComponent>(textComp, thickness, fade, color, tilingFactor);
                 
@@ -449,7 +449,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                             textures[texIdx].Use = meshComponent["Use " + name + texIStr].as<bool>();
                             auto path = meshComponent["Path " + name + texIStr].as<std::string>();
                             if (path != "")
-                                textures[texIdx].Component = Texture::Create(path);
+                                textures[texIdx].Component = Renderer::GetTexture(path);
                             else
                                 textures[texIdx].Component = nullptr;
                             

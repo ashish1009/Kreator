@@ -18,7 +18,9 @@ namespace iKan {
         UUID(uint64_t uuid);
         UUID(const UUID& other);
         
+        /// return the UUID as uint64_t
         operator uint64_t () { return m_UUID; }
+        /// return the UUID as const uint64_t
         operator const uint64_t () const { return m_UUID; }
 
     private:

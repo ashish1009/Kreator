@@ -91,7 +91,7 @@ void QuadComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTex
 CircleComponent::CircleComponent(float thickness, float fade) : Thickness(thickness), Fade(fade) {}
 CircleComponent::CircleComponent(const TextureComponent& texComp, float thickness, float fade, const glm::vec4& color, float tilingFactor) : Texture(texComp), Color(color), TilingFactor(tilingFactor), Thickness(thickness), Fade(fade) {}
 CircleComponent::CircleComponent(const std::shared_ptr<iKan::Texture>& texture) { Texture.Component = texture; }
-CircleComponent::CircleComponent(const std::string& texturePath) { Texture.Component = Texture::Create(texturePath);}
+CircleComponent::CircleComponent(const std::string& texturePath) { Texture.Component = Renderer::GetTexture(texturePath);}
 CircleComponent::CircleComponent(const CircleComponent& other) : Texture(other.Texture), Color(other.Color), TilingFactor(other.TilingFactor), Thickness(other.Thickness), Fade(other.Fade) { IK_CORE_INFO("Copying Circle Component"); }
 /// Render Imgui for Circle Component
 void CircleComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTexture) {
@@ -103,7 +103,7 @@ void CircleComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultT
     size_t texId = (Texture.Component ? Texture.Component->GetRendererID() : defaultTexture->GetRendererID());
     ImGui::Image((void*)texId, ImVec2(40.0f, 40.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
     PropertyGrid::DropConent([this](const std::string& path){
-        Texture.Component = Texture::Create(path);
+        Texture.Component = Renderer::GetTexture(path);
     });
     
     ImGui::NextColumn();

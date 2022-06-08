@@ -73,15 +73,14 @@ OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32
 
 /// Open GL Texture Constructor
 /// @param path Texture file path
-OpenGLTexture::OpenGLTexture(const std::string& path, bool inverted)
+OpenGLTexture::OpenGLTexture(const std::string& path, bool minLinear, bool magLinear)
 : m_Filepath(path), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA) {
     PROFILE();
 
     if (m_RendererID)
         glDeleteTextures(1, &m_RendererID);
     
-    if (inverted)
-        stbi_set_flip_vertically_on_load(1);
+    stbi_set_flip_vertically_on_load(1);
     
     m_TextureData = stbi_load(m_Filepath.c_str(), &m_Width, &m_Height, &m_Channel, 0);
     
@@ -118,8 +117,16 @@ OpenGLTexture::OpenGLTexture(const std::string& path, bool inverted)
         Renderer::AddRendererIDs(m_RendererID);
         glBindTexture(GL_TEXTURE_2D, m_RendererID);
         
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        if (minLinear)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        else
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        
+        if (magLinear)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        else
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         

@@ -15,9 +15,12 @@ namespace iKan {
     /// - Window and Application class sotring the time step of each frame, passing to all Layer via Update(Timestep)
     class Timestep {
     public:
+        /// Times Step Constructor
+        /// @param time Initial time to be set
         Timestep(TIME time = 0.0f);
         ~Timestep() = default;
         
+        /// Return the Time in type TIME
         operator TIME() const;
         
         /// Get the time step (Time took to render 1 Frame) in Seconds

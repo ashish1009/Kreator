@@ -15,7 +15,7 @@ namespace iKan {
     private:
         TextureLibrary() = default;
 
-        static std::shared_ptr<Texture> GetTexture(const std::string& path);
+        static std::shared_ptr<Texture> GetTexture(const std::string& path, bool minLinear = true, bool magLinear = true);
         static void ResetTextures();
 
         static std::unordered_map<std::string, std::shared_ptr<Texture>> s_TextureLibrary;

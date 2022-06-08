@@ -16,10 +16,15 @@ namespace iKan {
     public:
         virtual ~WindowResizeEvent() = default;
         
+        /// Window Resize Event constructor
+        /// @param width width of new window
+        /// @param height height of new window
         WindowResizeEvent(uint32_t width, uint32_t height)
         : m_Width(width), m_Height(height) {}
         
+        /// return the width of window
         uint32_t GetWidth() const { return m_Width; }
+        /// return the height of window
         uint32_t GetHeight() const { return m_Height; }
         
         EVENT_CLASS_TYPE(WindowResize);

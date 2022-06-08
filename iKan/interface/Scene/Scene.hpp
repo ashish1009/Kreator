@@ -100,6 +100,7 @@ namespace iKan {
         const std::shared_ptr<EditorCamera>& GetEditorCamera() const;
         
         /// Create Scene instance
+        /// @param path path of scene file
         static std::shared_ptr<Scene> Create(const std::string& path = "Unsaved Scene");
 
     private:

@@ -17,10 +17,15 @@ namespace iKan {
     public:
         virtual ~MouseMovedEvent() = default;
         
+        /// Mouse moved event
+        /// @param x X position of Mouse
+        /// @param y Y position of Mouse
         MouseMovedEvent(float x, float y)
         : m_MouseX(x), m_MouseY(y) {}
         
+        /// Return the X position of mouse
         float GetX() const { return m_MouseX; }
+        /// Return the Y position of mouse
         float GetY() const { return m_MouseY; }
         
         EVENT_CLASS_TYPE(MouseMoved);
@@ -36,10 +41,15 @@ namespace iKan {
     public:
         virtual ~MouseScrolledEvent() = default;
         
+        /// Mosue Scroll Event
+        /// @param xOffset x Offset of Scrolling
+        /// @param yOffset y Offset of Scrolling
         MouseScrolledEvent(float xOffset, float yOffset)
         : m_XOffset(xOffset), m_YOffset(yOffset) {}
         
+        /// return x Offset of Scrolling
         float GetXOffset() const { return m_XOffset; }
+        /// return y Offset of Scrolling
         float GetYOffset() const { return m_YOffset; }
         
         EVENT_CLASS_TYPE(MouseScrolled);
@@ -54,6 +64,7 @@ namespace iKan {
     class MouseButtonEvent : public Event {
     public:
         virtual ~MouseButtonEvent() = default;
+        /// return the Mouse button pressed
         MouseButton GetMouseButton() const { return m_Button; }
         
         EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
@@ -70,6 +81,8 @@ namespace iKan {
     public:
         virtual ~MouseButtonPressedEvent() = default;
         
+        /// Mouse button pressed Event
+        /// @param button Mouse button pressed
         MouseButtonPressedEvent(MouseButton button)
         : MouseButtonEvent(button) {}
         
@@ -81,6 +94,8 @@ namespace iKan {
     public:
         virtual ~MouseButtonReleasedEvent() = default;
         
+        /// Mouse button release ebent
+        /// @param button Mouse button released
         MouseButtonReleasedEvent(MouseButton button)
         : MouseButtonEvent(button) {}
         

@@ -16,6 +16,7 @@ namespace iKan {
     class KeyEvent : public Event {
     public:
         virtual ~KeyEvent() = default;
+        /// return the key code of event
         KeyCode GetKeyCode() const { return m_Code; }
         
         EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
@@ -33,9 +34,13 @@ namespace iKan {
     public:
         virtual ~KeyPressedEvent() = default;
         
+        /// Key pressed event
+        /// @param keycode Key code of event
+        /// @param repeatCount repeat count
         KeyPressedEvent(KeyCode keycode, int32_t repeatCount)
         : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
         
+        /// return the count of key repeated
         int32_t GetRepeatCount() const { return m_RepeatCount; }
         
         EVENT_CLASS_TYPE(KeyPressed);
@@ -49,6 +54,8 @@ namespace iKan {
     public:
         virtual ~KeyReleasedEvent() = default;
         
+        /// Key Release Event
+        /// @param keycode Key code that released
         KeyReleasedEvent(KeyCode keycode)
         : KeyEvent(keycode) {}
         
@@ -60,6 +67,8 @@ namespace iKan {
     public:
         virtual ~KeyTypedEvent() = default;
         
+        /// Key Type event
+        /// @param keycode Key code pressed
         KeyTypedEvent(KeyCode keycode)
         : KeyEvent(keycode) {}
         
