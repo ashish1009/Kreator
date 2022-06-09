@@ -70,6 +70,8 @@ namespace Chess {
         Player m_Players[MAX_PLAYER];
         
         Color m_Turn = Color::Black;
+        Color m_Winner = Color::MAX_PLAYER; // Neither Black or white is winner in start of game
+
     };
 
 }

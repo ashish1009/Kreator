@@ -184,6 +184,9 @@ void Piece::UpdatePosition(int8_t rowIdx, int8_t colIdx) {
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool Pawn_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {\
+    if (abs(Row - rowIdx) > 1 || abs(Col - colIdx) > 1)
+        return false;
+    
     // if destination block is EMPTY
     if (!blocks[rowIdx][colIdx]->Piece) {
         return ValidateStraightMove(Row, Col, rowIdx, colIdx, blocks);
@@ -232,6 +235,9 @@ std::vector<BLOCK_ROW_COL> Pawn_::GetPossibleMovePosition() const {
 /// @param rowIdx new row position of Piece
 /// @param colIdx new row column position of Piece
 bool King_::Validate(int8_t rowIdx, int8_t colIdx, std::shared_ptr<Block> blocks[MAX_ROWS][MAX_COLUMNS]) {
+    if (abs(Row - rowIdx) > 1 || abs(Col - colIdx) > 1)
+        return false;
+
     return ValidateDiagonalMove(Row, Col, rowIdx, colIdx, blocks) | ValidateStraightMove(Row, Col, rowIdx, colIdx, blocks);
 }
 

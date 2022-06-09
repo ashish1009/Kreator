@@ -169,7 +169,13 @@ void ChessLayer::RenderGui() {
             ImGui::Separator();
         }
         
-        ImGui::Text("TURN  : %s", ChessUtils::ColorString(m_Turn).c_str());
+        ImGui::Text("TURN   : %s", ChessUtils::ColorString(m_Turn).c_str());
+        ImGui::Separator();
+        if (m_Winner != Color::MAX_PLAYER)
+            ImGui::Text("WINNER : %s", ChessUtils::ColorString(m_Winner).c_str());
+        else
+            ImGui::Text("WINNER : ");
+        
         ImGui::Separator();
 
         if (m_ViewportData.HoveredEntity) {
@@ -450,21 +456,26 @@ void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
     // if Validation of new postion fails then return
     if (!m_SelectedPiece->ValidateAndUpdatePostion(m_HoveredBlock->Row, m_HoveredBlock->Col, m_Blocks))
         return;
-    
+        
     // Store the Piece entity before Updating the piece
     std::shared_ptr<Entity> entityToBeDeleted;
     if (!isBlockEmpty) {
         entityToBeDeleted = m_HoveredBlock->Piece->Entity;
         m_Scene->DestroyEntity(entityToBeDeleted);
+        
+        if (m_HoveredBlock->Piece->Name == Piece::Name::King) {
+            m_Winner = m_Turn;
+            return;
+        }
     }
-    
+        
     // If validate result is true then update Selected Block and new hovered block Piece
     EmptyBlock(prevblockPtr);
     FillBlock(m_HoveredBlock, m_SelectedPiece);
     
     // Deselect the block piece
     DeSelectPiece();
-    
+
     // Update the turn of player
     m_Turn = (m_Turn == Color::Black) ? Color::White : Color::Black;
 }
