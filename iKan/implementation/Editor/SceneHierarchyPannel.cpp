@@ -206,7 +206,7 @@ void SceneHierarchyPannel::RenderImgui() {
     // Delete the Entity
     if (m_EntityToBeDeleted) {
         const auto& group = m_EntityToBeDeleted->GetComponent<TagComponent>().Group;
-        auto& entities = m_EntityGroups[group];
+        auto& entities = m_EntityGroups.at(group);
         auto pos = std::find(entities.begin(), entities.end(), m_EntityToBeDeleted);
         
         if (pos != entities.end())
@@ -216,6 +216,17 @@ void SceneHierarchyPannel::RenderImgui() {
         if (m_SelectedEntity == m_EntityToBeDeleted)
             m_SelectedEntity = nullptr;
         m_EntityToBeDeleted = nullptr;
+    }
+    
+    // Remove Entity from gorup if Group is changed
+    if (m_EntityToRemoveFromGroup) {
+        auto& entities = m_EntityGroups.at(m_DeleteEntityFromGroup);
+        auto pos = std::find(entities.begin(), entities.end(), m_EntityToRemoveFromGroup);
+        
+        if (pos != entities.end())
+            entities.erase(pos);
+
+        m_EntityToRemoveFromGroup = nullptr;
     }
 
     ImGui::PopID();
@@ -251,15 +262,13 @@ void SceneHierarchyPannel::DrawEntityTreeNode(const std::shared_ptr<Entity>& ent
         
         ImGui::Separator();
         
+        const auto& selectedEntityGroup = m_SelectedEntity->GetComponent<TagComponent>().Group;
         if (ImGui::BeginMenu("Add to group")) {
             for (auto [group, entities] : m_EntityGroups) {
-                if (ImGui::MenuItem(group.c_str())) {
+                if (ImGui::MenuItem(group.c_str(), nullptr, false, group != selectedEntityGroup)) {
                     if (m_EntityGroups.find(entity->GetComponent<TagComponent>().Group) != m_EntityGroups.end()) {
-                        // if this entity was present in some group then just remove the entiry
-                        auto& entitiesInGroup = m_EntityGroups[entity->GetComponent<TagComponent>().Group];
-                        auto pos = std::find(entitiesInGroup.begin(), entitiesInGroup.end(), entity);
-                        if (pos != entitiesInGroup.end())
-                            entitiesInGroup.erase(pos);
+                        m_DeleteEntityFromGroup = entity->GetComponent<TagComponent>().Group;
+                        m_EntityToRemoveFromGroup = entity;
                     }
                     entity->GetComponent<TagComponent>().Group = group;
                 }

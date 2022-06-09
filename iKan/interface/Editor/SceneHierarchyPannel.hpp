@@ -55,7 +55,8 @@ namespace iKan {
         void AddComponent();
         
         // Member variables
-        std::shared_ptr<Entity> m_SelectedEntity, m_EntityToBeDeleted;
+        std::string m_DeleteEntityFromGroup;
+        std::shared_ptr<Entity> m_SelectedEntity, m_EntityToBeDeleted, m_EntityToRemoveFromGroup;
         std::shared_ptr<Scene> m_Context;
         std::unordered_map<std::string, std::vector<std::shared_ptr<Entity>>> m_EntityGroups;
     };
