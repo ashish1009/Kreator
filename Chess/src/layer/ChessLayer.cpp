@@ -117,7 +117,8 @@ void ChessLayer::Update(Timestep ts) {
         (uint32_t)m_ViewportData.Size.x > 0 && (uint32_t)m_ViewportData.Size.y > 0 && // zero sized framebuffer is invalid
         (spec.Width != (uint32_t)m_ViewportData.Size.x || spec.Height != (uint32_t)m_ViewportData.Size.y)) {
         m_ViewportData.FrameBuffer->Resize((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
-        m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);    }
+        m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
+    }
     
     Renderer::ResetStatsEachFrame();
 
@@ -545,7 +546,6 @@ std::shared_ptr<Entity> ChessLayer::CreatePieceEntity(const std::string& entityN
 
 /// Reset the Game
 void ChessLayer::ResetGame() {
-    // Make new scene as deleting Entity is causing Issue
     // Reset all the blocks
     for (int8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
         for (int8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
@@ -588,7 +588,22 @@ void ChessLayer::ResetGame() {
     m_Turn = Color::Black;
     m_Winner = Color::MAX_PLAYER; // Neither Black or white is winner in start of game
     
-    // Reinitialize the Game
+    // Make new scene as deleting Entity is causing Issue
+    // Create the Scene for rendering
+    m_Scene.reset();
+    m_Scene = Scene::Create();
+    m_Scene->PlayScene();
+    
+    m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
+
+    // Setup the scene Camera Entity
+    m_CameraEntity = m_Scene->CreateEntity("Camera");
+    m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
+
+    // Shifiting the camera and Border block as {0, 0} is our first block (bottom left) which is at the center
+    auto& camPosition = m_CameraEntity->GetComponent<TransformComponent>().Translation;
+    camPosition = { 3.5f, 3.5f, 0.0f };
+
     InitBlocksData();
     InitPlayerData();
 }
