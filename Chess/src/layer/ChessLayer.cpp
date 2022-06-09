@@ -169,53 +169,58 @@ void ChessLayer::RenderGui() {
             ImGui::Separator();
         }
         
-        ImGui::Text("TURN   : %s", ChessUtils::ColorString(m_Turn).c_str());
-        ImGui::Separator();
-        if (m_Winner != Color::MAX_PLAYER)
+        if (m_Winner != Color::MAX_PLAYER) {
             ImGui::Text("WINNER : %s", ChessUtils::ColorString(m_Winner).c_str());
-        else
-            ImGui::Text("WINNER : ");
-        
-        ImGui::Separator();
-
-        if (m_ViewportData.HoveredEntity) {
-            const auto& entity = m_ViewportData.HoveredEntity;
-            const auto& entityName = entity->GetComponent<TagComponent>().Tag;
-
-            // If entity curesor reached outside the board
-            // TODO: Fix this later as it will still work outside th border
-            if (entityName != "Border") { // Should be same as Border entity name
-                // get the position of Block as Row and Column
-                const auto& entityPosition = entity->GetComponent<TransformComponent>().Translation;
-                const int8_t rowIdx = (int8_t)entityPosition.y;
-                const int8_t colIdx = (int8_t)entityPosition.x;
-                
-                // Extract Block from hovered Block Row and column
-                m_HoveredBlock = m_Blocks[rowIdx][colIdx];
-
-                // Update the position of Entity that render outline over block
-                auto& HoveredEntityPos = m_EntityForOutlineHoveredBlock->GetComponent<TransformComponent>().Translation;
-                HoveredEntityPos = { colIdx, rowIdx, 0.1f };
-
-                ImGui::Text("Hovered Block");
-                ImGui::Text("Row : %d", m_HoveredBlock->Row);
-                ImGui::Text("Col : %d", m_HoveredBlock->Col);
-                ImGui::Separator();
-                if (const std::shared_ptr<Piece>& piece = m_HoveredBlock->Piece) {
-                    ImGui::Text("Piece");
-                    ImGui::Text("Name    : %s", ChessUtils::PieceString(piece->Name).c_str());
-                    ImGui::Text("Color   : %s", ChessUtils::ColorString(piece->Color).c_str());
-                    ImGui::Text("Row     : %d", piece->Row);
-                    ImGui::Text("Col     : %d", piece->Col);
-                    ImGui::Separator();
-                }
-                else
-                    ImGui::Text("Piece : Empty");
+            if (ImGui::Button("RESET")) {
+                ResetGame();
             }
         }
         else {
-            // deselecting Hovered Block
-            m_HoveredBlock = nullptr;
+            ImGui::Text("WINNER : ");
+            ImGui::Separator();
+
+            ImGui::Text("TURN   : %s", ChessUtils::ColorString(m_Turn).c_str());
+            ImGui::Separator();
+
+            if (m_ViewportData.HoveredEntity) {
+                const auto& entity = m_ViewportData.HoveredEntity;
+                const auto& entityName = entity->GetComponent<TagComponent>().Tag;
+
+                // If entity curesor reached outside the board
+                // TODO: Fix this later as it will still work outside th border
+                if (entityName != "Border") { // Should be same as Border entity name
+                    // get the position of Block as Row and Column
+                    const auto& entityPosition = entity->GetComponent<TransformComponent>().Translation;
+                    const int8_t rowIdx = (int8_t)entityPosition.y;
+                    const int8_t colIdx = (int8_t)entityPosition.x;
+                    
+                    // Extract Block from hovered Block Row and column
+                    m_HoveredBlock = m_Blocks[rowIdx][colIdx];
+
+                    // Update the position of Entity that render outline over block
+                    auto& HoveredEntityPos = m_EntityForOutlineHoveredBlock->GetComponent<TransformComponent>().Translation;
+                    HoveredEntityPos = { colIdx, rowIdx, 0.1f };
+
+                    ImGui::Text("Hovered Block");
+                    ImGui::Text("Row : %d", m_HoveredBlock->Row);
+                    ImGui::Text("Col : %d", m_HoveredBlock->Col);
+                    ImGui::Separator();
+                    if (const std::shared_ptr<Piece>& piece = m_HoveredBlock->Piece) {
+                        ImGui::Text("Piece");
+                        ImGui::Text("Name    : %s", ChessUtils::PieceString(piece->Name).c_str());
+                        ImGui::Text("Color   : %s", ChessUtils::ColorString(piece->Color).c_str());
+                        ImGui::Text("Row     : %d", piece->Row);
+                        ImGui::Text("Col     : %d", piece->Col);
+                        ImGui::Separator();
+                    }
+                    else
+                        ImGui::Text("Piece : Empty");
+                }
+            }
+            else {
+                // deselecting Hovered Block
+                m_HoveredBlock = nullptr;
+            }
         }
         
         ImGui::End(); // Debug Window
@@ -251,6 +256,9 @@ void ChessLayer::EventHandler(Event& event) {
 /// Mouse button Event
 /// @param e Mouse Button event handler
 bool ChessLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
+    if (!m_ViewportData.Hovered)
+        return false;
+    
     // Take Action only if Hovered block is not null then return
     if (!m_HoveredBlock)
         return false;
@@ -367,6 +375,9 @@ void ChessLayer::InitBlocksData() {
             auto& blockPosition = blockEntity->GetComponent<TransformComponent>().Translation;
             blockPosition.x = m_Blocks[rowIdx][colIdx]->Col; // X pixel is equivalent to Column
             blockPosition.y = m_Blocks[rowIdx][colIdx]->Row; // Y pixel is equivalent to Row
+            
+            // Store each entity of block to delete them before re Starting game
+            m_BlockEntities.emplace_back(blockEntity);
         }
     }
 }
@@ -465,7 +476,6 @@ void ChessLayer::ValidateAndUpdateMove(bool isBlockEmpty) {
         
         if (m_HoveredBlock->Piece->Name == Piece::Name::King) {
             m_Winner = m_Turn;
-            return;
         }
     }
         
@@ -531,4 +541,54 @@ std::shared_ptr<Entity> ChessLayer::CreatePieceEntity(const std::string& entityN
     tc.Scale = glm::vec3(0.5f, 0.5f, 1.0f);
     
     return entity;
+}
+
+/// Reset the Game
+void ChessLayer::ResetGame() {
+    // Make new scene as deleting Entity is causing Issue
+    // Reset all the blocks
+    for (int8_t rowIdx = 0; rowIdx < MAX_ROWS; rowIdx++) {
+        for (int8_t colIdx = 0; colIdx < MAX_COLUMNS; colIdx++) {
+            if (m_Blocks[rowIdx][colIdx]->Piece) 
+                m_Scene->DestroyEntity(m_Blocks[rowIdx][colIdx]->Piece->Entity);
+
+            m_Blocks[rowIdx][colIdx].reset();
+        }
+    }
+    
+    for (size_t blockEntityIdx = 0; blockEntityIdx < m_BlockEntities.size(); blockEntityIdx++) {
+        m_Scene->DestroyEntity(m_BlockEntities[blockEntityIdx]);
+        m_BlockEntities[blockEntityIdx].reset();
+    }
+    m_BlockEntities.clear();
+    
+    // Reset Selected and Hovered Block Entity and Textures
+    m_Scene->DestroyEntity(m_EntityForOutlineHoveredBlock);
+    m_EntityForOutlineHoveredBlock.reset();
+    
+    m_Scene->DestroyEntity(m_EntityForOutlineSelectedBlock);
+    m_EntityForOutlineSelectedBlock.reset();
+    
+    m_HoveredOutlineTexture.reset();
+    m_SelectedOutlineTexture.reset();
+    m_PossibleMoveOutlineTexture.reset();
+    
+    // Clear the vector of possible move entities
+    for (size_t possibleEntity = 0; possibleEntity < m_PossibleOutlineEntities.size(); possibleEntity++) {
+        m_Scene->DestroyEntity(m_PossibleOutlineEntities[possibleEntity]);
+        m_PossibleOutlineEntities[possibleEntity].reset();
+    }
+    m_PossibleOutlineEntities.clear();
+    
+    // reset the Hovered and selected block
+    m_HoveredBlock.reset();
+    m_SelectedPiece.reset();
+
+    // Reset the Turn and Winner
+    m_Turn = Color::Black;
+    m_Winner = Color::MAX_PLAYER; // Neither Black or white is winner in start of game
+    
+    // Reinitialize the Game
+    InitBlocksData();
+    InitPlayerData();
 }

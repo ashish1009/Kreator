@@ -48,7 +48,9 @@ namespace Chess {
         Piece (enum Name name, Chess::Color color, int32_t rowIdx, int8_t colIdx)
         : Name(name), Color(color), Row(rowIdx), Col(colIdx) {}
         
-        virtual ~Piece() = default;
+        virtual ~Piece() {
+            this->Entity.reset();
+        }
         
         /// Validate the move of Piece at new position
         /// @param rowIdx new row position of Piece

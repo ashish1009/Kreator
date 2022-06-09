@@ -49,15 +49,18 @@ namespace Chess {
         void ShowPossibleMoves();
         void DeletePossibleMovesEntities();
         bool IsBlockEmpty(std::shared_ptr<Block> block);
+        void ResetGame();
         
         // Member variabls
         // Layer Data
         Viewport m_ViewportData;
         std::shared_ptr<Scene> m_Scene;
-        
-        // Chess Data
         std::shared_ptr<Entity> m_CameraEntity;
+
+        // Chess Data
         std::shared_ptr<Block> m_Blocks[MAX_ROWS][MAX_COLUMNS];
+        std::vector<std::shared_ptr<Entity>> m_BlockEntities;
+        
         std::shared_ptr<Entity> m_EntityForOutlineHoveredBlock, m_EntityForOutlineSelectedBlock;
         std::shared_ptr<Texture> m_HoveredOutlineTexture, m_SelectedOutlineTexture, m_PossibleMoveOutlineTexture;
         

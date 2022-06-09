@@ -28,6 +28,10 @@ namespace Chess {
         }
         
         Block(int32_t row, int32_t col) : Row(row), Col(col) {}
+        ~Block() {
+            Piece.reset();
+            Piece = nullptr;
+        }
     };
 
 }
