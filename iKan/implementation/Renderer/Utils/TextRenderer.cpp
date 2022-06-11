@@ -23,7 +23,7 @@ struct TextData {
     std::shared_ptr<VertexBuffer> VertexBuffer;
     std::shared_ptr<Shader> Shader;
 
-    std::map<GLchar, TextRenderer::Character> Characters;
+    std::map<GLchar, std::shared_ptr<CharTexture>> CharTextureMap;
 };
 static TextData* s_TextData;
 
@@ -72,36 +72,12 @@ void TextRenderer::Init() {
             IK_CORE_ERROR("ERROR::FREETYTPE: Failed to load Glyph");
             continue;
         }
-        
-        // generate texture
-        uint32_t texture;
-        glGenTextures(1, &texture);
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glTexImage2D(
-            GL_TEXTURE_2D,
-            0,
-            GL_RED,
-            face->glyph->bitmap.width,
-            face->glyph->bitmap.rows,
-            0,
-            GL_RED,
-            GL_UNSIGNED_BYTE,
-            face->glyph->bitmap.buffer
-        );
-        
-        // set texture options
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         // now store character for later use
-        Character character = {
-            texture,
-            glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-            glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-            static_cast<uint32_t>(face->glyph->advance.x)
-        };
-        s_TextData->Characters.insert(std::pair<char, Character>(c, character));
+        std::shared_ptr<CharTexture> charTexture = CharTexture::Create(face,
+                                                                       glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                                                                       glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                                                                       static_cast<uint32_t>(face->glyph->advance.x));
+        s_TextData->CharTextureMap.insert(std::pair<char, std::shared_ptr<CharTexture>>(c, charTexture));
     }
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -143,13 +119,13 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
     // iterate through all characters
     std::string::const_iterator c;
     for (c = text.begin(); c != text.end(); c++) {
-        Character ch = s_TextData->Characters[*c];
+        std::shared_ptr<CharTexture> ch = s_TextData->CharTextureMap[*c];
 
-        float xpos = x + ch.Bearing.x * scale;
-        float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
+        float xpos = x + ch->GetBearing().x * scale;
+        float ypos = y - (ch->GetSize().y - ch->GetBearing().y) * scale;
 
-        float w = ch.Size.x * scale;
-        float h = ch.Size.y * scale;
+        float w = ch->GetSize().x * scale;
+        float h = ch->GetSize().y * scale;
         // update VBO for each character
         float vertices[6][4] = {
             { xpos,     ypos + h,   0.0f, 0.0f },
@@ -162,14 +138,14 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
         };
         
         // render glyph texture over quad
-        glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+        glBindTexture(GL_TEXTURE_2D, ch->GetRendererID());
         
         s_TextData->VertexBuffer->SetData(vertices, sizeof(vertices));
 
         // render quad
         glDrawArrays(GL_TRIANGLES, 0, 6);
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+        x += (ch->GetAdvance() >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);

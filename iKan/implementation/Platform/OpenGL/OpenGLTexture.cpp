@@ -195,7 +195,8 @@ void OpenGLTexture::Unbind() const {
 /// @param size Size of freetype glyph
 /// @param bearing bearing of freetype glyph
 /// @param advance advance of freetype glyph
-OpenGLCharTexture::OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size, const glm::ivec2& bearing, uint32_t advance) {
+OpenGLCharTexture::OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size, const glm::ivec2& bearing, uint32_t advance)
+: m_Size(size), m_Bearing(bearing), m_Advance(advance) {
     // generate texture
     glGenTextures(1, &m_RendererID);
     while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
