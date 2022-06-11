@@ -49,5 +49,8 @@ private:
     // Temp Data
     std::shared_ptr<SceneCamera> m_SceneCamera;
     std::shared_ptr<EditorCamera> m_EditorCamera;
+    
+    std::shared_ptr<Shader> m_TextShader;
+    void RenderText(std::string text, float x, float y, float scale, glm::vec3 color);
 };
 

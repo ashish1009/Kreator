@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E1CF3842854E32600CEFE10 /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1CF37C2854DE4000CEFE10 /* libfreetype.6.dylib */; };
 		3E6575E82837AFD9006B0C81 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6575E72837AFD8006B0C81 /* Cocoa.framework */; };
 		3E6575EA2837AFDD006B0C81 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6575E92837AFDD006B0C81 /* IOKit.framework */; };
 		3E6575EC2837AFE2006B0C81 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6575EB2837AFE2006B0C81 /* OpenGL.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E1CF37A2854DDF300CEFE10 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../iKan/vendors/gui/gui/freetype/lib/libfreetype.a; sourceTree = "<group>"; };
+		3E1CF37C2854DE4000CEFE10 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../iKan/vendors/gui/gui/freetype/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
 		3E6575E72837AFD8006B0C81 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3E6575E92837AFDD006B0C81 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		3E6575EB2837AFE2006B0C81 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -54,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E1CF3842854E32600CEFE10 /* libfreetype.6.dylib in Frameworks */,
 				3EB1C896283BCACB0098836F /* libassimp.5.dylib in Frameworks */,
 				3EB1C897283BCACB0098836F /* libIrrXML.dylib in Frameworks */,
 				3E6575EC2837AFE2006B0C81 /* OpenGL.framework in Frameworks */,
@@ -105,6 +109,8 @@
 		3E6A4D6528360A11003578F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E1CF37C2854DE4000CEFE10 /* libfreetype.6.dylib */,
+				3E1CF37A2854DDF300CEFE10 /* libfreetype.a */,
 				3EB1C894283BCACB0098836F /* libassimp.5.dylib */,
 				3EB1C895283BCACB0098836F /* libIrrXML.dylib */,
 				3E6575EB2837AFE2006B0C81 /* OpenGL.framework */,
@@ -327,6 +333,8 @@
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
+					"${PROJECT_DIR}/../iKan/vendors/gui/gui/freetype/include/freetype2",
+					"${PROJECT_DIR}/../iKan/vendors/glad/include",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -346,6 +354,8 @@
 					"${PROJECT_DIR}/../iKan/vendors/gui/gui",
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
+					"${PROJECT_DIR}/../iKan/vendors/gui/gui/freetype/include/freetype2",
+					"${PROJECT_DIR}/../iKan/vendors/glad/include",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";

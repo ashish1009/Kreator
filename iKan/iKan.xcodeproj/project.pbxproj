@@ -154,6 +154,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E1CF37F2854E1BC00CEFE10 /* TextShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextShader.glsl; sourceTree = "<group>"; };
 		3E2FA0E32839204100EE289A /* OpenGLRendererPipeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRendererPipeline.cpp; sourceTree = "<group>"; };
 		3E2FA0E42839204100EE289A /* OpenGLRendererPipeline.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRendererPipeline.hpp; sourceTree = "<group>"; };
 		3E2FA0E92839205700EE289A /* OpenGLRendererBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRendererBuffer.cpp; sourceTree = "<group>"; };
@@ -723,6 +724,7 @@
 		3EE244B0283A921400640481 /* 2D */ = {
 			isa = PBXGroup;
 			children = (
+				3E1CF37F2854E1BC00CEFE10 /* TextShader.glsl */,
 				3EE244B1283A921400640481 /* BatchQuadShader.glsl */,
 				3E820092283B738A0024DF91 /* BatchCircleShader.glsl */,
 			);
