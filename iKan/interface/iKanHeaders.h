@@ -23,6 +23,10 @@
 // Imgui file
 #include <imgui.h>
 
+// Freetype
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 // glm math library
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -59,6 +63,7 @@
 #include <Renderer/Utils/Renderer.hpp>
 #include <Renderer/Utils/Camera.hpp>
 #include <Renderer/Utils/BatchRenderer.hpp>
+#include <Renderer/Utils/TextRenderer.hpp>
 #include <Renderer/Utils/Mesh.hpp>
 #include <Renderer/Graphics/Pipeline.hpp>
 #include <Renderer/Graphics/Buffers.hpp>

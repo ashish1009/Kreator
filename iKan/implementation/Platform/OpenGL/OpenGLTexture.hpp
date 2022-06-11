@@ -53,4 +53,25 @@ namespace TextureUtils {
         std::string m_Filepath = "";
     };
     
+    /// Implementaiton for Open GL Char Texture
+    class OpenGLCharTexture : public CharTexture {
+    public:
+        OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size, const glm::ivec2& bearing, uint32_t advance);
+        virtual ~OpenGLCharTexture() = default;
+ 
+        RendererID GetRendererID() const override;
+        void Bind(uint32_t slot = 0) const override;
+        void Unbind() const  override;
+        
+        glm::ivec2 GetSize() const override { return m_Size; }
+        glm::ivec2 GetBearing() const override { return m_Bearing; }
+        uint32_t GetAdvance() const override { return m_Advance; }
+
+    private:
+        RendererID m_RendererID;
+        glm::ivec2 m_Size;
+        glm::ivec2 m_Bearing;
+        uint32_t   m_Advance;
+    };
+    
 }

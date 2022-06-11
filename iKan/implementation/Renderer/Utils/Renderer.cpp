@@ -8,6 +8,7 @@
 #include "Renderer.hpp"
 #include "Renderer/Utils/RendererAPI.hpp"
 #include "Renderer/Utils/BatchRenderer.hpp"
+#include "Renderer/Utils/TextRenderer.hpp"
 #include "Renderer/Utils/RendererStats.hpp"
 #include "Renderer/Utils/ShaderLibrary.hpp"
 #include "Renderer/Utils/TextureLibrary.hpp"
@@ -31,6 +32,7 @@ void Renderer::Init() {
     }
     s_RendererAPI->Init();
     BatchRenderer::Init();
+    TextRenderer::Init();
     PropertyGrid::Init();
 }
 
@@ -43,6 +45,7 @@ void Renderer::Shutdown() {
         s_RendererAPI.reset();
     }
     BatchRenderer::Shutdown();
+    TextRenderer::Shutdown();
     PropertyGrid::Shutdown();
     
     // Destorry the Shader library and Texture

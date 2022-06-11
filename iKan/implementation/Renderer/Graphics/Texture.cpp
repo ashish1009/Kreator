@@ -34,6 +34,19 @@ std::shared_ptr<Texture> Texture::Create(const std::string& path, bool minLinear
     }
 }
 
+/// Create Emptry Texture with user Defined Data of size height and Width
+/// @param size Size of freetype glyph
+/// @param bearing bearing of freetype glyph
+/// @param advance advance of freetype glyph
+std::shared_ptr<CharTexture> CharTexture::Create(const FT_Face& face, const glm::ivec2& size, const glm::ivec2& bearing, uint32_t advance) {
+    switch (Renderer::GetAPI()) {
+        case Renderer::API::OpenGL: return std::make_shared<OpenGLCharTexture>(face, size, bearing, advance);
+        case Renderer::API::None:
+        default: IK_CORE_ASSERT(false, "Invalid Renderer API (None)"); break;
+    }
+}
+
+
 TextureComponent::TextureComponent(const std::shared_ptr<Texture>& comp, bool use) : Component(comp), Use(use) {}
 TextureComponent::TextureComponent(const TextureComponent& other) : Component(other.Component), Use(other.Use) { IK_CORE_INFO("Copying TextureComponent"); }
 

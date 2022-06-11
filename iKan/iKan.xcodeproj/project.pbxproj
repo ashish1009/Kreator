@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E1CF3872854E41B00CEFE10 /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E1CF3852854E41B00CEFE10 /* TextRenderer.cpp */; };
+		3E1CF3882854E41B00CEFE10 /* TextRenderer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E1CF3862854E41B00CEFE10 /* TextRenderer.hpp */; };
 		3E2FA0E52839204100EE289A /* OpenGLRendererPipeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2FA0E32839204100EE289A /* OpenGLRendererPipeline.cpp */; };
 		3E2FA0E62839204100EE289A /* OpenGLRendererPipeline.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E2FA0E42839204100EE289A /* OpenGLRendererPipeline.hpp */; };
 		3E2FA0EB2839205700EE289A /* OpenGLRendererBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2FA0E92839205700EE289A /* OpenGLRendererBuffer.cpp */; };
@@ -155,6 +157,8 @@
 
 /* Begin PBXFileReference section */
 		3E1CF37F2854E1BC00CEFE10 /* TextShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextShader.glsl; sourceTree = "<group>"; };
+		3E1CF3852854E41B00CEFE10 /* TextRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextRenderer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
+		3E1CF3862854E41B00CEFE10 /* TextRenderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextRenderer.hpp; sourceTree = "<group>"; };
 		3E2FA0E32839204100EE289A /* OpenGLRendererPipeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRendererPipeline.cpp; sourceTree = "<group>"; };
 		3E2FA0E42839204100EE289A /* OpenGLRendererPipeline.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRendererPipeline.hpp; sourceTree = "<group>"; };
 		3E2FA0E92839205700EE289A /* OpenGLRendererBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRendererBuffer.cpp; sourceTree = "<group>"; };
@@ -362,6 +366,7 @@
 			children = (
 				3E6575F82837B662006B0C81 /* Renderer.hpp */,
 				3E6578FA2837E892006B0C81 /* BatchRenderer.hpp */,
+				3E1CF3862854E41B00CEFE10 /* TextRenderer.hpp */,
 				3E820089283B551C0024DF91 /* ShaderUniform.hpp */,
 				3E82009A283B88B40024DF91 /* Camera.hpp */,
 				3EB1C89B283BCB4D0098836F /* Mesh.hpp */,
@@ -404,6 +409,7 @@
 				3E6575FB2837B8E1006B0C81 /* RendererAPI.cpp */,
 				3E6578F62837E51E006B0C81 /* RendererStats.hpp */,
 				3E6578F92837E892006B0C81 /* BatchRenderer.cpp */,
+				3E1CF3852854E41B00CEFE10 /* TextRenderer.cpp */,
 				3EE244B4283A92D400640481 /* ShaderLibrary.cpp */,
 				3EE244B5283A92D400640481 /* ShaderLibrary.hpp */,
 				3E8200A2283B8A3A0024DF91 /* Camera.cpp */,
@@ -807,6 +813,7 @@
 				3E6575C528378FB1006B0C81 /* Window.hpp in Headers */,
 				3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */,
 				3E6575DD28379491006B0C81 /* KeyCodes.h in Headers */,
+				3E1CF3882854E41B00CEFE10 /* TextRenderer.hpp in Headers */,
 				3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */,
 				3EF2AE54283D2742009764F8 /* SceneSerialiser.hpp in Headers */,
 				3E803914283CCD870034F547 /* Material.hpp in Headers */,
@@ -930,6 +937,7 @@
 				3EB1C88F283BBA200098836F /* stb_image.cpp in Sources */,
 				3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */,
 				3EB1C8A1283BD5020098836F /* AABB.cpp in Sources */,
+				3E1CF3872854E41B00CEFE10 /* TextRenderer.cpp in Sources */,
 				3EF2AE53283D2742009764F8 /* SceneSerialiser.cpp in Sources */,
 				3E8200A4283B8A3A0024DF91 /* Camera.cpp in Sources */,
 				3E6A4D7228360F7C003578F4 /* Application.cpp in Sources */,
@@ -1120,6 +1128,7 @@
 					"${PROJECT_DIR}/vendors/enTT/include",
 					"${PROJECT_DIR}/vendors/yamlSerialiser/yaml/include",
 					"${PROJECT_DIR}/vendors/gui/guizmo",
+					"${PROJECT_DIR}/vendors/gui/gui/freetype/include/freetype2",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1155,6 +1164,7 @@
 					"${PROJECT_DIR}/vendors/enTT/include",
 					"${PROJECT_DIR}/vendors/yamlSerialiser/yaml/include",
 					"${PROJECT_DIR}/vendors/gui/guizmo",
+					"${PROJECT_DIR}/vendors/gui/gui/freetype/include/freetype2",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

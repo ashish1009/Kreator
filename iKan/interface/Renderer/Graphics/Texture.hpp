@@ -57,6 +57,36 @@ namespace iKan {
         static std::shared_ptr<Texture> Create(const std::string& path, bool minLinear = true, bool magLinear = true);
     };
     
+    /// Interface class for Storing Renderer Char Texture data. Implementation is depending on the
+    /// Supported Renerer API.
+    class CharTexture {
+    public:
+        virtual ~CharTexture() = default;
+ 
+        /// Return the Renderer ID of Texture
+        virtual RendererID GetRendererID() const = 0;
+        
+        /// Return the Size of Freetpe face
+        virtual glm::ivec2 GetSize() const = 0;
+        /// Return the Bearing of Freetpe face
+        virtual glm::ivec2 GetBearing() const = 0;
+        /// Return the Advance of Freetpe face
+        virtual uint32_t GetAdvance() const = 0;
+
+        /// Bind the Current Texture to a slot of shader
+        /// @param slot Slot of shader
+        virtual void Bind(uint32_t slot = 0) const = 0;
+        /// Unbind the Current Texture from shader slot
+        virtual void Unbind() const = 0;
+        
+        /// Create Emptry Texture with user Defined Data of size height and Width
+        /// @param face Freetpe face instance
+        /// @param size Size of freetype glyph
+        /// @param bearing bearing of freetype glyph
+        /// @param advance advance of freetype glyph
+        static std::shared_ptr<CharTexture> Create(const FT_Face& face, const glm::ivec2& size, const glm::ivec2& bearing, uint32_t advance);
+    };
+    
     /// Wrepper class to load texture and render as sprite
     class SubTexture {
     public:

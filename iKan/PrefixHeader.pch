@@ -17,6 +17,7 @@
 // C++ Files
 #include <iostream>
 #include <set>
+#include <map>
 #include <fstream>
 #include <unordered_set>
 
@@ -25,6 +26,10 @@
 
 // ImGui file
 #include <imgui.h>
+
+// Freetype
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 // glm math library
 #include <glm/glm.hpp>
