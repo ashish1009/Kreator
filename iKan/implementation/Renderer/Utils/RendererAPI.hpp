@@ -52,6 +52,7 @@ namespace iKan {
         virtual void GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData) const = 0;
         
         virtual void DrawIndexed(const std::shared_ptr<Pipeline>& va, uint32_t count) const = 0;
+        virtual void DrawArrays(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) const = 0;
         virtual void DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex) const = 0;
 
         static std::unique_ptr<RendererAPI> Create();

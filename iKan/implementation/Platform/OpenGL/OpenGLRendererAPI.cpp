@@ -28,6 +28,11 @@ void OpenGLRendererAPI::Init() const {
 
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initializeing Open GL Renderer API");
+
+    // TODO: Make API for Text enable too
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
     MultiSample(true);
     Depth(true);
     Blend(true);
@@ -114,6 +119,17 @@ void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, u
     glBindTexture(GL_TEXTURE_2D, 0);
     pipeline->Unbind();
     
+    RendererStatistics::Get().DrawCalls++;
+}
+
+/// Draw Indexed Vertex Array
+/// @param pipeline pipeline having vertex buffer and index buffer
+/// @param count number of Indices (if 0 then use index buffer of Vertex array)
+void OpenGLRendererAPI::DrawArrays(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) const {
+    pipeline->Bind();
+    glDrawArrays(GL_TRIANGLES, 0, count);
+    pipeline->Unbind();
+
     RendererStatistics::Get().DrawCalls++;
 }
 

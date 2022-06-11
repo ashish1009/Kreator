@@ -9,10 +9,7 @@
 #include "Renderer/Graphics/Shader.hpp"
 #include "Renderer/Graphics/Pipeline.hpp"
 #include "Renderer/Graphics/Texture.hpp"
-
-#include <ft2build.h>
-#include <glad/glad.h>
-#include FT_FREETYPE_H
+#include "Renderer/Utils/Renderer.hpp"
 
 using namespace iKan;
 
@@ -23,7 +20,7 @@ struct TextData {
     std::shared_ptr<VertexBuffer> VertexBuffer;
     std::shared_ptr<Shader> Shader;
 
-    std::map<GLchar, std::shared_ptr<CharTexture>> CharTextureMap;
+    std::map<char, std::shared_ptr<CharTexture>> CharTextureMap;
 };
 static TextData* s_TextData;
 
@@ -33,7 +30,6 @@ void TextRenderer::Init() {
     
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initialising the Text Renderer");
-    IK_LOG_SEPARATOR();
     
     // Create Pipeline instance
     s_TextData->Pipeline = Pipeline::Create();
@@ -62,9 +58,6 @@ void TextRenderer::Init() {
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, 48);
 
-    // disable byte-alignment restriction
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
     // load first 128 characters of ASCII set
     for (unsigned char c = 0; c < 128; c++) {
         // Load character glyph
@@ -79,7 +72,6 @@ void TextRenderer::Init() {
                                                                        static_cast<uint32_t>(face->glyph->advance.x));
         s_TextData->CharTextureMap.insert(std::pair<char, std::shared_ptr<CharTexture>>(c, charTexture));
     }
-    glBindTexture(GL_TEXTURE_2D, 0);
 
     // destroy FreeType once we're finished
     FT_Done_Face(face);
@@ -112,8 +104,6 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
     s_TextData->Shader->Bind();
     s_TextData->Shader->SetUniformFloat3("textColor", color);
 
-    glActiveTexture(GL_TEXTURE0);
-
     s_TextData->Pipeline->Bind();
 
     // iterate through all characters
@@ -137,16 +127,13 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
             { xpos + w, ypos + h,   1.0f, 0.0f }
         };
         
-        // render glyph texture over quad
-        glBindTexture(GL_TEXTURE_2D, ch->GetRendererID());
-        
+        ch->Bind();
         s_TextData->VertexBuffer->SetData(vertices, sizeof(vertices));
 
         // render quad
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        Renderer::DrawArrays(s_TextData->Pipeline, 6);
+
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
         x += (ch->GetAdvance() >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
-    glBindVertexArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
 }

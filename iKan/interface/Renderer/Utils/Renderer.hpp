@@ -87,6 +87,10 @@ namespace iKan {
         /// @param pipeline pipeline ref pointer
         /// @param count count
         static void DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count = 0);
+        /// Draw Vertex Array with indexed cound
+        /// @param pipeline vertex array ref pointer
+        /// @param count count
+        static void DrawArrays(const std::shared_ptr<Pipeline>& pipeline, uint32_t count);
         /// Render Complex submesh
         /// @param pipeline Pipeline
         /// @param count Count of index in submesh

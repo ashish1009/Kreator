@@ -229,5 +229,10 @@ OpenGLCharTexture::OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size
 }
 
 RendererID OpenGLCharTexture::GetRendererID() const { return m_RendererID;}
-void OpenGLCharTexture::Bind(uint32_t slot) const {}
-void OpenGLCharTexture::Unbind() const {}
+void OpenGLCharTexture::Bind(uint32_t slot) const {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_RendererID);
+}
+void OpenGLCharTexture::Unbind() const {
+    glBindTexture(GL_TEXTURE_2D, 0);
+}

@@ -124,6 +124,13 @@ void Renderer::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t c
     s_RendererAPI->DrawIndexed(pipeline, count);
 }
 
+/// Draw Vertex Array with indexed cound
+/// @param pipeline vertex array ref pointer
+/// @param count count
+void Renderer::DrawArrays(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) {
+    s_RendererAPI->DrawArrays(pipeline, count);
+}
+
 /// Render Complex submesh
 /// @param pipeline Pipeline
 /// @param count Count of index in submesh
