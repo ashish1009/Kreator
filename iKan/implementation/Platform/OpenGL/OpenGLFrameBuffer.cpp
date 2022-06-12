@@ -157,7 +157,6 @@ OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBuffer::Specification& specs) : 
             m_DepthSpecification = attchmentFormat;
     }
     Invalidate();
-    IK_LOG_SEPARATOR();
 }
 
 /// Open GL Framebuffer destructor
@@ -185,7 +184,6 @@ OpenGLFrameBuffer::~OpenGLFrameBuffer() {
     IK_CORE_WARN("        Renderer ID : {0}", m_DepthAttachment);
     IK_CORE_WARN("        Formate     : {0}", FbUtils::GetTextureFormateStringFromEnum(m_DepthSpecification));
 
-    IK_LOG_SEPARATOR();
 
     glDeleteFramebuffers(1, &m_RendererID);
     glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());

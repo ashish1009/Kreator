@@ -36,7 +36,6 @@ void OpenGLRendererAPI::Init() const {
     MultiSample(true);
     Depth(true);
     Blend(true);
-    IK_LOG_SEPARATOR();
     
     auto& caps = Renderer::Capabilities::Get();
     

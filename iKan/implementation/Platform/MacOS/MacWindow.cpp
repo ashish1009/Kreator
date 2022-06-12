@@ -26,7 +26,6 @@ MacWindow::MacWindow(const Window::Specification& spec) {
     IK_CORE_INFO("    VSync      : {0}", m_Data.Specification.VSync);
     IK_CORE_INFO("    Decorated  : {0}", m_Data.Specification.Decorated);
     IK_CORE_INFO("    FullScreen : {0}", m_Data.Specification.Fullscreen);
-    IK_LOG_SEPARATOR();
     
     Init();
 }
@@ -81,7 +80,6 @@ MacWindow::~MacWindow() {
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying MAC OS Window !!!");
     Shutdown();
-    IK_LOG_SEPARATOR();
 }
 
 /// Restisters the functions that will be called then GLFW interrupt triggers last argument of each function calls in

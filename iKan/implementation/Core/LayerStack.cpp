@@ -11,13 +11,15 @@ using namespace iKan;
 
 /// LayerStack Constructor
 LayerStack::LayerStack() {
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Layerstack ...");
 }
 
 /// LayerStack Destructr
 LayerStack::~LayerStack() {
+    IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Layerstack !!!");
-    IK_CORE_WARN("Deleting all Layers from Layerstack");
+    IK_CORE_WARN("    Deleting all Layers from Layerstack");
     for (auto& layer : m_Layers) {
         IK_CORE_WARN("Poping the layer : '{0}', from the stack. (Total Layers : {1})", layer->GetName().c_str(), m_NumLayers--);
         layer->Detach();

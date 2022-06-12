@@ -66,18 +66,16 @@ OpenGLRendererPipeline::OpenGLRendererPipeline() {
     glBindVertexArray(m_RendererID);
 
     IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating Open GL Piperline ...");
+    IK_CORE_INFO("Creating Open GL Pipeline ...");
     IK_CORE_INFO("    Renderer ID : {0}", m_RendererID);
-    IK_LOG_SEPARATOR();
 }
 
 /// Open GL Pipeline Destructor
 OpenGLRendererPipeline::~OpenGLRendererPipeline() {
     PROFILE();
     IK_LOG_SEPARATOR();
-    IK_CORE_WARN("Destroying Open GL Piperline !!!");
+    IK_CORE_WARN("Destroying Open GL Pipeline !!!");
     IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
-    IK_LOG_SEPARATOR();
 
     glDeleteVertexArrays(1, &m_RendererID);
 }
@@ -172,7 +170,6 @@ void OpenGLRendererPipeline::AddVertexBuffer(const std::shared_ptr<VertexBuffer>
             }
         } // switch (element.Type)
     } // for (const auto& element : layout.GetElements())
-    IK_LOG_SEPARATOR();
 }
 
 /// Setting Open GL Pipeline Constructor

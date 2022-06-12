@@ -18,11 +18,13 @@ using namespace iKan;
 
 /// Imgui layer COnstructor
 ImguiLayer::ImguiLayer() : Layer("Imgui Layer") {
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Imgui Layer instance ...");
 }
 
 /// Imgui Layer Desctructor
 ImguiLayer::~ImguiLayer() {
+    IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Imgui Layer instance !!!");
 }
 
@@ -69,7 +71,10 @@ void ImguiLayer::SetFont(const std::string &defaultFont, const std::string &bold
     // Default font is Regular
     io.FontDefault = io.Fonts->AddFontFromFileTTF(defaultFont.c_str(), 15.0f);
     
-    IK_CORE_INFO("Imgui Font chnaged to {0} and bold font to {1}", defaultFont.c_str(), boldFont);
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Imgui Font changed");
+    IK_CORE_INFO("    Regular Font Path : {0}", defaultFont.c_str());
+    IK_CORE_INFO("    Bold Font Path    : {0}", boldFont.c_str());
 }
 
 /// Detatch ImGuiLayer

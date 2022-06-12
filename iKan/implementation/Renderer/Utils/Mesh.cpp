@@ -84,8 +84,6 @@ Mesh::Mesh(const std::string& path, uint32_t entityId, bool loadPredefinedMateri
     IK_CORE_INFO("    Entity ID : {0}", m_EntityId);
     
     LoadMesh(loadPredefinedMaterial);
-    
-    IK_LOG_SEPARATOR();
 }
 
 /// Mesh Destructor
@@ -95,7 +93,6 @@ Mesh::~Mesh() {
     IK_CORE_WARN("    File Path : {0}", m_Path);
     IK_CORE_WARN("    Mesh Name : {0}", m_Name);
     IK_CORE_WARN("    Entity ID : {0}", m_EntityId);
-    IK_LOG_SEPARATOR();
 }
 
 /// Draw the mesh
@@ -105,8 +102,7 @@ void Mesh::Draw(const MeshCamera& camera, const glm::mat4& transform) {
 
     const auto& material = m_MeshMaterials[m_CurrentMaterialIndex].MaterialInstance;
     for (SubMesh& submesh : m_Submeshes) {
-        material->Set("u_Transform", transform * submesh.Transform);
-        
+        material->Set("u_Transform", transform * submesh.Transform);        
         material->Bind();
         
         if (m_IsAnimated) {
@@ -503,12 +499,13 @@ void Mesh::UploadMaterials() {
                     m_MeshMaterials[i].MaterialInstance->Set(textureShaderName, 0.0f);
                 }
             }
-
-//            IK_MESH_LOG("             Material Property");
-//            for (uint32_t i = 0; i < aiMaterial->mNumProperties; i++) {
-//                auto prop = aiMaterial->mProperties[i];
-//                IK_MESH_LOG("                Name: {0}, Type: {1}, Size: {2}, Value: {3}, Sementic {4}", prop->mKey.data, prop->mType, prop->mDataLength, *(float*)prop->mData, GetSementicType(prop->mSemantic));
-//            }
+#if 0
+            IK_MESH_LOG("             Material Property");
+            for (uint32_t i = 0; i < aiMaterial->mNumProperties; i++) {
+                auto prop = aiMaterial->mProperties[i];
+                IK_MESH_LOG("                Name: {0}, Type: {1}, Size: {2}, Value: {3}, Sementic {4}", prop->mKey.data, prop->mType, prop->mDataLength, *(float*)prop->mData, GetSementicType(prop->mSemantic));
+            }
+#endif
         } // for (uint32_t i = 0; i < m_Scene->mNumMaterials; i++)
     } // if (m_Scene->HasMaterials())
 }

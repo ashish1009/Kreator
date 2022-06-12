@@ -20,7 +20,6 @@ ContentBrowserPannel::ContentBrowserPannel(const std::string& rootPath) : m_Root
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Content Browser Pannnel ... ");
     IK_CORE_INFO("    Base Path : {0}", m_RootPath.string());
-    IK_LOG_SEPARATOR();
 
     m_PathHierarchy.emplace_back(m_CurrentDir);
     s_PinedPaths.emplace_back("../../../../../../../iKan.");
@@ -35,7 +34,6 @@ ContentBrowserPannel::~ContentBrowserPannel() {
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Creating Content Browser Pannnel ... ");
     IK_CORE_WARN("    Base Path : {0}", m_RootPath.string());
-    IK_LOG_SEPARATOR();
 }
 
 /// ContentBrowserPannel imgui renderer

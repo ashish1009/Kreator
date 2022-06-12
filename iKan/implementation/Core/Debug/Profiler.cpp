@@ -22,4 +22,5 @@ Profiler::~Profiler() {
     m_Duration = m_EndTImepoint - m_StartTimepoint;
     
     IK_CORE_TRACE(" '{0}': {1} sec, {2} ms, {3} us", m_FuncName, m_Duration.count(), m_Duration.count() * 1000, m_Duration.count() * 1000000);
+    IK_CORE_TRACE("-----------------------------------------------------------------------------------------------------------------------");
 }

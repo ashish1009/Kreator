@@ -27,7 +27,6 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(void* data, uint32_t size) : m_Size(size)
     IK_CORE_INFO("Creating Open GL Vertex Buffer with Data...");
     IK_CORE_INFO("    Renderer ID : {0}", m_RendererID);
     IK_CORE_INFO("    Size        : {0} Bytes ({1} KBm {2} MB)", m_Size, m_Size / 1000, m_Size / 1000000);
-    IK_LOG_SEPARATOR();
 
     RendererStatistics::Get().VertexBufferSize += m_Size;
 }
@@ -45,7 +44,6 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size) : m_Size(size) {
     IK_CORE_INFO("Creating Open GL Vertex Buffer withoud Data ...");
     IK_CORE_INFO("    Renderer ID : {0}", m_RendererID);
     IK_CORE_INFO("    Size        : {0} Bytes ({1} KB, {2} MB)", m_Size, m_Size / 1000, m_Size / 1000000);
-    IK_LOG_SEPARATOR();
 
     RendererStatistics::Get().VertexBufferSize += m_Size;
 }
@@ -57,7 +55,6 @@ OpenGLVertexBuffer::~OpenGLVertexBuffer() {
     IK_CORE_WARN("Destroying Open GL Vertex Buffer !!!");
     IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
     IK_CORE_WARN("    Size        : {0} Bytes ({1} KB, {2} MB)", m_Size, m_Size / 1000, m_Size / 1000000);
-    IK_LOG_SEPARATOR();
 
     glDeleteBuffers(1, &m_RendererID);
 }
@@ -97,7 +94,6 @@ OpenGLIndexBuffer::OpenGLIndexBuffer(void* data, uint32_t size) : m_Size(size), 
     IK_CORE_INFO("    Renderer ID       : {0}", m_RendererID);
     IK_CORE_INFO("    Number of Indices : {0}", m_Count);
     IK_CORE_INFO("    Size              : {0} Bytes ({1} KB, {2} MB)", m_Size, m_Size / 1000, m_Size / 1000000);
-    IK_LOG_SEPARATOR();
     
     RendererStatistics::Get().IndexBufferSize += m_Size;
 }
@@ -110,7 +106,6 @@ OpenGLIndexBuffer::~OpenGLIndexBuffer() {
     IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);
     IK_CORE_WARN("    Number of Indices : {0}", m_Count);
     IK_CORE_WARN("    Size              : {0} Bytes ({1} KB, {2} MB)", m_Size, m_Size / 1000, m_Size / 1000000);
-    IK_LOG_SEPARATOR();
 
     glDeleteBuffers(1, &m_RendererID);
 }

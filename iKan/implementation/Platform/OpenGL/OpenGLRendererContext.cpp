@@ -14,12 +14,14 @@ using namespace iKan;
 /// @param window GLFW Window instance
 OpenGLRendererContext::OpenGLRendererContext(GLFWwindow* window) : m_Window(window) {
     IK_CORE_ASSERT(window, "Window pointer is NULL !!!");
+    IK_LOG_SEPARATOR();
     Init();
 }
 
 /// Destructor Open GL Graphics Context
 OpenGLRendererContext::~OpenGLRendererContext() {
     PROFILE();
+    IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Renderer Context !!! ");
 }
 
@@ -39,12 +41,10 @@ void OpenGLRendererContext::Init() {
     // defines the correct function based on which OS we're compiling for
     IK_CORE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Can not initialize the Glad");
     
-    IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Open GL Renderer Context ... ");
     IK_CORE_INFO("    Vendor   : {0} ", glGetString(GL_VENDOR));
     IK_CORE_INFO("    Renderer : {0} ", glGetString(GL_RENDERER));
     IK_CORE_INFO("    Version  : {0} ", glGetString(GL_VERSION));
-    IK_LOG_SEPARATOR();
 }
 
 /// Swap buffer each frame

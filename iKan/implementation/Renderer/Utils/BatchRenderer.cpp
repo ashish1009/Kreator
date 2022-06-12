@@ -168,6 +168,7 @@ static CircleData* s_CircleData;
 
 /// Initialize the Batch renderer for 2D Renderer
 void BatchRenderer::Init() {
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initialising the Batch Renderer 2D ...");
     InitQuadData();
     InitCircleData();
@@ -176,21 +177,18 @@ void BatchRenderer::Init() {
 /// SHutdown or destroy the batch Renderer
 void BatchRenderer::Shutdown() {
     PROFILE();
+    IK_LOG_SEPARATOR();
     IK_CORE_WARN("Shutting down the Batch Renderer 2D !!!");
     
-    IK_LOG_SEPARATOR();
     IK_CORE_WARN("    Destroying the Quad Renderer Data");
     IK_CORE_WARN("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
     IK_CORE_WARN("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
     IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
-    IK_LOG_SEPARATOR();
 
-    IK_LOG_SEPARATOR();
     IK_CORE_WARN("    Destroying the Circle Renderer Data");
     IK_CORE_WARN("        Max Circles per Batch           : {0}", CircleData::MaxCircles);
     IK_CORE_WARN("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
     IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", CircleData::MaxVertex * sizeof(CircleData::Vertex),  CircleData::MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
-    IK_LOG_SEPARATOR();
 
     if (s_QuadData)
         delete s_QuadData;
@@ -205,12 +203,10 @@ void BatchRenderer::InitQuadData() {
     // Alloc memory for Quad Data
     s_QuadData = new QuadData();
     
-    IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Initialising the Quad Renderer");
     IK_CORE_INFO("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
     IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
     IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
-    IK_LOG_SEPARATOR();
     
     // Allocating the memory for vertex Buffer Pointer
     s_QuadData->VertexBufferBase = new QuadData::Vertex[QuadData::MaxVertex];
@@ -271,12 +267,10 @@ void BatchRenderer::InitCircleData() {
     // Alloc memory for Circle Data
     s_CircleData = new CircleData();
     
-    IK_LOG_SEPARATOR();
     IK_CORE_INFO("    Initialising the Circle Renderer");
     IK_CORE_INFO("        Max Circle per Batch            : {0}", CircleData::MaxCircles);
     IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
     IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", CircleData::MaxVertex * sizeof(CircleData::Vertex),  CircleData::MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
-    IK_LOG_SEPARATOR();
     
     // Allocating the memory for vertex Buffer Pointer
     s_CircleData->VertexBufferBase = new CircleData::Vertex[QuadData::MaxVertex];

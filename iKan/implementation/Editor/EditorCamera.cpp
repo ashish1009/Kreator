@@ -37,7 +37,6 @@ EditorCamera::EditorCamera() {
     IK_CORE_INFO("    Near Plane      : {0}", m_Near);
     IK_CORE_INFO("    Far Plane       : {0}", m_Far);
     IK_CORE_INFO("    FocalPoint      : {0} | {1} | {2}", m_FocalPoint.x, m_FocalPoint.y, m_FocalPoint.z);
-    IK_LOG_SEPARATOR()
 }
 
 /// Editor camera default destructor.
@@ -50,7 +49,6 @@ EditorCamera::~EditorCamera() {
     IK_CORE_WARN("    Near Plane      : {0}", m_Near);
     IK_CORE_WARN("    Far Plane       : {0}", m_Far);
     IK_CORE_WARN("    FocalPoint      : {0} | {1} | {2}", m_FocalPoint.x, m_FocalPoint.y, m_FocalPoint.z);
-    IK_LOG_SEPARATOR()
 }
 
 /// Update camera each frame

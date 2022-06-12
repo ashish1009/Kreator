@@ -14,10 +14,74 @@
             filePath = "iKan/implementation/Renderer/Utils/Renderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "Renderer::Shutdown()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "62D3CC2E-6DBE-4C40-B158-DAC11B8B78DB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Kreator/application/KreatorApp.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "iKan::CreateApplication()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AC9C0CD6-A950-4358-980E-FA7BE99560A4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Kreator/application/KreatorApp.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "KreatorApp(spec)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AC9C0CD6-A950-4358-980E-FA7BE99560A4 - 1c198f3b6487611f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "KreatorApp::KreatorApp(iKan::Application::Specification const&amp;)"
+                  moduleName = "Kreator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ikan./iKan/Github/Product/iKan/Kreator/application/KreatorApp.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "AC9C0CD6-A950-4358-980E-FA7BE99560A4 - 1c198f3b6487611f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "KreatorApp::KreatorApp(iKan::Application::Specification const&amp;)"
+                  moduleName = "Kreator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ikan./iKan/Github/Product/iKan/Kreator/application/KreatorApp.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -68,7 +68,6 @@ OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32
     IK_CORE_INFO("    Number of Channel : {0}", m_Channel);
     IK_CORE_INFO("    InternalFormat    : {0}", TextureUtils::GetFormatNameFromEnum(m_InternalFormat));
     IK_CORE_INFO("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
-    IK_LOG_SEPARATOR();
 }
 
 /// Open GL Texture Constructor
@@ -152,7 +151,6 @@ OpenGLTexture::OpenGLTexture(const std::string& path, bool minLinear, bool magLi
     }
     else
         IK_CORE_CRITICAL("Failed to load stbi Image {0}", m_Filepath.c_str());
-    IK_LOG_SEPARATOR();
 }
 
 /// Open GL Texture Destructor
@@ -171,7 +169,6 @@ OpenGLTexture::~OpenGLTexture() {
     IK_CORE_WARN("    Number of Channel : {0}", m_Channel);
     IK_CORE_WARN("    InternalFormat    : {0}", TextureUtils::GetFormatNameFromEnum(m_InternalFormat));
     IK_CORE_WARN("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
-    IK_LOG_SEPARATOR();
 
     Renderer::RemoveRendererIDs(m_RendererID);
     glDeleteTextures(1, &m_RendererID);
@@ -226,11 +223,20 @@ OpenGLCharTexture::OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Creating Open GL Char Texture to store Chars ... ");
+    IK_CORE_INFO("    Renderer ID       : {0}", m_RendererID);
+
 }
 
 /// Open GL Texture Destructor
 OpenGLCharTexture::~OpenGLCharTexture() {
     PROFILE();
+
+    IK_LOG_SEPARATOR();
+    IK_CORE_WARN("Creating Open GL Char Texture to store Chars ... ");
+    IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);
 
     Renderer::RemoveRendererIDs(m_RendererID);
     glDeleteTextures(1, &m_RendererID);

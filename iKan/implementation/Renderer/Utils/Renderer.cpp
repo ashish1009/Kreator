@@ -24,6 +24,7 @@ std::set<RendererID> Renderer::s_TextureRendererIDs;
 /// Initialize the Engine Renderer
 void Renderer::Init() {
     PROFILE();
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initialising all Renderers");
     if (!s_RendererAPI) {
         // Creating Default Open GL Renderer API instance
@@ -44,15 +45,17 @@ void Renderer::Shutdown() {
         s_RendererAPI->Shutdown();
         s_RendererAPI.reset();
     }
-    BatchRenderer::Shutdown();
-    TextRenderer::Shutdown();
-    PropertyGrid::Shutdown();
-    
+
     // Destorry the Shader library and Texture
     ShaderLibrary::ResetShaders();
     TextureLibrary::ResetTextures();
-    
+
+    // Clearing all renderer ID from renderer class
     s_TextureRendererIDs.clear();
+
+    BatchRenderer::Shutdown();
+    TextRenderer::Shutdown();
+    PropertyGrid::Shutdown();
 }
 
 /// Return the current active Renderer API
@@ -69,6 +72,7 @@ void Renderer::SetAPI(Renderer::API api) {
         default:
             IK_CORE_ASSERT(false, "Invalid Renderer API");
     }
+    IK_LOG_SEPARATOR();
     IK_CORE_INFO("Setting Renderer API : '{0}'", rendererAPI.c_str());
 #endif
     s_API = api;

@@ -93,8 +93,6 @@ OpenGLShader::OpenGLShader(const std::string& path) : m_AssetPath(path), m_Name(
     // Parse and Store all the Uniform in Shader
     Parse();
     ResolveUniforms();
-
-    IK_LOG_SEPARATOR();
 }
 
 /// Open GL Shader Destructor
@@ -105,7 +103,6 @@ OpenGLShader::~OpenGLShader() {
     IK_CORE_WARN("    Renderer ID : {0} ", m_RendererID);
     IK_CORE_WARN("    Name        : {0} ", m_Name);
     IK_CORE_WARN("    File Path   : {0} ", m_AssetPath);
-    IK_LOG_SEPARATOR();
 }
 
 /// Process the Shader file and separate the Shaders (Vertex, Fragent and so on) in strings

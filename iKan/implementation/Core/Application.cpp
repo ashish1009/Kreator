@@ -7,7 +7,6 @@
 
 #include "Application.hpp"
 #include "Core/Utils/AssetManager.hpp"
-#include "Core/LayerStack.hpp"
 #include "Core/Event/ApplicationEvent.h"
 #include "Renderer/Utils/Renderer.hpp"
 #include "Gui/ImguiLayer.hpp"
@@ -90,8 +89,7 @@ Application::Specification& Application::Specification::operator=(const Applicat
 
 /// Applciation Constructor
 /// @param spec Specification defined for application
-Application::Application(const Specification& spec)
-: m_Specification(spec) {
+Application::Application(const Specification& spec) : m_Specification(spec) {
     PROFILE();
     // If instance already created then abort the application
     // as multiple instacne should not be therer
@@ -108,7 +106,6 @@ Application::Application(const Specification& spec)
     IK_CORE_INFO("    Enable GUI                    : {0}", m_Specification.EnableGui);
     IK_CORE_INFO("    Core Asset Path               : {0}", m_Specification.CoreAssetPath);
     IK_CORE_INFO("    Client Asset Path             : {0}", m_Specification.ClientAssetPath);
-    IK_LOG_SEPARATOR();
     
     Init();
 }
@@ -129,14 +126,11 @@ Application::~Application() {
     IK_CORE_WARN("    Enable GUI                    : {0}", m_Specification.EnableGui);
     IK_CORE_WARN("    Core Asset Path               : {0}", m_Specification.CoreAssetPath);
     IK_CORE_WARN("    Client Asset Path             : {0}", m_Specification.ClientAssetPath);
-
-    IK_LOG_SEPARATOR();
 }
 
 /// Initialize the Application data
 void Application::Init() {
-    m_LayerStack = std::make_unique<LayerStack>();
-    
+    // Setting Up the Renderer API
     Renderer::SetAPI(m_Specification.RendererAPI);
     
     // Create Window for application and register the Event callback function to Window
@@ -178,7 +172,7 @@ void Application::Run() {
         m_Timestep = m_Window->GerTimestep();
 
         // Updating all the attached layer
-        for (auto& layer : *m_LayerStack.get())
+        for (auto& layer : m_LayerStack)
             layer->Update(m_Timestep);
 
         if (m_Specification.EnableGui)
@@ -198,7 +192,7 @@ void Application::EventHandler(Event& event) {
     dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(Application::WindowResize));
 
     // Event Handler for all layers
-    for (auto& layer : *m_LayerStack.get())
+    for (auto& layer : m_LayerStack)
         layer->EventHandler(event);
 }
 
@@ -221,7 +215,7 @@ void Application::RenderGui() {
     m_ImguiLayer->Begin();
 
     // Render Imgui for all layers
-    for (auto& layer : *m_LayerStack.get())
+    for (auto& layer : m_LayerStack)
         layer->RenderGui();
 
     m_ImguiLayer->End();
@@ -234,8 +228,8 @@ void Application::Close() {
 }
 
 // ----- Push and Pop Layer in staeck ----
-void Application::PushLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->PushLayer(layer); }
-void Application::PopLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack->PopLayer(layer); }
+void Application::PushLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack.PushLayer(layer); }
+void Application::PopLayer(const std::shared_ptr<Layer>& layer) { m_LayerStack.PopLayer(layer); }
 
 // --------------- Getters ---------------
 /// Return the GLFW Window native pointer

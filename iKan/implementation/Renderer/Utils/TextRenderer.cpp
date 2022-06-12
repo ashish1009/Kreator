@@ -66,7 +66,8 @@ void TextRenderer::Init() {
     
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initialising the Text Renderer");
-    
+    IK_CORE_INFO("    Memory Reserved for Vertex Data : {0} B ({1} KB) ", TextData::VertexForSingleChar * sizeof(TextData::Vertex),  TextData::VertexForSingleChar * sizeof(TextData::Vertex) / 1000.0f );
+
     // Allocating the memory for vertex Buffer Pointer
     s_TextData->VertexBufferBase = new TextData::Vertex[TextData::VertexForSingleChar];
 
@@ -98,7 +99,8 @@ void TextRenderer::Init() {
 /// Load the font for freetype
 /// @param fontPath path of font
 void TextRenderer::LoadFreetype(const std::string& fontPath) {
-    IK_CORE_INFO("    Loading Freetype Font");
+    IK_LOG_SEPARATOR();
+    IK_CORE_INFO("Loading Freetype Font for Text Data");
     IK_CORE_INFO("    Path : {0}", fontPath.c_str());
 
     FT_Library ft;
@@ -137,6 +139,7 @@ void TextRenderer::LoadFreetype(const std::string& fontPath) {
 void TextRenderer::Shutdown() {
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Shutting down the Text Renderer !!!");
+    IK_CORE_INFO("    Memory Reserved for Vertex Data : {0} B ({1} KB) ", TextData::VertexForSingleChar * sizeof(TextData::Vertex),  TextData::VertexForSingleChar * sizeof(TextData::Vertex) / 1000.0f );
     if (s_TextData)
         delete s_TextData;
 }

@@ -9,6 +9,7 @@
 
 #include "Core/Window.hpp"
 #include "Core/Utils/Timestep.hpp"
+#include "Core/LayerStack.hpp"
 #include "Renderer/Utils/Renderer.hpp"
 
 namespace iKan {
@@ -16,8 +17,6 @@ namespace iKan {
     // Forward Declarations
     class WindowCloseEvent;
     class WindowResizeEvent;
-    class LayerStack;
-    class Layer;
     class ImguiLayer;
 
     /// Base class for Core Application. Client can create its own Application derived from Base Core Applicaiton.
@@ -113,8 +112,9 @@ namespace iKan {
         bool m_IsRunning = true;
         Specification m_Specification;
         Timestep m_Timestep;
+        LayerStack m_LayerStack;
+
         std::unique_ptr<Window> m_Window;
-        std::unique_ptr<LayerStack> m_LayerStack;
         std::shared_ptr<ImguiLayer> m_ImguiLayer;
 
         // Static variables

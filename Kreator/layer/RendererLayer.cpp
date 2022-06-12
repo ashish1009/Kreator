@@ -9,11 +9,13 @@
 
 /// Renderer Layer Constructor
 RendererLayer::RendererLayer() : Layer("Renderer"), m_CBP("../../../../../../../iKan./iKan/Github/Product/iKan") {
+    IK_CLIENT_LOG_SEPARATOR();
     IK_INFO("Creating {0} Layer ...", m_Name);
 }
 
 /// Renderer layer Destructor
 RendererLayer::~RendererLayer() {
+    IK_CLIENT_LOG_SEPARATOR();
     IK_WARN("Destroying {0} Layer !!!", m_Name);
 }
 
@@ -21,17 +23,17 @@ RendererLayer::~RendererLayer() {
 void RendererLayer::Attach() {
     PROFILE();
     IK_INFO("Attaching {0} Layer to Application", m_Name);
-    
+
     // Change the Imgui Font
     auto& imguiLayer = Application::Get().GetImGuiLayer();
     imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"), AssetManager::GetClientAsset("fonts/OpenSans/OpenSans-Bold.ttf"));
-    
+
     // Change Freetype font
     TextRenderer::LoadFreetype(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"));
-    
+
     // Setup the Theme
     ImguiAPI::SetGreyThemeColors();
-    
+
     // Update the Viewport Data
     FrameBuffer::Specification spec;
     spec.Attachments = {
@@ -40,7 +42,7 @@ void RendererLayer::Attach() {
         FrameBuffer::Attachment::TextureFormat::R32I
     };
     m_VpData.FrameBuffer = FrameBuffer::Create(spec);
-    
+
     // TODO: Temp
     NewScene();
 }
@@ -63,24 +65,24 @@ void RendererLayer::Update(Timestep ts) {
     if (const FrameBuffer::Specification& spec = m_VpData.FrameBuffer->GetSpecification();
         (uint32_t)m_VpData.Size.x > 0 && (uint32_t)m_VpData.Size.y > 0 && // zero sized framebuffer is invalid
         (spec.Width != (uint32_t)m_VpData.Size.x || spec.Height != (uint32_t)m_VpData.Size.y)) {
-        
+
         m_VpData.FrameBuffer->Resize((uint32_t)m_VpData.Size.x, (uint32_t)m_VpData.Size.y);
         m_ActiveScene->SetViewport((uint32_t)m_VpData.Size.x, (uint32_t)m_VpData.Size.y);
-        
+
         projection = glm::ortho(0.0f, static_cast<float>(m_VpData.Size.x), 0.0f, static_cast<float>(m_VpData.Size.y));
     }
 
     Renderer::ResetStatsEachFrame();
-    
+
     m_VpData.FrameBuffer->Bind();
     {
         Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
-        
+
         m_ActiveScene->Update(ts);
         m_VpData.UpdateMousePos();
 
         UpdateHoveredEntity();
-        
+
         // Render the Frame rate
         Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.1f), glm::vec2(0.3), { 0.5f, 0.5f, 0.5f, 0.7f });
 
@@ -98,42 +100,42 @@ void RendererLayer::RenderGui() {
 
     if (m_ActiveScene) {
         m_ActiveScene->RenderImgui();
-        
+
         // Viewport
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Kreator Viewport");
         ImGui::PushID("Kreator Viewport");
-        
+
         m_VpData.Focused = ImGui::IsWindowFocused();
         m_VpData.Hovered = ImGui::IsWindowHovered();
-        
+
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
         m_VpData.Size = { viewportPanelSize.x, viewportPanelSize.y };
-        
+
         size_t textureID = m_VpData.FrameBuffer->GetColorAttachmentIds()[0];
         PropertyGrid::Image((void*)textureID, { m_VpData.Size.x, m_VpData.Size.y }, { 0, 1 }, { 1, 0 });
         ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         if (m_ActiveScene->IsEditing()) {
             PropertyGrid::DropConent([this](const std::string& path)
-                                              {
+                             {
                 if (StringUtils::GetExtensionFromFilePath(path) == "Kreator")
                     OpenScene(path);
                 else
                     IK_WARN("Invalid file for Scene {0}", path.c_str());
             });
-            
+
             Renderer::ImguiRendererStats();
             m_VpData.RenderImgui();
-            
+
             m_SHP->RenderImgui();
             m_CBP.RenderImgui();
-                        
+
             SaveScene();
             OnImguizmoUpdate();
         }
-        
+
         m_VpData.UpdateBound();
-        
+
         ImGui::PopID();
         ImGui::End(); // ImGui::Begin("Kreator Viewport");
     }
@@ -176,14 +178,14 @@ bool RendererLayer::OnKeyPressed(KeyPressedEvent& event) {
     // Shortcuts
     if (event.GetRepeatCount() > 0)
         return false;
-    
+
     bool cmd = Input::IsKeyPressed(KeyCode::LeftSuper) || Input::IsKeyPressed(KeyCode::RightSuper);
     bool ctrl = Input::IsKeyPressed(KeyCode::LeftControl) || Input::IsKeyPressed(KeyCode::RightControl);
 
     switch (event.GetKeyCode()) {
         case KeyCode::N:    if (cmd)    NewScene();             break;
         case KeyCode::X:    if (cmd)    CloseScene();           break;
-            
+
         // Gizmos
         case KeyCode::Q:    if (ctrl)    m_VpData.GizmoType = -1;                               break;
         case KeyCode::W:    if (ctrl)    m_VpData.GizmoType = ImGuizmo::OPERATION::TRANSLATE;   break;
@@ -199,12 +201,12 @@ bool RendererLayer::OnKeyPressed(KeyPressedEvent& event) {
 void RendererLayer::UpdateHoveredEntity() {
     if (!m_VpData.Hovered)
         return;
-    
+
     if (ImGuizmo::IsOver()) {
         m_VpData.HoveredEntity = m_SHP->GetSelectedEntity();
         return;
     }
-    
+
     Renderer::GetEntityIdFromPixels(m_VpData.MousePosX, m_VpData.MousePosY, m_VpData.HoveredEntityID);
     m_VpData.HoveredEntity = (m_VpData.HoveredEntityID > m_ActiveScene->GetMaxEntityId()) ? nullptr : m_ActiveScene->GetEnitityFromId(m_VpData.HoveredEntityID);
 }
@@ -215,39 +217,39 @@ void RendererLayer::OnImguizmoUpdate() {
     if (selectedEntity && m_VpData.GizmoType != -1) {
         ImGuizmo::SetOrthographic(false);
         ImGuizmo::SetDrawlist();
-        
+
         float windowWidth = (float)ImGui::GetWindowWidth();
         float windowHeight = (float)ImGui::GetWindowHeight();
         ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-        
+
         // Camera
         const std::shared_ptr<EditorCamera>& editorCamera = m_ActiveScene->GetEditorCamera();
-        
+
         glm::mat4 cameraProjection = editorCamera->GetProjectionMatrix();
         glm::mat4 cameraView       = editorCamera->GetViewMatrix();
-        
+
         // Entity transform
         auto& tc = selectedEntity->GetComponent<TransformComponent>();
         glm::mat4 transform = tc.GetTransform();
-        
+
         // Snapping
         bool snap = Input::IsKeyPressed(KeyCode::LeftControl);
         float snapValue = 0.5f; // Snap to 0.5m for translation/scale
-        
+
         // Snap to 45 degrees for rotation
         if (m_VpData.GizmoType == ImGuizmo::OPERATION::ROTATE)
             snapValue = 45.0f;
-        
+
         float snapValues[3] = { snapValue, snapValue, snapValue };
-        
+
         ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
                              (ImGuizmo::OPERATION)m_VpData.GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
                              nullptr, snap ? snapValues : nullptr);
-        
+
         if (ImGuizmo::IsUsing()) {
             glm::vec3 translation, rotation, scale;
             Math::DecomposeTransform(transform, translation, rotation, scale);
-            
+
             glm::vec3 deltaRotation = rotation - tc.Rotation;
             tc.Translation = translation;
             tc.Rotation += deltaRotation;

@@ -59,7 +59,6 @@ SceneCamera::SceneCamera(ProjectionType projType) : m_ProjectionType(projType) {
         IK_CORE_ASSERT(false, "Invalid Projection Type");
     }
     RecalculateProjection();
-    IK_LOG_SEPARATOR();
 }
 
 /// Scene Camera Copy Constructor
@@ -91,7 +90,6 @@ SceneCamera::~SceneCamera() {
     else {
         IK_CORE_ASSERT(false, "Invalid Projection Type");
     }
-    IK_LOG_SEPARATOR();
 }
 
 /// Render Imgui pannel for Scene Camera
@@ -175,7 +173,6 @@ void SceneCamera::SetOrthographic(float size, float nearClip, float farClip) {
     IK_CORE_INFO("    Near Plane      : {0}", m_Near);
     IK_CORE_INFO("    Far Plane       : {0}", m_Far);
     IK_CORE_INFO("Updating View Porjection Matrix");
-    IK_LOG_SEPARATOR();
     
     RecalculateProjection();
 }
@@ -197,7 +194,6 @@ void SceneCamera::SetPerspective(float fov, float nearClip, float farClip) {
     IK_CORE_INFO("    Near Plane      : {0}", m_Near);
     IK_CORE_INFO("    Far Plane       : {0}", m_Far);
     IK_CORE_INFO("Updating View Porjection Matrix");
-    IK_LOG_SEPARATOR();
     
     RecalculateProjection();
 }
