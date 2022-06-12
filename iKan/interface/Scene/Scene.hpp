@@ -153,6 +153,7 @@ namespace iKan {
         // TODO: Move some other place.
         struct IconTexture {
             const std::shared_ptr<Texture> PointLight = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/pointLight.png"));
+            const std::shared_ptr<Texture> Camera = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/camera.png"));
         };
         IconTexture m_IconTexture;
 

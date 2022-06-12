@@ -286,6 +286,13 @@ void Scene::Render2DComponents(const glm::mat4& viewProj, const glm::mat4& view)
         BatchRenderer::DrawFixedViewQuad(transform.GetTransform(), m_IconTexture.PointLight, glm::vec4(lightComp.Light->Radiance.x, lightComp.Light->Radiance.y, lightComp.Light->Radiance.z, 1.0f), 1.0f, (int32_t)entity);
     }
     
+    // Camera
+    auto cameraView = m_Registry.view<TransformComponent, CameraComponent>();
+    for (const auto& entity : cameraView) {
+        const auto& [transform, cameraComp] = cameraView.get<TransformComponent, CameraComponent>(entity);
+        BatchRenderer::DrawFixedViewQuad(transform.GetTransform(), m_IconTexture.Camera, glm::vec4(1.0f), 1.0f, (int32_t)entity);
+    }
+    
     BatchRenderer::EndBatch();
 
     // Texts
