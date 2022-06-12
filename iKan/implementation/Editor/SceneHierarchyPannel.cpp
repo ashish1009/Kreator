@@ -129,6 +129,7 @@ void SceneHierarchyPannel::RenderImgui() {
                 auto entity = m_Context->CreateEntity("Camera");
                 entity->GetComponent<TagComponent>().Group = "Cameras";
                 entity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Perspective);
+                entity->GetComponent<TransformComponent>().Scale = glm::vec3(0.5);
             }
             ImGui::Separator();
             
@@ -136,6 +137,7 @@ void SceneHierarchyPannel::RenderImgui() {
                 auto entity = m_Context->CreateEntity("Light");
                 entity->GetComponent<TagComponent>().Group = "Lights";
                 entity->AddComponent<LightComponent>();
+                entity->GetComponent<TransformComponent>().Scale = glm::vec3(0.5);
             }
             ImGui::Separator();
             

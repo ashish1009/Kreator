@@ -251,6 +251,18 @@ static void SerializeEntity(YAML::Emitter& out, std::shared_ptr<Entity> entity) 
         out << YAML::EndMap; // TextComponent
     }
     
+    if (entity->HasComponent<LightComponent>()) {
+        out << YAML::Key << "LightComponent";
+        out << YAML::BeginMap; // LightComponent
+        
+        auto& lc = entity->GetComponent<LightComponent>();
+        out << YAML::Key << "Present" << YAML::Value << lc.Light->Present;
+        out << YAML::Key << "Position" << YAML::Value << lc.Light->Position;
+        out << YAML::Key << "Radiance" << YAML::Value << lc.Light->Radiance;
+        
+        out << YAML::EndMap; // LightComponent
+    }
+    
     out << YAML::EndMap; // Entity
 }
 
@@ -328,9 +340,9 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 
                 IK_LOG_SEPARATOR();
                 IK_CORE_INFO("        Transform Component");
-                IK_CORE_INFO("            Translation   : {0}, {1}, {2}", tc.Translation.x, tc.Translation.y, tc.Translation.z);
-                IK_CORE_INFO("            Rotation      : {0}, {1}, {2}", tc.Rotation.x, tc.Rotation.y, tc.Rotation.z);
-                IK_CORE_INFO("            Scale         : {0}, {1}, {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
+                IK_CORE_INFO("            Translation   : {0} | {1} | {2}", tc.Translation.x, tc.Translation.y, tc.Translation.z);
+                IK_CORE_INFO("            Rotation      : {0} | {1} | {2}", tc.Rotation.x, tc.Rotation.y, tc.Rotation.z);
+                IK_CORE_INFO("            Scale         : {0} | {1} | {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
             } // if (transformComponent)
             
             auto cameraComponent = entity["CameraComponent"];
@@ -386,7 +398,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
 
                 IK_LOG_SEPARATOR();
                 IK_CORE_INFO("        Quad Component");
-                IK_CORE_INFO("            Color         : {0}, {1}, {2}, {3}", qc.Color.r, qc.Color.g, qc.Color.b, qc.Color.a);
+                IK_CORE_INFO("            Color         : {0} | {1} | {2} | {3}", qc.Color.r, qc.Color.g, qc.Color.b, qc.Color.a);
                 IK_CORE_INFO("            Rotation      : {0}", qc.TilingFactor);
                 
                 if (qc.Texture.Component) {
@@ -413,7 +425,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 auto& cc = deserializedEntity->AddComponent<CircleComponent>(textComp, thickness, fade, color, tilingFactor);
                 
                 IK_CORE_INFO("        Circle Component");
-                IK_CORE_INFO("            Color         : {0}, {1}, {2}, {3}", cc.Color.r, cc.Color.g, cc.Color.b, cc.Color.a);
+                IK_CORE_INFO("            Color         : {0} | {1} | {2} | {3}", cc.Color.r, cc.Color.g, cc.Color.b, cc.Color.a);
                 IK_CORE_INFO("            Rotation      : {0}", cc.TilingFactor);
                 IK_CORE_INFO("            Thickness     : {0}", cc.Thickness);
                 IK_CORE_INFO("            Fade          : {0}", cc.Fade);
@@ -451,7 +463,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                         prop.Roughness = meshComponent["Material Proeprty Roughness " + name].as<float>();
                         prop.TilinghFactor = meshComponent["Material Proeprty TilinghFactor " + name].as<float>();
 
-                        IK_CORE_INFO("                    Color         : {0}, {1}, {2}", prop.AlbedoColor.r, prop.AlbedoColor.g, prop.AlbedoColor.b);
+                        IK_CORE_INFO("                    Color         : {0} | {1} | {2}", prop.AlbedoColor.r, prop.AlbedoColor.g, prop.AlbedoColor.b);
                         IK_CORE_INFO("                    Metalness     : {0}", prop.Metalness);
                         IK_CORE_INFO("                    Roughness     : {0}", prop.Roughness);
                         IK_CORE_INFO("                    Tiling Factor : {0}", prop.TilinghFactor);
@@ -487,8 +499,24 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 IK_LOG_SEPARATOR();
                 IK_CORE_INFO("        Text Component:");
                 IK_CORE_INFO("            Text  : {0}", tc.Text);
-                IK_CORE_INFO("            Color : {0}, {1}, {2}, {3}", tc.Color.r, tc.Color.g, tc.Color.b, tc.Color.a);
-            } // if (quadComponent)
+                IK_CORE_INFO("            Color : {0} | {1} | {2} | {3}", tc.Color.r, tc.Color.g, tc.Color.b, tc.Color.a);
+            } // if (textComponent)
+            
+            auto lightComponent = entity["LightComponent"];
+            if (lightComponent) {
+                // Entities always have transforms
+                auto& lc = deserializedEntity->AddComponent<LightComponent>();
+                
+                lc.Light->Present = lightComponent["Present"].as<int32_t>();
+                lc.Light->Position = lightComponent["Position"].as<glm::vec3>();
+                lc.Light->Radiance = lightComponent["Radiance"].as<glm::vec3>();
+                                                
+                IK_CORE_INFO("  Entity Light");
+                IK_CORE_INFO("      Present  : {0}", lc.Light->Present);
+                IK_CORE_INFO("      Position : {0} | {1} | {2}", lc.Light->Position.x, lc.Light->Position.y, lc.Light->Position.z);
+                IK_CORE_INFO("      Radiance : {0} | {1} | {2}", lc.Light->Radiance.x, lc.Light->Radiance.y, lc.Light->Radiance.z);
+            }
+
         } // for (auto entity : entities)
     } // if (entities)
     return true;

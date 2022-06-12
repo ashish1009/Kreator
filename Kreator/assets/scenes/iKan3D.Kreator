@@ -40,58 +40,32 @@ Entities:
       Use DefaultMaterial4: false
       Path DefaultMaterial4: ""
       Num Materials: 1
-  - Entity: 6915600102934739884
+  - Entity: 994898289167077020
     TagComponent:
-      Tag: Sphere
+      Tag: Camera
+      Group: Cameras
+    TransformComponent:
+      Translation: [0, 0, 18.75]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      FixedAspectRatio: false
+      Primary: true
+      ProjectionType: 0
+      PerspectiveFOV: 0.785398185
+      OrthographicSize: 10
+      Near: 0.00999999978
+      Far: 10000
+  - Entity: 7086695393782489951
+    TagComponent:
+      Tag: Cube
       Group: Fundamental Mesh\
     TransformComponent:
-      Translation: [1.18540549, 0, 0]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     MeshComponent:
-      FilePath: ../../iKan/assets/models/Sphere.fbx
-      ActiveMaterial: 0
-      Material Name 0: Material.001
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color Material.001: [1, 0.800000012, 0.800000012]
-      Material Proeprty Metalness Material.001: 1
-      Material Proeprty Roughness Material.001: 0.199999988
-      Material Proeprty TilinghFactor Material.001: 1
-      Use Material.0010: false
-      Path Material.0010: ""
-      Use Material.0011: false
-      Path Material.0011: ""
-      Use Material.0012: false
-      Path Material.0012: ""
-      Use Material.0013: false
-      Path Material.0013: ""
-      Use Material.0014: false
-      Path Material.0014: ""
-      Num Materials: 1
-  - Entity: 8501354524244518677
-    TagComponent:
-      Tag: Quad
-      Group: Quads
-    TransformComponent:
-      Translation: [8.45215034, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    QuadComponent:
-      Color: [1, 1, 1, 1]
-      TilingFactor: 1
-      Use: false
-      TexturePath: ""
-  - Entity: 5441148085898815533
-    TagComponent:
-      Tag: Torus
-      Group: Fundamental Mesh\
-    TransformComponent:
-      Translation: [4.32599163, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      FilePath: ../../iKan/assets/models/Torus.fbx
+      FilePath: ../../iKan/assets/models/Cube.fbx
       ActiveMaterial: 0
       Material Name 0: DefaultMaterial
       Material InvertX 0: false
@@ -140,35 +114,6 @@ Entities:
       Use Default Material4: false
       Path Default Material4: ""
       Num Materials: 1
-  - Entity: 7086695393782489951
-    TagComponent:
-      Tag: Cube
-      Group: Fundamental Mesh\
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      FilePath: ../../iKan/assets/models/Cube.fbx
-      ActiveMaterial: 0
-      Material Name 0: DefaultMaterial
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
-      Material Proeprty Metalness DefaultMaterial: 0
-      Material Proeprty Roughness DefaultMaterial: 0.10557282
-      Material Proeprty TilinghFactor DefaultMaterial: 1
-      Use DefaultMaterial0: false
-      Path DefaultMaterial0: ""
-      Use DefaultMaterial1: false
-      Path DefaultMaterial1: ""
-      Use DefaultMaterial2: false
-      Path DefaultMaterial2: ""
-      Use DefaultMaterial3: false
-      Path DefaultMaterial3: ""
-      Use DefaultMaterial4: false
-      Path DefaultMaterial4: ""
-      Num Materials: 1
   - Entity: 7805123580234856441
     TagComponent:
       Tag: Cone
@@ -198,22 +143,77 @@ Entities:
       Use DefaultMaterial4: false
       Path DefaultMaterial4: ""
       Num Materials: 1
-  - Entity: 994898289167077020
+  - Entity: 5441148085898815533
     TagComponent:
-      Tag: Camera
-      Group: Cameras
+      Tag: Torus
+      Group: Fundamental Mesh\
     TransformComponent:
-      Translation: [0, 0, 7]
+      Translation: [4.32599163, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    CameraComponent:
-      FixedAspectRatio: false
-      Primary: true
-      ProjectionType: 0
-      PerspectiveFOV: 0.785398185
-      OrthographicSize: 10
-      Near: 0.00999999978
-      Far: 10000
+    MeshComponent:
+      FilePath: ../../iKan/assets/models/Torus.fbx
+      ActiveMaterial: 0
+      Material Name 0: DefaultMaterial
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness DefaultMaterial: 0
+      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty TilinghFactor DefaultMaterial: 1
+      Use DefaultMaterial0: false
+      Path DefaultMaterial0: ""
+      Use DefaultMaterial1: false
+      Path DefaultMaterial1: ""
+      Use DefaultMaterial2: false
+      Path DefaultMaterial2: ""
+      Use DefaultMaterial3: false
+      Path DefaultMaterial3: ""
+      Use DefaultMaterial4: false
+      Path DefaultMaterial4: ""
+      Num Materials: 1
+  - Entity: 8501354524244518677
+    TagComponent:
+      Tag: Quad
+      Group: Quads
+    TransformComponent:
+      Translation: [8.45215034, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    QuadComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      Use: false
+      TexturePath: ""
+  - Entity: 6915600102934739884
+    TagComponent:
+      Tag: Sphere
+      Group: Fundamental Mesh\
+    TransformComponent:
+      Translation: [1.18540549, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../iKan/assets/models/Sphere.fbx
+      ActiveMaterial: 0
+      Material Name 0: Material.001
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color Material.001: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness Material.001: 1
+      Material Proeprty Roughness Material.001: 0.199999988
+      Material Proeprty TilinghFactor Material.001: 1
+      Use Material.0010: false
+      Path Material.0010: ""
+      Use Material.0011: false
+      Path Material.0011: ""
+      Use Material.0012: false
+      Path Material.0012: ""
+      Use Material.0013: false
+      Path Material.0013: ""
+      Use Material.0014: false
+      Path Material.0014: ""
+      Num Materials: 1
   - Entity: 14215502187299319800
     TagComponent:
       Tag: Circle
@@ -333,3 +333,15 @@ Entities:
       Use None4: false
       Path None4: ""
       Num Materials: 2
+  - Entity: 9977890193782153764
+    TagComponent:
+      Tag: Light
+      Group: Lights
+    TransformComponent:
+      Translation: [0, 0, 5.80970955]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 0.5]
+    LightComponent:
+      Present: 1
+      Position: [0, 0, 0]
+      Radiance: [0.747787595, 0.25146842, 0.25146842]
