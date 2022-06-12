@@ -79,6 +79,9 @@ void ChessLayer::Attach() {
     auto& imguiLayer = Application::Get().GetImGuiLayer();
     imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"), AssetManager::GetClientAsset("fonts/OpenSans/OpenSans-Bold.ttf"));
     
+    // Change Freetype font
+    TextRenderer::LoadFreetype(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"));
+
     // Setup the Theme
     ImguiAPI::SetGreyThemeColors();
     
@@ -112,22 +115,43 @@ void ChessLayer::Attach() {
 
 /// Update the renderer Layer each frame
 void ChessLayer::Update(Timestep ts) {
+    static glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_ViewportData.Size.x), 0.0f, static_cast<float>(m_ViewportData.Size.y));
+
     // If resize the window call the update the Scene View port and Frame buffer should be resized
     if (const FrameBuffer::Specification& spec = m_ViewportData.FrameBuffer->GetSpecification();
         (uint32_t)m_ViewportData.Size.x > 0 && (uint32_t)m_ViewportData.Size.y > 0 && // zero sized framebuffer is invalid
         (spec.Width != (uint32_t)m_ViewportData.Size.x || spec.Height != (uint32_t)m_ViewportData.Size.y)) {
         m_ViewportData.FrameBuffer->Resize((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
         m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
+        
+        projection = glm::ortho(0.0f, static_cast<float>(m_ViewportData.Size.x), 0.0f, static_cast<float>(m_ViewportData.Size.y));
     }
     
     Renderer::ResetStatsEachFrame();
 
     m_ViewportData.FrameBuffer->Bind();
 
-    Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
+    Renderer::Clear({ 0.3f, 0.3f, 0.3f, 1.0f });
     m_Scene->Update(ts);
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
+
+    // Render the Frame rate
+    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.7f, 0.7f, 0.7f, 0.7f });
+
+    // Render the Renderer Version
+    static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
+    static std::string rendererInfo = "(c) iKan Chess | " + rendererCapability.Vendor + " | " + rendererCapability.Renderer + " | " + rendererCapability.Version;
+    Renderer::RenderText(rendererInfo, projection, glm::vec3(m_ViewportData.Size.x - 480.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.7f, 0.7f, 0.7f, 0.7f });
+    
+    // Render the Player Info
+    Renderer::RenderText(m_Players[0].Name, projection, glm::vec3(m_ViewportData.Size.x - 100.0f, m_ViewportData.Size.y - 50.0f, 0.3f), glm::vec2(0.5), { 0.0f, 0.0f, 0.0f, 1.0f });
+    Renderer::RenderText(m_Players[1].Name, projection, glm::vec3(100.0f, m_ViewportData.Size.y - 50.0f, 0.3f), glm::vec2(0.5), { 1.0f, 1.0f, 1.0f, 1.0f });
+    
+    // render the Turn
+    std::string turnString = "Turn : " + ChessUtils::ColorString(m_Turn);
+    glm::vec4 color = (m_Turn == Color::Black) ? glm::vec4(0.0f, 0.0f, 0.0f, 1.0f) : glm::vec4(1.0f);
+    Renderer::RenderText(turnString, projection, glm::vec3((m_ViewportData.Size.x / 2) - 100.0f, m_ViewportData.Size.y - 50.0f, 0.3f), glm::vec2(0.8), color );
 
     m_ViewportData.FrameBuffer->Unbind();
 }

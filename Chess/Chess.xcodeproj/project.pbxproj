@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E6678CD2856012D0029A72C /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6678CC2856012D0029A72C /* libfreetype.6.dylib */; };
 		3EF2AABA283D015B009764F8 /* libiKan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AAB9283D015B009764F8 /* libiKan.a */; };
 		3EF2AABD283D016E009764F8 /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AABB283D016E009764F8 /* libIrrXML.dylib */; };
 		3EF2AABE283D016E009764F8 /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AABC283D016E009764F8 /* libassimp.5.dylib */; };
@@ -32,6 +33,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E6678CC2856012D0029A72C /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../iKan/vendors/gui/gui/freetype/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
 		3EF2AA88283D0111009764F8 /* Chess */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chess; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2AAB9283D015B009764F8 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2AABB283D016E009764F8 /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = ../iKan/vendors/assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E6678CD2856012D0029A72C /* libfreetype.6.dylib in Frameworks */,
 				3EF2AAC4283D017D009764F8 /* Cocoa.framework in Frameworks */,
 				3EF2AAC2283D0179009764F8 /* IOKit.framework in Frameworks */,
 				3EF2AAC0283D0175009764F8 /* OpenGL.framework in Frameworks */,
@@ -103,6 +106,7 @@
 		3EF2AAB8283D015B009764F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E6678CC2856012D0029A72C /* libfreetype.6.dylib */,
 				3EF2AAC3283D017D009764F8 /* Cocoa.framework */,
 				3EF2AAC1283D0179009764F8 /* IOKit.framework */,
 				3EF2AABF283D0175009764F8 /* OpenGL.framework */,
@@ -410,6 +414,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
 					"${PROJECT_DIR}/src",
+					"${PROJECT_DIR}/../iKan/vendors/gui/gui/freetype/include/freetype2",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -428,6 +433,7 @@
 					"${PROJECT_DIR}/../iKan/vendors/enTT/include",
 					"${PROJECT_DIR}/../iKan/vendors/gui/guizmo",
 					"${PROJECT_DIR}/src",
+					"${PROJECT_DIR}/../iKan/vendors/gui/gui/freetype/include/freetype2",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendors/assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
