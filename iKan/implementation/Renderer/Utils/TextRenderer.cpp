@@ -145,11 +145,10 @@ void TextRenderer::BeginBatch(const glm::mat4& cameraViewProj) {
 
 /// Render the Text in Window
 /// @param text Text to be rendereed
-/// @param x X Position of Text
-/// @param y y Position of Text
-/// @param scale Size of text
+/// @param transform Transform of COlor
 /// @param color Color of text
-void TextRenderer::RenderText(std::string text, const glm::mat4& transform, const glm::vec4& color, uint32_t entID) {
+/// @param entID Pixel ID of Text
+void TextRenderer::RenderText(std::string text, const glm::mat4& transform, const glm::vec4& color, int32_t entID) {
     // TODO: Rotation of Char is not suppirted Yet
     // iterate through all characters
     std::string::const_iterator c;
@@ -177,14 +176,11 @@ void TextRenderer::RenderText(std::string text, const glm::mat4& transform, cons
             { xpos + w, ypos + h, zpos },
         };
         
-        glm::mat4 rotation_ = glm::toMat4(glm::quat(rotation));
         s_TextData->VertexBufferPtr = s_TextData->VertexBufferBase;
         
         // Each Vertex of Char
         for (size_t i = 0; i < TextData::VertexForSingleChar; i++) {
-            glm::mat4 t = glm::translate(glm::mat4(1.0f), vertexPosition[i]) * rotation_ * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
-
-            s_TextData->VertexBufferPtr->Position     = t * glm::vec4(1.0f);
+            s_TextData->VertexBufferPtr->Position     = vertexPosition[i];
             s_TextData->VertexBufferPtr->Color        = color;
             s_TextData->VertexBufferPtr->TexCoord     = s_TextData->BaseTexCoords[i];
             s_TextData->VertexBufferPtr->ObjectID     = entID;
@@ -204,4 +200,61 @@ void TextRenderer::RenderText(std::string text, const glm::mat4& transform, cons
     }
     
     RendererStatistics::Get().VertexCount += TextData::VertexForSingleChar;
+}
+
+/// Render the Text in Window
+/// @param text Text to be rendereed
+/// @param position Text Poistion
+/// @param scale Text Poistion
+/// @param color Color of text
+void TextRenderer::RenderText(std::string text, glm::vec3 position, const glm::vec2& scale, const glm::vec4& color) {
+    // iterate through all characters
+    std::string::const_iterator c;
+    
+    for (c = text.begin(); c != text.end(); c++) {
+        std::shared_ptr<CharTexture> ch = s_TextData->CharTextureMap[*c];
+
+        float xpos = position.x + ch->GetBearing().x * scale.x;
+        float ypos = position.y - (ch->GetSize().y - ch->GetBearing().y) * scale.y;
+        float zpos = position.z;
+
+        float w = ch->GetSize().x * scale.x;
+        float h = ch->GetSize().y * scale.y;
+        
+        // update VBO for each character
+        glm::vec3 vertexPosition[TextData::VertexForSingleChar] = {
+            { xpos,     ypos + h, zpos },
+            { xpos,     ypos    , zpos },
+            { xpos + w, ypos    , zpos },
+
+            { xpos,     ypos + h, zpos },
+            { xpos + w, ypos    , zpos },
+            { xpos + w, ypos + h, zpos },
+        };
+        
+        s_TextData->VertexBufferPtr = s_TextData->VertexBufferBase;
+        
+        // Each Vertex of Char
+        for (size_t i = 0; i < TextData::VertexForSingleChar; i++) {
+            s_TextData->VertexBufferPtr->Position     = vertexPosition[i];
+            s_TextData->VertexBufferPtr->Color        = color;
+            s_TextData->VertexBufferPtr->TexCoord     = s_TextData->BaseTexCoords[i];
+            s_TextData->VertexBufferPtr->ObjectID     = -1;
+            s_TextData->VertexBufferPtr++;
+        }
+        
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_TextData->VertexBufferPtr - (uint8_t*)s_TextData->VertexBufferBase);
+        s_TextData->VertexBuffer->SetData(s_TextData->VertexBufferBase, dataSize);
+        
+        // Render the Scene
+        s_TextData->Shader->Bind();
+        ch->Bind();
+        Renderer::DrawArrays(s_TextData->Pipeline, 6);
+
+        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+        position.x += (ch->GetAdvance() >> 6) * scale.x; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+    }
+    
+    RendererStatistics::Get().VertexCount += TextData::VertexForSingleChar;
+
 }

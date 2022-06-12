@@ -7,10 +7,6 @@
 
 #include "RendererLayer.hpp"
 
-glm::vec3 t_ = {0.0f, 0.0f, 0.0f};
-glm::vec3 s_ = {1.0f, 1.0f, 1.0f};
-glm::vec3 r_ = {0.0f, 0.0f, 0.0f};
-
 /// Renderer Layer Constructor
 RendererLayer::RendererLayer() : Layer("Renderer"), m_CBP("../../../../../../../iKan./iKan/Github/Product/iKan") {
     IK_INFO("Creating {0} Layer ...", m_Name);
@@ -76,6 +72,8 @@ void RendererLayer::Update(Timestep ts) {
         m_VpData.UpdateMousePos();
 
         UpdateHoveredEntity();
+        
+        Renderer::RenderFrameRate(glm::vec3(0.0f), glm::vec2(0.5), glm::vec4(1.0f));
     }
     m_VpData.FrameBuffer->Unbind();
 }
@@ -83,16 +81,9 @@ void RendererLayer::Update(Timestep ts) {
 /// Render GUI Window each frame for Renderer Layer
 void RendererLayer::RenderGui() {
     ImguiAPI::StartDcocking();
-    ImguiAPI::FrameRate();
 
     if (m_ActiveScene) {
         m_ActiveScene->RenderImgui();
-        
-        ImGui::Begin("Debug");
-        ImGui::DragFloat3("T", &t_.x);
-        ImGui::DragFloat3("R", &r_.x);
-        ImGui::DragFloat3("S", &s_.x);
-        ImGui::End();
         
         // Viewport
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
@@ -127,6 +118,8 @@ void RendererLayer::RenderGui() {
             
             SaveScene();
             OnImguizmoUpdate();
+            
+            ImguiAPI::FrameRate();
         }
         
         m_VpData.UpdateBound();

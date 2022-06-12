@@ -140,6 +140,16 @@ void Renderer::DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, 
     s_RendererAPI->DrawIndexedBaseVertex(pipeline, count, indicesdata, basevertex);
 }
 
+// ------------------------ Predefined Texts ------------------------------
+/// Render the Frame rate as text
+/// @param position position of text
+/// @param scale size of text
+void Renderer::RenderFrameRate(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color) {
+    static glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(1600), 0.0f, static_cast<float>(900));
+    TextRenderer::BeginBatch(projection);
+    TextRenderer::RenderText(std::to_string(ImGui::GetIO().Framerate), position, scale, color);
+}
+
 // --------------------- Renderer Stats API ---------------------------------
 /// Restet the renderer Stats each frame
 /// NOTE: Only those stats will be reset that need to be reset each frame

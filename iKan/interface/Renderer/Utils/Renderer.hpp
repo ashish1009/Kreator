@@ -97,6 +97,12 @@ namespace iKan {
         /// @param indicesdata indices data
         /// @param basevertex Base vertex pos
         static void DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex);
+        
+        // ------------------------ Predefined Texts ------------------------------
+        /// Render the Frame rate as text
+        /// @param position position of text
+        /// @param scale size of text
+        static void RenderFrameRate(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color);
 
         // --------------------- Renderer Stats API ---------------------------------
         /// Restet the renderer Stats each frame

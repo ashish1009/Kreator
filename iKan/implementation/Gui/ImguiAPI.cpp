@@ -7,6 +7,7 @@
 
 #include "ImguiAPI.hpp"
 #include "Renderer/Utils/RendererAPI.hpp"
+#include "Renderer/Utils/TextRenderer.hpp"
 
 using namespace iKan;
 
