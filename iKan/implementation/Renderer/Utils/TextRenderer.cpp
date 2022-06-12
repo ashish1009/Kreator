@@ -93,8 +93,6 @@ void TextRenderer::Init() {
     s_TextData->BaseTexCoords[3] = { 0.0f, 0.0f };
     s_TextData->BaseTexCoords[4] = { 1.0f, 1.0f };
     s_TextData->BaseTexCoords[5] = { 1.0f, 0.0f };
-    
-    LoadFreetype(AssetManager::GetCoreAsset("fonts/opensans/OpenSans-Bold.ttf"));
 }
 
 /// Load the font for freetype

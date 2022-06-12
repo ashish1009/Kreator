@@ -54,6 +54,8 @@ static std::string GetEntityNameFromChar(char type) {
     return "";
 }
 
+/// Initialize the Background data
+/// @param scene scene reference pointer
 void Background::Init(const std::shared_ptr<Scene>& scene) {
     IK_CLIENT_LOG_SEPARATOR();
     IK_INFO("Initializing the background data");
@@ -92,6 +94,7 @@ void Background::Init(const std::shared_ptr<Scene>& scene) {
     }
 }
 
+/// shut down the Background
 void Background::Shutdown() {
     for (auto tile : TileEntityMap) {
         tile.second.reset();

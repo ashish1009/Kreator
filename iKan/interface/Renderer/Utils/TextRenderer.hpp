@@ -17,6 +17,11 @@ namespace iKan {
     /// Wrapper class for storing Text Renderer API
     class TextRenderer {
     public:
+        /// Load the font for freetype
+        /// @param fontPath path of font
+        /// NOTE: Load the Font before using any other API In clientw
+        static void LoadFreetype(const std::string& fontPath);
+
         /// Initialze the Text renderer. Create All buffers needed to store Data (Both Renderer and CPU)
         static void Init();
         /// Shutdown on Text the Batch Renderer. Delete all the allocated Data
@@ -41,11 +46,7 @@ namespace iKan {
         /// @param scale Text Poistion
         /// @param color Color of text
         static void RenderText(std::string text, glm::vec3 position, const glm::vec2& scale, const glm::vec4& color);
-        
-        /// Load the font for freetype
-        /// @param fontPath path of font
-        static void LoadFreetype(const std::string& fontPath);
-    
+            
     private:
         // Making Singleton
         TextRenderer() = default;

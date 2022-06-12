@@ -51,6 +51,8 @@ void Renderer::Shutdown() {
     // Destorry the Shader library and Texture
     ShaderLibrary::ResetShaders();
     TextureLibrary::ResetTextures();
+    
+    s_TextureRendererIDs.clear();
 }
 
 /// Return the current active Renderer API
@@ -187,7 +189,8 @@ void Renderer::AddRendererIDs(RendererID rendererId) {
 /// Remove Texture renderer ID so that they wont get repeated
 /// @param rendererId Renderer ID to be added in set
 void Renderer::RemoveRendererIDs(RendererID rendererId) {
-    s_TextureRendererIDs.erase(rendererId);
+    if (std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) != s_TextureRendererIDs.end())
+        s_TextureRendererIDs.erase(rendererId);
 }
 
 // ---------------- Shader Manager ----------------------------
