@@ -9,6 +9,7 @@
 
 #include "Core/Math/UUID.hpp"
 #include "Scene/SceneCamera.hpp"
+#include "Scene/SceneLight.hpp"
 #include "Renderer/Graphics/Texture.hpp"
 
 namespace iKan {
@@ -107,6 +108,14 @@ namespace iKan {
         
         TextComponent(const std::string& text);
 
+        void RenderImgui();
+    };
+    
+    /// Light Component
+    struct LightComponent {
+        std::shared_ptr<SceneLight> Light;
+        
+        LightComponent();
         void RenderImgui();
     };
 

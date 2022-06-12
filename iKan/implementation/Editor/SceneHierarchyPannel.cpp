@@ -132,15 +132,22 @@ void SceneHierarchyPannel::RenderImgui() {
             }
             ImGui::Separator();
             
+            if (ImGui::MenuItem("Light")) {
+                auto entity = m_Context->CreateEntity("Light");
+                entity->GetComponent<TagComponent>().Group = "Lights";
+                entity->AddComponent<LightComponent>();
+            }
+            ImGui::Separator();
+            
             if (ImGui::BeginMenu("2D Entity")) {
                 if (ImGui::MenuItem("Quad")) {
                     auto entity = m_Context->CreateEntity("Quad");
-                    entity->GetComponent<TagComponent>().Group = "Quads";
+                    entity->GetComponent<TagComponent>().Group = "2D Fundamentals";
                     entity->AddComponent<QuadComponent>();
                 }
                 if (ImGui::MenuItem("Circle")) {
                     auto entity = m_Context->CreateEntity("Circle");
-                    entity->GetComponent<TagComponent>().Group = "Circles";
+                    entity->GetComponent<TagComponent>().Group = "2D Fundamentals";
                     entity->AddComponent<CircleComponent>();
                 }
                 if (ImGui::MenuItem("Text")) {
@@ -346,6 +353,7 @@ void SceneHierarchyPannel::DrawComponents() {
     DrawComponent<CircleComponent>("Circle", m_SelectedEntity, [this](auto& cc) { cc.RenderImgui(c_DefaultTexture); });
     DrawComponent<MeshComponent>("Mesh", m_SelectedEntity, [this](auto& mc) { mc.RenderImgui(c_DefaultTexture, m_SelectedEntity); });
     DrawComponent<TextComponent>("Text", m_SelectedEntity, [](auto& tc) { tc.RenderImgui(); });
+    DrawComponent<LightComponent>("Light", m_SelectedEntity, [](auto& lc) { lc.RenderImgui(); });
 }
 
 /// Add Component
@@ -360,6 +368,11 @@ void SceneHierarchyPannel::AddComponent() {
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndMenu();
+    }
+    ImGui::Separator();
+    if (ImGui::MenuItem("Light")) {
+        m_SelectedEntity->AddComponent<LightComponent>();
+        ImGui::CloseCurrentPopup();
     }
     ImGui::Separator();
     if (ImGui::BeginMenu("2D Element")) {

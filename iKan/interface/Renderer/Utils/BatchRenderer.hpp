@@ -26,9 +26,10 @@ namespace iKan {
         /// Shutdown on destroy the Batch Renderer. Delete all the allocated Data
         static void Shutdown();
         
-        /// Initialize the Batch for each Draw call (each Batch Rendering)
-        /// @param cameraViewProj Ciew projection matrix of Camera
-        static void BeginBatch(const glm::mat4& cameraViewProj);
+        /// Begin the Batch for 2D Rendere
+        /// @param cameraViewProj View projection Matrix
+        /// @param cameraView camera view
+        static void BeginBatch(const glm::mat4& cameraViewProj, const glm::mat4& cameraView);
         /// End the current batch by rendering all the vertex
         static void EndBatch();
 
@@ -45,7 +46,13 @@ namespace iKan {
         /// @param tintColor Color of Quad
         /// @param entID Pixel ID of Quad
         static void DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor = glm::vec4(1.0f), float tilingFactor = 1.0f, int32_t entID = -1 );
-        
+        /// Draw Quad API with Texture
+        /// @param transform Transformation matrix of Quad
+        /// @param texture Texture to be uploaded in Batch
+        /// @param tilingFactor tiling factor of Texture (Scale by which texture to be Multiplied)
+        /// @param tintColor Color of Quad
+        /// @param entID Pixel ID of Quad
+        static void DrawFixedViewQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor = glm::vec4(1.0f), float tilingFactor = 1.0f, int32_t entID = -1);
         /// Draw Quad API with sprite subtexture
         /// @param transform Transformation matrix of Quad
         /// @param subTexture Subtexture component

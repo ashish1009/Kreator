@@ -18,7 +18,7 @@ std::shared_ptr<SceneLight> SceneLight::Create() {
 }
 
 /// Render Imgui for Scene light
-void SceneLight::ImguiRenderer() {
+void SceneLight::RenderImgui() {
     bool isLight = (bool)Present;
 
     ImGui::Columns(2);

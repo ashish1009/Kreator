@@ -116,7 +116,7 @@ void Scene::Update(Timestep ts) {
 void Scene::UpdateEditor(Timestep ts) {
     m_EditorCamera->Update(ts);
     
-    Render2DComponents(m_EditorCamera->GetViewProjection());
+    Render2DComponents(m_EditorCamera->GetViewProjection(), m_EditorCamera->GetViewMatrix());
     Render3DComponents(m_EditorCamera->GetPosition(), m_EditorCamera->GetViewProjection(), ts);
 }
 
@@ -129,7 +129,7 @@ void Scene::UpdateRuntime(Timestep ts) {
         const auto& tc = primaryCameraEntity->GetComponent<TransformComponent>();
         const glm::mat4& cameraTransform = tc.GetTransform();
         
-        Render2DComponents(camera->GetProjectionMatrix() * glm::inverse(cameraTransform));
+        Render2DComponents(camera->GetProjectionMatrix() * glm::inverse(cameraTransform), glm::inverse(cameraTransform));
         Render3DComponents(tc.Translation, camera->GetProjectionMatrix() * glm::inverse(cameraTransform), ts);
     }
 }
@@ -246,8 +246,8 @@ void Scene::ResizeCameraEntity(uint32_t width, uint32_t height) {
 
 /// Render all 2D components
 /// @param viewProj Camera View projection matrix
-void Scene::Render2DComponents(const glm::mat4& viewProj) {
-    BatchRenderer::BeginBatch(viewProj);
+void Scene::Render2DComponents(const glm::mat4& viewProj, const glm::mat4& view) {
+    BatchRenderer::BeginBatch(viewProj, view);
 
     // Quads
     auto quadGroup = m_Registry.group<TransformComponent>(entt::get<QuadComponent>);
@@ -278,6 +278,14 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
         else
             BatchRenderer::DrawQuad(transform.GetTransform(), glm::vec4(1.0f), (int32_t)entity); // TODO: Store color in sprite renderer Later
     }
+
+    // Lights
+    auto lightView = m_Registry.view<TransformComponent, LightComponent>();
+    for (const auto& entity : lightView) {
+        const auto& [transform, lightComp] = lightView.get<TransformComponent, LightComponent>(entity);
+        BatchRenderer::DrawFixedViewQuad(transform.GetTransform(), m_IconTexture.PointLight, glm::vec4(lightComp.Light->Radiance.x, lightComp.Light->Radiance.y, lightComp.Light->Radiance.z, 1.0f), 1.0f, (int32_t)entity);
+    }
+    
     BatchRenderer::EndBatch();
 
     // Texts
@@ -287,6 +295,7 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
         TextRenderer::BeginBatch(viewProj);
         TextRenderer::RenderText(textComp.Text, transform.GetTransform(), textComp.Color, (uint32_t)entity);
     }
+    
 }
 
 /// Render all 3D components

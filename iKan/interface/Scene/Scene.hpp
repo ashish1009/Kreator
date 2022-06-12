@@ -12,12 +12,14 @@
 #include "Core/Math/UUID.hpp"
 #include "Editor/EditorCamera.hpp"
 #include "Renderer/Graphics/Texture.hpp"
+#include "Renderer/Utils/Renderer.hpp"
 #include "Scene/SceneCamera.hpp"
 
 namespace iKan {
 
     // Forward Declarations
     class Entity;
+    class Texture;
     class SceneHierarchyPannel;
     class SceneSerializer;
     
@@ -118,7 +120,7 @@ namespace iKan {
 
         void ResizeCameraEntity(uint32_t width, uint32_t height);
         
-        void Render2DComponents(const glm::mat4& viewProj);
+        void Render2DComponents(const glm::mat4& viewProj, const glm::mat4& view);
         void Render3DComponents(const glm::vec3& cameraosition, const glm::mat4& cameraViewProj, Timestep ts);
         
         std::shared_ptr<Entity> GetPrimaryCameraEntity();
@@ -147,6 +149,12 @@ namespace iKan {
         // Utils Memebers
         std::shared_ptr<Texture> m_PlayTexture, m_PauseTexture;
         std::string m_FilePath = "Unsaved Scene", m_Name = "Unsaved Scene";
+        
+        // TODO: Move some other place.
+        struct IconTexture {
+            const std::shared_ptr<Texture> PointLight = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/pointLight.png"));
+        };
+        IconTexture m_IconTexture;
 
         friend class Entity;
         friend class SceneHierarchyPannel;

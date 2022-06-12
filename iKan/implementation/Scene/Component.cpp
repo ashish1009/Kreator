@@ -163,3 +163,7 @@ void TextComponent::RenderImgui() {
     ImGui::Separator();
     PropertyGrid::ColorEdit(Color);
 }
+
+// Light Component
+LightComponent::LightComponent() { Light = SceneLight::Create(); }
+void LightComponent::RenderImgui() { Light->RenderImgui(); }

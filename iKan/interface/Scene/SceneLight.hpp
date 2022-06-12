@@ -23,7 +23,7 @@ namespace iKan {
         static std::shared_ptr<SceneLight> Create();
         
         /// Render the imgui for Scene Light
-        void ImguiRenderer();
+        void RenderImgui();
         
         /// Retrurn the transform of Light
         glm::mat4 GetTransform() const;
