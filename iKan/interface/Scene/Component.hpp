@@ -99,5 +99,14 @@ namespace iKan {
     struct SpriteComponent {
         std::shared_ptr<iKan::SubTexture> SubTexture;
     };
+    
+    struct TextComponent {
+        std::string Text;
+        glm::vec4 Color = glm::vec4(1.0f);
+        
+        TextComponent(const std::string& text);
+
+        void RenderImgui();
+    };
 
 }

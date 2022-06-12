@@ -154,3 +154,10 @@ void MeshComponent::RenderImgui(const std::shared_ptr<iKan::Texture>& defaultTex
     ImGui::Separator();
     ImGui::Columns(1);
 }
+
+// Text Component
+TextComponent::TextComponent(const std::string& text) : Text(text) {}
+void TextComponent::RenderImgui() {
+    auto& tag = Text;
+    PropertyGrid::String("Text", tag, 50.0f, 300.0f, "Enter New Text Here...", true, true, 4);
+}

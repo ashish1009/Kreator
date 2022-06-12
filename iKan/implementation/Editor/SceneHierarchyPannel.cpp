@@ -80,7 +80,7 @@ void SceneHierarchyPannel::RenderImgui() {
     ImGui::Begin("Scene Data");
     ImGui::PushID("Scene Data");
     
-    // Show Scene Na
+    // Show Scene Name
     ImGui::Text(" %s (%d Entities. Max Entity ID: %d)", m_Context->GetName().c_str(), m_Context->GetNumEntities(), m_Context->GetMaxEntityId());
     ImGui::Separator();
     
@@ -143,49 +143,54 @@ void SceneHierarchyPannel::RenderImgui() {
                     entity->GetComponent<TagComponent>().Group = "Circles";
                     entity->AddComponent<CircleComponent>();
                 }
+                if (ImGui::MenuItem("Text")) {
+                    auto entity = m_Context->CreateEntity("Text");
+                    entity->GetComponent<TagComponent>().Group = "Texts";
+                    entity->AddComponent<TextComponent>("Enter Text Here");
+                }
                 ImGui::EndMenu();
             }
             
             if (ImGui::BeginMenu("3D Entity")) {
                 if (ImGui::MenuItem("Empty Mesh")) {
                     auto entity = m_Context->CreateEntity("Mesh");
-                    entity->GetComponent<TagComponent>().Group = "Meshes";
+                    entity->GetComponent<TagComponent>().Group = "Complex Meshes";
                     entity->AddComponent<MeshComponent>();
                 }
                 ImGui::Separator();
                 if (ImGui::MenuItem("Cube")) {
                     auto entity = m_Context->CreateEntity("Cube");
-                    entity->GetComponent<TagComponent>().Group = "Cubes";
+                    entity->GetComponent<TagComponent>().Group = "Fundamental Meshes";
                     auto& mc = entity->AddComponent<MeshComponent>();
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Cube.fbx"), (uint32_t)(*entity.get()));
                 }
                 if (ImGui::MenuItem("Sphere")) {
                     auto entity = m_Context->CreateEntity("Sphere");
-                    entity->GetComponent<TagComponent>().Group = "Spheres";
+                    entity->GetComponent<TagComponent>().Group = "Fundamental Meshes";
                     auto& mc = entity->AddComponent<MeshComponent>();
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Sphere.fbx"), (uint32_t)(*entity.get()));
                 }
                 if (ImGui::MenuItem("Plane")) {
                     auto entity = m_Context->CreateEntity("Plane");
-                    entity->GetComponent<TagComponent>().Group = "Planes";
+                    entity->GetComponent<TagComponent>().Group = "Fundamental Meshes";
                     auto& mc = entity->AddComponent<MeshComponent>();
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Plane.obj"), (uint32_t)(*entity.get()));
                 }
                 if (ImGui::MenuItem("Capsule")) {
                     auto entity = m_Context->CreateEntity("Capsule");
-                    entity->GetComponent<TagComponent>().Group = "Capsules";
+                    entity->GetComponent<TagComponent>().Group = "Fundamental Meshes";
                     auto& mc = entity->AddComponent<MeshComponent>();
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Capsule.fbx"), (uint32_t)(*entity.get()));
                 }
                 if (ImGui::MenuItem("Cone")) {
                     auto entity = m_Context->CreateEntity("Cone");
-                    entity->GetComponent<TagComponent>().Group = "Cones";
+                    entity->GetComponent<TagComponent>().Group = "Fundamental Meshes";
                     auto& mc = entity->AddComponent<MeshComponent>();
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Cone.fbx"), (uint32_t)(*entity.get()));
                 }
                 if (ImGui::MenuItem("Cylinder")) {
                     auto entity = m_Context->CreateEntity("Cylinder");
-                    entity->GetComponent<TagComponent>().Group = "Cylinders";
+                    entity->GetComponent<TagComponent>().Group = "Fundamental Meshes";
                     auto& mc = entity->AddComponent<MeshComponent>();
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Cylinder.fbx"), (uint32_t)(*entity.get()));
                 }
@@ -340,6 +345,7 @@ void SceneHierarchyPannel::DrawComponents() {
     DrawComponent<QuadComponent>("Quad", m_SelectedEntity, [this](auto& qc) { qc.RenderImgui(c_DefaultTexture); });
     DrawComponent<CircleComponent>("Circle", m_SelectedEntity, [this](auto& cc) { cc.RenderImgui(c_DefaultTexture); });
     DrawComponent<MeshComponent>("Mesh", m_SelectedEntity, [this](auto& mc) { mc.RenderImgui(c_DefaultTexture, m_SelectedEntity); });
+    DrawComponent<TextComponent>("Text", m_SelectedEntity, [](auto& tc) { tc.RenderImgui(); });
 }
 
 /// Add Component
@@ -363,6 +369,10 @@ void SceneHierarchyPannel::AddComponent() {
         }
         if (ImGui::MenuItem("Circle")) {
             m_SelectedEntity->AddComponent<CircleComponent>();
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Text")) {
+            m_SelectedEntity->AddComponent<TextComponent>("Enter Text Here");
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndMenu();

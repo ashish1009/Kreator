@@ -151,3 +151,4 @@ Add the following library search paths
 - TODO: In Scene.cpp : Store color in sprite renderer Later
 - TODO: In OpenGLRendererAPI.hpp : Make API for Text enable too
 - TODO: In TextRenderer.hpp : Rotation of Char is not suppirted Yet
+- TODO: In Scene.cpp : Add Duplicate Entity for other entity too later

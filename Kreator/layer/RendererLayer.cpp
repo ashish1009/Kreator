@@ -72,13 +72,6 @@ void RendererLayer::Update(Timestep ts) {
     {
         Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
         
-        TextRenderer::BeginBatch(m_ActiveScene->GetEditorCamera()->GetViewProjection());
-        
-        glm::mat4 rotation = glm::toMat4(glm::quat(r_));
-        glm::mat4 t = glm::translate(glm::mat4(1.0f), t_) * rotation * glm::scale(glm::mat4(1.0f), s_);
-        
-        TextRenderer::RenderText("This is sample text", t, glm::vec3(0.5, 0.8f, 0.2f), 1);
-        
         m_ActiveScene->Update(ts);
         m_VpData.UpdateMousePos();
 

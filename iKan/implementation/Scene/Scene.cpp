@@ -8,6 +8,7 @@
 #include "Scene.hpp"
 #include "Scene/Entity.hpp"
 #include "Renderer/Utils/BatchRenderer.hpp"
+#include "Renderer/Utils/TextRenderer.hpp"
 #include "Renderer/Utils/Mesh.hpp"
 #include "Editor/PropertyGrid.hpp"
 
@@ -100,6 +101,7 @@ std::shared_ptr<Entity> Scene::DuplicateEntity(const std::shared_ptr<Entity>& en
     CopyComponentIfExist<CameraComponent>(*newEntity.get(), *entity.get());
     CopyComponentIfExist<QuadComponent>(*newEntity.get(), *entity.get());
     CopyComponentIfExist<CircleComponent>(*newEntity.get(), *entity.get());
+    // TODO: Add Duplicate Entity for other entity too later
     return newEntity;
 }
 
@@ -276,8 +278,15 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
         else
             BatchRenderer::DrawQuad(transform.GetTransform(), glm::vec4(1.0f), (int32_t)entity); // TODO: Store color in sprite renderer Later
     }
+    BatchRenderer::EndBatch();
 
-    BatchRenderer::EndBatch();    
+    // Texts
+    auto textView = m_Registry.view<TransformComponent, TextComponent>();
+    for (const auto& entity : textView) {
+        const auto& [transform, textComp] = textView.get<TransformComponent, TextComponent>(entity);
+        TextRenderer::BeginBatch(viewProj);
+        TextRenderer::RenderText(textComp.Text, transform.GetTransform(), glm::vec4(0.5, 0.8f, 0.2f, 1.0f), (uint32_t)entity);
+    }
 }
 
 /// Render all 3D components

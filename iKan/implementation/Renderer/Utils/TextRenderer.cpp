@@ -18,7 +18,7 @@ using namespace iKan;
 struct TextData {
     struct Vertex {
         glm::vec3 Position;
-        glm::vec3 Color;
+        glm::vec4 Color;
         glm::vec2 TexCoord;
         
         int32_t ObjectID; // Pixel ID of Quad
@@ -77,7 +77,7 @@ void TextRenderer::Init() {
     s_TextData->VertexBuffer = VertexBuffer::Create(sizeof(TextData::Vertex) * TextData::VertexForSingleChar);
     s_TextData->VertexBuffer->AddLayout({
         { "a_Position",  ShaderDataType::Float3 },
-        { "a_Color",     ShaderDataType::Float3 },
+        { "a_Color",     ShaderDataType::Float4 },
         { "a_TexCoords", ShaderDataType::Float2 },
         { "a_ObjectID",  ShaderDataType::Int },
     });
@@ -149,7 +149,7 @@ void TextRenderer::BeginBatch(const glm::mat4& cameraViewProj) {
 /// @param y y Position of Text
 /// @param scale Size of text
 /// @param color Color of text
-void TextRenderer::RenderText(std::string text, const glm::mat4& transform, glm::vec3 color, uint32_t entID) {
+void TextRenderer::RenderText(std::string text, const glm::mat4& transform, const glm::vec4& color, uint32_t entID) {
     // TODO: Rotation of Char is not suppirted Yet
     // iterate through all characters
     std::string::const_iterator c;
