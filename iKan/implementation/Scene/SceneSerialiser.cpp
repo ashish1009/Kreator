@@ -241,6 +241,16 @@ static void SerializeEntity(YAML::Emitter& out, std::shared_ptr<Entity> entity) 
         out << YAML::EndMap; // MeshComponent
     }
     
+    if (entity->HasComponent<TextComponent>()) {
+        out << YAML::Key << "TextComponent";
+        out << YAML::BeginMap; // MeshComponent
+        
+        auto& tc = entity->GetComponent<TextComponent>();
+        out << YAML::Key << "Text" << YAML::Value << tc.Text;
+        out << YAML::Key << "Color" << YAML::Value << tc.Color;
+        out << YAML::EndMap; // TextComponent
+    }
+    
     out << YAML::EndMap; // Entity
 }
 
@@ -284,7 +294,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
     
     std::string sceneName = data["Scene"].as<std::string>();
     IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Deserializing scene");
+    IK_CORE_INFO("Deserialising scene");
     IK_CORE_INFO("    Path : {0}", filepath);
     IK_CORE_INFO("    Name : {0}", sceneName);
 
@@ -301,7 +311,10 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
             }
             
             std::shared_ptr<Entity> deserializedEntity = m_Scene->CreateEntity(name, uuid);
-            IK_CORE_INFO("    Deserialized entity with ID = {0}, name = {1}", uuid, name);
+            IK_LOG_SEPARATOR();
+            IK_CORE_INFO("    Deserialising Entity");
+            IK_CORE_INFO("    ID    : {0}", uuid);
+            IK_CORE_INFO("    Name  : {0}", name);
             
             deserializedEntity->GetComponent<TagComponent>().Group = group;
             
@@ -314,11 +327,11 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 tc.Scale = transformComponent["Scale"].as<glm::vec3>();
                 
                 IK_LOG_SEPARATOR();
-                IK_CORE_INFO("        Transform Component:");
-                IK_CORE_INFO("            Translation: {0}, {1}, {2}", tc.Translation.x, tc.Translation.y, tc.Translation.z);
-                IK_CORE_INFO("            Rotation: {0}, {1}, {2}", tc.Rotation.x, tc.Rotation.y, tc.Rotation.z);
-                IK_CORE_INFO("            Scale: {0}, {1}, {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
-            }
+                IK_CORE_INFO("        Transform Component");
+                IK_CORE_INFO("            Translation   : {0}, {1}, {2}", tc.Translation.x, tc.Translation.y, tc.Translation.z);
+                IK_CORE_INFO("            Rotation      : {0}, {1}, {2}", tc.Rotation.x, tc.Rotation.y, tc.Rotation.z);
+                IK_CORE_INFO("            Scale         : {0}, {1}, {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
+            } // if (transformComponent)
             
             auto cameraComponent = entity["CameraComponent"];
             if (cameraComponent) {
@@ -339,22 +352,22 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                     cc.Camera->SetPerspective(fov, near, far);
                 
                 IK_LOG_SEPARATOR();
-                IK_CORE_INFO("        Cameara Component:");
-                IK_CORE_INFO("            Primary: {0}", cc.Primary);
-                IK_CORE_INFO("            Fixed Aspect Ratio: {0}", cc.FixedAspectRatio);
+                IK_CORE_INFO("        Cameara Component");
+                IK_CORE_INFO("            Primary             : {0}", cc.Primary);
+                IK_CORE_INFO("            Fixed Aspect Ratio  : {0}", cc.FixedAspectRatio);
                 
                 if ((SceneCamera::ProjectionType)type == SceneCamera::ProjectionType::Orthographic) {
-                    IK_CORE_INFO("            Orthographic Camera :");
-                    IK_CORE_INFO("                Orthographic Size: {0}", cc.Camera->GetOrthographicSize());
+                    IK_CORE_INFO("            Orthographic Camera");
+                    IK_CORE_INFO("                Size : {0}", cc.Camera->GetOrthographicSize());
                 }
                 else if ((SceneCamera::ProjectionType)type == SceneCamera::ProjectionType::Perspective) {
-                    IK_CORE_INFO("            Perspective Camera :");
-                    IK_CORE_INFO("                Perspective FOV: {0}", cc.Camera->GetPerspectiveFOV());
+                    IK_CORE_INFO("            Perspective Camera");
+                    IK_CORE_INFO("                FOV  : {0}", cc.Camera->GetPerspectiveFOV());
                 }
                 
-                IK_CORE_INFO("            Near: {0}", cc.Camera->GetNear());
-                IK_CORE_INFO("            Far: {0}", cc.Camera->GetFar());
-            }
+                IK_CORE_INFO("                Near : {0}", cc.Camera->GetNear());
+                IK_CORE_INFO("                Far  : {0}", cc.Camera->GetFar());
+            } // if (cameraComponent)
             
             auto quadComponent = entity["QuadComponent"];
             if (quadComponent) {
@@ -372,15 +385,15 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 auto& qc = deserializedEntity->AddComponent<QuadComponent>(textComp, color, tilingFactor);
 
                 IK_LOG_SEPARATOR();
-                IK_CORE_INFO("        Quad Component:");
-                IK_CORE_INFO("            Color: {0}, {1}, {2}, {3}", qc.Color.r, qc.Color.g, qc.Color.b, qc.Color.a);
-                IK_CORE_INFO("            Rotation: {0}", qc.TilingFactor);
+                IK_CORE_INFO("        Quad Component");
+                IK_CORE_INFO("            Color         : {0}, {1}, {2}, {3}", qc.Color.r, qc.Color.g, qc.Color.b, qc.Color.a);
+                IK_CORE_INFO("            Rotation      : {0}", qc.TilingFactor);
                 
                 if (qc.Texture.Component) {
-                    IK_CORE_INFO("        Texture Use: {0}", qc.Texture.Use);
-                    IK_CORE_INFO("        Texture Path: {0}", qc.Texture.Component->GetfilePath());
+                    IK_CORE_INFO("        Texture Use   : {0}", qc.Texture.Use);
+                    IK_CORE_INFO("        Texture Path  : {0}", qc.Texture.Component->GetfilePath());
                 }
-            }
+            } // if (quadComponent)
   
             auto circleComponent = entity["CircleComponent"];
             if (circleComponent) {
@@ -399,17 +412,17 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                 
                 auto& cc = deserializedEntity->AddComponent<CircleComponent>(textComp, thickness, fade, color, tilingFactor);
                 
-                IK_CORE_INFO("        Quad Component:");
-                IK_CORE_INFO("            Color: {0}, {1}, {2}, {3}", cc.Color.r, cc.Color.g, cc.Color.b, cc.Color.a);
-                IK_CORE_INFO("            Rotation: {0}", cc.TilingFactor);
-                IK_CORE_INFO("            Thickness: {0}", cc.Thickness);
-                IK_CORE_INFO("            Fade: {0}", cc.Fade);
+                IK_CORE_INFO("        Circle Component");
+                IK_CORE_INFO("            Color         : {0}, {1}, {2}, {3}", cc.Color.r, cc.Color.g, cc.Color.b, cc.Color.a);
+                IK_CORE_INFO("            Rotation      : {0}", cc.TilingFactor);
+                IK_CORE_INFO("            Thickness     : {0}", cc.Thickness);
+                IK_CORE_INFO("            Fade          : {0}", cc.Fade);
                 
                 if (cc.Texture.Component) {
-                    IK_CORE_INFO("        Texture Use: {0}", cc.Texture.Use);
-                    IK_CORE_INFO("        Texture Path: {0}", cc.Texture.Component->GetfilePath());
+                    IK_CORE_INFO("        Texture Use   : {0}", cc.Texture.Use);
+                    IK_CORE_INFO("        Texture Path  : {0}", cc.Texture.Component->GetfilePath());
                 }
-            }
+            } // if (circleComponent)
             
             auto meshComponent = entity["MeshComponent"];
             if (meshComponent) {
@@ -421,16 +434,16 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                     mc.Mesh->SetActiveMaterialIndex(meshComponent["ActiveMaterial"].as<uint32_t>());
                     
                     uint32_t numMaterials = meshComponent["Num Materials"].as<uint32_t>();
-                    IK_CORE_INFO("        Mesh Component:");
-                    IK_CORE_INFO("            File Path: {0}", mc.Mesh->GetPath());
-                    IK_CORE_INFO("            Number of Materials: {0}", numMaterials);
+                    IK_CORE_INFO("        Mesh Component");
+                    IK_CORE_INFO("            File Path             : {0}", mc.Mesh->GetPath());
+                    IK_CORE_INFO("            Number of Materials   : {0}", numMaterials);
 
                     for (uint32_t matIdx = 0; matIdx < numMaterials; matIdx++) {
                         auto matIStr = std::to_string(matIdx);
                         auto name = meshComponent["Material Name " + matIStr].as<std::string>();
                         auto invertX = meshComponent["Material InvertX " + matIStr].as<bool>();
                         auto invertY = meshComponent["Material InvertY " + matIStr].as<bool>();
-                        IK_CORE_INFO("                Name: {0}", name);
+                        IK_CORE_INFO("                Name  : {0}", name);
                         
                         MaterialProperty prop;
                         prop.AlbedoColor = meshComponent["Material Proeprty Color " + name].as<glm::vec3>();
@@ -438,10 +451,10 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                         prop.Roughness = meshComponent["Material Proeprty Roughness " + name].as<float>();
                         prop.TilinghFactor = meshComponent["Material Proeprty TilinghFactor " + name].as<float>();
 
-                        IK_CORE_INFO("                    Color: {0}, {1}, {2}", prop.AlbedoColor.r, prop.AlbedoColor.g, prop.AlbedoColor.b);
-                        IK_CORE_INFO("                    Metalness: {0}", prop.Metalness);
-                        IK_CORE_INFO("                    Roughness: {0}", prop.Roughness);
-                        IK_CORE_INFO("                    Tiling Factor: {0}", prop.TilinghFactor);
+                        IK_CORE_INFO("                    Color         : {0}, {1}, {2}", prop.AlbedoColor.r, prop.AlbedoColor.g, prop.AlbedoColor.b);
+                        IK_CORE_INFO("                    Metalness     : {0}", prop.Metalness);
+                        IK_CORE_INFO("                    Roughness     : {0}", prop.Roughness);
+                        IK_CORE_INFO("                    Tiling Factor : {0}", prop.TilinghFactor);
 
                         std::array<TextureComponent, MaxPBRTextureSupported> textures;
                         for (uint32_t texIdx = 0; texIdx < MaxPBRTextureSupported; texIdx++) {
@@ -454,15 +467,29 @@ bool SceneSerializer::Deserialize(const std::string& filepath) {
                                 textures[texIdx].Component = nullptr;
                             
                             if (textures[texIdx].Component) {
-                                IK_CORE_INFO("                        Texture Use: {0}", textures[texIdx].Use);
-                                IK_CORE_INFO("                        Texture Path: {0}", textures[texIdx].Component->GetfilePath());
+                                IK_CORE_INFO("                        Texture Use  : {0}", textures[texIdx].Use);
+                                IK_CORE_INFO("                        Texture Path : {0}", textures[texIdx].Component->GetfilePath());
                             }
                         }
                         mc.Mesh->AddMaterial(name, prop, textures, invertX, invertY);
-                    }
-                }
-            }
-        }
-    }
+                    } // for (uint32_t matIdx = 0; matIdx < numMaterials; matIdx++)
+                } // if(path != "")
+            } // if (meshComponent)
+            
+            auto textComponent = entity["TextComponent"];
+            if (textComponent) {
+                const std::string& text = textComponent["Text"].as<std::string>();
+                const glm::vec4& color = textComponent["Color"].as<glm::vec4>();
+                
+                auto& tc = deserializedEntity->AddComponent<TextComponent>(text);
+                tc.Color = color;
+                
+                IK_LOG_SEPARATOR();
+                IK_CORE_INFO("        Text Component:");
+                IK_CORE_INFO("            Text  : {0}", tc.Text);
+                IK_CORE_INFO("            Color : {0}, {1}, {2}, {3}", tc.Color.r, tc.Color.g, tc.Color.b, tc.Color.a);
+            } // if (quadComponent)
+        } // for (auto entity : entities)
+    } // if (entities)
     return true;
 }
