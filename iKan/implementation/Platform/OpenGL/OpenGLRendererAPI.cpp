@@ -38,7 +38,7 @@ void OpenGLRendererAPI::Init() const {
     Blend(true);
     IK_LOG_SEPARATOR();
     
-    auto& caps = RendererAPI::Capabilities::Get();
+    auto& caps = Renderer::Capabilities::Get();
     
     caps.Vendor   = (const char*)glGetString(GL_VENDOR);
     caps.Renderer = (const char*)glGetString(GL_RENDERER);

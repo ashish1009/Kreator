@@ -141,13 +141,14 @@ void Renderer::DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, 
 }
 
 // ------------------------ Predefined Texts ------------------------------
-/// Render the Frame rate as text
+/// Render the text irrespectic of entity or Camera
+/// @param text Text tto be projection
 /// @param position position of text
 /// @param scale size of text
-void Renderer::RenderFrameRate(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color) {
-    static glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(1600), 0.0f, static_cast<float>(900));
+/// @param color color of Text
+void Renderer::RenderText(const std::string& text, const glm::mat4& projection, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color) {
     TextRenderer::BeginBatch(projection);
-    TextRenderer::RenderText(std::to_string(ImGui::GetIO().Framerate), position, scale, color);
+    TextRenderer::RenderText(text, position, scale, color);
 }
 
 // --------------------- Renderer Stats API ---------------------------------

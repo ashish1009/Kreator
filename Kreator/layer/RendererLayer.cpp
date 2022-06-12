@@ -54,12 +54,17 @@ void RendererLayer::Update(Timestep ts) {
     if (!m_ActiveScene)
         return;
     
+    static glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_VpData.Size.x), 0.0f, static_cast<float>(m_VpData.Size.y));
+
     // If resize the window call the update the Scene View port and Frame buffer should be resized
     if (const FrameBuffer::Specification& spec = m_VpData.FrameBuffer->GetSpecification();
         (uint32_t)m_VpData.Size.x > 0 && (uint32_t)m_VpData.Size.y > 0 && // zero sized framebuffer is invalid
         (spec.Width != (uint32_t)m_VpData.Size.x || spec.Height != (uint32_t)m_VpData.Size.y)) {
+        
         m_VpData.FrameBuffer->Resize((uint32_t)m_VpData.Size.x, (uint32_t)m_VpData.Size.y);
         m_ActiveScene->SetViewport((uint32_t)m_VpData.Size.x, (uint32_t)m_VpData.Size.y);
+        
+        projection = glm::ortho(0.0f, static_cast<float>(m_VpData.Size.x), 0.0f, static_cast<float>(m_VpData.Size.y));
     }
 
     Renderer::ResetStatsEachFrame();
@@ -73,7 +78,13 @@ void RendererLayer::Update(Timestep ts) {
 
         UpdateHoveredEntity();
         
-        Renderer::RenderFrameRate(glm::vec3(0.0f), glm::vec2(0.5), glm::vec4(1.0f));
+        // Render the Frame rate
+        Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.1f), glm::vec2(0.3), { 0.5f, 0.5f, 0.5f, 0.7f });
+
+        // Render the Renderer Version
+        static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
+        static std::string rendererInfo = "(c) Kreator | " + rendererCapability.Vendor + " | " + rendererCapability.Renderer + " | " + rendererCapability.Version;
+        Renderer::RenderText(rendererInfo, projection, glm::vec3(m_VpData.Size.x - 480.0f, 1.0f, 0.1f), glm::vec2(0.3), { 0.5f, 0.5f, 0.5f, 0.7f });
     }
     m_VpData.FrameBuffer->Unbind();
 }
@@ -113,13 +124,9 @@ void RendererLayer::RenderGui() {
             
             m_SHP->RenderImgui();
             m_CBP.RenderImgui();
-            
-            ImguiAPI::RendererVersion();
-            
+                        
             SaveScene();
             OnImguizmoUpdate();
-            
-            ImguiAPI::FrameRate();
         }
         
         m_VpData.UpdateBound();

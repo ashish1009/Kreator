@@ -284,8 +284,7 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
     auto textView = m_Registry.view<TransformComponent, TextComponent>();
     for (const auto& entity : textView) {
         const auto& [transform, textComp] = textView.get<TransformComponent, TextComponent>(entity);
-        static glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(1600), 0.0f, static_cast<float>(900));
-        TextRenderer::BeginBatch(projection);
+        TextRenderer::BeginBatch(viewProj);
         TextRenderer::RenderText(textComp.Text, transform.GetTransform(), glm::vec4(0.5, 0.8f, 0.2f, 1.0f), (uint32_t)entity);
     }
 }

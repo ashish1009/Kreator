@@ -33,7 +33,28 @@ namespace iKan {
         enum class API : uint8_t {
             None = 0,
             OpenGL = 1,
-            /* Add other Supported API */};
+            /* Add other Supported API */
+        };
+        
+        /// Stores the capability of renderer
+        struct Capabilities {
+            std::string Vendor;
+            std::string Renderer;
+            std::string Version;
+            
+            static Capabilities& Get() {
+                static Capabilities capabilities;
+                return capabilities;
+            }
+    
+        private:
+            ~Capabilities() = default;
+            Capabilities() = default;
+            Capabilities(const Capabilities&) = delete;
+            Capabilities(Capabilities&&) = delete;
+            Capabilities& operator=(const Capabilities&) = delete;
+            Capabilities& operator=(Capabilities&&) = delete;
+        };
         
         // -------------------- Core API to control Renderer -------------------------
         /// Intialize all Renderer that are supported by iKan.
@@ -100,9 +121,12 @@ namespace iKan {
         
         // ------------------------ Predefined Texts ------------------------------
         /// Render the Frame rate as text
+        /// @param text Text tto be rendered
+        /// @param projection window projectiom
         /// @param position position of text
         /// @param scale size of text
-        static void RenderFrameRate(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color);
+        /// @param color color of Text
+        static void RenderText(const std::string& text, const glm::mat4& projection, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color);
 
         // --------------------- Renderer Stats API ---------------------------------
         /// Restet the renderer Stats each frame

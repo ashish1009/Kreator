@@ -15,26 +15,6 @@ namespace iKan {
     /// Interface for Renderer API
     class RendererAPI {
     public:
-        /// Stores the capability of renderer
-        struct Capabilities {
-            std::string Vendor;
-            std::string Renderer;
-            std::string Version;
-            
-            static Capabilities& Get() {
-                static Capabilities capabilities;
-                return capabilities;
-            }
-    
-        private:
-            ~Capabilities() = default;
-            Capabilities() = default;
-            Capabilities(const Capabilities&) = delete;
-            Capabilities(Capabilities&&) = delete;
-            Capabilities& operator=(const Capabilities&) = delete;
-            Capabilities& operator=(Capabilities&&) = delete;
-        };
-
         virtual ~RendererAPI() = default;
 
         virtual void Init() const = 0;

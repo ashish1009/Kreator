@@ -7,6 +7,7 @@
 
 #include "ImguiAPI.hpp"
 #include "Renderer/Utils/RendererAPI.hpp"
+#include "Renderer/Utils/Renderer.hpp"
 #include "Renderer/Utils/TextRenderer.hpp"
 
 using namespace iKan;
@@ -74,7 +75,7 @@ void ImguiAPI::FrameRate() {
 /// RendererVersion
 /// @param pIsOpen flag to check presence
 void ImguiAPI::RendererVersion() {
-    static const RendererAPI::Capabilities& s_RendererCapability = RendererAPI::Capabilities::Get();
+    static const Renderer::Capabilities& s_RendererCapability = Renderer::Capabilities::Get();
     ImGui::Begin("Renderer Version", nullptr, ImGuiWindowFlags_NoScrollbar);
     ImGui::PushID("Renderer Version");
 

@@ -59,6 +59,9 @@ Develop the following Games and Editor and Add Fetures as per need in iKan
 - Renderer APIs
     - Batch Renderer API for rendering Quad and Circles (2D Batch)
     
+- Text Renderer
+    - API created to render the Text either via Entity or without entity/Camera 
+    
 - Editor
     - Added Editor 3D camera
     - Scene Hierarchy pannel : To Grow With Time
