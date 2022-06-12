@@ -310,6 +310,7 @@ void Scene::Render3DComponents(const glm::vec3& cameraosition, const glm::mat4& 
     auto meshView = m_Registry.view<TransformComponent, MeshComponent>();
     for (const auto& entity : meshView) {
         const auto& [transform, mesh] = meshView.get<TransformComponent, MeshComponent>(entity);
+        // TODO: Move to Scene Renderer Later
         if (mesh.Mesh) {
             mesh.Mesh->Update(ts);
             mesh.Mesh->Draw({ cameraosition, cameraViewProj }, transform.GetTransform());

@@ -24,7 +24,6 @@ namespace iKan {
         /// @param clientLevel Client Log Level
         /// @param logFilePath Path relative to executable binary, where our log file to be saved.
         ///                    NOTE: Add '\' in the end.
-        ///                    TODO: Change default argument file path when Asset manager will get introduced
         /// @param logFileName Log file name. NOTE: Without any extention.
         static void Init(Level coreLevel = Level::Trace, Level clientLevel = Level::Trace, const std::string& logFilePath = "../../Logs/", const std::string& logFileName = "iKan");
         

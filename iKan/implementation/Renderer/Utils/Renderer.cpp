@@ -18,7 +18,6 @@ using namespace iKan;
 
 Renderer::API Renderer::s_API = Renderer::API::None;
 std::unique_ptr<RendererAPI> Renderer::s_RendererAPI;
-std::set<RendererID> Renderer::s_TextureRendererIDs;
 
 // ----------------------- Core Renderer API ----------------------------------
 /// Initialize the Engine Renderer
@@ -49,9 +48,6 @@ void Renderer::Shutdown() {
     // Destorry the Shader library and Texture
     ShaderLibrary::ResetShaders();
     TextureLibrary::ResetTextures();
-
-    // Clearing all renderer ID from renderer class
-    s_TextureRendererIDs.clear();
 
     BatchRenderer::Shutdown();
     TextRenderer::Shutdown();
@@ -179,22 +175,19 @@ void Renderer::ImguiRendererStats() {
 /// Check is this renderer ID already given to some texture
 /// @param rendererId Renderer ID to be checked
 bool Renderer::IsTextureRendererIDExist(RendererID rendererId) {
-    return std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) != s_TextureRendererIDs.end();
+    return TextureLibrary::IsTextureRendererIDExist(rendererId);
 }
 
 /// Add Texture renderer ID so that they wont get repeated
 /// @param rendererId Renderer ID to be added in set
 void Renderer::AddRendererIDs(RendererID rendererId) {
-    // Extra Check
-    IK_CORE_ASSERT(std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) == s_TextureRendererIDs.end(), "Repeated Renderer ID... ");
-    s_TextureRendererIDs.insert(rendererId);
+    TextureLibrary::AddRendererIDs(rendererId);
 }
 
 /// Remove Texture renderer ID so that they wont get repeated
 /// @param rendererId Renderer ID to be added in set
 void Renderer::RemoveRendererIDs(RendererID rendererId) {
-    if (std::find(s_TextureRendererIDs.begin(), s_TextureRendererIDs.end(), rendererId) != s_TextureRendererIDs.end())
-        s_TextureRendererIDs.erase(rendererId);
+    TextureLibrary::RemoveRendererIDs(rendererId);
 }
 
 // ---------------- Shader Manager ----------------------------

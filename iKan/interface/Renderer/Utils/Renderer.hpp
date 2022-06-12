@@ -169,9 +169,6 @@ namespace iKan {
         // Member varaibel
         static API s_API;
         static std::unique_ptr<RendererAPI> s_RendererAPI;
-        
-        // TODO: Create Texture Library for storing already Loaded Textures and their ID
-        static std::set<RendererID> s_TextureRendererIDs;
     };
     
 }

@@ -144,15 +144,15 @@ Add the following library search paths
 
 ## TODOs
 - TODO: Remove Creator and Implementation files in final commit. Only Interface and Library .a file
-- TODO: In Logger::Init() : Change default argument file path when Asset manager will get introduced
 - TODO: In Shader.hpp : Change this value based on the Open GL Version
 - TODO: In BatchRenderer : Make configurable in run time and While initializing the Batch Renderer
 - TODO: In glGenTextures() : Decide later to delete older on or not
-- TODO: In Renderer.hpp : Create Texture Library for storing already Loaded Textures and their ID
 - TODO: In RendererStats.h and Viewport.cpp : Make column widht size acc to font of Imgui
-- TODO: In ContentBrowserPanne.h : Move some other place.
+- TODO: In ContentBrowserPanne.hpp : Move some other place.
+- TODO: In Scene.hpp : Move some other place.
 - TODO: In Component.hpp : Make Color and TextureComponent in base class
 - TODO: In Scene.cpp : Store color in sprite renderer Later
 - TODO: In OpenGLRendererAPI.hpp : Make API for Text enable too
 - TODO: In TextRenderer.hpp : Rotation of Char is not suppirted Yet
 - TODO: In Scene.cpp : Add Duplicate Entity for other entity too later
+- TODO: In Scene.cpp : Move to Scene Renderer Later
