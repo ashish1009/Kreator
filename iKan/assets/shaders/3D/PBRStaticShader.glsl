@@ -62,6 +62,7 @@ in VS_OUT
     float ObjectID;
 } vs_Input;
 
+// Stores the Material Property
 struct Material
 {
     vec3 AlbedoColor;
@@ -69,6 +70,15 @@ struct Material
     float Metalness;
     float Roughness;
     float TilinghFactor;
+};
+
+// Stores the Light Property
+struct Light
+{
+    bool Present;
+    
+    vec3 Position;
+    vec3 Radiance;
 };
 
 // Texture Uniforms
@@ -89,6 +99,7 @@ uniform float u_SpecularTextureToggle;
 uniform float u_TextureInvertVertical;
 uniform float u_TextureInvertHorizontal;
 
+uniform Light u_Light[4];
 uniform Material u_Material;
 uniform vec3 u_CameraPosition;
 
@@ -105,6 +116,25 @@ struct PBRParameters
     float Roughness;
 };
 PBRParameters m_Params;
+
+/// Add Light to Material
+vec3 Lighting(vec3 F0)
+{
+    vec3 result = vec3(0.0);
+    
+    // Process each light
+    for (int i = 0; i < 4; i++)
+    {
+        Light light = u_Light[i];
+        if (light.Present)
+        {
+            result = vec3(1.0f);
+            return result;
+        }
+    }
+    
+    return result;
+}
 
 /// Fragment Main Function
 void main()
@@ -130,7 +160,18 @@ void main()
     
     m_Params.View = normalize(u_CameraPosition - vs_Input.WorldPosition);
     m_Params.NdotV = max(dot(m_Params.Normal, m_Params.View), 0.0f);
+    
+    // calculate reflectance at normal incidence
+    // By pre-computing F0 for both dielectrics and conductors we can use the same Fresnel-Schlick approximation for both types of surfaces,
+    // but we do have to tint the base reflectivity if we have a metallic surface. We generally accomplish this as follows:
+    vec3 F0 = vec3(0.04f);
+    F0 = mix(F0, m_Params.Albedo, m_Params.Metalness);
 
-    o_Color = vec4(m_Params.Albedo, 1.0f);
+    vec3 lightContribution = Lighting(F0);
+
+    vec3 color = lightContribution;
+
+    // TODO: Add HDR or Gamma correction
+    o_Color = vec4(color, 1.0f);
     o_IDBuffer = int(vs_Input.ObjectID);
 }

@@ -390,10 +390,22 @@ void OpenGLShader::ResolveUniforms() {
                 if (uniform->GetType() == OpenGLShaderUniformDeclaration::Type::STRUCT) {
                     const ShaderStruct& s = uniform->GetShaderUniformStruct();
                     const auto& fields = s.GetFields();
-                    for (size_t k = 0; k < fields.size(); k++) {
-                        OpenGLShaderUniformDeclaration* field = (OpenGLShaderUniformDeclaration*)fields[k];
-                        field->m_Location = GetUniformLocation(uniform->m_Name + "." + field->m_Name);
-                        IK_CORE_INFO("            Location : {0} for {1}.{2} [{3}]", field->m_Location, s.GetName(), field->GetName(), field->GetCount());
+                    if (uniform->GetCount() > 1) {
+                        for (size_t l = 0; l < uniform->GetCount(); l++) {
+                            for (size_t k = 0; k < fields.size(); k++) {
+                                OpenGLShaderUniformDeclaration* field = (OpenGLShaderUniformDeclaration*)fields[k];
+                                std::string uniformName = uniform->m_Name + "[" + std::to_string(l) + "]." + field->m_Name;
+                                field->m_Location = GetUniformLocation(uniformName);
+                                IK_CORE_INFO("            Location : {0} for {1}.{2} [{3}]", field->m_Location, s.GetName(), field->GetName(), field->GetCount());
+                            }
+                        }
+                    }
+                    else {
+                        for (size_t k = 0; k < fields.size(); k++) {
+                            OpenGLShaderUniformDeclaration* field = (OpenGLShaderUniformDeclaration*)fields[k];
+                            field->m_Location = GetUniformLocation(uniform->m_Name + "." + field->m_Name);
+                            IK_CORE_INFO("            Location : {0} for {1}.{2} [{3}]", field->m_Location, s.GetName(), field->GetName(), field->GetCount());
+                        }
                     }
                 }
                 else {

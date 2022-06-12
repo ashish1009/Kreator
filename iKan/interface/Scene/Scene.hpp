@@ -26,6 +26,8 @@ namespace iKan {
     /// Stores all infor and data of scene
     class Scene {
     public:
+        static constexpr uint32_t MAX_LIGHT = 4;
+        
         /// State of Scene
         enum State : uint8_t { Play = 0, Edit = 1 };
 

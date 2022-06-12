@@ -13,7 +13,7 @@ namespace iKan {
     /// Parameter fo this structure should be aligned with shader
     struct SceneLight {
         // NOTE: As Shader glsl takes bool as 4 bytes so we need to use int32 instead of bool
-        int32_t Present = 1;
+        int32_t Present = 0;
         
         glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
         glm::vec3 Radiance = { 1.0f, 1.0f, 1.0f };

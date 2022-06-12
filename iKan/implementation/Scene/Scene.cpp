@@ -312,8 +312,31 @@ void Scene::Render3DComponents(const glm::vec3& cameraosition, const glm::mat4& 
         const auto& [transform, mesh] = meshView.get<TransformComponent, MeshComponent>(entity);
         // TODO: Move to Scene Renderer Later
         if (mesh.Mesh) {
+            // Environment
+            {
+                auto& material = mesh.Mesh->GetBaseMaterial();
+                
+                // Camera 
+                material->Set("u_ViewProjection", cameraViewProj);
+                material->Set("u_CameraPosition", cameraosition);
+                
+                // Lights
+                auto view = m_Registry.view<LightComponent>();
+                uint32_t numLight = 0;
+                SceneLight lights[MAX_LIGHT];
+                for (auto entity : view) {
+                    auto& comp = view.get<LightComponent>(entity);
+                    lights[numLight] = *comp.Light.get();
+
+                    if (numLight++ > MAX_LIGHT)
+                        return;
+                }
+                
+                material->Set(std::string("u_Light"), lights);
+            }
+
             mesh.Mesh->Update(ts);
-            mesh.Mesh->Draw({ cameraosition, cameraViewProj }, transform.GetTransform());
+            mesh.Mesh->Draw(transform.GetTransform());
         }
     }
 }

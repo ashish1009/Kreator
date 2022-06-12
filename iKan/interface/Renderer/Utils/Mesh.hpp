@@ -93,14 +93,6 @@ namespace iKan {
         std::array<TextureComponent, MaxPBRTextureSupported> Textures;
     };
     
-    /// Wrapper structure used to draw mesh. load to SHader
-    struct MeshCamera {
-        glm::vec3 Position;
-        glm::mat4 ViewProjection;
-        
-        MeshCamera(glm::vec3 position, glm::mat4 viewProjection) : Position(position), ViewProjection(viewProjection) {}
-    };
-    
     /// Mesh Loader class
     class Mesh {
     public:
@@ -110,7 +102,7 @@ namespace iKan {
         /// Draw the Mesh
         /// @param camera Mesh Camera reference
         /// @param transform mesh transform matrix
-        void Draw(const MeshCamera& camera, const glm::mat4& transform);
+        void Draw(const glm::mat4& transform);
 
         /// Update the mesh position each frame : For animation
         /// @param ts time step of each frame
@@ -120,7 +112,7 @@ namespace iKan {
         /// @param defaultTexture default texrure for Imgui window
         void RenderImgui(const std::shared_ptr<Texture>& defaultTexture);
         
-        /// Return all the material of Mesh
+        /// Return all the material of Mesh (Material to be loaded in shader)
         const std::vector<MeshMaterial>& GetMaterials() const;
         /// Add a material in the mesh
         /// @param name Name of Material
@@ -135,8 +127,14 @@ namespace iKan {
         /// return the File path
         const std::string& GetPath() const;
         
+        /// Get the Active Mateiral Index
         const uint32_t GetActiveMaterialIndex() const;
+        /// Set the Active Material Index
+        /// @param currMatIndex Material Index
         void SetActiveMaterialIndex(uint32_t currMatIndex);
+        
+        /// return the Base Material
+        std::shared_ptr<Material>& GetBaseMaterial();
         
         /// Create instance of Mesh
         /// @param path Path of Mesh to be loaded

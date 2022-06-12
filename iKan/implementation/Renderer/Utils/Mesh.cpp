@@ -96,10 +96,7 @@ Mesh::~Mesh() {
 }
 
 /// Draw the mesh
-void Mesh::Draw(const MeshCamera& camera, const glm::mat4& transform) {
-    m_BaseMaterial->Set("u_ViewProjection", camera.ViewProjection);
-    m_BaseMaterial->Set("u_CameraPosition", camera.Position);
-
+void Mesh::Draw(const glm::mat4& transform) {
     const auto& material = m_MeshMaterials[m_CurrentMaterialIndex].MaterialInstance;
     for (SubMesh& submesh : m_Submeshes) {
         material->Set("u_Transform", transform * submesh.Transform);        
@@ -871,3 +868,4 @@ const std::string& Mesh::GetPath() const { return m_Path; }
 const std::vector<MeshMaterial>& Mesh::GetMaterials() const { return m_MeshMaterials; }
 const uint32_t Mesh::GetActiveMaterialIndex() const { return m_CurrentMaterialIndex; }
 void Mesh::SetActiveMaterialIndex(uint32_t currMatIndex) { m_CurrentMaterialIndex = currMatIndex; }
+std::shared_ptr<Material>& Mesh::GetBaseMaterial() { return m_BaseMaterial; }
