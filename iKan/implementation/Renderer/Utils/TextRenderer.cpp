@@ -168,7 +168,7 @@ void TextRenderer::RenderText(std::string text, const glm::mat4& transform, cons
 
         float xpos = position.x + ch->GetBearing().x * scale.x;
         float ypos = position.y - (ch->GetSize().y - ch->GetBearing().y) * scale.y;
-        float zpos = position.z;
+        float zpos = position.z - 500.0f;
 
         float w = ch->GetSize().x * scale.x;
         float h = ch->GetSize().y * scale.y;

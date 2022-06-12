@@ -160,4 +160,6 @@ TextComponent::TextComponent(const std::string& text) : Text(text) {}
 void TextComponent::RenderImgui() {
     auto& tag = Text;
     PropertyGrid::String("Text", tag, 50.0f, 300.0f, "Enter New Text Here...", true, true, 1);
+    ImGui::Separator();
+    PropertyGrid::ColorEdit(Color);
 }

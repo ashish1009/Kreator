@@ -100,6 +100,7 @@ namespace iKan {
         std::shared_ptr<iKan::SubTexture> SubTexture;
     };
     
+    /// Text Component
     struct TextComponent {
         std::string Text;
         glm::vec4 Color = glm::vec4(1.0f);

@@ -123,6 +123,10 @@ namespace iKan {
         /// @param hint Hint string to pring in Writable space
         static bool Search(char* value, const char* hint);
         
+        /// Edit the color of vec 4
+        /// @param colorRef Color reference
+        static void ColorEdit(glm::vec4& colorRef);
+        
         /// Drop content from content prowser pannel and call the function
         /// @param uiFunction Function
         template<typename UIFunction> static void DropConent(UIFunction uiFunction) {

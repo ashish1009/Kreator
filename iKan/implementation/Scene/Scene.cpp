@@ -285,7 +285,7 @@ void Scene::Render2DComponents(const glm::mat4& viewProj) {
     for (const auto& entity : textView) {
         const auto& [transform, textComp] = textView.get<TransformComponent, TextComponent>(entity);
         TextRenderer::BeginBatch(viewProj);
-        TextRenderer::RenderText(textComp.Text, transform.GetTransform(), glm::vec4(0.5, 0.8f, 0.2f, 1.0f), (uint32_t)entity);
+        TextRenderer::RenderText(textComp.Text, transform.GetTransform(), textComp.Color, (uint32_t)entity);
     }
 }
 
