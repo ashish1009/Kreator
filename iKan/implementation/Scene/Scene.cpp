@@ -325,8 +325,13 @@ void Scene::Render3DComponents(const glm::vec3& cameraosition, const glm::mat4& 
                 uint32_t numLight = 0;
                 SceneLight lights[MAX_LIGHT];
                 for (auto entity : view) {
-                    auto& comp = view.get<LightComponent>(entity);
-                    lights[numLight] = *comp.Light.get();
+                    auto& lightComp = view.get<LightComponent>(entity);
+                    
+                    // Update the Position of Light
+                    auto& transComp = m_Registry.get<TransformComponent>(entity);
+                    lightComp.Light->Position = transComp.Translation;
+                    
+                    lights[numLight] = *lightComp.Light.get();
 
                     if (numLight++ > MAX_LIGHT)
                         return;

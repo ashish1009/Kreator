@@ -51,6 +51,9 @@ void main()
 layout (location = 0) out vec4 o_Color;
 layout (location = 1) out int  o_IDBuffer;
 
+const float PI = 3.14159265359;
+const float Epsilon = 0.00001;
+
 in VS_OUT
 {
     vec3 WorldPosition;
@@ -117,6 +120,43 @@ struct PBRParameters
 };
 PBRParameters m_Params;
 
+// GGX/Towbridge-Reitz normal distribution function.
+// Uses Disney's reparametrization of alpha = roughness^2
+float ndfGGX(float cosLh, float roughness)
+{
+    float alpha = roughness * roughness;
+    float alphaSq = alpha * alpha;
+    
+    float denom = (cosLh * cosLh) * (alphaSq - 1.0) + 1.0;
+    return alphaSq / (PI * denom * denom);
+}
+
+// Single term for separable Schlick-GGX below.
+float gaSchlickG1(float cosTheta, float k)
+{
+    return cosTheta / (cosTheta * (1.0 - k) + k);
+}
+
+// Schlick-GGX approximation of geometric attenuation function using Smith's method.
+float gaSchlickGGX(float cosLi, float NdotV, float roughness)
+{
+    float r = roughness + 1.0;
+    float k = (r * r) / 8.0; // Epic suggests using this roughness remapping for analytic lights.
+    return gaSchlickG1(cosLi, k) * gaSchlickG1(NdotV, k);
+}
+
+// Shlick's approximation of the Fresnel factor.
+vec3 fresnelSchlick(vec3 F0, float cosTheta)
+{
+    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
+}
+
+// Slick Roughness for IBL
+vec3 fresnelSchlickRoughness(vec3 F0, float cosTheta, float roughness)
+{
+    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+}
+
 /// Add Light to Material
 vec3 Lighting(vec3 F0)
 {
@@ -128,8 +168,39 @@ vec3 Lighting(vec3 F0)
         Light light = u_Light[i];
         if (light.Present)
         {
-            result = vec3(1.0f);
-            return result;
+            // Light Direction
+            vec3 Li = normalize(light.Position - vs_Input.WorldPosition);
+
+            // half way vector
+            vec3 Lh = normalize(Li + m_Params.View);
+            
+            // Light Radiance
+            vec3 Lradiance = light.Radiance;
+            
+            // Calculate angles between surface normal and various light vectors.
+            float cosLi = max(0.0, dot(m_Params.Normal, Li));
+            float cosLh = max(0.0, dot(m_Params.Normal, Lh));
+
+            // Cook-Torrance BRDF
+            float D = ndfGGX(cosLh, m_Params.Roughness);
+            float G = gaSchlickGGX(cosLi, m_Params.NdotV, m_Params.Roughness);
+            vec3 F = fresnelSchlick(F0, max(0.0, dot(Lh, m_Params.View)));
+
+            // BRDF Specular
+            vec3 specularBRDF = (F * D * G) / max(Epsilon, 4.0 * cosLi * m_Params.NdotV);
+            
+            // BRDF Diffuse
+            // for energy conservation, the diffuse and specular light can't
+            // be above 1.0 (unless the surface emits light); to preserve this
+            // relationship the diffuse component (kD) should equal 1.0 - F.
+            
+            // multiply kD by the inverse metalness such that only non-metals
+            // have diffuse lighting, or a linear blend if partly metal (pure metals
+            // have no diffuse light).
+            vec3 kd = (1.0 - F) * (1.0 - m_Params.Metalness);
+            vec3 diffuseBRDF = kd * m_Params.Albedo;
+
+            result += (diffuseBRDF + specularBRDF) * Lradiance * cosLi;
         }
     }
     
