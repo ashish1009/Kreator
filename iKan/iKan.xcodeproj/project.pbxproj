@@ -78,6 +78,8 @@
 		3E6578F82837E51E006B0C81 /* RendererStats.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6578F62837E51E006B0C81 /* RendererStats.hpp */; };
 		3E6578FB2837E892006B0C81 /* BatchRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6578F92837E892006B0C81 /* BatchRenderer.cpp */; };
 		3E6578FC2837E892006B0C81 /* BatchRenderer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6578FA2837E892006B0C81 /* BatchRenderer.hpp */; };
+		3E6678D3285625270029A72C /* SceneLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6678D1285625270029A72C /* SceneLight.cpp */; };
+		3E6678D4285625270029A72C /* SceneLight.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6678D2285625270029A72C /* SceneLight.hpp */; };
 		3E6A4D6928360A2B003578F4 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */; };
 		3E6A4D6C28360E74003578F4 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6B28360E74003578F4 /* Entrypoint.h */; };
 		3E6A4D6E28360F1B003578F4 /* iKanHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6A4D6D28360F1B003578F4 /* iKanHeaders.h */; };
@@ -227,6 +229,8 @@
 		3E6578F62837E51E006B0C81 /* RendererStats.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RendererStats.hpp; sourceTree = "<group>"; wrapsLines = 0; };
 		3E6578F92837E892006B0C81 /* BatchRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BatchRenderer.cpp; sourceTree = "<group>"; };
 		3E6578FA2837E892006B0C81 /* BatchRenderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BatchRenderer.hpp; sourceTree = "<group>"; };
+		3E6678D1285625270029A72C /* SceneLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneLight.cpp; sourceTree = "<group>"; };
+		3E6678D2285625270029A72C /* SceneLight.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneLight.hpp; sourceTree = "<group>"; };
 		3E6A4D3C2836091E003578F4 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6A4D6828360A2B003578F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3E6A4D6B28360E74003578F4 /* Entrypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entrypoint.h; sourceTree = "<group>"; };
@@ -656,6 +660,7 @@
 				3EF2AA11283CFC22009764F8 /* Component.hpp */,
 				3EF2AE52283D2742009764F8 /* SceneSerialiser.hpp */,
 				3E4D74A32846432C0053D366 /* Viewport.hpp */,
+				3E6678D2285625270029A72C /* SceneLight.hpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -669,6 +674,7 @@
 				3EF2AA10283CFC22009764F8 /* Component.cpp */,
 				3EF2AE51283D2742009764F8 /* SceneSerialiser.cpp */,
 				3E4D74A22846432C0053D366 /* Viewport.cpp */,
+				3E6678D1285625270029A72C /* SceneLight.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -796,6 +802,7 @@
 				3E6A4D8C28369025003578F4 /* Layer.hpp in Headers */,
 				3E6575FA2837B662006B0C81 /* Renderer.hpp in Headers */,
 				3E6A4D7D28364303003578F4 /* Asserts.h in Headers */,
+				3E6678D4285625270029A72C /* SceneLight.hpp in Headers */,
 				3E96196B2847DE4700C74F6D /* TextureLibrary.hpp in Headers */,
 				3E8200A9283B8F750024DF91 /* EditorCamera.hpp in Headers */,
 				3E6575E128379C0E006B0C81 /* Timestep.hpp in Headers */,
@@ -973,6 +980,7 @@
 				3E2FA0FB2839209A00EE289A /* Texture.cpp in Sources */,
 				3E803913283CCD870034F547 /* Material.cpp in Sources */,
 				3E6578EF2837DE49006B0C81 /* PropertyGrid.cpp in Sources */,
+				3E6678D3285625270029A72C /* SceneLight.cpp in Sources */,
 				3E6575EF2837B2A4006B0C81 /* Profiler.cpp in Sources */,
 				3E65763F2837CA95006B0C81 /* MacInput.cpp in Sources */,
 				3EB1C89C283BCB4D0098836F /* Mesh.cpp in Sources */,
