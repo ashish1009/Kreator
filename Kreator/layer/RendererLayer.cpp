@@ -7,6 +7,10 @@
 
 #include "RendererLayer.hpp"
 
+glm::vec3 t_ = {0.0f, 0.0f, 0.0f};
+glm::vec3 s_ = {1.0f, 1.0f, 1.0f};
+glm::vec3 r_ = {0.0f, 0.0f, 0.0f};
+
 /// Renderer Layer Constructor
 RendererLayer::RendererLayer() : Layer("Renderer"), m_CBP("../../../../../../../iKan./iKan/Github/Product/iKan") {
     IK_INFO("Creating {0} Layer ...", m_Name);
@@ -68,12 +72,12 @@ void RendererLayer::Update(Timestep ts) {
     {
         Renderer::Clear({ 0.2f, 0.2f, 0.2f, 1.0f });
         
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(1600), 0.0f, static_cast<float>(900));
-        TextRenderer::BeginBatch(projection);
+        TextRenderer::BeginBatch(m_ActiveScene->GetEditorCamera()->GetViewProjection());
         
-        glm::mat4 t = glm::mat4(1.0f);
+        glm::mat4 rotation = glm::toMat4(glm::quat(r_));
+        glm::mat4 t = glm::translate(glm::mat4(1.0f), t_) * rotation * glm::scale(glm::mat4(1.0f), s_);
         
-        TextRenderer::RenderText("This is sample text", t, 525.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f), 1);
+        TextRenderer::RenderText("This is sample text", t, glm::vec3(0.5, 0.8f, 0.2f), 1);
         
         m_ActiveScene->Update(ts);
         m_VpData.UpdateMousePos();
@@ -90,6 +94,12 @@ void RendererLayer::RenderGui() {
 
     if (m_ActiveScene) {
         m_ActiveScene->RenderImgui();
+        
+        ImGui::Begin("Debug");
+        ImGui::DragFloat3("T", &t_.x);
+        ImGui::DragFloat3("R", &r_.x);
+        ImGui::DragFloat3("S", &s_.x);
+        ImGui::End();
         
         // Viewport
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });

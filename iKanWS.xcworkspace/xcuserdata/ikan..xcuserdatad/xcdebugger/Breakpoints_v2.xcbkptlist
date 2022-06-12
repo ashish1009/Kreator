@@ -142,9 +142,9 @@
             filePath = "iKan/implementation/Renderer/Utils/TextRenderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
-            landmarkName = "TextRenderer::RenderText(text, transform, x, y, scale, color, entID)"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "TextRenderer::RenderText(text, transform, color, entID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -158,9 +158,9 @@
             filePath = "iKan/implementation/Renderer/Utils/TextRenderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
-            landmarkName = "TextRenderer::RenderText(text, transform, x, y, scale, color, entID)"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "TextRenderer::RenderText(text, transform, color, entID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

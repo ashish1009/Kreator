@@ -25,14 +25,8 @@ struct TextData {
     };
     
     // --------------- Constants -----------------
-    /// Max number of Quad to be rendered in single Batch
-    /// NOTE: Memory will be reserved in GPU for MaxQuads.
-    /// TODO: Make configurable in run time and While initializing the Batch Renderer
-    static constexpr uint32_t MaxChars = 10000;
-
     // Fixed Constants
     static constexpr uint32_t VertexForSingleChar = 6;
-    static constexpr uint32_t MaxVertex = MaxChars * VertexForSingleChar;
     
     /// Renderer Data storage
     std::shared_ptr<Pipeline> Pipeline;
@@ -61,7 +55,7 @@ struct TextData {
         delete [] VertexBufferBase;
         VertexBufferBase = nullptr;
 
-        RendererStatistics::Get().VertexBufferSize -= TextData::MaxVertex * sizeof(TextData::Vertex);
+        RendererStatistics::Get().VertexBufferSize -= TextData::VertexForSingleChar * sizeof(TextData::Vertex);
     }
 };
 static TextData* s_TextData;
@@ -74,13 +68,13 @@ void TextRenderer::Init() {
     IK_CORE_INFO("Initialising the Text Renderer");
     
     // Allocating the memory for vertex Buffer Pointer
-    s_TextData->VertexBufferBase = new TextData::Vertex[TextData::MaxVertex];
+    s_TextData->VertexBufferBase = new TextData::Vertex[TextData::VertexForSingleChar];
 
     // Create Pipeline instance
     s_TextData->Pipeline = Pipeline::Create();
 
     // Create vertes Buffer
-    s_TextData->VertexBuffer = VertexBuffer::Create(sizeof(TextData::Vertex) * TextData::MaxVertex);
+    s_TextData->VertexBuffer = VertexBuffer::Create(sizeof(TextData::Vertex) * TextData::VertexForSingleChar);
     s_TextData->VertexBuffer->AddLayout({
         { "a_Position",  ShaderDataType::Float3 },
         { "a_Color",     ShaderDataType::Float3 },
@@ -155,32 +149,42 @@ void TextRenderer::BeginBatch(const glm::mat4& cameraViewProj) {
 /// @param y y Position of Text
 /// @param scale Size of text
 /// @param color Color of text
-void TextRenderer::RenderText(std::string text, const glm::mat4& transform, float x, float y, float scale, glm::vec3 color, uint32_t entID) {
+void TextRenderer::RenderText(std::string text, const glm::mat4& transform, glm::vec3 color, uint32_t entID) {
+    // TODO: Rotation of Char is not suppirted Yet
     // iterate through all characters
     std::string::const_iterator c;
+    glm::vec3 position, rotation, scale;
+    Math::DecomposeTransform(transform, position, rotation, scale);
+    
     for (c = text.begin(); c != text.end(); c++) {
         std::shared_ptr<CharTexture> ch = s_TextData->CharTextureMap[*c];
 
-        float xpos = x + ch->GetBearing().x * scale;
-        float ypos = y - (ch->GetSize().y - ch->GetBearing().y) * scale;
+        float xpos = position.x + ch->GetBearing().x * scale.x;
+        float ypos = position.y - (ch->GetSize().y - ch->GetBearing().y) * scale.y;
+        float zpos = position.z;
 
-        float w = ch->GetSize().x * scale;
-        float h = ch->GetSize().y * scale;
+        float w = ch->GetSize().x * scale.x;
+        float h = ch->GetSize().y * scale.y;
         
         // update VBO for each character
-        glm::vec4 position[TextData::VertexForSingleChar] = {
-            { xpos,     ypos + h, 0.0f, 1.0f },
-            { xpos,     ypos    , 0.0f, 1.0f },
-            { xpos + w, ypos    , 0.0f, 1.0f },
+        glm::vec3 vertexPosition[TextData::VertexForSingleChar] = {
+            { xpos,     ypos + h, zpos },
+            { xpos,     ypos    , zpos },
+            { xpos + w, ypos    , zpos },
 
-            { xpos,     ypos + h, 0.0f, 1.0f },
-            { xpos + w, ypos    , 0.0f, 1.0f },
-            { xpos + w, ypos + h, 0.0f, 1.0f },
+            { xpos,     ypos + h, zpos },
+            { xpos + w, ypos    , zpos },
+            { xpos + w, ypos + h, zpos },
         };
         
+        glm::mat4 rotation_ = glm::toMat4(glm::quat(rotation));
         s_TextData->VertexBufferPtr = s_TextData->VertexBufferBase;
+        
+        // Each Vertex of Char
         for (size_t i = 0; i < TextData::VertexForSingleChar; i++) {
-            s_TextData->VertexBufferPtr->Position     = transform * position[i];
+            glm::mat4 t = glm::translate(glm::mat4(1.0f), vertexPosition[i]) * rotation_ * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
+
+            s_TextData->VertexBufferPtr->Position     = t * glm::vec4(1.0f);
             s_TextData->VertexBufferPtr->Color        = color;
             s_TextData->VertexBufferPtr->TexCoord     = s_TextData->BaseTexCoords[i];
             s_TextData->VertexBufferPtr->ObjectID     = entID;
@@ -196,7 +200,7 @@ void TextRenderer::RenderText(std::string text, const glm::mat4& transform, floa
         Renderer::DrawArrays(s_TextData->Pipeline, 6);
 
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        x += (ch->GetAdvance() >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+        position.x += (ch->GetAdvance() >> 6) * scale.x; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
     
     RendererStatistics::Get().VertexCount += TextData::VertexForSingleChar;

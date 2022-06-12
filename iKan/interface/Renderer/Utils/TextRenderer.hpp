@@ -34,7 +34,7 @@ namespace iKan {
         /// @param y y Position of Text
         /// @param scale Size of text
         /// @param color Color of text
-        static void RenderText(std::string text, const glm::mat4& transform, float x, float y, float scale, glm::vec3 color, uint32_t entID);
+        static void RenderText(std::string text, const glm::mat4& transform, glm::vec3 color, uint32_t entID);
         
     private:
         // Making Singleton
