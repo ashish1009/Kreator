@@ -73,7 +73,7 @@ namespace Mario {
     
     class Background {
     public:
-        static void Init(std::shared_ptr<Scene> scene);
+        static void Init(const std::shared_ptr<Scene>& scene);
         static void Shutdown();
         
     private:
@@ -89,8 +89,12 @@ namespace Mario {
             
             Tile(const std::shared_ptr<iKan::SubTexture>& subTexture, bool isRigid) : IsRigid(isRigid),  SubTexture(subTexture) {}
             
-            static std::shared_ptr<Tile> Create(std::shared_ptr<iKan::SubTexture> subTexture, bool isRigid = true) {
+            static std::shared_ptr<Tile> Create(const std::shared_ptr<iKan::SubTexture>& subTexture, bool isRigid = true) {
                 return std::make_shared<Tile>(subTexture, isRigid);
+            }
+            
+            ~Tile() {
+                
             }
         };
         

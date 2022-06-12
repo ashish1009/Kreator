@@ -57,7 +57,7 @@ namespace TextureUtils {
     class OpenGLCharTexture : public CharTexture {
     public:
         OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size, const glm::ivec2& bearing, uint32_t advance);
-        virtual ~OpenGLCharTexture() = default;
+        virtual ~OpenGLCharTexture();
  
         RendererID GetRendererID() const override;
         void Bind(uint32_t slot = 0) const override;

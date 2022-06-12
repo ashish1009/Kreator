@@ -26,6 +26,9 @@ void RendererLayer::Attach() {
     auto& imguiLayer = Application::Get().GetImGuiLayer();
     imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"), AssetManager::GetClientAsset("fonts/OpenSans/OpenSans-Bold.ttf"));
     
+    // Change Freetype font
+    TextRenderer::LoadFreetype(AssetManager::GetClientAsset("/fonts/OpenSans/OpenSans-Regular.ttf"));
+    
     // Setup the Theme
     ImguiAPI::SetGreyThemeColors();
     

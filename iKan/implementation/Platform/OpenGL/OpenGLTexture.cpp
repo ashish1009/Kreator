@@ -228,6 +228,14 @@ OpenGLCharTexture::OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
+/// Open GL Texture Destructor
+OpenGLCharTexture::~OpenGLCharTexture() {
+    PROFILE();
+
+    Renderer::RemoveRendererIDs(m_RendererID);
+    glDeleteTextures(1, &m_RendererID);
+}
+
 RendererID OpenGLCharTexture::GetRendererID() const { return m_RendererID;}
 void OpenGLCharTexture::Bind(uint32_t slot) const {
     glActiveTexture(GL_TEXTURE0);

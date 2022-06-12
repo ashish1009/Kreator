@@ -94,17 +94,24 @@ void TextRenderer::Init() {
     s_TextData->BaseTexCoords[4] = { 1.0f, 1.0f };
     s_TextData->BaseTexCoords[5] = { 1.0f, 0.0f };
     
-    // FreeType
+    LoadFreetype(AssetManager::GetCoreAsset("fonts/opensans/OpenSans-Bold.ttf"));
+}
+
+/// Load the font for freetype
+/// @param fontPath path of font
+void TextRenderer::LoadFreetype(const std::string& fontPath) {
+    IK_CORE_INFO("    Loading Freetype Font");
+    IK_CORE_INFO("    Path : {0}", fontPath.c_str());
+
     FT_Library ft;
     IK_CORE_ASSERT(!FT_Init_FreeType(&ft), "Not able to load Freetype");
     
     // find path to font
-    std::string fontName = AssetManager::GetCoreAsset("fonts/opensans/OpenSans-Bold.ttf");
-    IK_CORE_ASSERT(!fontName.empty(), "Not able to load Font");
+    IK_CORE_ASSERT(!fontPath.empty(), "Not able to load Font");
     
     // load font as face
     FT_Face face;
-    IK_CORE_ASSERT(!FT_New_Face(ft, fontName.c_str(), 0, &face), "Unavle to load tha font to freetype");
+    IK_CORE_ASSERT(!FT_New_Face(ft, fontPath.c_str(), 0, &face), "Unavle to load tha font to freetype");
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, 48);
 

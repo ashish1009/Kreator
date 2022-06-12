@@ -98,7 +98,8 @@ Develop the following Games and Editor and Add Fetures as per need in iKan
 `{...} directory where Kreator Engine is cloned`
 Link the Kreator.a in your project... 
 Link the libassimp.5.dylib from path {...}/vendors/assimp/lib
-Link the libIrrXML.dylib from path {...}/vendors/assimp/lib 
+Link the libIrrXML.dylib from path {...}/vendors/assimp/lib
+Link the libfreetype.6.dylib from path {...}/vendors/gui/gui/freetype/lib
 
 ### Frameworks
 Link following frameworks to your project...

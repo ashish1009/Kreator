@@ -29,6 +29,9 @@ void MarioLayer::Attach() {
     auto& imguiLayer = Application::Get().GetImGuiLayer();
     imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/Mario.ttf"), AssetManager::GetClientAsset("fonts/Mario.ttf"));
     
+    // Change Freetype font
+    TextRenderer::LoadFreetype(AssetManager::GetClientAsset("/fonts/Mario.ttf"));
+    
     // Setup the Theme
     ImguiAPI::SetGreyThemeColors();
     
@@ -62,12 +65,17 @@ void MarioLayer::Attach() {
 
 /// Update the renderer Layer each frame
 void MarioLayer::Update(Timestep ts) {
+    static glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_ViewportData.Size.x), 0.0f, static_cast<float>(m_ViewportData.Size.y));
+
     // If resize the window call the update the Scene View port and Frame buffer should be resized
     if (const FrameBuffer::Specification& spec = m_ViewportData.FrameBuffer->GetSpecification();
         (uint32_t)m_ViewportData.Size.x > 0 && (uint32_t)m_ViewportData.Size.y > 0 && // zero sized framebuffer is invalid
         (spec.Width != (uint32_t)m_ViewportData.Size.x || spec.Height != (uint32_t)m_ViewportData.Size.y)) {
         m_ViewportData.FrameBuffer->Resize((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
-        m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);    }
+        m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
+        
+        projection = glm::ortho(0.0f, static_cast<float>(m_ViewportData.Size.x), 0.0f, static_cast<float>(m_ViewportData.Size.y));
+    }
     
     Renderer::ResetStatsEachFrame();
 
@@ -77,6 +85,14 @@ void MarioLayer::Update(Timestep ts) {
     m_Scene->Update(ts);
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
+    
+    // Render the Frame rate
+    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
+
+    // Render the Renderer Version
+    static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
+    static std::string rendererInfo = "(c) iKan Mario | " + rendererCapability.Vendor + " | " + rendererCapability.Renderer + " | " + rendererCapability.Version;
+    Renderer::RenderText(rendererInfo, projection, glm::vec3(m_ViewportData.Size.x - 580.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
 
     m_ViewportData.FrameBuffer->Unbind();
 }
@@ -107,7 +123,6 @@ void MarioLayer::RenderGui() {
     
     // TODO: Debug
     {
-        ImguiAPI::FrameRate();
         Renderer::ImguiRendererStats();
         m_ViewportData.RenderImgui();
         

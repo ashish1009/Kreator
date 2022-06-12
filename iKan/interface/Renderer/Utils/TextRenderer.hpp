@@ -42,6 +42,10 @@ namespace iKan {
         /// @param color Color of text
         static void RenderText(std::string text, glm::vec3 position, const glm::vec2& scale, const glm::vec4& color);
         
+        /// Load the font for freetype
+        /// @param fontPath path of font
+        static void LoadFreetype(const std::string& fontPath);
+    
     private:
         // Making Singleton
         TextRenderer() = default;
