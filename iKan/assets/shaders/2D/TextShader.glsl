@@ -8,29 +8,43 @@
 // vertex Shader
 #type vertex
 #version 330 core
-layout (location = 0) in vec4 vertex;
-out vec2 TexCoords;
+layout(location = 0) in vec3  a_Position;
+layout(location = 1) in vec3  a_Color;
+layout(location = 2) in vec2  a_TexCoord;
+layout(location = 3) in int   a_ObjectID;
+
+out vec2 v_TexCoords;
+out vec3 v_Color;
+out float v_ObjectID;
 
 uniform mat4 u_ViewProjection;
 
 void main()
 {
-    gl_Position = u_ViewProjection * vec4(vertex.xy, 0.0, 1.0);
-    TexCoords = vertex.zw;
+    gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+    v_TexCoords = a_TexCoord;
+    v_Color = a_Color;
+    v_ObjectID = a_ObjectID;
 }
 
 // Fragment Shader
 #type fragment
 #version 330 core
 
-in vec2 TexCoords;
-out vec4 color;
+layout(location = 0) out vec4 o_Color;
+layout(location = 1) out int  o_IDBuffer;
 
-uniform sampler2D text;
-uniform vec3 textColor;
+in vec2 v_TexCoords;
+in vec3 v_Color;
+in float v_ObjectID;
+
+uniform sampler2D u_Text;
 
 void main()
 {
-    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
-    color = vec4(textColor, 1.0) * sampled;
+    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(u_Text, v_TexCoords).r);
+    
+    o_Color = vec4(v_Color, 1.0) * sampled;
+    o_IDBuffer = int(v_ObjectID);
+
 }

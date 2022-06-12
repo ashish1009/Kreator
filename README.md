@@ -150,3 +150,4 @@ Add the following library search paths
 - TODO: In Component.hpp : Make Color and TextureComponent in base class
 - TODO: In Scene.cpp : Store color in sprite renderer Later
 - TODO: In OpenGLRendererAPI.hpp : Make API for Text enable too
+- TODO: In TextRenderer.hpp : Make configurable in run time and While initializing the Batch Renderer

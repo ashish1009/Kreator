@@ -10,17 +10,59 @@
 #include "Renderer/Graphics/Pipeline.hpp"
 #include "Renderer/Graphics/Texture.hpp"
 #include "Renderer/Utils/Renderer.hpp"
+#include "Renderer/Utils/RendererStats.hpp"
 
 using namespace iKan;
 
 /// Store the Data used to render the Text
 struct TextData {
+    struct Vertex {
+        glm::vec3 Position;
+        glm::vec3 Color;
+        glm::vec2 TexCoord;
+        
+        int32_t ObjectID; // Pixel ID of Quad
+    };
+    
+    // --------------- Constants -----------------
+    /// Max number of Quad to be rendered in single Batch
+    /// NOTE: Memory will be reserved in GPU for MaxQuads.
+    /// TODO: Make configurable in run time and While initializing the Batch Renderer
+    static constexpr uint32_t MaxChars = 10000;
+
+    // Fixed Constants
+    static constexpr uint32_t VertexForSingleChar = 6;
+    static constexpr uint32_t MaxVertex = MaxChars * VertexForSingleChar;
+    
     /// Renderer Data storage
     std::shared_ptr<Pipeline> Pipeline;
     std::shared_ptr<VertexBuffer> VertexBuffer;
     std::shared_ptr<Shader> Shader;
 
+    /// Map to store the Char Texture for each character
     std::map<char, std::shared_ptr<CharTexture>> CharTextureMap;
+
+    // -------------- Variables ------------------
+    /// Base pointer of Vertex Data. This is start of Batch data for single draw call
+    Vertex* VertexBufferBase = nullptr;
+    /// Incrememntal Vetrtex Data Pointer to store all the batch data in Buffer
+    Vertex* VertexBufferPtr = nullptr;
+
+    /// Store the Base Texture coordinga
+    glm::vec2 BaseTexCoords[VertexForSingleChar];
+        
+    /// Constructor
+    TextData() {
+        IK_CORE_INFO("Creating Text Data instance ...");
+    }
+    /// Destructir
+    virtual ~TextData() {
+        IK_CORE_WARN("Destroying Text Data instance and clearing the data !!!");
+        delete [] VertexBufferBase;
+        VertexBufferBase = nullptr;
+
+        RendererStatistics::Get().VertexBufferSize -= TextData::MaxVertex * sizeof(TextData::Vertex);
+    }
 };
 static TextData* s_TextData;
 
@@ -31,18 +73,32 @@ void TextRenderer::Init() {
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initialising the Text Renderer");
     
+    // Allocating the memory for vertex Buffer Pointer
+    s_TextData->VertexBufferBase = new TextData::Vertex[TextData::MaxVertex];
+
     // Create Pipeline instance
     s_TextData->Pipeline = Pipeline::Create();
 
     // Create vertes Buffer
-    s_TextData->VertexBuffer = VertexBuffer::Create(sizeof(float) * 6 * 4);
+    s_TextData->VertexBuffer = VertexBuffer::Create(sizeof(TextData::Vertex) * TextData::MaxVertex);
     s_TextData->VertexBuffer->AddLayout({
-        { "vertex", ShaderDataType::Float4 }
+        { "a_Position",  ShaderDataType::Float3 },
+        { "a_Color",     ShaderDataType::Float3 },
+        { "a_TexCoords", ShaderDataType::Float2 },
+        { "a_ObjectID",  ShaderDataType::Int },
     });
     s_TextData->Pipeline->AddVertexBuffer(s_TextData->VertexBuffer);
     
     // Init the Text shader
     s_TextData->Shader = Renderer::GetShader(AssetManager::GetCoreAsset("shaders/2D/TextShader.glsl"));
+    
+    // Base Texture coordinate for Char rendering
+    s_TextData->BaseTexCoords[0] = { 0.0f, 0.0f };
+    s_TextData->BaseTexCoords[1] = { 0.0f, 1.0f };
+    s_TextData->BaseTexCoords[2] = { 1.0f, 1.0f };
+    s_TextData->BaseTexCoords[3] = { 0.0f, 0.0f };
+    s_TextData->BaseTexCoords[4] = { 1.0f, 1.0f };
+    s_TextData->BaseTexCoords[5] = { 1.0f, 0.0f };
     
     // FreeType
     FT_Library ft;
@@ -99,13 +155,7 @@ void TextRenderer::BeginBatch(const glm::mat4& cameraViewProj) {
 /// @param y y Position of Text
 /// @param scale Size of text
 /// @param color Color of text
-void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec3 color) {
-    // activate corresponding render state
-    s_TextData->Shader->Bind();
-    s_TextData->Shader->SetUniformFloat3("textColor", color);
-
-    s_TextData->Pipeline->Bind();
-
+void TextRenderer::RenderText(std::string text, const glm::mat4& transform, float x, float y, float scale, glm::vec3 color, uint32_t entID) {
     // iterate through all characters
     std::string::const_iterator c;
     for (c = text.begin(); c != text.end(); c++) {
@@ -116,24 +166,38 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
 
         float w = ch->GetSize().x * scale;
         float h = ch->GetSize().y * scale;
+        
         // update VBO for each character
-        float vertices[6][4] = {
-            { xpos,     ypos + h,   0.0f, 0.0f },
-            { xpos,     ypos,       0.0f, 1.0f },
-            { xpos + w, ypos,       1.0f, 1.0f },
+        glm::vec4 position[TextData::VertexForSingleChar] = {
+            { xpos,     ypos + h, 0.0f, 1.0f },
+            { xpos,     ypos    , 0.0f, 1.0f },
+            { xpos + w, ypos    , 0.0f, 1.0f },
 
-            { xpos,     ypos + h,   0.0f, 0.0f },
-            { xpos + w, ypos,       1.0f, 1.0f },
-            { xpos + w, ypos + h,   1.0f, 0.0f }
+            { xpos,     ypos + h, 0.0f, 1.0f },
+            { xpos + w, ypos    , 0.0f, 1.0f },
+            { xpos + w, ypos + h, 0.0f, 1.0f },
         };
         
+        s_TextData->VertexBufferPtr = s_TextData->VertexBufferBase;
+        for (size_t i = 0; i < TextData::VertexForSingleChar; i++) {
+            s_TextData->VertexBufferPtr->Position     = transform * position[i];
+            s_TextData->VertexBufferPtr->Color        = color;
+            s_TextData->VertexBufferPtr->TexCoord     = s_TextData->BaseTexCoords[i];
+            s_TextData->VertexBufferPtr->ObjectID     = entID;
+            s_TextData->VertexBufferPtr++;
+        }
+        
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_TextData->VertexBufferPtr - (uint8_t*)s_TextData->VertexBufferBase);
+        s_TextData->VertexBuffer->SetData(s_TextData->VertexBufferBase, dataSize);
+        
+        // Render the Scene
+        s_TextData->Shader->Bind();
         ch->Bind();
-        s_TextData->VertexBuffer->SetData(vertices, sizeof(vertices));
-
-        // render quad
         Renderer::DrawArrays(s_TextData->Pipeline, 6);
 
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
         x += (ch->GetAdvance() >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
+    
+    RendererStatistics::Get().VertexCount += TextData::VertexForSingleChar;
 }

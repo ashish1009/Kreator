@@ -17,17 +17,6 @@ namespace iKan {
     /// Wrapper class for storing Text Renderer API
     class TextRenderer {
     public:
-//        /// Holds all state information relevant to a character as loaded using FreeType
-//        struct Character {
-//            uint32_t TextureID;     // ID handle of the glyph texture
-//            glm::ivec2 Size;        // Size of glyph
-//            glm::ivec2 Bearing;     // Offset from baseline to left/top of glyph
-//            uint32_t   Advance;     // Horizontal offset to advance to next glyph
-//            
-//            Character(uint32_t textureID, glm::ivec2 size, glm::ivec2 bearing, uint32_t advance )
-//            : TextureID(textureID), Size(size), Bearing(bearing), Advance(advance) {}
-//        };
-        
         /// Initialze the Text renderer. Create All buffers needed to store Data (Both Renderer and CPU)
         static void Init();
         /// Shutdown on Text the Batch Renderer. Delete all the allocated Data
@@ -36,15 +25,26 @@ namespace iKan {
         /// Begin the Batch renderer Scene
         /// @param viewProj View projection matrix of Camera
         static void BeginBatch(const glm::mat4& cameraViewProj);
-        
+        /// End the current batch by rendering all the vertex
+        static void EndBatch();
+
         /// Render the Text in Window
         /// @param text Text to be rendereed
         /// @param x X Position of Text
         /// @param y y Position of Text
         /// @param scale Size of text
         /// @param color Color of text
-        static void RenderText(std::string text, float x, float y, float scale, glm::vec3 color);
-
+        static void RenderText(std::string text, const glm::mat4& transform, float x, float y, float scale, glm::vec3 color, uint32_t entID);
+        
+    private:
+        // Making Singleton
+        TextRenderer() = default;
+        MAKE_SINGLETON(TextRenderer);
+        
+        // Member Methods
+        /// Initialze the Quad Renderer Data
+        static void Flush();
+        static void NextBatch();
     };
     
 }
