@@ -29,6 +29,7 @@ namespace Mario {
      Y : Pipe Head
      X : Bricks
      B : Bonus
+     b : Used Bonus
      ( : Cloud (
      ^ : Cloud ^
      ) : Cloud )

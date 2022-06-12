@@ -34,6 +34,7 @@ static std::string GetEntityNameFromChar(char type) {
         case 'Y' : return "Pipe";      break;
         case 'X' : return "Bricks";    break;
         case 'B' : return "Bonus";     break;
+        case 'b' : return "UsedBonus"; break;
             
         case '<' : return "Grass <";   break;
         case 'v' : return "Grass v";   break;
@@ -133,19 +134,21 @@ void Background::StoreSubtextureOfEachTile() {
     
     // Bonus SubTextures
     {
-        // Unused bonus (from 0 -3)
+        // Unused bonus (from 0 - 3)
         TilesColorMapWithChar['B'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(Sprite, { 24.0f, 27.0f })); // Brown
         TilesColorMapWithChar['B'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(Sprite, { 24.0f, 25.0f })); // Blue
         TilesColorMapWithChar['B'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(Sprite, { 24.0f, 23.0f })); // Grey
         TilesColorMapWithChar['B'][ThemeColor::Green] = (SubTexture::CreateFromCoords(Sprite, { 24.0f, 21.0f })); // Green
         
-        // USed bonus (from 4 -7)
-        TilesColorMapWithChar['B'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 27.0f })); // Brown
-        TilesColorMapWithChar['B'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 25.0f })); // Blue
-        TilesColorMapWithChar['B'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 23.0f })); // Grey
-        TilesColorMapWithChar['B'][ThemeColor::Green] = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 21.0f })); // Green
+        TileMap['B'] = Tile::Create(TilesColorMapWithChar['B'][0]);
         
-        TileMap['B'] = Tile::Create(TilesColorMapWithChar['B'][CurrentTheme]);
+        // Used bonus (from 4 - 7)
+        TilesColorMapWithChar['b'][ThemeColor::Brown] = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 27.0f })); // Brown
+        TilesColorMapWithChar['b'][ThemeColor::Blue]  = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 25.0f })); // Blue
+        TilesColorMapWithChar['b'][ThemeColor::Grey]  = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 23.0f })); // Grey
+        TilesColorMapWithChar['b'][ThemeColor::Green] = (SubTexture::CreateFromCoords(Sprite, { 27.0f, 21.0f })); // Green
+        
+        TileMap['b'] = Tile::Create(TilesColorMapWithChar['b'][0]);
     }
     
     // Steps SubTextures
