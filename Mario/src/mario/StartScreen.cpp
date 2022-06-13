@@ -10,6 +10,7 @@
 using namespace Mario;
 
 std::shared_ptr<Texture> StartScreen::s_Sprite = nullptr;
+std::shared_ptr<Texture> StartScreen::s_SelectePlayer = nullptr;
 std::unordered_map<char, std::shared_ptr<SubTexture>> StartScreen::s_TileMap;
 std::vector<std::shared_ptr<Entity>> StartScreen::s_Entities;
 
@@ -31,6 +32,7 @@ static std::string s_MapTiles =
 void StartScreen::CreateEntities(const std::shared_ptr<Scene>& scene) {
     // Texture tile
     s_Sprite = Renderer::GetTexture(AssetManager::GetClientAsset("textures/StartScreenTile.png"), false, false);
+    s_SelectePlayer = Renderer::GetTexture(AssetManager::GetClientAsset("textures/SelectPlayer.png"), false, false);
     
     // Initialise the tiles and map
     Init();
@@ -76,6 +78,13 @@ void StartScreen::DestroyEntities(const std::shared_ptr<Scene>& scene) {
     s_Sprite.reset();
 }
 
+void StartScreen::Update(const glm::mat4& projection, float yPos) {
+    glm::mat4 t = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, yPos, 0.4f)) * glm::toMat4(glm::quat(glm::vec3(0.0f))) * glm::scale(glm::mat4(1.0f), glm::vec3(0.6f));
+    
+    BatchRenderer::BeginBatch(projection, glm::mat4(1.0f));
+    BatchRenderer::DrawQuad(t, s_SelectePlayer);
+    BatchRenderer::EndBatch();
+}
 
 /// Initialize the start screen tiles
 void StartScreen::Init()

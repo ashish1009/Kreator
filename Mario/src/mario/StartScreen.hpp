@@ -19,12 +19,14 @@ namespace Mario {
         static void CreateEntities(const std::shared_ptr<Scene>& scene);
         static void DestroyEntities(const std::shared_ptr<Scene>& scene);
         static void RenderText(const glm::mat4& projection);
+        static void Update(const glm::mat4& projection, float yPos);
         
     private:
         static void Init();
         
         // Texture to store tile sprite sheet
         static std::shared_ptr<Texture> s_Sprite;
+        static std::shared_ptr<Texture> s_SelectePlayer;
         
         // Map of subtexture to character tile
         static std::unordered_map<char, std::shared_ptr<SubTexture>> s_TileMap;

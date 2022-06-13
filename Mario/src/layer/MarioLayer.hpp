@@ -42,6 +42,7 @@ namespace Mario {
         
         // Mario Data
         bool m_Started = false;
+        float m_SelectedPlayerIconPosition = -3.6;
     };
 
 }

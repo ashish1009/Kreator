@@ -104,13 +104,12 @@ void MarioLayer::Update(Timestep ts) {
     Mario::TextRender::Update(projection, m_ViewportData.Size);
     Mario::Background::Update(m_CameraEntity->GetComponent<CameraComponent>().Camera->GetProjectionMatrix());
     
-    // Render the Frame rate
-    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
-
     // render Start Screen only if game is not started
     if (!m_Started) {
+        Mario::StartScreen::Update(m_CameraEntity->GetComponent<CameraComponent>().Camera->GetProjectionMatrix(), m_SelectedPlayerIconPosition);
+
         // Render Text for Start Screen
-        StartScreen::RenderText(projection);
+        Mario::StartScreen::RenderText(projection);
 
         // Render the Renderer Version
         static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
@@ -118,6 +117,9 @@ void MarioLayer::Update(Timestep ts) {
         Renderer::RenderText(rendererInfo, projection, glm::vec3(m_ViewportData.Size.x - 580.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
     }
 
+    // Render the Frame rate
+    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
+    
     m_ViewportData.FrameBuffer->Unbind();
 }
 
@@ -178,6 +180,10 @@ bool MarioLayer::OnKeyPressed(KeyPressedEvent& event) {
         m_Started = true;
         StartScreen::DestroyEntities(m_Scene);
     }
+    if (event.GetKeyCode() == KeyCode::A) {
+        m_SelectedPlayerIconPosition = (m_SelectedPlayerIconPosition < -3.6) ? -3.6 : -4.9;
+    }
+
     return false;
 }
 
