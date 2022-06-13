@@ -16,14 +16,13 @@
 
 using namespace iKan;
 
-static constexpr aiTextureType s_AiMaterialType[MaxPBRTextureSupported] = { aiTextureType_DIFFUSE, aiTextureType_NORMALS, aiTextureType_SHININESS, aiTextureType_METALNESS, aiTextureType_SPECULAR };
-static const std::string s_Texname[MaxPBRTextureSupported] = { "Albedo", "Normal", "Roughness", "Metallic", "Specular" };
+static constexpr aiTextureType s_AiMaterialType[MaxPBRTextureSupported] = { aiTextureType_DIFFUSE, aiTextureType_NORMALS, aiTextureType_SHININESS, aiTextureType_METALNESS };
+static const std::string s_Texname[MaxPBRTextureSupported] = { "Albedo", "Normal", "Roughness", "Metallic" };
 static const std::string s_ShaderTextureName[MaxPBRTextureSupported] = {
     "u_" + s_Texname[0] + "Texture",
     "u_" + s_Texname[1] + "Texture",
     "u_" + s_Texname[2] + "Texture",
-    "u_" + s_Texname[3] + "Texture",
-    "u_" + s_Texname[4] + "Texture"
+    "u_" + s_Texname[3] + "Texture"
 };
 static const uint32_t s_MeshImportFlags =
                             aiProcess_CalcTangentSpace |        // Create binormals/tangents just in case

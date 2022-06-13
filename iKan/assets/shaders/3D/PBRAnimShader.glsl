@@ -103,14 +103,12 @@ uniform sampler2D u_AlbedoTexture;
 uniform sampler2D u_NormalTexture;
 uniform sampler2D u_RoughnessTexture;
 uniform sampler2D u_MetallicTexture;
-uniform sampler2D u_SpecularTexture;
 
 // Texture Toggle
 uniform float u_AlbedoTextureToggle;
 uniform float u_NormalTextureToggle;
 uniform float u_RoughnessTextureToggle;
 uniform float u_MetallicTextureToggle;
-uniform float u_SpecularTextureToggle;
 
 // Texture Invert
 uniform float u_TextureInvertVertical;
@@ -123,7 +121,6 @@ uniform vec3 u_CameraPosition;
 struct PBRParameters
 {
     vec3 Albedo;
-    vec3 Specular;
     vec3 Normal;
     
     vec3 View;
@@ -232,9 +229,7 @@ void main()
     m_Params.Metalness = (u_MetallicTextureToggle > 0.5) ? texture(u_MetallicTexture, normalizedTexCoords * u_Material.TilinghFactor).r : u_Material.Metalness;
     m_Params.Roughness = (u_RoughnessTextureToggle > 0.5) ? texture(u_RoughnessTexture, normalizedTexCoords * u_Material.TilinghFactor).r : u_Material.Roughness;
     m_Params.Roughness = max(m_Params.Roughness, 0.05); // Minimum roughness of 0.05 to keep specular highlight
-    
-    m_Params.Specular    = (u_SpecularTextureToggle > 0.5) ? texture(u_SpecularTexture, normalizedTexCoords * u_Material.TilinghFactor).rgb : u_Material.AlbedoColor;
-    
+        
     // Normals (either from vertex or map)
     m_Params.Normal = normalize(vs_Input.Normal);
     if (u_NormalTextureToggle > 0.5)

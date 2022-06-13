@@ -19,7 +19,7 @@ class aiAnimation;
 
 namespace iKan {
     
-    static constexpr uint32_t MaxPBRTextureSupported = 5;
+    static constexpr uint32_t MaxPBRTextureSupported = 4;
     
     /// Vertex of Static Submesh
     struct StaticVertex {
