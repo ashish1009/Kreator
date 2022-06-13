@@ -27,6 +27,8 @@ MarioLayer::~MarioLayer() {
 void MarioLayer::Attach() {
     IK_INFO("Attaching '{0}'", m_Name);
     
+    BatchRenderer::ReInitialize(2000, 2000);
+    
     // Change the Imgui Font
     auto& imguiLayer = Application::Get().GetImGuiLayer();
     imguiLayer.SetFont(AssetManager::GetClientAsset("/fonts/Mario.ttf"), AssetManager::GetClientAsset("fonts/Mario.ttf"));

@@ -22,9 +22,16 @@ namespace iKan {
     class BatchRenderer {
     public:
         /// Initialze the Batch renderer. Create All buffers needed to store Data (Both Renderer and CPU)
-        static void Init();
+        /// By default 100 Quads and 100 Circle data is reserved in CPU and GPU
+        /// @param maxQuads max Quad for each batch
+        /// @param maxCircles mac circles for each batch
+        static void Init(uint32_t maxQuads = 100, uint32_t maxCircles = 100);
         /// Shutdown on destroy the Batch Renderer. Delete all the allocated Data
-        static void Shutdown();
+        static void Shutdown();        
+        /// Reinitialize the batch renderer
+        /// @param maxQuads max Quad for each batch
+        /// @param maxCircles mac circles for each batch
+        static void ReInitialize(uint32_t maxQuads, uint32_t maxCircles);
         
         /// Begin the Batch for 2D Rendere
         /// @param cameraViewProj View projection Matrix
@@ -83,8 +90,8 @@ namespace iKan {
         
         // Member Methods
         /// Initialze the Quad Renderer Data
-        static void InitQuadData();
-        static void InitCircleData();
+        static void InitQuadData(uint32_t maxQuads);
+        static void InitCircleData(uint32_t macCircles);
         static void Flush();
         static void NextBatch();
         

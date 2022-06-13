@@ -25,6 +25,10 @@ struct RendererData {
         glm::mat4 CameraViewProjection;
         glm::mat4 CameraView;
     };
+    
+    /// Store the Vertex and Indices size
+    uint32_t MaxVertex;
+    uint32_t MaxIndices;
 
     /// Store the Environment data
     Environment Environment;
@@ -70,18 +74,12 @@ struct QuadData : RendererData {
     };
     
     // --------------- Constants -----------------
-    /// Max number of Quad to be rendered in single Batch
-    /// NOTE: Memory will be reserved in GPU for MaxQuads.
-    /// TODO: Make configurable in run time and While initializing the Batch Renderer
-    static constexpr uint32_t MaxQuad = 1000;
-
-    // Fixed Constants
     static constexpr uint32_t VertexForSingleQuad = 4;
     static constexpr uint32_t IndicesForSingleQuad = 6;
-    static constexpr uint32_t MaxVertex = MaxQuad * VertexForSingleQuad;
-    static constexpr uint32_t MaxIndices = MaxQuad * IndicesForSingleQuad;
-
+    
     // -------------- Variables ------------------
+    uint32_t MaxQuads = 0;
+    
     /// Base pointer of Vertex Data. This is start of Batch data for single draw call
     Vertex* VertexBufferBase = nullptr;
     /// Incrememntal Vetrtex Data Pointer to store all the batch data in Buffer
@@ -130,18 +128,12 @@ struct CircleData : RendererData {
     };
     
     // --------------- Constants -----------------
-    /// Max number of Quad to be rendered in single Batch
-    /// NOTE: Memory will be reserved in GPU for MaxQuads.
-    /// TODO: Make configurable in run time and While initializing the Batch Renderer
-    static constexpr uint32_t MaxCircles = 1000;
-
-    // Fixed Constants
     static constexpr uint32_t VertexForSingleCircle = 4;
     static constexpr uint32_t IndicesForSingleCircle = 6;
-    static constexpr uint32_t MaxVertex = MaxCircles * VertexForSingleCircle;
-    static constexpr uint32_t MaxIndices = MaxCircles * IndicesForSingleCircle;
 
     // -------------- Variables ------------------
+    uint32_t MaxCircles = 0;
+    
     /// Base pointer of Vertex Data. This is start of Batch data for single draw call
     Vertex* VertexBufferBase = nullptr;
     /// Incrememntal Vetrtex Data Pointer to store all the batch data in Buffer
@@ -175,11 +167,11 @@ struct CircleData : RendererData {
 static CircleData* s_CircleData;
 
 /// Initialize the Batch renderer for 2D Renderer
-void BatchRenderer::Init() {
+void BatchRenderer::Init(uint32_t maxQuads, uint32_t maxCircles) {
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initialising the Batch Renderer 2D ...");
-    InitQuadData();
-    InitCircleData();
+    InitQuadData(maxQuads);
+    InitCircleData(maxQuads);
 }
 
 /// SHutdown or destroy the batch Renderer
@@ -189,14 +181,14 @@ void BatchRenderer::Shutdown() {
     IK_CORE_WARN("Shutting down the Batch Renderer 2D !!!");
     
     IK_CORE_WARN("    Destroying the Quad Renderer Data");
-    IK_CORE_WARN("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
+    IK_CORE_WARN("        Max Quads per Batch             : {0}", s_QuadData->MaxQuads);
     IK_CORE_WARN("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
-    IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
+    IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", s_QuadData->MaxVertex * sizeof(QuadData::Vertex),  s_QuadData->MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
 
     IK_CORE_WARN("    Destroying the Circle Renderer Data");
-    IK_CORE_WARN("        Max Circles per Batch           : {0}", CircleData::MaxCircles);
+    IK_CORE_WARN("        Max Circles per Batch           : {0}", s_CircleData->MaxCircles);
     IK_CORE_WARN("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
-    IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", CircleData::MaxVertex * sizeof(CircleData::Vertex),  CircleData::MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
+    IK_CORE_WARN("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", s_CircleData->MaxVertex * sizeof(CircleData::Vertex),  s_CircleData->MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
 
     if (s_QuadData)
         delete s_QuadData;
@@ -206,24 +198,29 @@ void BatchRenderer::Shutdown() {
 }
 
 /// Initialize Quad Data
-void BatchRenderer::InitQuadData() {
+void BatchRenderer::InitQuadData(uint32_t maxQuads) {
     PROFILE();
+
     // Alloc memory for Quad Data
     s_QuadData = new QuadData();
     
+    s_QuadData->MaxQuads = maxQuads;
+    s_QuadData->MaxVertex = maxQuads * s_QuadData->VertexForSingleQuad;
+    s_QuadData->MaxIndices = maxQuads * s_QuadData->IndicesForSingleQuad;
+
     IK_CORE_INFO("    Initialising the Quad Renderer");
-    IK_CORE_INFO("        Max Quads per Batch             : {0}", QuadData::MaxQuad);
+    IK_CORE_INFO("        Max Quads per Batch             : {0}", maxQuads);
     IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
-    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", QuadData::MaxVertex * sizeof(QuadData::Vertex),  QuadData::MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
+    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", s_QuadData->MaxVertex * sizeof(QuadData::Vertex),  s_QuadData->MaxVertex * sizeof(QuadData::Vertex) / 1000.0f );
     
     // Allocating the memory for vertex Buffer Pointer
-    s_QuadData->VertexBufferBase = new QuadData::Vertex[QuadData::MaxVertex];
+    s_QuadData->VertexBufferBase = new QuadData::Vertex[s_QuadData->MaxVertex];
     
     // Create Pipeline instance
     s_QuadData->Pipeline = Pipeline::Create();
     
     // Create vertes Buffer
-    s_QuadData->VertexBuffer = VertexBuffer::Create(QuadData::MaxVertex * sizeof(QuadData::Vertex));
+    s_QuadData->VertexBuffer = VertexBuffer::Create(s_QuadData->MaxVertex * sizeof(QuadData::Vertex));
     s_QuadData->VertexBuffer->AddLayout({
         { "a_Position",     ShaderDataType::Float3 },
         { "a_Color",        ShaderDataType::Float4 },
@@ -235,10 +232,10 @@ void BatchRenderer::InitQuadData() {
     s_QuadData->Pipeline->AddVertexBuffer(s_QuadData->VertexBuffer);
 
     // Create Index Buffer
-    uint32_t* quadIndices = new uint32_t[QuadData::MaxIndices];
+    uint32_t* quadIndices = new uint32_t[s_QuadData->MaxIndices];
     
     uint32_t offset = 0;
-    for (size_t i = 0; i < QuadData::MaxIndices; i += QuadData::IndicesForSingleQuad) {
+    for (size_t i = 0; i < s_QuadData->MaxIndices; i += QuadData::IndicesForSingleQuad) {
         quadIndices[i + 0] = offset + 0;
         quadIndices[i + 1] = offset + 1;
         quadIndices[i + 2] = offset + 2;
@@ -251,7 +248,7 @@ void BatchRenderer::InitQuadData() {
     }
     
     // Create Index Buffer in GPU for storing Indices
-    std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, QuadData::MaxIndices);
+    std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, s_QuadData->MaxIndices);
     s_QuadData->Pipeline->SetIndexBuffer(ib);
     delete[] quadIndices;
     
@@ -270,24 +267,29 @@ void BatchRenderer::InitQuadData() {
 }
 
 /// Initialize Circle Data
-void BatchRenderer::InitCircleData() {
+void BatchRenderer::InitCircleData(uint32_t maxCircles) {
     PROFILE();
+    
     // Alloc memory for Circle Data
     s_CircleData = new CircleData();
     
+    s_CircleData->MaxCircles = maxCircles;
+    s_CircleData->MaxVertex = maxCircles * s_CircleData->VertexForSingleCircle;
+    s_CircleData->MaxIndices = maxCircles * s_CircleData->IndicesForSingleCircle;
+    
     IK_CORE_INFO("    Initialising the Circle Renderer");
-    IK_CORE_INFO("        Max Circle per Batch            : {0}", CircleData::MaxCircles);
+    IK_CORE_INFO("        Max Circle per Batch            : {0}", maxCircles);
     IK_CORE_INFO("        Max Texture Slots Batch         : {0}", MaxTextureSlotsInShader);
-    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", CircleData::MaxVertex * sizeof(CircleData::Vertex),  CircleData::MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
+    IK_CORE_INFO("        Memory Reserved for Vertex Data : {0} B ({1} KB) ", s_CircleData->MaxVertex * sizeof(CircleData::Vertex),  s_CircleData->MaxVertex * sizeof(CircleData::Vertex) / 1000.0f );
     
     // Allocating the memory for vertex Buffer Pointer
-    s_CircleData->VertexBufferBase = new CircleData::Vertex[QuadData::MaxVertex];
+    s_CircleData->VertexBufferBase = new CircleData::Vertex[s_CircleData->MaxVertex];
     
     // Create Pipeline instance
     s_CircleData->Pipeline = Pipeline::Create();
     
     // Create vertes Buffer
-    s_CircleData->VertexBuffer = VertexBuffer::Create(CircleData::MaxVertex * sizeof(CircleData::Vertex));
+    s_CircleData->VertexBuffer = VertexBuffer::Create(s_CircleData->MaxVertex * sizeof(CircleData::Vertex));
     s_CircleData->VertexBuffer->AddLayout({
         { "a_Position",     ShaderDataType::Float3 },
         { "a_Color",        ShaderDataType::Float4 },
@@ -301,10 +303,10 @@ void BatchRenderer::InitCircleData() {
     s_CircleData->Pipeline->AddVertexBuffer(s_CircleData->VertexBuffer);
 
     // Create Index Buffer
-    uint32_t* quadIndices = new uint32_t[CircleData::MaxIndices];
+    uint32_t* quadIndices = new uint32_t[s_CircleData->MaxIndices];
     
     uint32_t offset = 0;
-    for (size_t i = 0; i < CircleData::MaxIndices; i += CircleData::IndicesForSingleCircle) {
+    for (size_t i = 0; i < s_CircleData->MaxIndices; i += CircleData::IndicesForSingleCircle) {
         quadIndices[i + 0] = offset + 0;
         quadIndices[i + 1] = offset + 1;
         quadIndices[i + 2] = offset + 2;
@@ -317,7 +319,7 @@ void BatchRenderer::InitCircleData() {
     }
     
     // Create Index Buffer in GPU for storing Indices
-    std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, CircleData::MaxIndices);
+    std::shared_ptr<IndexBuffer> ib = IndexBuffer::CreateWithCount(quadIndices, s_CircleData->MaxIndices);
     s_CircleData->Pipeline->SetIndexBuffer(ib);
     delete[] quadIndices;
     
@@ -333,6 +335,14 @@ void BatchRenderer::InitCircleData() {
     
     // Setup the Circle Shader
     s_CircleData->Shader = Renderer::GetShader(AssetManager::GetCoreAsset("shaders/2D/BatchCircleShader.glsl"));
+}
+
+/// Reinitialize the batch renderer
+/// @param maxQuads max Quad for each batch
+/// @param maxCircles mac circles for each batch
+void BatchRenderer::ReInitialize(uint32_t maxQuads, uint32_t maxCircles) {
+    Shutdown();
+    Init(maxQuads, maxCircles);
 }
 
 /// Begin the Batch renderer Scene
@@ -449,7 +459,7 @@ void BatchRenderer::DrawCircle(const glm::mat4& transform, const std::shared_ptr
 /// @param entID Pixel ID of Quad
 void BatchRenderer::DrawTextureQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec2* textureCoords, float tilingFactor, const glm::vec4& tintColor, int32_t entID) {
     // If number of indices increase in batch then start new batch
-    if (s_QuadData->IndexCount >= QuadData::MaxIndices) {
+    if (s_QuadData->IndexCount >= s_QuadData->MaxIndices) {
         IK_CORE_WARN("    Starts the new batch as number of indices ({0}) increases in the previous batch", s_QuadData->IndexCount);
         NextBatch();
     }
@@ -508,7 +518,7 @@ void BatchRenderer::DrawFixedViewQuad(const glm::mat4& transform, const std::sha
     Math::DecomposeTransform(transform, position, rotation, scale);
     
     // If number of indices increase in batch then start new batch
-    if (s_QuadData->IndexCount >= QuadData::MaxIndices) {
+    if (s_QuadData->IndexCount >= s_QuadData->MaxIndices) {
         IK_CORE_WARN("    Starts the new batch as number of indices ({0}) increases in the previous batch", s_QuadData->IndexCount);
         NextBatch();
     }
@@ -568,7 +578,7 @@ void BatchRenderer::DrawFixedViewQuad(const glm::mat4& transform, const std::sha
 void BatchRenderer::DrawTextureCircle(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, float tilingFactor, const glm::vec4& color, float thickness, float fade, int32_t entID)
 {
     // If number of indices increase in batch then start new batch
-    if (s_CircleData->IndexCount >= CircleData::MaxIndices) {
+    if (s_CircleData->IndexCount >= s_CircleData->MaxIndices) {
         IK_CORE_WARN("Starts the new batch as number of indices ({0}) increases in the previous batch", s_CircleData->IndexCount);
         NextBatch();
     }

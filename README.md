@@ -145,7 +145,6 @@ Add the following library search paths
 ## TODOs
 - TODO: Remove Creator and Implementation files in final commit. Only Interface and Library .a file
 - TODO: In Shader.hpp : Change this value based on the Open GL Version
-- TODO: In BatchRenderer : Make configurable in run time and While initializing the Batch Renderer
 - TODO: In glGenTextures() : Decide later to delete older on or not
 - TODO: In RendererStats.h and Viewport.cpp : Make column widht size acc to font of Imgui
 - TODO: In ContentBrowserPanne.hpp : Move some other place.
