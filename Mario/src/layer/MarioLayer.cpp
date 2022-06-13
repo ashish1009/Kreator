@@ -106,15 +106,15 @@ void MarioLayer::Update(Timestep ts) {
     // Render the Frame rate
     Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
 
-    // Render the Renderer Version
-    static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
-    static std::string rendererInfo = "(c) iKan MARIO | " + rendererCapability.Vendor + " | " + rendererCapability.Renderer + " | " + rendererCapability.Version;
-    Renderer::RenderText(rendererInfo, projection, glm::vec3(m_ViewportData.Size.x - 580.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
-
     // render Start Screen only if game is not started
     if (!m_Started) {
         // Render Text for Start Screen
         StartScreen::RenderText(projection);
+
+        // Render the Renderer Version
+        static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
+        static std::string rendererInfo = "(c) iKan MARIO | " + rendererCapability.Vendor + " | " + rendererCapability.Renderer + " | " + rendererCapability.Version;
+        Renderer::RenderText(rendererInfo, projection, glm::vec3(m_ViewportData.Size.x - 580.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
     }
 
     m_ViewportData.FrameBuffer->Unbind();
@@ -173,6 +173,10 @@ void MarioLayer::EventHandler(Event& event) {
 /// Kwy Press Event
 /// @param event Key Press event handler
 bool MarioLayer::OnKeyPressed(KeyPressedEvent& event) {
+    if (event.GetKeyCode() == KeyCode::S) {
+        m_Started = true;
+        StartScreen::DestroyEntities(m_Scene);
+    }
     return false;
 }
 
