@@ -450,6 +450,79 @@ void BatchRenderer::DrawCircle(const glm::mat4& transform, const std::shared_ptr
     DrawTextureCircle(transform, texture, tilingFactor, tintColor, thickness, fade, entID);
 }
 
+/// Draw Quad API with Texture
+/// @param transform Transformation matrix of Quad
+/// @param texture Texture to be uploaded in Batch
+/// @param tilingFactor tiling factor of Texture (Scale by which texture to be Multiplied)
+/// @param tintColor Color of Quad
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawFixedViewQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor, float tilingFactor, int32_t entID) {
+    glm::vec3 position, rotation, scale;
+    Math::DecomposeTransform(transform, position, rotation, scale);
+    
+    DrawFixedViewQuad(position, scale, texture, tintColor, tilingFactor, entID);
+}
+
+/// Draw Quad API with Texture
+/// @param position Position matrix of Quad
+/// @param position Size matrix of Quad
+/// @param texture Texture to be uploaded in Batch
+/// @param tilingFactor tiling factor of Texture (Scale by which texture to be Multiplied)
+/// @param tintColor Color of Quad
+/// @param entID Pixel ID of Quad
+void BatchRenderer::DrawFixedViewQuad(const glm::vec3& position, const glm::vec3& scale, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor, float tilingFactor, int32_t entID) {
+    static glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+    // If number of indices increase in batch then start new batch
+    if (s_QuadData->IndexCount >= s_QuadData->MaxIndices) {
+        IK_CORE_WARN("    Starts the new batch as number of indices ({0}) increases in the previous batch", s_QuadData->IndexCount);
+        NextBatch();
+    }
+    
+    float textureIndex = 0.0f;
+    if (texture) {
+        // Find if texture is already loaded in current batch
+        for (size_t i = 1; i < s_QuadData->TextureSlotIndex; i++) {
+            if (s_QuadData->TextureSlots[i].get() == texture.get()) {
+                // Found the current textue in the batch
+                textureIndex = (float)i;
+                break;
+            }
+        }
+        
+        // If current texture slot is not pre loaded then load the texture in proper slot
+        if (textureIndex == 0.0f) {
+            // If number of slots increases max then start new batch
+            if (s_QuadData->TextureSlotIndex >= MaxTextureSlotsInShader) {
+                IK_CORE_WARN("    Starts the new batch as number of texture slot ({0}) increases in the previous batch", s_QuadData->TextureSlotIndex);
+                NextBatch();
+            }
+            
+            // Loading the current texture in the first free slot slot
+            textureIndex = (float)s_QuadData->TextureSlotIndex;
+            s_QuadData->TextureSlots[s_QuadData->TextureSlotIndex] = texture;
+            s_QuadData->TextureSlotIndex++;
+        }
+    }
+    
+    glm::vec3 camRightWS = { s_QuadData->Environment.CameraView[0][0], s_QuadData->Environment.CameraView[1][0], s_QuadData->Environment.CameraView[2][0] };
+    glm::vec3 camUpWS = { s_QuadData->Environment.CameraView[0][1], s_QuadData->Environment.CameraView[1][1], s_QuadData->Environment.CameraView[2][1] };
+    
+    for (size_t i = 0; i < QuadData::VertexForSingleQuad; i++) {
+        s_QuadData->VertexBufferPtr->Position     = position + camRightWS * s_QuadData->VertexPositions[i].x * scale.x + camUpWS * s_QuadData->VertexPositions[i].y * scale.y;
+        s_QuadData->VertexBufferPtr->Color        = tintColor;
+        s_QuadData->VertexBufferPtr->TexCoords    = textureCoords[i];
+        s_QuadData->VertexBufferPtr->TexIndex     = textureIndex;
+        s_QuadData->VertexBufferPtr->TilingFactor = tilingFactor;
+        s_QuadData->VertexBufferPtr->ObjectID     = entID;
+        s_QuadData->VertexBufferPtr++;
+    }
+    
+    s_QuadData->IndexCount += QuadData::IndicesForSingleQuad;
+    
+    RendererStatistics::Get().IndexCount += QuadData::IndicesForSingleQuad;
+    RendererStatistics::Get().VertexCount += QuadData::VertexForSingleQuad;
+}
+
 /// Common Quad Renderer
 /// @param transform Quad transform
 /// @param texture Texture to be uploaded
@@ -505,69 +578,6 @@ void BatchRenderer::DrawTextureQuad(const glm::mat4& transform, const std::share
     RendererStatistics::Get().IndexCount += QuadData::IndicesForSingleQuad;
     RendererStatistics::Get().VertexCount += QuadData::VertexForSingleQuad;
 }
-
-/// Draw Quad API with Texture
-/// @param transform Transformation matrix of Quad
-/// @param texture Texture to be uploaded in Batch
-/// @param tilingFactor tiling factor of Texture (Scale by which texture to be Multiplied)
-/// @param tintColor Color of Quad
-/// @param entID Pixel ID of Quad
-void BatchRenderer::DrawFixedViewQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor, float tilingFactor, int32_t entID) {
-    static glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
-    glm::vec3 position, rotation, scale;
-    Math::DecomposeTransform(transform, position, rotation, scale);
-    
-    // If number of indices increase in batch then start new batch
-    if (s_QuadData->IndexCount >= s_QuadData->MaxIndices) {
-        IK_CORE_WARN("    Starts the new batch as number of indices ({0}) increases in the previous batch", s_QuadData->IndexCount);
-        NextBatch();
-    }
-    
-    float textureIndex = 0.0f;
-    if (texture) {
-        // Find if texture is already loaded in current batch
-        for (size_t i = 1; i < s_QuadData->TextureSlotIndex; i++) {
-            if (s_QuadData->TextureSlots[i].get() == texture.get()) {
-                // Found the current textue in the batch
-                textureIndex = (float)i;
-                break;
-            }
-        }
-        
-        // If current texture slot is not pre loaded then load the texture in proper slot
-        if (textureIndex == 0.0f) {
-            // If number of slots increases max then start new batch
-            if (s_QuadData->TextureSlotIndex >= MaxTextureSlotsInShader) {
-                IK_CORE_WARN("    Starts the new batch as number of texture slot ({0}) increases in the previous batch", s_QuadData->TextureSlotIndex);
-                NextBatch();
-            }
-            
-            // Loading the current texture in the first free slot slot
-            textureIndex = (float)s_QuadData->TextureSlotIndex;
-            s_QuadData->TextureSlots[s_QuadData->TextureSlotIndex] = texture;
-            s_QuadData->TextureSlotIndex++;
-        }
-    }
-    
-    glm::vec3 camRightWS = { s_QuadData->Environment.CameraView[0][0], s_QuadData->Environment.CameraView[1][0], s_QuadData->Environment.CameraView[2][0] };
-    glm::vec3 camUpWS = { s_QuadData->Environment.CameraView[0][1], s_QuadData->Environment.CameraView[1][1], s_QuadData->Environment.CameraView[2][1] };
-    
-    for (size_t i = 0; i < QuadData::VertexForSingleQuad; i++) {
-        s_QuadData->VertexBufferPtr->Position     = position + camRightWS * s_QuadData->VertexPositions[i].x * scale.x + camUpWS * s_QuadData->VertexPositions[i].y * scale.y;
-        s_QuadData->VertexBufferPtr->Color        = tintColor;
-        s_QuadData->VertexBufferPtr->TexCoords    = textureCoords[i];
-        s_QuadData->VertexBufferPtr->TexIndex     = textureIndex;
-        s_QuadData->VertexBufferPtr->TilingFactor = tilingFactor;
-        s_QuadData->VertexBufferPtr->ObjectID     = entID;
-        s_QuadData->VertexBufferPtr++;
-    }
-    
-    s_QuadData->IndexCount += QuadData::IndicesForSingleQuad;
-    
-    RendererStatistics::Get().IndexCount += QuadData::IndicesForSingleQuad;
-    RendererStatistics::Get().VertexCount += QuadData::VertexForSingleQuad;
-}
-
 
 /// Render the Circle
 /// @param transform Transform of crcle

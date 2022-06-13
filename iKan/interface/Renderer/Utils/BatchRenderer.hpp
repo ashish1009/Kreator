@@ -60,6 +60,14 @@ namespace iKan {
         /// @param tintColor Color of Quad
         /// @param entID Pixel ID of Quad
         static void DrawFixedViewQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor = glm::vec4(1.0f), float tilingFactor = 1.0f, int32_t entID = -1);
+        /// Draw Quad API with Texture
+        /// @param position Position matrix of Quad
+        /// @param position Size matrix of Quad
+        /// @param texture Texture to be uploaded in Batch
+        /// @param tilingFactor tiling factor of Texture (Scale by which texture to be Multiplied)
+        /// @param tintColor Color of Quad
+        /// @param entID Pixel ID of Quad
+        static void DrawFixedViewQuad(const glm::vec3& position, const glm::vec3& scale, const std::shared_ptr<Texture>& texture, const glm::vec4& tintColor = glm::vec4(1.0f), float tilingFactor = 1.0f, int32_t entID = -1);
         /// Draw Quad API with sprite subtexture
         /// @param transform Transformation matrix of Quad
         /// @param subTexture Subtexture component
