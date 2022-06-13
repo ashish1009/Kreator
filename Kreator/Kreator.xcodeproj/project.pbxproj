@@ -38,6 +38,82 @@
 /* Begin PBXFileReference section */
 		3E1CF37A2854DDF300CEFE10 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../iKan/vendors/gui/gui/freetype/lib/libfreetype.a; sourceTree = "<group>"; };
 		3E1CF37C2854DE4000CEFE10 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../iKan/vendors/gui/gui/freetype/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
+		3E2191BC285738E8009F8387 /* bricks2Diffuse.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bricks2Diffuse.jpeg; sourceTree = "<group>"; };
+		3E2191BD285738E8009F8387 /* bricks2Specular.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bricks2Specular.jpeg; sourceTree = "<group>"; };
+		3E2191BE285738E8009F8387 /* brickwallNormal.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = brickwallNormal.jpeg; sourceTree = "<group>"; };
+		3E2191BF285738E8009F8387 /* bricks2Normal.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bricks2Normal.jpeg; sourceTree = "<group>"; };
+		3E2191C0285738E8009F8387 /* brickwallDiffuse.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = brickwallDiffuse.jpeg; sourceTree = "<group>"; };
+		3E2191C1285738E8009F8387 /* Kreator.Kreator */ = {isa = PBXFileReference; lastKnownFileType = text; path = Kreator.Kreator; sourceTree = "<group>"; };
+		3E2191C2285738E8009F8387 /* defaultTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultTexture.png; sourceTree = "<group>"; };
+		3E2191C3285738E8009F8387 /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
+		3E2191C4285738E8009F8387 /* wood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood.png; sourceTree = "<group>"; };
+		3E2191C5285738E8009F8387 /* matrix.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = matrix.png; sourceTree = "<group>"; };
+		3E2191C7285738E8009F8387 /* container.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container.png; sourceTree = "<group>"; };
+		3E2191C8285738E8009F8387 /* containerSpecular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = containerSpecular.png; sourceTree = "<group>"; };
+		3E2191C9285738E8009F8387 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
+		3E2191CA285738E8009F8387 /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
+		3E2191CB285738E8009F8387 /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerboard.png; sourceTree = "<group>"; };
+		3E2191CC285738E8009F8387 /* marble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marble.png; sourceTree = "<group>"; };
+		3E2191CD285738E8009F8387 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
+		3E2191D1285738E8009F8387 /* Vampire_emission.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vampire_emission.png; sourceTree = "<group>"; };
+		3E2191D2285738E8009F8387 /* Vampire_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vampire_diffuse.png; sourceTree = "<group>"; };
+		3E2191D3285738E8009F8387 /* Vampire_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vampire_normal.png; sourceTree = "<group>"; };
+		3E2191D4285738E8009F8387 /* Vampire_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vampire_specular.png; sourceTree = "<group>"; };
+		3E2191D5285738E8009F8387 /* dancing_vampire.dae */ = {isa = PBXFileReference; lastKnownFileType = text.xml.dae; path = dancing_vampire.dae; sourceTree = "<group>"; };
+		3E2191D6285738E8009F8387 /* Sphere.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere.fbx; sourceTree = "<group>"; };
+		3E2191D7285738E8009F8387 /* Cube.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cube.fbx; sourceTree = "<group>"; };
+		3E2191D9285738E8009F8387 /* m1911_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m1911_normal.png; sourceTree = "<group>"; };
+		3E2191DA285738E8009F8387 /* M1911.blend1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = M1911.blend1; sourceTree = "<group>"; };
+		3E2191DB285738E8009F8387 /* m1911_roughness.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m1911_roughness.png; sourceTree = "<group>"; };
+		3E2191DC285738E8009F8387 /* m1911_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m1911_color.png; sourceTree = "<group>"; };
+		3E2191DD285738E8009F8387 /* m1911.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = m1911.fbx; sourceTree = "<group>"; };
+		3E2191DE285738E8009F8387 /* M1911.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = M1911.blend; sourceTree = "<group>"; };
+		3E2191DF285738E8009F8387 /* imgui.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = imgui.ini; sourceTree = "<group>"; };
+		3E2191E0285738E8009F8387 /* m1911_metalness.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m1911_metalness.png; sourceTree = "<group>"; };
+		3E2191E1285738E8009F8387 /* M1911Materials.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = M1911Materials.fbx; sourceTree = "<group>"; };
+		3E2191E2285738E8009F8387 /* Plane.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Plane.obj; sourceTree = "<group>"; };
+		3E2191E4285738E8009F8387 /* source_attribution.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = source_attribution.txt; sourceTree = "<group>"; };
+		3E2191E5285738E8009F8387 /* backpack.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = backpack.obj; sourceTree = "<group>"; };
+		3E2191E6285738E8009F8387 /* diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = diffuse.jpg; sourceTree = "<group>"; };
+		3E2191E7285738E8009F8387 /* specular.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = specular.jpg; sourceTree = "<group>"; };
+		3E2191E8285738E8009F8387 /* normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal.png; sourceTree = "<group>"; };
+		3E2191E9285738E8009F8387 /* ao.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ao.jpg; sourceTree = "<group>"; };
+		3E2191EA285738E8009F8387 /* roughness.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = roughness.jpg; sourceTree = "<group>"; };
+		3E2191EB285738E8009F8387 /* backpack.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = backpack.mtl; sourceTree = "<group>"; };
+		3E2191ED285738E8009F8387 /* cyborg.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cyborg.obj; sourceTree = "<group>"; };
+		3E2191EE285738E8009F8387 /* cyborg.blend1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = cyborg.blend1; sourceTree = "<group>"; };
+		3E2191EF285738E8009F8387 /* cyborg.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = cyborg.blend; sourceTree = "<group>"; };
+		3E2191F0285738E8009F8387 /* cyborg_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cyborg_normal.png; sourceTree = "<group>"; };
+		3E2191F1285738E8009F8387 /* cyborg_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cyborg_diffuse.png; sourceTree = "<group>"; };
+		3E2191F2285738E8009F8387 /* cyborg_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cyborg_specular.png; sourceTree = "<group>"; };
+		3E2191F3285738E8009F8387 /* cyborg.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = cyborg.mtl; sourceTree = "<group>"; };
+		3E2191F4285738E8009F8387 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		3E2191F7285738E9009F8387 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		3E2191F8285738E9009F8387 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		3E2191F9285738E9009F8387 /* Roboto-SemiMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-SemiMedium.ttf"; sourceTree = "<group>"; };
+		3E2191FA285738E9009F8387 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		3E2191FB285738E9009F8387 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
+		3E2191FC285738E9009F8387 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		3E2191FD285738E9009F8387 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
+		3E2191FE285738E9009F8387 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
+		3E2191FF285738E9009F8387 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		3E219200285738E9009F8387 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		3E219201285738E9009F8387 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		3E219202285738E9009F8387 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		3E219203285738E9009F8387 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		3E219204285738E9009F8387 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
+		3E219206285738E9009F8387 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		3E219207285738E9009F8387 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		3E219208285738E9009F8387 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		3E219209285738E9009F8387 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		3E21920A285738E9009F8387 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
+		3E21920B285738E9009F8387 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		3E21920C285738E9009F8387 /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		3E21920D285738E9009F8387 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		3E21920E285738E9009F8387 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		3E21920F285738E9009F8387 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		3E219210285738E9009F8387 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
+		3E219213285738E9009F8387 /* iKan3D.Kreator */ = {isa = PBXFileReference; lastKnownFileType = text; path = iKan3D.Kreator; sourceTree = "<group>"; };
 		3E6575E72837AFD8006B0C81 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3E6575E92837AFDD006B0C81 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		3E6575EB2837AFE2006B0C81 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -70,6 +146,198 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E2191B9285738E8009F8387 /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191BA285738E8009F8387 /* basicTextures */,
+			);
+			path = texture;
+			sourceTree = "<group>";
+		};
+		3E2191BA285738E8009F8387 /* basicTextures */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191BB285738E8009F8387 /* Walls */,
+				3E2191C1285738E8009F8387 /* Kreator.Kreator */,
+				3E2191C2285738E8009F8387 /* defaultTexture.png */,
+				3E2191C3285738E8009F8387 /* metal.png */,
+				3E2191C4285738E8009F8387 /* wood.png */,
+				3E2191C5285738E8009F8387 /* matrix.png */,
+				3E2191C6285738E8009F8387 /* Container */,
+				3E2191C9285738E8009F8387 /* grass.png */,
+				3E2191CA285738E8009F8387 /* window.png */,
+				3E2191CB285738E8009F8387 /* checkerboard.png */,
+				3E2191CC285738E8009F8387 /* marble.png */,
+				3E2191CD285738E8009F8387 /* smile.png */,
+			);
+			path = basicTextures;
+			sourceTree = "<group>";
+		};
+		3E2191BB285738E8009F8387 /* Walls */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191BC285738E8009F8387 /* bricks2Diffuse.jpeg */,
+				3E2191BD285738E8009F8387 /* bricks2Specular.jpeg */,
+				3E2191BE285738E8009F8387 /* brickwallNormal.jpeg */,
+				3E2191BF285738E8009F8387 /* bricks2Normal.jpeg */,
+				3E2191C0285738E8009F8387 /* brickwallDiffuse.jpeg */,
+			);
+			path = Walls;
+			sourceTree = "<group>";
+		};
+		3E2191C6285738E8009F8387 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191C7285738E8009F8387 /* container.png */,
+				3E2191C8285738E8009F8387 /* containerSpecular.png */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
+		3E2191CE285738E8009F8387 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191CF285738E8009F8387 /* vampire */,
+				3E2191D6285738E8009F8387 /* Sphere.fbx */,
+				3E2191D7285738E8009F8387 /* Cube.fbx */,
+				3E2191D8285738E8009F8387 /* m1911 */,
+				3E2191E2285738E8009F8387 /* Plane.obj */,
+				3E2191E3285738E8009F8387 /* backpack */,
+				3E2191EC285738E8009F8387 /* cyborg */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		3E2191CF285738E8009F8387 /* vampire */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191D0285738E8009F8387 /* textures */,
+				3E2191D5285738E8009F8387 /* dancing_vampire.dae */,
+			);
+			path = vampire;
+			sourceTree = "<group>";
+		};
+		3E2191D0285738E8009F8387 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191D1285738E8009F8387 /* Vampire_emission.png */,
+				3E2191D2285738E8009F8387 /* Vampire_diffuse.png */,
+				3E2191D3285738E8009F8387 /* Vampire_normal.png */,
+				3E2191D4285738E8009F8387 /* Vampire_specular.png */,
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
+		3E2191D8285738E8009F8387 /* m1911 */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191D9285738E8009F8387 /* m1911_normal.png */,
+				3E2191DA285738E8009F8387 /* M1911.blend1 */,
+				3E2191DB285738E8009F8387 /* m1911_roughness.png */,
+				3E2191DC285738E8009F8387 /* m1911_color.png */,
+				3E2191DD285738E8009F8387 /* m1911.fbx */,
+				3E2191DE285738E8009F8387 /* M1911.blend */,
+				3E2191DF285738E8009F8387 /* imgui.ini */,
+				3E2191E0285738E8009F8387 /* m1911_metalness.png */,
+				3E2191E1285738E8009F8387 /* M1911Materials.fbx */,
+			);
+			path = m1911;
+			sourceTree = "<group>";
+		};
+		3E2191E3285738E8009F8387 /* backpack */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191E4285738E8009F8387 /* source_attribution.txt */,
+				3E2191E5285738E8009F8387 /* backpack.obj */,
+				3E2191E6285738E8009F8387 /* diffuse.jpg */,
+				3E2191E7285738E8009F8387 /* specular.jpg */,
+				3E2191E8285738E8009F8387 /* normal.png */,
+				3E2191E9285738E8009F8387 /* ao.jpg */,
+				3E2191EA285738E8009F8387 /* roughness.jpg */,
+				3E2191EB285738E8009F8387 /* backpack.mtl */,
+			);
+			path = backpack;
+			sourceTree = "<group>";
+		};
+		3E2191EC285738E8009F8387 /* cyborg */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191ED285738E8009F8387 /* cyborg.obj */,
+				3E2191EE285738E8009F8387 /* cyborg.blend1 */,
+				3E2191EF285738E8009F8387 /* cyborg.blend */,
+				3E2191F0285738E8009F8387 /* cyborg_normal.png */,
+				3E2191F1285738E8009F8387 /* cyborg_diffuse.png */,
+				3E2191F2285738E8009F8387 /* cyborg_specular.png */,
+				3E2191F3285738E8009F8387 /* cyborg.mtl */,
+				3E2191F4285738E8009F8387 /* LICENSE.txt */,
+			);
+			path = cyborg;
+			sourceTree = "<group>";
+		};
+		3E2191F5285738E9009F8387 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191F6285738E9009F8387 /* roboto */,
+				3E219205285738E9009F8387 /* opensans */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		3E2191F6285738E9009F8387 /* roboto */ = {
+			isa = PBXGroup;
+			children = (
+				3E2191F7285738E9009F8387 /* Roboto-Medium.ttf */,
+				3E2191F8285738E9009F8387 /* Roboto-Light.ttf */,
+				3E2191F9285738E9009F8387 /* Roboto-SemiMedium.ttf */,
+				3E2191FA285738E9009F8387 /* Roboto-Regular.ttf */,
+				3E2191FB285738E9009F8387 /* Roboto-MediumItalic.ttf */,
+				3E2191FC285738E9009F8387 /* Roboto-ThinItalic.ttf */,
+				3E2191FD285738E9009F8387 /* Roboto-BoldItalic.ttf */,
+				3E2191FE285738E9009F8387 /* Roboto-LightItalic.ttf */,
+				3E2191FF285738E9009F8387 /* Roboto-Italic.ttf */,
+				3E219200285738E9009F8387 /* LICENSE.txt */,
+				3E219201285738E9009F8387 /* Roboto-BlackItalic.ttf */,
+				3E219202285738E9009F8387 /* Roboto-Bold.ttf */,
+				3E219203285738E9009F8387 /* Roboto-Thin.ttf */,
+				3E219204285738E9009F8387 /* Roboto-Black.ttf */,
+			);
+			path = roboto;
+			sourceTree = "<group>";
+		};
+		3E219205285738E9009F8387 /* opensans */ = {
+			isa = PBXGroup;
+			children = (
+				3E219206285738E9009F8387 /* OpenSans-SemiBold.ttf */,
+				3E219207285738E9009F8387 /* OpenSans-Light.ttf */,
+				3E219208285738E9009F8387 /* OpenSans-Italic.ttf */,
+				3E219209285738E9009F8387 /* OpenSans-ExtraBold.ttf */,
+				3E21920A285738E9009F8387 /* OpenSans-LightItalic.ttf */,
+				3E21920B285738E9009F8387 /* OpenSans-Bold.ttf */,
+				3E21920C285738E9009F8387 /* OpenSans-SemiBoldItalic.ttf */,
+				3E21920D285738E9009F8387 /* OpenSans-ExtraBoldItalic.ttf */,
+				3E21920E285738E9009F8387 /* LICENSE.txt */,
+				3E21920F285738E9009F8387 /* OpenSans-Regular.ttf */,
+				3E219210285738E9009F8387 /* OpenSans-BoldItalic.ttf */,
+			);
+			path = opensans;
+			sourceTree = "<group>";
+		};
+		3E219211285738E9009F8387 /* scenes */ = {
+			isa = PBXGroup;
+			children = (
+				3E219212285738E9009F8387 /* unsavedScene */,
+				3E219213285738E9009F8387 /* iKan3D.Kreator */,
+			);
+			path = scenes;
+			sourceTree = "<group>";
+		};
+		3E219212285738E9009F8387 /* unsavedScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = unsavedScene;
+			sourceTree = "<group>";
+		};
 		3E6A4D4A28360954003578F4 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +370,10 @@
 		3E6A4D64283609FD003578F4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				3E2191F5285738E9009F8387 /* fonts */,
+				3E2191CE285738E8009F8387 /* models */,
+				3E219211285738E9009F8387 /* scenes */,
+				3E2191B9285738E8009F8387 /* texture */,
 			);
 			path = assets;
 			sourceTree = "<group>";

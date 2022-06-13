@@ -143,6 +143,8 @@ void Scene::PlayScene() {
     m_Update = std::bind(&Scene::UpdateRuntime, this, std::placeholders::_1);
     m_EventHandler = std::bind(&Scene::EventHandlerRuntime, this, std::placeholders::_1);
     m_RenderImgui = std::bind(&Scene::RenderImguiRuntime, this);
+    
+    m_ShowIcons = false;
 }
 
 /// Set scene to Edit mode
@@ -279,18 +281,20 @@ void Scene::Render2DComponents(const glm::mat4& viewProj, const glm::mat4& view)
             BatchRenderer::DrawQuad(transform.GetTransform(), glm::vec4(1.0f), (int32_t)entity); // TODO: Store color in sprite renderer Later
     }
 
-    // Lights
-    auto lightView = m_Registry.view<TransformComponent, LightComponent>();
-    for (const auto& entity : lightView) {
-        const auto& [transform, lightComp] = lightView.get<TransformComponent, LightComponent>(entity);
-        BatchRenderer::DrawFixedViewQuad(transform.GetTransform(), m_IconTexture.PointLight, glm::vec4(lightComp.Light->Radiance.x, lightComp.Light->Radiance.y, lightComp.Light->Radiance.z, 1.0f), 1.0f, (int32_t)entity);
-    }
-    
-    // Camera
-    auto cameraView = m_Registry.view<TransformComponent, CameraComponent>();
-    for (const auto& entity : cameraView) {
-        const auto& [transform, cameraComp] = cameraView.get<TransformComponent, CameraComponent>(entity);
-        BatchRenderer::DrawFixedViewQuad(transform.GetTransform(), m_IconTexture.Camera, glm::vec4(1.0f), 1.0f, (int32_t)entity);
+    if (m_ShowIcons) {
+        // Lights
+        auto lightView = m_Registry.view<TransformComponent, LightComponent>();
+        for (const auto& entity : lightView) {
+            const auto& [transform, lightComp] = lightView.get<TransformComponent, LightComponent>(entity);
+            BatchRenderer::DrawFixedViewQuad(transform.GetTransform(), m_IconTexture.PointLight, glm::vec4(lightComp.Light->Radiance.x, lightComp.Light->Radiance.y, lightComp.Light->Radiance.z, 1.0f), 1.0f, (int32_t)entity);
+        }
+        
+        // Camera
+        auto cameraView = m_Registry.view<TransformComponent, CameraComponent>();
+        for (const auto& entity : cameraView) {
+            const auto& [transform, cameraComp] = cameraView.get<TransformComponent, CameraComponent>(entity);
+            BatchRenderer::DrawFixedViewQuad(transform.GetTransform(), m_IconTexture.Camera, glm::vec4(1.0f), 1.0f, (int32_t)entity);
+        }
     }
     
     BatchRenderer::EndBatch();

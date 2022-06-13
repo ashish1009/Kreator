@@ -152,6 +152,9 @@ namespace iKan {
         std::shared_ptr<Texture> m_PlayTexture, m_PauseTexture;
         std::string m_FilePath = "Unsaved Scene", m_Name = "Unsaved Scene";
         
+        // Debug Members
+        bool m_ShowIcons = false;
+        
         // TODO: Move some other place.
         struct IconTexture {
             const std::shared_ptr<Texture> PointLight = Renderer::GetTexture(AssetManager::GetCoreAsset("/textures/icons/pointLight.png"));

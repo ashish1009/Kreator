@@ -14,8 +14,8 @@
             filePath = "iKan/implementation/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
             landmarkName = "Scene::Render3DComponents(cameraosition, cameraViewProj, ts)"
             landmarkType = "7">
          </BreakpointContent>

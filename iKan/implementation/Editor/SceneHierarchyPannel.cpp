@@ -120,9 +120,9 @@ void SceneHierarchyPannel::RenderImgui() {
     
     // Menu popup on Right Click
     if (ImGui::BeginPopupContextWindow(0, (int32_t)MouseButton::ButtonRight, false)) { // false -> Right-click on blank space
-        if (ImGui::BeginMenu("Create Empty Entity")) {
+        if (ImGui::BeginMenu("Entity")) {
             if (ImGui::MenuItem("Empty Entity"))
-                m_Context->CreateEntity("Empty Entity");
+                m_SelectedEntity = m_Context->CreateEntity("Empty Entity");
             ImGui::Separator();
             
             if (ImGui::MenuItem("Camera")) {
@@ -130,7 +130,7 @@ void SceneHierarchyPannel::RenderImgui() {
                 m_SelectedEntity->GetComponent<TagComponent>().Group = "Cameras";
                 m_SelectedEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Perspective);
                 m_SelectedEntity->GetComponent<TransformComponent>().Scale = glm::vec3(0.5);
-            }
+            } // Camera
             ImGui::Separator();
             
             if (ImGui::MenuItem("Light")) {
@@ -138,7 +138,7 @@ void SceneHierarchyPannel::RenderImgui() {
                 m_SelectedEntity->GetComponent<TagComponent>().Group = "Lights";
                 m_SelectedEntity->AddComponent<LightComponent>();
                 m_SelectedEntity->GetComponent<TransformComponent>().Scale = glm::vec3(0.5);
-            }
+            } // Light
             ImGui::Separator();
             
             if (ImGui::BeginMenu("2D Entity")) {
@@ -158,7 +158,7 @@ void SceneHierarchyPannel::RenderImgui() {
                     m_SelectedEntity->AddComponent<TextComponent>("Enter Text Here");
                 }
                 ImGui::EndMenu();
-            }
+            } // 2D Entity
             
             if (ImGui::BeginMenu("3D Entity")) {
                 if (ImGui::MenuItem("Empty Mesh")) {
@@ -210,9 +210,20 @@ void SceneHierarchyPannel::RenderImgui() {
                     mc.Mesh = Mesh::Create(AssetManager::GetCoreAsset("models/Torus.fbx"), (uint32_t)(*m_SelectedEntity.get()));
                 }
                 ImGui::EndMenu();
+            } // 3D Entity
+            ImGui::EndMenu();
+        } // Entity
+        
+        if (ImGui::BeginMenu("Scene Debug")) {
+            if (m_Context->m_ShowIcons) {
+                if (ImGui::MenuItem("Hide Icons"))
+                    m_Context->m_ShowIcons = false;
             }
-
-            ImGui::EndMenu(); // Create Empty Entity
+            else {
+                if (ImGui::MenuItem("Show Icons"))
+                    m_Context->m_ShowIcons = true;
+            }
+            ImGui::EndPopup();
         }
         ImGui::EndPopup();
     }
