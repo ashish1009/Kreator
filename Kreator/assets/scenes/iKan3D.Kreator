@@ -1,240 +1,11 @@
 Scene: Untitled
 Entities:
-  - Entity: 1478168155718318053
-    TagComponent:
-      Tag: Text
-      Group: Texts
-    TransformComponent:
-      Translation: [-11.0162659, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.00999999978, 0.00999999978, 1]
-    TextComponent:
-      Text: Enter Text Here
-      Color: [1, 1, 1, 1]
-  - Entity: 14257709188038570648
-    TagComponent:
-      Tag: Mesh
-      Group: Complex Mesh
-    TransformComponent:
-      Translation: [6.19608974, -1.63375604, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/cyborg/cyborg.obj
-      ActiveMaterial: 0
-      Material Name 0: DefaultMaterial
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color DefaultMaterial: [1, 0.600000024, 0.600000024]
-      Material Proeprty Metalness DefaultMaterial: 0
-      Material Proeprty Roughness DefaultMaterial: 1
-      Material Proeprty TilinghFactor DefaultMaterial: 1
-      Use DefaultMaterial0: false
-      Path DefaultMaterial0: ""
-      Use DefaultMaterial1: false
-      Path DefaultMaterial1: ""
-      Use DefaultMaterial2: false
-      Path DefaultMaterial2: ""
-      Use DefaultMaterial3: false
-      Path DefaultMaterial3: ""
-      Use DefaultMaterial4: false
-      Path DefaultMaterial4: ""
-      Num Materials: 1
-  - Entity: 994898289167077020
-    TagComponent:
-      Tag: Camera
-      Group: Cameras
-    TransformComponent:
-      Translation: [0, 0, 18.75]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      FixedAspectRatio: false
-      Primary: true
-      ProjectionType: 0
-      PerspectiveFOV: 0.785398185
-      OrthographicSize: 10
-      Near: 0.00999999978
-      Far: 10000
-  - Entity: 7086695393782489951
-    TagComponent:
-      Tag: Cube
-      Group: Fundamental Mesh\
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      FilePath: ../../iKan/assets/models/Cube.fbx
-      ActiveMaterial: 0
-      Material Name 0: DefaultMaterial
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
-      Material Proeprty Metalness DefaultMaterial: 0
-      Material Proeprty Roughness DefaultMaterial: 0.10557282
-      Material Proeprty TilinghFactor DefaultMaterial: 1
-      Use DefaultMaterial0: false
-      Path DefaultMaterial0: ""
-      Use DefaultMaterial1: false
-      Path DefaultMaterial1: ""
-      Use DefaultMaterial2: false
-      Path DefaultMaterial2: ""
-      Use DefaultMaterial3: false
-      Path DefaultMaterial3: ""
-      Use DefaultMaterial4: false
-      Path DefaultMaterial4: ""
-      Num Materials: 1
-  - Entity: 13577598537378034112
-    TagComponent:
-      Tag: Bag Pack
-      Group: Complex Mesh
-    TransformComponent:
-      Translation: [-5.28110266, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.25999999, 0.25999999, 0.25999999]
-    MeshComponent:
-      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/backpack/backpack.obj
-      ActiveMaterial: 0
-      Material Name 0: Default Material
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color Default Material: [0.876106203, 0.64738822, 0.64738822]
-      Material Proeprty Metalness Default Material: 0.5
-      Material Proeprty Roughness Default Material: 0.5
-      Material Proeprty TilinghFactor Default Material: 1
-      Use Default Material0: false
-      Path Default Material0: ""
-      Use Default Material1: false
-      Path Default Material1: ""
-      Use Default Material2: false
-      Path Default Material2: ""
-      Use Default Material3: false
-      Path Default Material3: ""
-      Use Default Material4: false
-      Path Default Material4: ""
-      Num Materials: 1
-  - Entity: 7805123580234856441
-    TagComponent:
-      Tag: Cone
-      Group: Fundamental Mesh\
-    TransformComponent:
-      Translation: [-2.68775964, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      FilePath: ../../iKan/assets/models/Cone.fbx
-      ActiveMaterial: 0
-      Material Name 0: DefaultMaterial
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
-      Material Proeprty Metalness DefaultMaterial: 0
-      Material Proeprty Roughness DefaultMaterial: 0.10557282
-      Material Proeprty TilinghFactor DefaultMaterial: 1
-      Use DefaultMaterial0: false
-      Path DefaultMaterial0: ""
-      Use DefaultMaterial1: false
-      Path DefaultMaterial1: ""
-      Use DefaultMaterial2: false
-      Path DefaultMaterial2: ""
-      Use DefaultMaterial3: false
-      Path DefaultMaterial3: ""
-      Use DefaultMaterial4: false
-      Path DefaultMaterial4: ""
-      Num Materials: 1
-  - Entity: 5441148085898815533
-    TagComponent:
-      Tag: Torus
-      Group: Fundamental Mesh\
-    TransformComponent:
-      Translation: [4.32599163, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      FilePath: ../../iKan/assets/models/Torus.fbx
-      ActiveMaterial: 0
-      Material Name 0: DefaultMaterial
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
-      Material Proeprty Metalness DefaultMaterial: 0
-      Material Proeprty Roughness DefaultMaterial: 0.10557282
-      Material Proeprty TilinghFactor DefaultMaterial: 1
-      Use DefaultMaterial0: false
-      Path DefaultMaterial0: ""
-      Use DefaultMaterial1: false
-      Path DefaultMaterial1: ""
-      Use DefaultMaterial2: false
-      Path DefaultMaterial2: ""
-      Use DefaultMaterial3: false
-      Path DefaultMaterial3: ""
-      Use DefaultMaterial4: false
-      Path DefaultMaterial4: ""
-      Num Materials: 1
-  - Entity: 8501354524244518677
-    TagComponent:
-      Tag: Quad
-      Group: Quads
-    TransformComponent:
-      Translation: [8.45215034, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    QuadComponent:
-      Color: [1, 1, 1, 1]
-      TilingFactor: 1
-      Use: false
-      TexturePath: ""
-  - Entity: 6915600102934739884
-    TagComponent:
-      Tag: Sphere
-      Group: Fundamental Mesh\
-    TransformComponent:
-      Translation: [1.18540549, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      FilePath: ../../iKan/assets/models/Sphere.fbx
-      ActiveMaterial: 0
-      Material Name 0: Material.001
-      Material InvertX 0: false
-      Material InvertY 0: false
-      Material Proeprty Color Material.001: [1, 0.800000012, 0.800000012]
-      Material Proeprty Metalness Material.001: 1
-      Material Proeprty Roughness Material.001: 0.199999988
-      Material Proeprty TilinghFactor Material.001: 1
-      Use Material.0010: false
-      Path Material.0010: ""
-      Use Material.0011: false
-      Path Material.0011: ""
-      Use Material.0012: false
-      Path Material.0012: ""
-      Use Material.0013: false
-      Path Material.0013: ""
-      Use Material.0014: false
-      Path Material.0014: ""
-      Num Materials: 1
-  - Entity: 14215502187299319800
-    TagComponent:
-      Tag: Circle
-      Group: Circles
-    TransformComponent:
-      Translation: [-6.64097595, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CircleComponent:
-      Color: [1, 1, 1, 1]
-      TilingFactor: 1
-      Thickness: 1
-      Fade: 0.00499999989
-      Use: false
-      TexturePath: ""
-  - Entity: 7257545502378044140
+  - Entity: 11143674955413421949
     TagComponent:
       Tag: Cylinder
-      Group: Fundamental Mesh\
+      Group: Fundamental Meshes
     TransformComponent:
-      Translation: [-4.03349209, 0, 0]
+      Translation: [-5.32982111, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     MeshComponent:
@@ -258,12 +29,12 @@ Entities:
       Use DefaultMaterial4: false
       Path DefaultMaterial4: ""
       Num Materials: 1
-  - Entity: 6084926807100376491
+  - Entity: 8097859219557923045
     TagComponent:
       Tag: Capsule
-      Group: Fundamental Mesh\
+      Group: Fundamental Meshes
     TransformComponent:
-      Translation: [2.70369959, 0, 0]
+      Translation: [-3.63584685, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     MeshComponent:
@@ -287,21 +58,195 @@ Entities:
       Use DefaultMaterial4: false
       Path DefaultMaterial4: ""
       Num Materials: 1
-  - Entity: 10027750943656859307
+  - Entity: 2644265512148160088
+    TagComponent:
+      Tag: M11 Gun
+      Group: Complex Meshes
+    TransformComponent:
+      Translation: [0, 2.92530823, 0]
+      Rotation: [0, 0, 0]
+      Scale: [11.0919991, 11.0919991, 11.0919991]
+    MeshComponent:
+      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/m1911/m1911.fbx
+      ActiveMaterial: 0
+      Material Name 0: Unnamed Mateiral
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color Unnamed Mateiral: [1, 1, 1]
+      Material Proeprty Metalness Unnamed Mateiral: 0.5
+      Material Proeprty Roughness Unnamed Mateiral: 0.5
+      Material Proeprty TilinghFactor Unnamed Mateiral: 1
+      Use Unnamed Mateiral0: true
+      Path Unnamed Mateiral0: ""
+      Use Unnamed Mateiral1: true
+      Path Unnamed Mateiral1: ""
+      Use Unnamed Mateiral2: true
+      Path Unnamed Mateiral2: ""
+      Use Unnamed Mateiral3: true
+      Path Unnamed Mateiral3: ""
+      Use Unnamed Mateiral4: true
+      Path Unnamed Mateiral4: ""
+      Num Materials: 1
+  - Entity: 12808211100844691005
+    TagComponent:
+      Tag: Sphere
+      Group: Fundamental Meshes
+    TransformComponent:
+      Translation: [1.52870941, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../iKan/assets/models/Sphere.fbx
+      ActiveMaterial: 0
+      Material Name 0: DefaultMaterial
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness DefaultMaterial: 0
+      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty TilinghFactor DefaultMaterial: 1
+      Use DefaultMaterial0: false
+      Path DefaultMaterial0: ""
+      Use DefaultMaterial1: false
+      Path DefaultMaterial1: ""
+      Use DefaultMaterial2: false
+      Path DefaultMaterial2: ""
+      Use DefaultMaterial3: false
+      Path DefaultMaterial3: ""
+      Use DefaultMaterial4: false
+      Path DefaultMaterial4: ""
+      Num Materials: 1
+  - Entity: 14753033402968213464
+    TagComponent:
+      Tag: Bagpack
+      Group: Complex Meshes
+    TransformComponent:
+      Translation: [-7.18906212, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.430000007, 0.430000007, 0.430000007]
+    MeshComponent:
+      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/backpack/backpack.obj
+      ActiveMaterial: 0
+      Material Name 0: Unnamed Mateiral
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color Unnamed Mateiral: [1, 1, 1]
+      Material Proeprty Metalness Unnamed Mateiral: 0.5
+      Material Proeprty Roughness Unnamed Mateiral: 0.5
+      Material Proeprty TilinghFactor Unnamed Mateiral: 1
+      Use Unnamed Mateiral0: false
+      Path Unnamed Mateiral0: ""
+      Use Unnamed Mateiral1: false
+      Path Unnamed Mateiral1: ""
+      Use Unnamed Mateiral2: false
+      Path Unnamed Mateiral2: ""
+      Use Unnamed Mateiral3: false
+      Path Unnamed Mateiral3: ""
+      Use Unnamed Mateiral4: false
+      Path Unnamed Mateiral4: ""
+      Num Materials: 1
+  - Entity: 16245159662029538353
+    TagComponent:
+      Tag: Torus
+      Group: Fundamental Meshes
+    TransformComponent:
+      Translation: [4.54480934, 0, 0]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../iKan/assets/models/Torus.fbx
+      ActiveMaterial: 0
+      Material Name 0: DefaultMaterial
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness DefaultMaterial: 0
+      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty TilinghFactor DefaultMaterial: 1
+      Use DefaultMaterial0: false
+      Path DefaultMaterial0: ""
+      Use DefaultMaterial1: false
+      Path DefaultMaterial1: ""
+      Use DefaultMaterial2: false
+      Path DefaultMaterial2: ""
+      Use DefaultMaterial3: false
+      Path DefaultMaterial3: ""
+      Use DefaultMaterial4: false
+      Path DefaultMaterial4: ""
+      Num Materials: 1
+  - Entity: 991405851843985240
+    TagComponent:
+      Tag: Vampire
+      Group: Complex Meshes
+    TransformComponent:
+      Translation: [0, -4.1314249, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/vampire/dancing_vampire.dae
+      ActiveMaterial: 0
+      Material Name 0: Unnamed Mateiral
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color Unnamed Mateiral: [1, 1, 1]
+      Material Proeprty Metalness Unnamed Mateiral: 0.5
+      Material Proeprty Roughness Unnamed Mateiral: 0.5
+      Material Proeprty TilinghFactor Unnamed Mateiral: 1
+      Use Unnamed Mateiral0: true
+      Path Unnamed Mateiral0: ""
+      Use Unnamed Mateiral1: true
+      Path Unnamed Mateiral1: ""
+      Use Unnamed Mateiral2: true
+      Path Unnamed Mateiral2: ""
+      Use Unnamed Mateiral3: true
+      Path Unnamed Mateiral3: ""
+      Use Unnamed Mateiral4: true
+      Path Unnamed Mateiral4: ""
+      Num Materials: 1
+  - Entity: 8432085189442250911
+    TagComponent:
+      Tag: Cone
+      Group: Fundamental Meshes
+    TransformComponent:
+      Translation: [3.09873199, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../iKan/assets/models/Cone.fbx
+      ActiveMaterial: 0
+      Material Name 0: DefaultMaterial
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness DefaultMaterial: 0
+      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty TilinghFactor DefaultMaterial: 1
+      Use DefaultMaterial0: false
+      Path DefaultMaterial0: ""
+      Use DefaultMaterial1: false
+      Path DefaultMaterial1: ""
+      Use DefaultMaterial2: false
+      Path DefaultMaterial2: ""
+      Use DefaultMaterial3: false
+      Path DefaultMaterial3: ""
+      Use DefaultMaterial4: false
+      Path DefaultMaterial4: ""
+      Num Materials: 1
+  - Entity: 10535952058883421001
     TagComponent:
       Tag: Plane
-      Group: Fundamental Mesh\
+      Group: Fundamental Meshes
     TransformComponent:
-      Translation: [-1.4307133, 0, 0]
-      Rotation: [-2.86431718, 0, 0]
-      Scale: [1, 0.999996662, 0.999996662]
+      Translation: [-1.98318887, 0, 0]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 0.999998689, 0.999998689]
     MeshComponent:
       FilePath: ../../iKan/assets/models/Plane.obj
       ActiveMaterial: 0
       Material Name 0: DefaultMaterial
       Material InvertX 0: false
       Material InvertY 0: false
-      Material Proeprty Color DefaultMaterial: [0.823529422, 0.609573245, 0.609573245]
+      Material Proeprty Color DefaultMaterial: [1, 0.600000024, 0.600000024]
       Material Proeprty Metalness DefaultMaterial: 0
       Material Proeprty Roughness DefaultMaterial: 1
       Material Proeprty TilinghFactor DefaultMaterial: 1
@@ -333,15 +278,61 @@ Entities:
       Use None4: false
       Path None4: ""
       Num Materials: 2
-  - Entity: 9977890193782153764
+  - Entity: 7538635268502806881
     TagComponent:
-      Tag: Light
-      Group: Lights
+      Tag: Cube
+      Group: Fundamental Meshes
     TransformComponent:
-      Translation: [0, 0, 5.80970955]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 0.5]
-    LightComponent:
-      Present: 1
-      Position: [0, 0, 0]
-      Radiance: [0.747787595, 0.25146842, 0.25146842]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../iKan/assets/models/Cube.fbx
+      ActiveMaterial: 0
+      Material Name 0: DefaultMaterial
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color DefaultMaterial: [1, 0.800000012, 0.800000012]
+      Material Proeprty Metalness DefaultMaterial: 0
+      Material Proeprty Roughness DefaultMaterial: 0.10557282
+      Material Proeprty TilinghFactor DefaultMaterial: 1
+      Use DefaultMaterial0: false
+      Path DefaultMaterial0: ""
+      Use DefaultMaterial1: false
+      Path DefaultMaterial1: ""
+      Use DefaultMaterial2: false
+      Path DefaultMaterial2: ""
+      Use DefaultMaterial3: false
+      Path DefaultMaterial3: ""
+      Use DefaultMaterial4: false
+      Path DefaultMaterial4: ""
+      Num Materials: 1
+  - Entity: 17566521852379060017
+    TagComponent:
+      Tag: Cyborg
+      Group: Complex Meshes
+    TransformComponent:
+      Translation: [6.39717817, -1.60208082, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      FilePath: ../../../../../../../iKan./iKan/Github/Product/iKan/Kreator/assets/models/cyborg/cyborg.obj
+      ActiveMaterial: 0
+      Material Name 0: Unnamed Mateiral
+      Material InvertX 0: false
+      Material InvertY 0: false
+      Material Proeprty Color Unnamed Mateiral: [1, 1, 1]
+      Material Proeprty Metalness Unnamed Mateiral: 0.5
+      Material Proeprty Roughness Unnamed Mateiral: 0.5
+      Material Proeprty TilinghFactor Unnamed Mateiral: 1
+      Use Unnamed Mateiral0: true
+      Path Unnamed Mateiral0: ""
+      Use Unnamed Mateiral1: true
+      Path Unnamed Mateiral1: ""
+      Use Unnamed Mateiral2: true
+      Path Unnamed Mateiral2: ""
+      Use Unnamed Mateiral3: true
+      Path Unnamed Mateiral3: ""
+      Use Unnamed Mateiral4: true
+      Path Unnamed Mateiral4: ""
+      Num Materials: 1

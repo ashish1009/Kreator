@@ -163,12 +163,15 @@ void TextRenderer::RenderText(std::string text, const glm::mat4& transform, cons
     glm::vec3 position, rotation, scale;
     Math::DecomposeTransform(transform, position, rotation, scale);
     
+    // Rescaling the text as it render too large in begining
+    scale *= 0.01;
+    
     for (c = text.begin(); c != text.end(); c++) {
         std::shared_ptr<CharTexture> ch = s_TextData->CharTextureMap[*c];
 
         float xpos = position.x + ch->GetBearing().x * scale.x;
         float ypos = position.y - (ch->GetSize().y - ch->GetBearing().y) * scale.y;
-        float zpos = position.z - 500.0f;
+        float zpos = position.z;
 
         float w = ch->GetSize().x * scale.x;
         float h = ch->GetSize().y * scale.y;
