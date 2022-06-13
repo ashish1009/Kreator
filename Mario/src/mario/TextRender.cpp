@@ -9,24 +9,15 @@
 
 using namespace Mario;
 
-struct TextRenderData {
-    uint32_t Score;
-    uint32_t CoinCount;
-    
-    uint32_t WorldLevel;
-    uint32_t WorldSubLevel;
-    
-    uint32_t TimeLeft;
-};
 static TextRenderData s_Data;
 
 /// Initialize the Text Data
-void TextRender::Init(uint32_t worldLevel, uint32_t worldSubLevel, uint32_t timeLeft) {
-    s_Data.Score = 0;
-    s_Data.CoinCount = 0;
-    s_Data.WorldLevel = worldLevel;
-    s_Data.WorldSubLevel = worldSubLevel;
-    s_Data.TimeLeft = timeLeft;
+void TextRender::Init(const TextRenderData& textData) {
+    s_Data.Score = textData.Score;
+    s_Data.CoinCount = textData.CoinCount;
+    s_Data.WorldLevel = textData.WorldLevel;
+    s_Data.WorldSubLevel = textData.WorldSubLevel;
+    s_Data.TimeLeft = textData.TimeLeft;
 }
 
 /// Update the Teext rendere for Mario
