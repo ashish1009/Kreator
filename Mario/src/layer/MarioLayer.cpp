@@ -102,6 +102,7 @@ void MarioLayer::Update(Timestep ts) {
     UpdateHoveredEntity();
     
     Mario::TextRender::Update(projection, m_ViewportData.Size);
+    Mario::Background::Update(m_CameraEntity->GetComponent<CameraComponent>().Camera->GetProjectionMatrix());
     
     // Render the Frame rate
     Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });

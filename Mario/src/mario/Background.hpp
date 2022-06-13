@@ -76,6 +76,7 @@ namespace Mario {
     public:
         static void Init(const std::shared_ptr<Scene>& scene);
         static void Shutdown();
+        static void Update(const glm::mat4& projection);
         
     private:
         Background() = default;

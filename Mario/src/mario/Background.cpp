@@ -95,6 +95,15 @@ void Background::Init(const std::shared_ptr<Scene>& scene) {
     }
 }
 
+void Background::Update(const glm::mat4& projection) {
+    static glm::mat4 t = glm::translate(glm::mat4(1.0f), glm::vec3(-6.0f, 7.3f, 0.4f)) * glm::toMat4(glm::quat(glm::vec3(0.0f))) * glm::scale(glm::mat4(1.0f), glm::vec3(0.6f));
+    static std::shared_ptr<SubTexture> coinIcon = SubTexture::CreateFromCoords(Sprite, { 24.0f, 26.0f });
+    
+    BatchRenderer::BeginBatch(projection, glm::mat4(1.0f));
+    BatchRenderer::DrawQuad(t, coinIcon, -1);
+    BatchRenderer::EndBatch();
+}
+
 /// shut down the Background
 void Background::Shutdown() {
     for (auto tile : TileEntityMap) {
