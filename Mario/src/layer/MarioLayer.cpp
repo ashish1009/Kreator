@@ -108,9 +108,12 @@ void MarioLayer::Update(Timestep ts) {
     static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
     static std::string rendererInfo = "(c) iKan MARIO | " + rendererCapability.Vendor + " | " + rendererCapability.Renderer + " | " + rendererCapability.Version;
     Renderer::RenderText(rendererInfo, projection, glm::vec3(m_ViewportData.Size.x - 580.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
-    
-    // Render Text for Start Screen
-    StartScreen::RenderText(projection);
+
+    // render Start Screen only if game is not started
+    if (!m_Started) {
+        // Render Text for Start Screen
+        StartScreen::RenderText(projection);
+    }
 
     m_ViewportData.FrameBuffer->Unbind();
 }

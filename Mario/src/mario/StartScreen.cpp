@@ -11,6 +11,7 @@ using namespace Mario;
 
 std::shared_ptr<Texture> StartScreen::s_Sprite = nullptr;
 std::unordered_map<char, std::shared_ptr<SubTexture>> StartScreen::s_TileMap;
+std::vector<std::shared_ptr<Entity>> StartScreen::s_Entities;
 
 static std::string s_MapTiles =
 //          I__K A N
@@ -51,10 +52,30 @@ void StartScreen::CreateEntities(const std::shared_ptr<Scene>& scene) {
                 
                 tc.Translation = { x + 8, (mapHeight / 2.0f) - y + 2, 0.0f };
                 tc.Scale       = { spriteSize.x, spriteSize.y , 0.0f};
+                
+                s_Entities.emplace_back(entity);
+                
             } //if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
         } // for (uint32_t x = 0; x < mapWidth; x++)
     } // for (uint32_t y = 0; y < mapHeight; y++)
 }
+
+/// Initialize the background tiles and creat entities
+/// @param scene Scene reference pointer
+void StartScreen::DestroyEntities(const std::shared_ptr<Scene>& scene) {
+    for (auto& entity : s_Entities)
+        scene->DestroyEntity(entity);
+    
+    s_Entities.clear();
+    
+    for (auto& tileMap : s_TileMap) {
+        tileMap.second.reset();
+    }
+    s_TileMap.clear();
+    
+    s_Sprite.reset();
+}
+
 
 /// Initialize the start screen tiles
 void StartScreen::Init()
@@ -81,5 +102,8 @@ void StartScreen::Init()
 void StartScreen::RenderText(const glm::mat4& projection) {
     // Render the Frame rate
     Renderer::RenderText("(c)2022 iKan Mario", projection, glm::vec3(950.0f, 265.0f, 0.3f), glm::vec2(0.5), { 1.0f, 1.0f, 1.0f, 0.8f });
+
+    Renderer::RenderText("1 PLAYER GAME", projection, glm::vec3(550.0f, 200.0f, 0.3f), glm::vec2(1.0), { 1.0f, 1.0f, 1.0f, 0.8f });
+    Renderer::RenderText("2 PLAYER GAME", projection, glm::vec3(550.0f, 150.0f, 0.3f), glm::vec2(1.0), { 1.0f, 1.0f, 1.0f, 0.8f });
 
 }

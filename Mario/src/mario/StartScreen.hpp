@@ -17,6 +17,7 @@ namespace Mario {
     class StartScreen {
     public:
         static void CreateEntities(const std::shared_ptr<Scene>& scene);
+        static void DestroyEntities(const std::shared_ptr<Scene>& scene);
         static void RenderText(const glm::mat4& projection);
         
     private:
@@ -27,6 +28,8 @@ namespace Mario {
         
         // Map of subtexture to character tile
         static std::unordered_map<char, std::shared_ptr<SubTexture>> s_TileMap;
+        
+        static std::vector<std::shared_ptr<Entity>> s_Entities;
     };
     
 }

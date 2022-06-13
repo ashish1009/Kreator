@@ -39,6 +39,9 @@ namespace Mario {
         std::shared_ptr<Scene> m_Scene;
 
         std::shared_ptr<Entity> m_CameraEntity;
+        
+        // Mario Data
+        bool m_Started = false;
     };
 
 }
