@@ -61,7 +61,7 @@ namespace iKan {
         ShaderDomain GetDomain() const override { return m_Domain; }
         
         uint32_t GetAbsoluteOffset() const { return m_Struct ? m_Struct->GetOffset() + m_Offset : m_Offset; }
-        int32_t GetLocation() const { return m_Location; }
+        int32_t GetLocation(uint32_t index = 0) const { return m_Location[index]; }
         
         Type GetType() const { return m_Type; }
         bool IsArray() const { return m_Count > 1; }
@@ -87,7 +87,7 @@ namespace iKan {
         ShaderDomain m_Domain;
         ShaderStruct* m_Struct;
         
-        mutable int32_t m_Location;
+        mutable std::vector<int32_t> m_Location;
         
         friend class OpenGLShader;
         friend class OpenGLShaderUniformBufferDeclaration;

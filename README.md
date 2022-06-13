@@ -157,3 +157,4 @@ Add the following library search paths
 - TODO: In Scene.cpp : Add Duplicate Entity for other entity too later
 - TODO: In Scene.cpp : Move to Scene Renderer Later
 - TODO: In PBRStatic and Anim Shader : Add HDR or Gamma correction
+- TODO: In OpenGLShader.cpp : Add Check of location later

@@ -76,7 +76,7 @@ namespace iKan {
         
         void ResolveAndSetUniform(OpenGLShaderUniformDeclaration* uniform, const Buffer& buffer);
         void ResolveAndSetUniformArray(OpenGLShaderUniformDeclaration* uniform, const Buffer& buffer);
-        void ResolveAndSetUniformField(const OpenGLShaderUniformDeclaration& field, std::byte* data, int32_t offset);
+        void ResolveAndSetUniformField(const OpenGLShaderUniformDeclaration& field, std::byte* data, int32_t offset, uint8_t idx);
         
         // Attribites
         void UploadUniformInt1(int32_t location, int32_t value);
