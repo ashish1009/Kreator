@@ -6,6 +6,7 @@
 //
 
 #include "MarioLayer.hpp"
+#include "mario/Background.hpp"
 
 using namespace Mario;
 
@@ -59,6 +60,9 @@ void MarioLayer::Attach() {
     
     auto& cameraComponent = m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
     cameraComponent.Camera->SetOrthographicSize(18.0f);
+    
+    // initialize the Mario data
+    Background::Init(m_Scene, ThemeColor::Blue);
 }
 
 /// Update the renderer Layer each frame
@@ -120,6 +124,7 @@ void MarioLayer::RenderGui() {
 /// Detach the Renderer Lyer
 void MarioLayer::Detach() {
     IK_WARN("Detaching '{0}'", m_Name);
+    Background::Shutdown(m_Scene);
 }
 
 /// Handle the Events of Renderer Layer

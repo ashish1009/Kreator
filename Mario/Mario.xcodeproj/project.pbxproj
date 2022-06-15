@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E0466662859C71700B3BF3C /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0466642859C71700B3BF3C /* Player.cpp */; };
+		3E04666F2859E08600B3BF3C /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E04666D2859E08600B3BF3C /* Background.cpp */; };
 		3E6678C42855EB8F0029A72C /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6678C32855EB8F0029A72C /* libfreetype.6.dylib */; };
 		3EF2AA2D283CFFBD009764F8 /* libiKan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2C283CFFBD009764F8 /* libiKan.a */; };
 		3EF2AA30283CFFCB009764F8 /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2E283CFFCB009764F8 /* libassimp.5.dylib */; };
@@ -35,6 +36,8 @@
 /* Begin PBXFileReference section */
 		3E0466642859C71700B3BF3C /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		3E0466652859C71700B3BF3C /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
+		3E04666D2859E08600B3BF3C /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
+		3E04666E2859E08600B3BF3C /* Background.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Background.hpp; sourceTree = "<group>"; };
 		3E6678C32855EB8F0029A72C /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../iKan/vendors/gui/gui/freetype/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
 		3EF2AA21283CFF7F009764F8 /* Mario */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Mario; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2AA2C283CFFBD009764F8 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +86,8 @@
 			children = (
 				3E0466642859C71700B3BF3C /* Player.cpp */,
 				3E0466652859C71700B3BF3C /* Player.hpp */,
+				3E04666D2859E08600B3BF3C /* Background.cpp */,
+				3E04666E2859E08600B3BF3C /* Background.hpp */,
 			);
 			path = mario;
 			sourceTree = "<group>";
@@ -227,6 +232,7 @@
 			files = (
 				3EF2AA7D283D008F009764F8 /* MarioApp.cpp in Sources */,
 				3E0466662859C71700B3BF3C /* Player.cpp in Sources */,
+				3E04666F2859E08600B3BF3C /* Background.cpp in Sources */,
 				3EF2AA7C283D008F009764F8 /* main.cpp in Sources */,
 				3EF2AA7E283D008F009764F8 /* MarioLayer.cpp in Sources */,
 			);
