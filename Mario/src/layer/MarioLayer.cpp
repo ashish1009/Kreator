@@ -183,6 +183,10 @@ bool MarioLayer::OnKeyPressed(KeyPressedEvent& event) {
     if (event.GetKeyCode() == KeyCode::A) {
         m_SelectedPlayerIconPosition = (m_SelectedPlayerIconPosition < -3.6) ? -3.6 : -4.9;
     }
+    
+    if (event.GetKeyCode() == KeyCode::Right) {
+        m_CameraEntity->GetComponent<TransformComponent>().Translation.x += 0.1;
+    }
 
     return false;
 }
