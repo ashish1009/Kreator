@@ -36,7 +36,11 @@ void TextRender::UpdateRunTime(const glm::mat4& projection, const Data& data) {
     Renderer::RenderText(std::to_string(data.Score.TotalScore), projection, position, scale, color);
 
     // Coins
+    position.x = -6.5f;
+    position.y = 7.5f;
+    Renderer::RenderText("COINS", projection, position, scale, color);
     position.x = -6.0f;
+    position.y = 6.5f;
     Renderer::RenderText(std::string(("x") + std::to_string(data.Score.CoinCount)), projection, position, scale, color);
 
     // World Level
@@ -64,7 +68,7 @@ void TextRender::UpdateInitTime(const glm::mat4& projection) {
 
     position.x = 5.0f;
     position.y = -2.5f;
-    Renderer::RenderText("(c)2022 iKan Mario", projection, position, { 1.2f, 1.2f }, color);
+    Renderer::RenderText("(c)2022 iKan MARIO", projection, position, { 1.2f, 1.2f }, color);
 
     position.x = -3.0f;
     position.y = -5.0f;

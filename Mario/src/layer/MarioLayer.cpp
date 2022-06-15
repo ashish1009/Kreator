@@ -64,7 +64,7 @@ void MarioLayer::Attach() {
     cameraComponent.Camera->SetOrthographicSize(18.0f);
     
     // initialize the Mario data
-    Background::Init(m_Scene, ThemeColor::Blue);
+    Background::Init(m_Scene, ThemeColor::Brown);
     StartScreen::Init(m_Scene);
 }
 
@@ -91,11 +91,10 @@ void MarioLayer::Update(Timestep ts) {
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
 
-    // Render the Text
-    // Hard coding will be replaced
     TextRender::UpdateRunTime(projection, { { 0, 0 }, { 1, 1 }, 300 });
-
+    Background::RuntimeIcon(projection);
     if (m_Data.IsStarted) {
+        // TODO: Hard coding will be replaced
     }
     else {
         TextRender::UpdateInitTime(projection);
