@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E0466662859C71700B3BF3C /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0466642859C71700B3BF3C /* Player.cpp */; };
 		3E6678C42855EB8F0029A72C /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6678C32855EB8F0029A72C /* libfreetype.6.dylib */; };
-		3E6678C72855F2E10029A72C /* TextRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6678C52855F2E10029A72C /* TextRender.cpp */; };
-		3EB6448E2850F555001C5E61 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6448C2850F555001C5E61 /* Background.cpp */; };
-		3ED5D34A28577D74004859DD /* StartScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ED5D34828577D74004859DD /* StartScreen.cpp */; };
 		3EF2AA2D283CFFBD009764F8 /* libiKan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2C283CFFBD009764F8 /* libiKan.a */; };
 		3EF2AA30283CFFCB009764F8 /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2E283CFFCB009764F8 /* libassimp.5.dylib */; };
 		3EF2AA31283CFFCB009764F8 /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AA2F283CFFCB009764F8 /* libIrrXML.dylib */; };
@@ -35,13 +33,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E0466642859C71700B3BF3C /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		3E0466652859C71700B3BF3C /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
 		3E6678C32855EB8F0029A72C /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../iKan/vendors/gui/gui/freetype/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
-		3E6678C52855F2E10029A72C /* TextRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextRender.cpp; sourceTree = "<group>"; };
-		3E6678C62855F2E10029A72C /* TextRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextRender.hpp; sourceTree = "<group>"; };
-		3EB6448C2850F555001C5E61 /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
-		3EB6448D2850F555001C5E61 /* Background.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Background.hpp; sourceTree = "<group>"; };
-		3ED5D34828577D74004859DD /* StartScreen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StartScreen.cpp; sourceTree = "<group>"; };
-		3ED5D34928577D74004859DD /* StartScreen.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StartScreen.hpp; sourceTree = "<group>"; };
 		3EF2AA21283CFF7F009764F8 /* Mario */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Mario; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2AA2C283CFFBD009764F8 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EF2AA2E283CFFCB009764F8 /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../iKan/vendors/assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
@@ -87,12 +81,8 @@
 		3EB6448B2850F530001C5E61 /* mario */ = {
 			isa = PBXGroup;
 			children = (
-				3EB6448C2850F555001C5E61 /* Background.cpp */,
-				3EB6448D2850F555001C5E61 /* Background.hpp */,
-				3E6678C52855F2E10029A72C /* TextRender.cpp */,
-				3E6678C62855F2E10029A72C /* TextRender.hpp */,
-				3ED5D34828577D74004859DD /* StartScreen.cpp */,
-				3ED5D34928577D74004859DD /* StartScreen.hpp */,
+				3E0466642859C71700B3BF3C /* Player.cpp */,
+				3E0466652859C71700B3BF3C /* Player.hpp */,
 			);
 			path = mario;
 			sourceTree = "<group>";
@@ -236,11 +226,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EF2AA7D283D008F009764F8 /* MarioApp.cpp in Sources */,
+				3E0466662859C71700B3BF3C /* Player.cpp in Sources */,
 				3EF2AA7C283D008F009764F8 /* main.cpp in Sources */,
-				3ED5D34A28577D74004859DD /* StartScreen.cpp in Sources */,
-				3E6678C72855F2E10029A72C /* TextRender.cpp in Sources */,
 				3EF2AA7E283D008F009764F8 /* MarioLayer.cpp in Sources */,
-				3EB6448E2850F555001C5E61 /* Background.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,10 +8,18 @@
 #pragma once
 
 #include <iKanHeaders.h>
+#include "mario/Player.hpp"
 
 using namespace iKan;
 
 namespace Mario {
+    
+    /// Data used for Mario Game. Both Rendering and Computation
+    struct Data {
+        bool IsStarted = false;         // Flag to check is game started. Set up only when se select number of player
+        uint32_t NumPlayers = 0;        // Stores the number of player
+        std::vector<Player> Players;    // Stores information of each players in vector (Make sure to iterate till NumPlayers only)
+    };
     
     /// Chess Renderer Layer
     class MarioLayer : public Layer {
@@ -34,15 +42,11 @@ namespace Mario {
         void UpdateHoveredEntity();
                 
         // Member variabls
-        // Layer Data
         Viewport m_ViewportData;
         std::shared_ptr<Scene> m_Scene;
-
         std::shared_ptr<Entity> m_CameraEntity;
         
-        // Mario Data
-        bool m_Started = false;
-        float m_SelectedPlayerIconPosition = -3.6;
+        Data m_Data;
     };
 
 }

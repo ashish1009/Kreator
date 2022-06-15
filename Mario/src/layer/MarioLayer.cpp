@@ -6,9 +6,6 @@
 //
 
 #include "MarioLayer.hpp"
-#include "mario/Background.hpp"
-#include "mario/TextRender.hpp"
-#include "mario/StartScreen.hpp"
 
 using namespace Mario;
 
@@ -62,20 +59,6 @@ void MarioLayer::Attach() {
     
     auto& cameraComponent = m_CameraEntity->AddComponent<CameraComponent>(SceneCamera::ProjectionType::Orthographic);
     cameraComponent.Camera->SetOrthographicSize(18.0f);
-    
-    // Initialize tha Mario Data
-    Background::Init(m_Scene);
-    
-    Mario::TextRenderData data;
-    data.Score = 0;
-    data.CoinCount = 0;
-    data.WorldLevel = 1;
-    data.WorldSubLevel = 1;
-    data.TimeLeft = 300;
-    Mario::TextRender::Init(data);
-    
-    // Init Start Screen
-    StartScreen::CreateEntities(m_Scene);
 }
 
 /// Update the renderer Layer each frame
@@ -100,22 +83,6 @@ void MarioLayer::Update(Timestep ts) {
     m_Scene->Update(ts);
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
-    
-    Mario::TextRender::Update(projection, m_ViewportData.Size);
-    Mario::Background::Update(m_CameraEntity->GetComponent<CameraComponent>().Camera->GetProjectionMatrix());
-    
-    // render Start Screen only if game is not started
-    if (!m_Started) {
-        Mario::StartScreen::Update(m_CameraEntity->GetComponent<CameraComponent>().Camera->GetProjectionMatrix(), m_SelectedPlayerIconPosition);
-
-        // Render Text for Start Screen
-        Mario::StartScreen::RenderText(projection);
-
-        // Render the Renderer Version
-        static const Renderer::Capabilities& rendererCapability = Renderer::Capabilities::Get();
-        static std::string rendererInfo = "(c) iKan MARIO | " + rendererCapability.Vendor + " | " + rendererCapability.Renderer + " | " + rendererCapability.Version;
-        Renderer::RenderText(rendererInfo, projection, glm::vec3(m_ViewportData.Size.x - 580.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
-    }
 
     // Render the Frame rate
     Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
@@ -146,24 +113,13 @@ void MarioLayer::RenderGui() {
 
     ImGui::PopID();
     ImGui::End(); // Viewport
-    
-    // TODO: Debug
-    {
-        Renderer::ImguiRendererStats();
-        m_ViewportData.RenderImgui();
-        
-        ImGui::Begin("Debug");
-        PropertyGrid::Float3("Camera Position", m_CameraEntity->GetComponent<TransformComponent>().Translation);
-        ImGui::End();
-    }
-        
+ 
     ImguiAPI::EndDcocking();
 }
 
 /// Detach the Renderer Lyer
 void MarioLayer::Detach() {
     IK_WARN("Detaching '{0}'", m_Name);
-    Background::Shutdown();
 }
 
 /// Handle the Events of Renderer Layer
@@ -176,18 +132,6 @@ void MarioLayer::EventHandler(Event& event) {
 /// Kwy Press Event
 /// @param event Key Press event handler
 bool MarioLayer::OnKeyPressed(KeyPressedEvent& event) {
-    if (event.GetKeyCode() == KeyCode::S) {
-        m_Started = true;
-        StartScreen::DestroyEntities(m_Scene);
-    }
-    if (event.GetKeyCode() == KeyCode::A) {
-        m_SelectedPlayerIconPosition = (m_SelectedPlayerIconPosition < -3.6) ? -3.6 : -4.9;
-    }
-    
-    if (event.GetKeyCode() == KeyCode::Right) {
-        m_CameraEntity->GetComponent<TransformComponent>().Translation.x += 0.1;
-    }
-
     return false;
 }
 
