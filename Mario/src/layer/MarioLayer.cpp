@@ -98,7 +98,7 @@ void MarioLayer::Update(Timestep ts) {
     if (m_Data.IsStarted) {
     }
     else {
-        TextRender::UpdateInitTime();
+        TextRender::UpdateInitTime(projection, m_ViewportData.Size);
     }
 
     // Render the Frame rate

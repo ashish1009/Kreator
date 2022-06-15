@@ -31,7 +31,7 @@ namespace Mario {
         /// @param windowSize window Position
         static void UpdateRunTime(const glm::mat4& projection, const glm::vec2& windowSize, const Data& data);
         /// Render the text at init time before game started
-        static void UpdateInitTime();
+        static void UpdateInitTime(const glm::mat4& projection, const glm::vec2& windowSize);
         
     private:
         TextRender() = default;

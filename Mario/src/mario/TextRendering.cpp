@@ -40,6 +40,10 @@ void TextRender::UpdateRunTime(const glm::mat4& projection, const glm::vec2& win
 }
 
 /// Render the text at init time before game started
-void TextRender::UpdateInitTime() {
-    
+void TextRender::UpdateInitTime(const glm::mat4& projection, const glm::vec2& windowSize) {
+    // Render the Frame rate
+    Renderer::RenderText("(c)2022 iKan Mario", projection, glm::vec3(950.0f, 265.0f, 0.3f), glm::vec2(0.5), { 1.0f, 1.0f, 1.0f, 0.8f });
+
+    Renderer::RenderText("1 PLAYER GAME", projection, glm::vec3(windowSize.x / 3.0f, 200.0f, 0.3f), glm::vec2(1.0), { 1.0f, 1.0f, 1.0f, 0.8f });
+    Renderer::RenderText("2 PLAYER GAME", projection, glm::vec3(windowSize.x / 3.0f, 150.0f, 0.3f), glm::vec2(1.0), { 1.0f, 1.0f, 1.0f, 0.8f });
 }
