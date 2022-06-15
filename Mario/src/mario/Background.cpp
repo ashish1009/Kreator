@@ -150,11 +150,11 @@ void Background::Init(const std::shared_ptr<Scene>& scene, ThemeColor color) {
     s_RendererData->Init(color);
 
     // 4. Create entities for each tile
+    IK_INFO("Creating Entity for each tile ");
     // Extract the map width. MAP Width should be same for each New line string
     size_t mapWidth    = s_MapTiles.find_first_of('0') + 1;
     uint32_t mapHeight = static_cast<uint32_t>(strlen(s_MapTiles.c_str())) / mapWidth;
 
-    IK_INFO("Creating Entity for each tile ");
     for (uint32_t y = 0; y < mapHeight; y++) {
         for (uint32_t x = 0; x < mapWidth; x++) {
             // Create entity if we have sub texture for the character we found in map

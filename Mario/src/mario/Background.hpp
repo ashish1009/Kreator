@@ -20,7 +20,12 @@ namespace Mario {
     
     class Background {
     public:
+        /// Initialize the Background tiles and Create their entity
+        /// @param scene Scene reference pointer
+        /// @param color Theme color
         static void Init(const std::shared_ptr<Scene>& scene, ThemeColor color);
+        /// Shut down the Background. Delete all entity if created
+        /// @param scene Scene referece pointer
         static void Shutdown(const std::shared_ptr<Scene>& scene);
         
     private:

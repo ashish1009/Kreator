@@ -6,3 +6,7 @@
 //
 
 #include "Player.hpp"
+
+using namespace Mario;
+
+const Player::Score& Player::GetScore() { return m_Score; }

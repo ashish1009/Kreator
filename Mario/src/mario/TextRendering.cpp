@@ -1,0 +1,45 @@
+//
+//  TextRendering.cpp
+//  Mario
+//
+//  Created by iKan on 15/06/22.
+//
+
+#include "TextRendering.hpp"
+
+using namespace Mario;
+
+/// Copy the runtime Text render data
+/// @param score Current score of current player
+/// @param coinCount Coin count of current player
+/// @param worldLevel Current level of player
+/// @param worldSubLevel Curretn Sub level of player
+/// @param timeLeft Time left for current level
+TextRender::Data::Data(uint32_t score, uint32_t coinCount, uint32_t worldLevel, uint32_t worldSubLevel, uint32_t timeLeft)
+: Score(score), CoinCount(coinCount), WorldLevel(worldLevel), WorldSubLevel(worldSubLevel), TimeLeft(timeLeft) { }
+
+/// Render the text after game started
+/// @param projection Camera projection
+/// @param windowSize window Position
+void TextRender::UpdateRunTime(const glm::mat4& projection, const glm::vec2& windowSize, const Data& data) {
+    // Score
+    Renderer::RenderText("MARIO", projection, glm::vec3(40.0f, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    Renderer::RenderText(std::to_string(data.Score), projection, glm::vec3(40.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    
+    // Coins
+    Renderer::RenderText(std::string(("x") + std::to_string(data.CoinCount)), projection, glm::vec3(windowSize.x / 3.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+
+    // World Level
+    Renderer::RenderText("WORLD", projection, glm::vec3(windowSize.x / 1.5f, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    std::string levelString = std::to_string(data.WorldLevel) + " - " + std::to_string(data.WorldSubLevel);
+    Renderer::RenderText(levelString, projection, glm::vec3(windowSize.x / 1.5f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+
+    // Time
+    Renderer::RenderText("TIME", projection, glm::vec3(windowSize.x - 120.0, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    Renderer::RenderText(std::to_string(data.TimeLeft), projection, glm::vec3(windowSize.x - 120.0, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+}
+
+/// Render the text at init time before game started
+void TextRender::UpdateInitTime() {
+    
+}

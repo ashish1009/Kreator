@@ -7,6 +7,7 @@
 
 #include "MarioLayer.hpp"
 #include "mario/Background.hpp"
+#include "mario/TextRendering.hpp"
 
 using namespace Mario;
 
@@ -87,6 +88,16 @@ void MarioLayer::Update(Timestep ts) {
     m_Scene->Update(ts);
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
+
+    // Update the Text
+    TextRender::Data data;
+    TextRender::UpdateRunTime(projection, m_ViewportData.Size, data);
+
+    if (m_Data.IsStarted) {
+    }
+    else {
+        TextRender::UpdateInitTime();
+    }
 
     // Render the Frame rate
     Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
