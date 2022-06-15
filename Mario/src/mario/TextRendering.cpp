@@ -15,8 +15,8 @@ using namespace Mario;
 /// @param worldLevel Current level of player
 /// @param worldSubLevel Curretn Sub level of player
 /// @param timeLeft Time left for current level
-TextRender::Data::Data(uint32_t score, uint32_t coinCount, uint32_t worldLevel, uint32_t worldSubLevel, uint32_t timeLeft)
-: Score(score), CoinCount(coinCount), WorldLevel(worldLevel), WorldSubLevel(worldSubLevel), TimeLeft(timeLeft) { }
+TextRender::Data::Data(const PlayerScore& score, const PlayerLevel& level, uint32_t timeLeft)
+: Score(score), Level(level), TimeLeft(timeLeft) { }
 
 /// Render the text after game started
 /// @param projection Camera projection
@@ -24,14 +24,14 @@ TextRender::Data::Data(uint32_t score, uint32_t coinCount, uint32_t worldLevel, 
 void TextRender::UpdateRunTime(const glm::mat4& projection, const glm::vec2& windowSize, const Data& data) {
     // Score
     Renderer::RenderText("MARIO", projection, glm::vec3(40.0f, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
-    Renderer::RenderText(std::to_string(data.Score), projection, glm::vec3(40.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    Renderer::RenderText(std::to_string(data.Score.TotalScore), projection, glm::vec3(40.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
     
     // Coins
-    Renderer::RenderText(std::string(("x") + std::to_string(data.CoinCount)), projection, glm::vec3(windowSize.x / 3.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    Renderer::RenderText(std::string(("x") + std::to_string(data.Score.CoinCount)), projection, glm::vec3(windowSize.x / 3.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
 
     // World Level
     Renderer::RenderText("WORLD", projection, glm::vec3(windowSize.x / 1.5f, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
-    std::string levelString = std::to_string(data.WorldLevel) + " - " + std::to_string(data.WorldSubLevel);
+    std::string levelString = std::to_string(data.Level.WorldLevel) + " - " + std::to_string(data.Level.WorldSubLevel);
     Renderer::RenderText(levelString, projection, glm::vec3(windowSize.x / 1.5f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
 
     // Time

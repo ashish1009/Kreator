@@ -89,9 +89,9 @@ void MarioLayer::Update(Timestep ts) {
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
 
-    // Update the Text
-    TextRender::Data data;
-    TextRender::UpdateRunTime(projection, m_ViewportData.Size, data);
+    // Render the Text
+    // Hard coding will be replaced
+    TextRender::UpdateRunTime(projection, m_ViewportData.Size, { { 0, 0 }, { 1, 1 }, 300 });
 
     if (m_Data.IsStarted) {
     }

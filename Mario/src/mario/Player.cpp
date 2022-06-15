@@ -9,4 +9,5 @@
 
 using namespace Mario;
 
-const Player::Score& Player::GetScore() { return m_Score; }
+const PlayerScore& Player::GetScore() { return m_Score; }
+const PlayerLevel& Player::GetLevel() { return m_Level; }

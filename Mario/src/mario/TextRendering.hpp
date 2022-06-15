@@ -8,6 +8,7 @@
 #pragma once
 
 #include <iKanHeaders.h>
+#include "mario/Common.hpp"
 
 using namespace iKan;
 
@@ -20,15 +21,11 @@ namespace Mario {
         /// Just a wrapper of all Run time text.
         /// Each elemnt will be copied from somewhere
         struct Data {
-            uint32_t Score = 0;
-            uint32_t CoinCount = 0;
-            
-            uint32_t WorldLevel = 0;
-            uint32_t WorldSubLevel = 0;
-            
+            PlayerScore Score;
+            PlayerLevel Level;
             uint32_t TimeLeft = 0;
             
-            Data(uint32_t score, uint32_t coinCount, uint32_t worldLevel, uint32_t wirldSubLevel, uint32_t timeLeft);
+            Data(const PlayerScore& score, const PlayerLevel& level, uint32_t timeLeft);
             Data() = default;
         };
         
