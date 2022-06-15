@@ -8,6 +8,7 @@
 #include "MarioLayer.hpp"
 #include "mario/Background.hpp"
 #include "mario/TextRendering.hpp"
+#include "mario/StartScreen.hpp"
 
 using namespace Mario;
 
@@ -64,6 +65,7 @@ void MarioLayer::Attach() {
     
     // initialize the Mario data
     Background::Init(m_Scene, ThemeColor::Blue);
+    StartScreen::Init(m_Scene);
 }
 
 /// Update the renderer Layer each frame
@@ -136,6 +138,7 @@ void MarioLayer::RenderGui() {
 void MarioLayer::Detach() {
     IK_WARN("Detaching '{0}'", m_Name);
     Background::Shutdown(m_Scene);
+    StartScreen::Shutdown(m_Scene);
 }
 
 /// Handle the Events of Renderer Layer

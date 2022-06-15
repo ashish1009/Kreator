@@ -7,10 +7,7 @@
 
 #pragma once
 
-#include <iKanHeaders.h>
 #include "mario/Common.hpp"
-
-using namespace iKan;
 
 namespace Mario {
 
