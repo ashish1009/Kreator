@@ -70,7 +70,7 @@ void MarioLayer::Attach() {
 
 /// Update the renderer Layer each frame
 void MarioLayer::Update(Timestep ts) {
-    static glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_ViewportData.Size.x), 0.0f, static_cast<float>(m_ViewportData.Size.y));
+    static glm::mat4 projection = m_CameraEntity->GetComponent<CameraComponent>().Camera->GetProjectionMatrix();
 
     // If resize the window call the update the Scene View port and Frame buffer should be resized
     if (const FrameBuffer::Specification& spec = m_ViewportData.FrameBuffer->GetSpecification();
@@ -79,7 +79,7 @@ void MarioLayer::Update(Timestep ts) {
         m_ViewportData.FrameBuffer->Resize((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
         m_Scene->SetViewport((uint32_t)m_ViewportData.Size.x, (uint32_t)m_ViewportData.Size.y);
         
-        projection = glm::ortho(0.0f, static_cast<float>(m_ViewportData.Size.x), 0.0f, static_cast<float>(m_ViewportData.Size.y));
+        projection = m_CameraEntity->GetComponent<CameraComponent>().Camera->GetProjectionMatrix();
     }
     
     Renderer::ResetStatsEachFrame();
@@ -93,16 +93,16 @@ void MarioLayer::Update(Timestep ts) {
 
     // Render the Text
     // Hard coding will be replaced
-    TextRender::UpdateRunTime(projection, m_ViewportData.Size, { { 0, 0 }, { 1, 1 }, 300 });
+    TextRender::UpdateRunTime(projection, { { 0, 0 }, { 1, 1 }, 300 });
 
     if (m_Data.IsStarted) {
     }
     else {
-        TextRender::UpdateInitTime(projection, m_ViewportData.Size);
+        TextRender::UpdateInitTime(projection);
     }
 
     // Render the Frame rate
-    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(1.0f, 1.0f, 0.3f), glm::vec2(0.3), { 0.0f, 1.0f, 1.0f, 1.0f });
+    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(-16.5f, -9.0f, 0.3f), glm::vec2(1.0), { 0.0f, 1.0f, 1.0f, 1.0f });
     
     m_ViewportData.FrameBuffer->Unbind();
 }

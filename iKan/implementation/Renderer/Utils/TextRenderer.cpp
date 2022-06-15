@@ -218,9 +218,12 @@ void TextRenderer::RenderText(std::string text, const glm::mat4& transform, cons
 /// @param position Text Poistion
 /// @param scale Text Poistion
 /// @param color Color of text
-void TextRenderer::RenderText(std::string text, glm::vec3 position, const glm::vec2& scale, const glm::vec4& color) {
+void TextRenderer::RenderText(std::string text, glm::vec3 position, const glm::vec2& scale_, const glm::vec4& color) {
     // iterate through all characters
     std::string::const_iterator c;
+
+    // Rescaling the text as it render too large in begining
+    glm::vec2 scale = scale_ * glm::vec2(0.01f);
     
     for (c = text.begin(); c != text.end(); c++) {
         std::shared_ptr<CharTexture> ch = s_TextData->CharTextureMap[*c];

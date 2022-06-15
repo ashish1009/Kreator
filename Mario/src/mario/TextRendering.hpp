@@ -29,9 +29,9 @@ namespace Mario {
         /// Render the text after game started
         /// @param projection Camera projection
         /// @param windowSize window Position
-        static void UpdateRunTime(const glm::mat4& projection, const glm::vec2& windowSize, const Data& data);
+        static void UpdateRunTime(const glm::mat4& projection, const Data& data);
         /// Render the text at init time before game started
-        static void UpdateInitTime(const glm::mat4& projection, const glm::vec2& windowSize);
+        static void UpdateInitTime(const glm::mat4& projection);
         
     private:
         TextRender() = default;

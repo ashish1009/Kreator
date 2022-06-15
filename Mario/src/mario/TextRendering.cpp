@@ -6,6 +6,7 @@
 //
 
 #include "TextRendering.hpp"
+#include "Background.hpp"
 
 using namespace Mario;
 
@@ -21,29 +22,53 @@ TextRender::Data::Data(const PlayerScore& score, const PlayerLevel& level, uint3
 /// Render the text after game started
 /// @param projection Camera projection
 /// @param windowSize window Position
-void TextRender::UpdateRunTime(const glm::mat4& projection, const glm::vec2& windowSize, const Data& data) {
+void TextRender::UpdateRunTime(const glm::mat4& projection, const Data& data) {
+    static glm::vec2 scale = glm::vec3(1.8f);
+    static glm::vec4 color = glm::vec4(1.0f);
+
+    glm::vec3 position = glm::vec3(0.3f);
+
     // Score
-    Renderer::RenderText("MARIO", projection, glm::vec3(40.0f, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
-    Renderer::RenderText(std::to_string(data.Score.TotalScore), projection, glm::vec3(40.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
-    
+    position.x = -15.0f;
+    position.y = 7.5f;
+    Renderer::RenderText("MARIO", projection, position, scale, color);
+    position.y = 6.5f;
+    Renderer::RenderText(std::to_string(data.Score.TotalScore), projection, position, scale, color);
+
     // Coins
-    Renderer::RenderText(std::string(("x") + std::to_string(data.Score.CoinCount)), projection, glm::vec3(windowSize.x / 3.0f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    position.x = -6.0f;
+    Renderer::RenderText(std::string(("x") + std::to_string(data.Score.CoinCount)), projection, position, scale, color);
 
     // World Level
-    Renderer::RenderText("WORLD", projection, glm::vec3(windowSize.x / 1.5f, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    position.x = 3.0f;
+    position.y = 7.5f;
+    Renderer::RenderText("WORLD", projection, position, scale, color);
     std::string levelString = std::to_string(data.Level.WorldLevel) + " - " + std::to_string(data.Level.WorldSubLevel);
-    Renderer::RenderText(levelString, projection, glm::vec3(windowSize.x / 1.5f, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    position.y = 6.5f;
+    Renderer::RenderText(levelString, projection, position, scale, color);
 
     // Time
-    Renderer::RenderText("TIME", projection, glm::vec3(windowSize.x - 120.0, windowSize.y - 50.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
-    Renderer::RenderText(std::to_string(data.TimeLeft), projection, glm::vec3(windowSize.x - 120.0, windowSize.y - 80.0f, 0.3f), glm::vec2(0.7), { 1.0f, 1.0f, 1.0f, 1.0f });
+    position.x = 12.0f;
+    position.y = 7.5f;
+    Renderer::RenderText("TIME", projection, position, scale, color);
+    position.y = 6.5f;
+    Renderer::RenderText(std::to_string(data.TimeLeft), projection, position, scale, color);
 }
 
 /// Render the text at init time before game started
-void TextRender::UpdateInitTime(const glm::mat4& projection, const glm::vec2& windowSize) {
-    // Render the Frame rate
-    Renderer::RenderText("(c)2022 iKan Mario", projection, glm::vec3(950.0f, 265.0f, 0.3f), glm::vec2(0.5), { 1.0f, 1.0f, 1.0f, 0.8f });
+void TextRender::UpdateInitTime(const glm::mat4& projection) {
+    static glm::vec2 scale = glm::vec3(1.8f);
+    static glm::vec4 color = glm::vec4(1.0f);
 
-    Renderer::RenderText("1 PLAYER GAME", projection, glm::vec3(windowSize.x / 3.0f, 200.0f, 0.3f), glm::vec2(1.0), { 1.0f, 1.0f, 1.0f, 0.8f });
-    Renderer::RenderText("2 PLAYER GAME", projection, glm::vec3(windowSize.x / 3.0f, 150.0f, 0.3f), glm::vec2(1.0), { 1.0f, 1.0f, 1.0f, 0.8f });
+    glm::vec3 position = glm::vec3(0.3f);
+
+    position.x = 5.0f;
+    position.y = -2.5f;
+    Renderer::RenderText("(c)2022 iKan Mario", projection, position, { 1.2f, 1.2f }, color);
+
+    position.x = -3.0f;
+    position.y = -5.0f;
+    Renderer::RenderText("1 PLAYER GAME", projection, position, scale, color);
+    position.y = -6.0f;
+    Renderer::RenderText("2 PLAYER GAME", projection, position, scale, color);
 }
