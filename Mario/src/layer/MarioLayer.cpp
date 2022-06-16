@@ -9,6 +9,7 @@
 #include "mario/Background.hpp"
 #include "mario/TextRendering.hpp"
 #include "mario/StartScreen.hpp"
+#include "mario/IconRender.hpp"
 
 using namespace Mario;
 
@@ -91,13 +92,15 @@ void MarioLayer::Update(Timestep ts) {
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
 
+    // TODO: Hard coding will be replaced
+    // TODO: Will bve moved to IsStarted check
     TextRender::UpdateRunTime(projection, { { 0, 0 }, { 1, 1 }, 300 });
-    Background::RuntimeIcon(projection);
+    IconRender::RunTimeIcon(projection);
     if (m_Data.IsStarted) {
-        // TODO: Hard coding will be replaced
     }
     else {
         TextRender::UpdateInitTime(projection);
+        IconRender::InitTimeIcon(projection, -4.8f);
     }
 
     // Render the Frame rate

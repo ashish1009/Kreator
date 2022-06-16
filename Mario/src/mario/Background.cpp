@@ -184,17 +184,6 @@ void Background::Shutdown(const std::shared_ptr<Scene>& scene) {
         delete s_RendererData;
 }
 
-/// Render Runtime Icon without camera view
-/// @param projection camera projection
-void Background::RuntimeIcon(const glm::mat4& projection) {
-    static glm::mat4 t = glm::translate(glm::mat4(1.0f), glm::vec3(-6.4f, 7.7f, 0.3f)) * glm::toMat4(glm::quat(glm::vec3(0.0f))) * glm::scale(glm::mat4(1.0f), glm::vec3(0.6f));
-    static std::shared_ptr<SubTexture> coinIcon = SubTexture::CreateFromCoords(s_RendererData->Sprite, { 24.0f, 26.0f });
-    
-    BatchRenderer::BeginBatch(projection, glm::mat4(1.0f));
-    BatchRenderer::DrawQuad(t, coinIcon, -1);
-    BatchRenderer::EndBatch();
-}
-
 /// Stores the subtexture from Sprite for each tile in init time
 void MarioRendererData::Init(ThemeColor color) {
     IK_INFO("    Storing the Subtextures for each Tile");

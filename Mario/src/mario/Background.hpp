@@ -26,10 +26,6 @@ namespace Mario {
         /// @param scene Scene referece pointer
         static void Shutdown(const std::shared_ptr<Scene>& scene);
         
-        /// Render Runtime Icon without camera view
-        /// @param projection camera projection
-        static void RuntimeIcon(const glm::mat4& projection);
-        
     private:
         Background() = default;
         MAKE_SINGLETON(Background);
