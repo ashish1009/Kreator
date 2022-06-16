@@ -20,8 +20,7 @@ TagComponent::TagComponent(const std::string& tag, const std::string& group) : T
 // Transform Component
 TransformComponent::TransformComponent(const glm::vec3& translation) : Translation(translation) { }
 glm::mat4 TransformComponent::GetTransform() const {
-    glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
-    return glm::translate(glm::mat4(1.0f), Translation) * rotation * glm::scale(glm::mat4(1.0f), Scale);
+    return Math::GetTransformMatrix(Translation, Rotation, Scale);
 }
 void TransformComponent::RenderImgui() {
     PropertyGrid::Float3("Translation", Translation, nullptr, 0.25f, 0.0f, 80.0f);

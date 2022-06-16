@@ -36,6 +36,5 @@ void SceneLight::RenderImgui() {
 
 /// Return the transform matrix
 glm::mat4 SceneLight::GetTransform() const {
-    glm::mat4 rotation = glm::toMat4(glm::quat({ 0.0f, 0.0f, 0.0f }));
-    return glm::translate(glm::mat4(1.0f), Position) * rotation * glm::scale(glm::mat4(1.0f), LightSize);
+    return Math::GetTransformMatrix(Position, { 0.0f, 0.0f, 0.0f }, LightSize);
 }

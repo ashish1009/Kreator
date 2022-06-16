@@ -60,5 +60,14 @@ namespace iKan::Math {
         return true;
     }
     
+    /// Generate tht transform matrix from position scale and rotation
+    /// @param position position
+    /// @param rotaiton rotaiton
+    /// @param scale scale
+    glm::mat4 GetTransformMatrix(const glm::vec3& position, const glm::vec3& rotaiton, const glm::vec3& scale) {
+        glm::mat4 rotation = glm::toMat4(glm::quat(rotaiton));
+        return glm::translate(glm::mat4(1.0f), position) * rotation * glm::scale(glm::mat4(1.0f), scale);
+    }
+    
 }
 
