@@ -11,3 +11,8 @@ using namespace Mario;
 
 const PlayerScore& Player::GetScore() { return m_Score; }
 const PlayerLevel& Player::GetLevel() { return m_Level; }
+
+/// Create player instance
+std::shared_ptr<Player> Player::Create() {
+    return std::make_shared<Player>();
+}

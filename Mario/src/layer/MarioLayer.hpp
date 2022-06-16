@@ -18,7 +18,7 @@ namespace Mario {
     struct Data {
         bool IsStarted = false;         // Flag to check is game started. Set up only when se select number of player
         uint32_t NumPlayers = 0;        // Stores the number of player
-        std::vector<Player> Players;    // Stores information of each players in vector (Make sure to iterate till NumPlayers only)
+        std::vector<std::shared_ptr<Player>> Players;    // Stores information of each players in vector (Make sure to iterate till NumPlayers only)
     };
     
     /// Chess Renderer Layer
@@ -51,6 +51,8 @@ namespace Mario {
         
         // Mario Data before game start
         float m_SelectPlayerIconPosition = -4.8f;
+        uint32_t m_CurrentPlayerIndex = 0;
+        std::shared_ptr<Player> m_CurrentPlayer;
     };
 
 }

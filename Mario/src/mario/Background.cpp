@@ -40,6 +40,7 @@ using namespace Mario;
  3 : Forest 3
 / -------------------------------------------------------------------------------------- */
 // TODO: For now making number of row even to make position of y integral
+// TODO: will move to level folder/class
 static std::string s_MapTiles =
 "                                                                                                                                                                                                                                                                                                                            0"
 "                                                                                                                                                                                                                                                                                                                            0"

@@ -93,8 +93,7 @@ void MarioLayer::Update(Timestep ts) {
     UpdateHoveredEntity();
 
     if (m_Data.IsStarted) {
-        // TODO: Hard coding will be replaced
-        TextRender::UpdateRunTime(projection, { { 0, 0 }, { 1, 1 }, 300 });
+        TextRender::UpdateRunTime(projection, { m_CurrentPlayer->GetScore(), m_CurrentPlayer->GetLevel(), 300 });
         IconRender::RunTimeIcon(projection);
     }
     else {
@@ -156,7 +155,17 @@ bool MarioLayer::OnKeyPressed(KeyPressedEvent& event) {
         m_SelectPlayerIconPosition = (m_SelectPlayerIconPosition < -4.8f) ? -4.8f : -5.5f;
     }
     if (event.GetKeyCode() == KeyCode::S) {
+        // 2 Players if m_SelectPlayerIconPosition < -4.8f else 1 Player
+        m_Data.NumPlayers = (m_SelectPlayerIconPosition < -4.8f) ? 2 : 1;
+        
+        for (uint32_t playerIdx = 0; playerIdx < m_Data.NumPlayers; playerIdx++)
+            m_Data.Players.emplace_back(Player::Create());
+     
+        StartScreen::Shutdown(m_Scene);
         m_Data.IsStarted = true;
+        
+        // TODO: change location when diying player feature added
+        m_CurrentPlayer = m_Data.Players[m_CurrentPlayerIndex];
     }
     return false;
 }

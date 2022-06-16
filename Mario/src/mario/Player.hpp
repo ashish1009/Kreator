@@ -21,6 +21,8 @@ namespace Mario {
         const PlayerScore& GetScore();
         const PlayerLevel& GetLevel();
         
+        static std::shared_ptr<Player> Create();
+        
     private:
         PlayerScore m_Score;
         PlayerLevel m_Level;
