@@ -92,9 +92,12 @@ void MarioLayer::Update(Timestep ts) {
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
 
+    // TODO: Make function pointer
     if (m_Data.IsStarted) {
         TextRender::UpdateRunTime(projection, { m_CurrentPlayer->GetScore(), m_CurrentPlayer->GetLevel(), 300 });
         IconRender::RunTimeIcon(projection);
+        
+        UpdateGame();
     }
     else {
         TextRender::UpdateInitTime(projection);
@@ -105,6 +108,18 @@ void MarioLayer::Update(Timestep ts) {
     Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(-16.5f, -9.0f, 0.3f), glm::vec2(1.0), { 0.0f, 1.0f, 1.0f, 1.0f });
     
     m_ViewportData.FrameBuffer->Unbind();
+}
+
+/// Update the game runtime
+void MarioLayer::UpdateGame() {
+    if (Input::IsKeyPressed(KeyCode::Right)) {
+        static float& cameraPosx = m_CameraEntity->GetComponent<TransformComponent>().Translation.x;
+        cameraPosx += m_MarioSpeed;
+    }
+    if (Input::IsKeyPressed(KeyCode::Left)) {
+        static float& cameraPosx = m_CameraEntity->GetComponent<TransformComponent>().Translation.x;
+        cameraPosx -= m_MarioSpeed;
+    }
 }
 
 /// Render ; for Renderer Layer

@@ -31,5 +31,4 @@ namespace Mario {
         PlayerLevel(uint32_t worldLevel = 1, uint32_t worldSubLevel = 1) : WorldLevel(worldLevel), WorldSubLevel(worldSubLevel) {}
     };
     
-    
 }

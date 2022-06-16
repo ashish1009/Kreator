@@ -40,6 +40,8 @@ namespace Mario {
         bool OnKeyPressed(KeyPressedEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
         void UpdateHoveredEntity();
+        
+        void UpdateGame();
                 
         // Member variabls
         Viewport m_ViewportData;
@@ -48,11 +50,12 @@ namespace Mario {
         
         // Mario Data
         Data m_Data;
+        uint32_t m_CurrentPlayerIndex = 0;
+        std::shared_ptr<Player> m_CurrentPlayer;
+        float m_MarioSpeed = 0.1f;
         
         // Mario Data before game start
         float m_SelectPlayerIconPosition = -4.8f;
-        uint32_t m_CurrentPlayerIndex = 0;
-        std::shared_ptr<Player> m_CurrentPlayer;
     };
 
 }
