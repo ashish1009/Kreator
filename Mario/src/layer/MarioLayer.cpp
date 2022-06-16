@@ -92,15 +92,14 @@ void MarioLayer::Update(Timestep ts) {
     m_ViewportData.UpdateMousePos();
     UpdateHoveredEntity();
 
-    // TODO: Hard coding will be replaced
-    // TODO: Will bve moved to IsStarted check
-    TextRender::UpdateRunTime(projection, { { 0, 0 }, { 1, 1 }, 300 });
-    IconRender::RunTimeIcon(projection);
     if (m_Data.IsStarted) {
+        // TODO: Hard coding will be replaced
+        TextRender::UpdateRunTime(projection, { { 0, 0 }, { 1, 1 }, 300 });
+        IconRender::RunTimeIcon(projection);
     }
     else {
         TextRender::UpdateInitTime(projection);
-        IconRender::InitTimeIcon(projection, -4.8f);
+        IconRender::InitTimeIcon(projection, m_SelectPlayerIconPosition);
     }
 
     // Render the Frame rate
@@ -153,6 +152,12 @@ void MarioLayer::EventHandler(Event& event) {
 /// Kwy Press Event
 /// @param event Key Press event handler
 bool MarioLayer::OnKeyPressed(KeyPressedEvent& event) {
+    if (event.GetKeyCode() == KeyCode::A) {
+        m_SelectPlayerIconPosition = (m_SelectPlayerIconPosition < -4.8f) ? -4.8f : -5.5f;
+    }
+    if (event.GetKeyCode() == KeyCode::S) {
+        m_Data.IsStarted = true;
+    }
     return false;
 }
 

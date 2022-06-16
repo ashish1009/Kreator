@@ -28,6 +28,7 @@ void IconRender::InitTimeIcon(const glm::mat4& projection, float yPos) {
     static glm::vec3 rotation = glm::vec3(0.0f);
     static glm::vec3 position = glm::vec3(-3.5f, yPos, 0.3f);
 
+    position.y = yPos;
     glm::mat4 t = Math::GetTransformMatrix(position, rotation, scale);
     static std::shared_ptr<Texture> selectPlayerTexture = Renderer::GetTexture(AssetManager::GetClientAsset("textures/SelectPlayer.png"), false, false);
     

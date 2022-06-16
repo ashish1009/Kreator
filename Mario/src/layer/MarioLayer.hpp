@@ -46,7 +46,11 @@ namespace Mario {
         std::shared_ptr<Scene> m_Scene;
         std::shared_ptr<Entity> m_CameraEntity;
         
+        // Mario Data
         Data m_Data;
+        
+        // Mario Data before game start
+        float m_SelectPlayerIconPosition = -4.8f;
     };
 
 }
