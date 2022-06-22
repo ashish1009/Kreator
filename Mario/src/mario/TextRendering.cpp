@@ -23,7 +23,7 @@ TextRender::Data::Data(const PlayerScore& score, const PlayerLevel& level, uint3
 /// @param projection Camera projection
 /// @param windowSize window Position
 void TextRender::UpdateRunTime(const glm::mat4& projection, const Data& data) {
-    static glm::vec2 scale = glm::vec3(1.5f);
+    static glm::vec2 scale = glm::vec3(0.015f);
     static glm::vec4 color = glm::vec4(1.0f);
 
     glm::vec3 position = glm::vec3(0.3f);
@@ -61,14 +61,14 @@ void TextRender::UpdateRunTime(const glm::mat4& projection, const Data& data) {
 
 /// Render the text at init time before game started
 void TextRender::UpdateInitTime(const glm::mat4& projection) {
-    static glm::vec2 scale = glm::vec3(1.5f);
+    static glm::vec2 scale = glm::vec3(0.015f);
     static glm::vec4 color = glm::vec4(1.0f);
 
     glm::vec3 position = glm::vec3(0.3f);
 
     position.x = 5.8f;
     position.y = -2.5f;
-    Renderer::RenderText("(c)2022 iKan MARIO", projection, position, { 1.0f, 1.0f }, color);
+    Renderer::RenderText("(c)2022 iKan MARIO", projection, position, { 0.01f, 0.01f }, color);
 
     position.x = -3.0f;
     position.y = -5.0f;

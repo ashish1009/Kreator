@@ -20,7 +20,7 @@ class CircleData;
 
 /// Common 2D Batch Renderer Data
 /// Base class for all 2D Renderer like Quad, Circle ...
-struct RendererData {
+struct BatchRendererData {
     struct Environment {
         glm::mat4 CameraViewProjection;
         glm::mat4 CameraView;
@@ -50,17 +50,17 @@ struct RendererData {
     uint32_t TextureSlotIndex = 1; // 0 = white texture
     
     /// Virtual Destructor
-    virtual ~RendererData() = default;
+    virtual ~BatchRendererData() = default;
     
     friend class QuadData;
     friend class CircleData;
     
 private:
-    RendererData() = default;
+    BatchRendererData() = default;
  };
 
 /// Batch Data to Rendering Quads
-struct QuadData : RendererData {
+struct QuadData : BatchRendererData {
     /// Single vertex of a Quad
     struct Vertex {
         glm::vec3 Position;  // Position of a Quad
@@ -112,7 +112,7 @@ struct QuadData : RendererData {
 static QuadData* s_QuadData;
 
 /// Batch Data to Rendering Circles
-struct CircleData : RendererData {
+struct CircleData : BatchRendererData {
     /// Single vertex of a Circle
     struct Vertex {
         glm::vec3 Position;  // Position of a Quad

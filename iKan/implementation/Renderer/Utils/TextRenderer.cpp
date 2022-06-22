@@ -223,7 +223,7 @@ void TextRenderer::RenderText(std::string text, glm::vec3 position, const glm::v
     std::string::const_iterator c;
 
     // Rescaling the text as it render too large in begining
-    glm::vec2 scale = scale_ * glm::vec2(0.01f);
+    glm::vec2 scale = scale_ * glm::vec2(1.00f);
     
     for (c = text.begin(); c != text.end(); c++) {
         std::shared_ptr<CharTexture> ch = s_TextData->CharTextureMap[*c];

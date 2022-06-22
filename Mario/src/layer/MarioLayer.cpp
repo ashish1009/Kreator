@@ -105,7 +105,7 @@ void MarioLayer::Update(Timestep ts) {
     }
 
     // Render the Frame rate
-    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(-16.5f, -9.0f, 0.3f), glm::vec2(1.0), { 0.0f, 1.0f, 1.0f, 1.0f });
+    Renderer::RenderText(std::to_string((uint32_t)(ImGui::GetIO().Framerate)), projection, glm::vec3(-16.5f, -9.0f, 0.3f), glm::vec2(0.01), { 0.0f, 1.0f, 1.0f, 1.0f });
     
     m_ViewportData.FrameBuffer->Unbind();
 }
