@@ -19,6 +19,11 @@ using namespace iKan;
 Renderer::API Renderer::s_API = Renderer::API::None;
 std::unique_ptr<RendererAPI> Renderer::s_RendererAPI;
 
+struct RendererData {
+    RenderCommandQueue CommandQueue;
+};
+static RendererData s_Data;
+
 // ----------------------- Core Renderer API ----------------------------------
 /// Initialize the Engine Renderer
 void Renderer::Init() {
@@ -204,4 +209,14 @@ std::shared_ptr<Shader> Renderer::GetShader(const std::string& path) {
 /// @param magLinear flag is mag filter is linear
 std::shared_ptr<Texture> Renderer::GetTexture(const std::string& path, bool minLinear, bool magLinear) {
     return TextureLibrary::GetTexture(path, minLinear, magLinear);
+}
+
+/// Return the Renderer Command Queue instance
+RenderCommandQueue& Renderer::GetRenderCommandQueue() {
+    return s_Data.CommandQueue;
+}
+
+/// Run all the commands
+void Renderer::WaitAndRender() {
+    s_Data.CommandQueue.Execute();
 }

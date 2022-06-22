@@ -6,6 +6,7 @@
 //
 
 #pragma once
+#include "Renderer/Utils/RenderCommandQueue.hpp"
 
 // Common Renderer File.
 // Resposible to create interface between Core and Client
@@ -162,6 +163,27 @@ namespace iKan {
         /// @param magLinear flag is mag filter is linear
         static std::shared_ptr<Texture> GetTexture(const std::string& path, bool minLinear = true, bool magLinear = true);
         
+        // ------------------------ Renderer Command Queue API ----------------------
+        static void WaitAndRender();
+        
+        /// Submit the renderer API in the Renderer Command Queue. Later will be executed
+        /// one by one. FunT is type of funcion
+        /// @param func Fucntion pointer to be added in queue
+        template<typename FuncT> static void Submit(FuncT&& func) {
+            auto renderCmd = [](void* ptr) {
+                auto pFunc = (FuncT*)ptr;
+                (*pFunc)();
+
+                // NOTE: Instead of destroying we could try and enforce all items to be trivally destructible
+                // however some items like uniforms which contain std::strings still exist for now
+                // static_assert(std::is_trivially_destructible_v<FuncT>, "FuncT must be trivially destructible");
+                pFunc->~FuncT();
+            };
+            auto storageBuffer = GetRenderCommandQueue().Allocate(renderCmd, sizeof(func));
+            new (storageBuffer) FuncT(std::forward<FuncT>(func));
+        }
+
+        
     private:
         Renderer() = default;
         MAKE_SINGLETON(Renderer);
@@ -169,6 +191,7 @@ namespace iKan {
         // Member varaibel
         static API s_API;
         static std::unique_ptr<RendererAPI> s_RendererAPI;
+        static RenderCommandQueue& GetRenderCommandQueue();
     };
     
 }

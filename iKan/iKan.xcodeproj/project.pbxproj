@@ -36,6 +36,8 @@
 		3E567D6B284CFE7600F44800 /* Maths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E567D69284CFE7600F44800 /* Maths.cpp */; };
 		3E567D6C284CFE7600F44800 /* Maths.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E567D6A284CFE7600F44800 /* Maths.hpp */; };
 		3E567D70284D020D00F44800 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2AB94283D1FBC009764F8 /* libyaml.a */; };
+		3E58079B2862E14F0047379F /* RenderCommandQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E5807992862E14F0047379F /* RenderCommandQueue.cpp */; };
+		3E58079C2862E14F0047379F /* RenderCommandQueue.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E58079A2862E14F0047379F /* RenderCommandQueue.hpp */; };
 		3E6575C428378FB1006B0C81 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C228378FB1006B0C81 /* Window.cpp */; };
 		3E6575C528378FB1006B0C81 /* Window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E6575C328378FB1006B0C81 /* Window.hpp */; };
 		3E6575CA28378FD8006B0C81 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6575C828378FD8006B0C81 /* MacWindow.cpp */; };
@@ -187,6 +189,8 @@
 		3E567D60284CF3C500F44800 /* ContentBrowserPannel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ContentBrowserPannel.hpp; sourceTree = "<group>"; };
 		3E567D69284CFE7600F44800 /* Maths.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maths.cpp; sourceTree = "<group>"; };
 		3E567D6A284CFE7600F44800 /* Maths.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maths.hpp; sourceTree = "<group>"; };
+		3E5807992862E14F0047379F /* RenderCommandQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCommandQueue.cpp; sourceTree = "<group>"; };
+		3E58079A2862E14F0047379F /* RenderCommandQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderCommandQueue.hpp; sourceTree = "<group>"; };
 		3E6575C228378FB1006B0C81 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		3E6575C328378FB1006B0C81 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
 		3E6575C828378FD8006B0C81 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
@@ -375,6 +379,7 @@
 				3E82009A283B88B40024DF91 /* Camera.hpp */,
 				3EB1C89B283BCB4D0098836F /* Mesh.hpp */,
 				3E803912283CCD870034F547 /* Material.hpp */,
+				3E58079A2862E14F0047379F /* RenderCommandQueue.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -421,6 +426,7 @@
 				3E803911283CCD870034F547 /* Material.cpp */,
 				3E9619682847DE4700C74F6D /* TextureLibrary.cpp */,
 				3E9619692847DE4700C74F6D /* TextureLibrary.hpp */,
+				3E5807992862E14F0047379F /* RenderCommandQueue.cpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -792,6 +798,7 @@
 				3E4D74A52846432C0053D366 /* Viewport.hpp in Headers */,
 				3E2FA0FC2839209A00EE289A /* Texture.hpp in Headers */,
 				3E6576332837BF09006B0C81 /* RendererContext.hpp in Headers */,
+				3E58079C2862E14F0047379F /* RenderCommandQueue.hpp in Headers */,
 				3E6576402837CA95006B0C81 /* Input.hpp in Headers */,
 				3E2FA0E62839204100EE289A /* OpenGLRendererPipeline.hpp in Headers */,
 				3E6575D628379414006B0C81 /* Event.h in Headers */,
@@ -979,6 +986,7 @@
 				3E6578DE2837D278006B0C81 /* ImguiBuild.cpp in Sources */,
 				3E2FA0FB2839209A00EE289A /* Texture.cpp in Sources */,
 				3E803913283CCD870034F547 /* Material.cpp in Sources */,
+				3E58079B2862E14F0047379F /* RenderCommandQueue.cpp in Sources */,
 				3E6578EF2837DE49006B0C81 /* PropertyGrid.cpp in Sources */,
 				3E6678D3285625270029A72C /* SceneLight.cpp in Sources */,
 				3E6575EF2837B2A4006B0C81 /* Profiler.cpp in Sources */,
