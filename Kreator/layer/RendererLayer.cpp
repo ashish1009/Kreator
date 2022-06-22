@@ -21,7 +21,6 @@ RendererLayer::~RendererLayer() {
 
 /// Renderer Layer Attach
 void RendererLayer::Attach() {
-    PROFILE();
     IK_INFO("Attaching {0} Layer to Application", m_Name);
 
     // Change the Imgui Font
@@ -49,7 +48,6 @@ void RendererLayer::Attach() {
 
 /// Renderer Layer Detach
 void RendererLayer::Detach() {
-    PROFILE();
     IK_WARN("Detaching {0} Layer to Application", m_Name);
 }
 

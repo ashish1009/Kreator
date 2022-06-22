@@ -61,7 +61,6 @@ static std::string ShaderDataTypeToString(ShaderDataType type) {
 
 /// Open GL Pipeline Constructor
 OpenGLRendererPipeline::OpenGLRendererPipeline() {
-    PROFILE();
     glGenVertexArrays(1, &m_RendererID);
     glBindVertexArray(m_RendererID);
 
@@ -72,7 +71,6 @@ OpenGLRendererPipeline::OpenGLRendererPipeline() {
 
 /// Open GL Pipeline Destructor
 OpenGLRendererPipeline::~OpenGLRendererPipeline() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Pipeline !!!");
     IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
@@ -98,8 +96,6 @@ void OpenGLRendererPipeline::Unbind() const {
 /// Add the Pipeline in the Open GL Pipeline.
 /// @param vertexBuffer Vertex Buffer adding to the Pipeline
 void OpenGLRendererPipeline::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) {
-    PROFILE();
-    
     glBindVertexArray(m_RendererID);
     m_VertexBuffers.push_back(vertexBuffer);
     
@@ -175,7 +171,6 @@ void OpenGLRendererPipeline::AddVertexBuffer(const std::shared_ptr<VertexBuffer>
 /// Setting Open GL Pipeline Constructor
 /// @param indexBuffer Current Index buffer for Pipeline
 void OpenGLRendererPipeline::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) {
-    PROFILE();
     IK_CORE_INFO("Setting up the Index Buffer (ID: {0}) into Pipeline (ID: {1})", indexBuffer->GetRendererID(), m_RendererID);
     m_IndexBuffer = indexBuffer;
     glBindVertexArray(m_RendererID);

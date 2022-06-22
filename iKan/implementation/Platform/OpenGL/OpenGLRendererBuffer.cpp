@@ -15,7 +15,6 @@ using namespace iKan;
 /// @param data Data pointer to be stored in Vertex buffer
 /// @param size size of data to be stored in buffer
 OpenGLVertexBuffer::OpenGLVertexBuffer(void* data, uint32_t size) : m_Size(size) {
-    PROFILE();
     m_Data.Clear();
     m_Data = Buffer::Copy(data, m_Size);
 
@@ -34,8 +33,6 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(void* data, uint32_t size) : m_Size(size)
 /// Open GL vertex Buffer Constructor with size only
 /// @param size size of data to be stored in buffer
 OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size) : m_Size(size) {
-    PROFILE();
-    
     glGenBuffers(1, &m_RendererID);
     glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
     glBufferData(GL_ARRAY_BUFFER, m_Size, nullptr, GL_DYNAMIC_DRAW);
@@ -50,7 +47,6 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size) : m_Size(size) {
 
 /// Open GL Vertex Buffer Detructor
 OpenGLVertexBuffer::~OpenGLVertexBuffer() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Vertex Buffer !!!");
     IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
@@ -81,7 +77,6 @@ void OpenGLVertexBuffer::SetData(void* data, uint32_t size) {
 /// @param size size of data to be stored
 /// @param data data pointer
 OpenGLIndexBuffer::OpenGLIndexBuffer(void* data, uint32_t size) : m_Size(size), m_Count(m_Size / sizeof(uint32_t)) {
-    PROFILE();
     m_Data.Clear();
     m_Data = Buffer::Copy(data, size);
     
@@ -100,7 +95,6 @@ OpenGLIndexBuffer::OpenGLIndexBuffer(void* data, uint32_t size) : m_Size(size), 
 
 /// Open GL Index Buffer Destructor
 OpenGLIndexBuffer::~OpenGLIndexBuffer() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Index Buffer !!!");
     IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);

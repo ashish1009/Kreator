@@ -30,7 +30,6 @@ ImguiLayer::~ImguiLayer() {
 
 /// Attach ImGuiLayer
 void ImguiLayer::Attach() {
-    PROFILE();
     IK_CORE_INFO("{0} is attached to application", GetName());
     
     IMGUI_CHECKVERSION();

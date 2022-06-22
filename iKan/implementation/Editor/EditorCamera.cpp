@@ -18,8 +18,6 @@ std::shared_ptr<EditorCamera> EditorCamera::Create() {
 
 ///Editor camera default constructor. Setup the default perspective view
 EditorCamera::EditorCamera() {
-    PROFILE();
-    
     m_Near = 0.01f;
     m_Far = 10000.0f;
     
@@ -41,7 +39,6 @@ EditorCamera::EditorCamera() {
 
 /// Editor camera default destructor.
 EditorCamera::~EditorCamera() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Editor Camera !!!");
     IK_CORE_WARN("    FOV             : {0}", m_FOV);

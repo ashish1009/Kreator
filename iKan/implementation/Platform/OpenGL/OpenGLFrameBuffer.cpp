@@ -146,7 +146,6 @@ namespace FbUtils {
 /// Open GL Framebuffer constructor
 /// @param specs Frame buffer specificaiton
 OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBuffer::Specification& specs) : m_Specification(specs) {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Open GL Framebuffer ...");
     
@@ -160,9 +159,7 @@ OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBuffer::Specification& specs) : 
 }
 
 /// Open GL Framebuffer destructor
-OpenGLFrameBuffer::~OpenGLFrameBuffer() {
-    PROFILE();
-    
+OpenGLFrameBuffer::~OpenGLFrameBuffer() {    
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Framebuffer !!!");
     IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);

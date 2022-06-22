@@ -15,7 +15,6 @@ using namespace iKan;
 /// MAC Window Constructor
 /// @param spec Window Spcification
 MacWindow::MacWindow(const Window::Specification& spec) {
-    PROFILE();
     m_Data.Specification = spec;
 
     IK_LOG_SEPARATOR();

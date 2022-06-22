@@ -31,8 +31,6 @@ std::shared_ptr<SceneCamera> SceneCamera::Create(ProjectionType projType) {
 /// Scene Camera Constructor
 /// @param projType Projection type of camera
 SceneCamera::SceneCamera(ProjectionType projType) : m_ProjectionType(projType) {
-    PROFILE();
-    
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Scene Camera ...");
     IK_CORE_INFO("    Projection Type : {0}", GetProjectionNameFromType(m_ProjectionType));
@@ -68,9 +66,7 @@ SceneCamera::SceneCamera(const SceneCamera& other) {
 }
 
 /// Scene Camera Destructor
-SceneCamera::~SceneCamera() {
-    PROFILE();
-    
+SceneCamera::~SceneCamera() {    
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Scene Camera !!!");
     IK_CORE_WARN("    Projection Type : {0}", GetProjectionNameFromType(m_ProjectionType));

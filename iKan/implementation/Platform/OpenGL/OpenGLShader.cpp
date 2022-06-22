@@ -76,7 +76,6 @@ namespace ShaderUtils {
 /// Open GL Shader Constructor
 /// @param path Shaderglsl File path
 OpenGLShader::OpenGLShader(const std::string& path) : m_AssetPath(path), m_Name(StringUtils::GetNameFromFilePath(path)) {
-    PROFILE();
     m_RendererID = glCreateProgram();
 
     IK_LOG_SEPARATOR();
@@ -97,7 +96,6 @@ OpenGLShader::OpenGLShader(const std::string& path) : m_AssetPath(path), m_Name(
 
 /// Open GL Shader Destructor
 OpenGLShader::~OpenGLShader() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Shader ...");
     IK_CORE_WARN("    Renderer ID : {0} ", m_RendererID);

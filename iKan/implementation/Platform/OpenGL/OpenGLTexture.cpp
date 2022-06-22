@@ -36,8 +36,6 @@ namespace iKan::TextureUtils {
 /// @param size size of texture
 OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32_t size)
 : m_Width(width), m_Height(height), m_TextureData(data), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA), m_Size(size) {
-    PROFILE();
-
     while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
         /// Checking is this assihned renderer ID already given to some texture.
         /// If yes then recreate new Texture renderer ID
@@ -74,8 +72,6 @@ OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32
 /// @param path Texture file path
 OpenGLTexture::OpenGLTexture(const std::string& path, bool minLinear, bool magLinear)
 : m_Filepath(path), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA) {
-    PROFILE();
-
     if (m_RendererID)
         glDeleteTextures(1, &m_RendererID);
     
@@ -155,8 +151,6 @@ OpenGLTexture::OpenGLTexture(const std::string& path, bool minLinear, bool magLi
 
 /// Open GL Texture Destructor
 OpenGLTexture::~OpenGLTexture() {
-    PROFILE();
-
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Texture: !!! ");
     if (m_Filepath != "")
@@ -232,8 +226,6 @@ OpenGLCharTexture::OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size
 
 /// Open GL Texture Destructor
 OpenGLCharTexture::~OpenGLCharTexture() {
-    PROFILE();
-
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Creating Open GL Char Texture to store Chars ... ");
     IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);

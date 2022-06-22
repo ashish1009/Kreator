@@ -176,7 +176,6 @@ void BatchRenderer::Init(uint32_t maxQuads, uint32_t maxCircles) {
 
 /// SHutdown or destroy the batch Renderer
 void BatchRenderer::Shutdown() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Shutting down the Batch Renderer 2D !!!");
     
@@ -199,8 +198,6 @@ void BatchRenderer::Shutdown() {
 
 /// Initialize Quad Data
 void BatchRenderer::InitQuadData(uint32_t maxQuads) {
-    PROFILE();
-
     // Alloc memory for Quad Data
     s_QuadData = new QuadData();
     
@@ -267,9 +264,7 @@ void BatchRenderer::InitQuadData(uint32_t maxQuads) {
 }
 
 /// Initialize Circle Data
-void BatchRenderer::InitCircleData(uint32_t maxCircles) {
-    PROFILE();
-    
+void BatchRenderer::InitCircleData(uint32_t maxCircles) {    
     // Alloc memory for Circle Data
     s_CircleData = new CircleData();
     

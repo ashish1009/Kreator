@@ -92,7 +92,6 @@ void Scene::DestroyEntity(const std::shared_ptr<Entity>& entity) {
 /// Duplicate the entity
 /// @param entity Entity Handle to be duplicated
 std::shared_ptr<Entity> Scene::DuplicateEntity(const std::shared_ptr<Entity>& entity) {
-    PROFILE();
     auto newEntity = CreateEntity(entity->GetName());
 
     // Copy Components

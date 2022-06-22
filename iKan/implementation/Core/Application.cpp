@@ -90,7 +90,6 @@ Application::Specification& Application::Specification::operator=(const Applicat
 /// Applciation Constructor
 /// @param spec Specification defined for application
 Application::Application(const Specification& spec) : m_Specification(spec) {
-    PROFILE();
     // If instance already created then abort the application
     // as multiple instacne should not be therer
     IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
@@ -112,8 +111,6 @@ Application::Application(const Specification& spec) : m_Specification(spec) {
 
 /// Applciation Destructor
 Application::~Application() {
-    PROFILE();
-    
     Shutdown();
 
     IK_LOG_SEPARATOR();
@@ -166,7 +163,6 @@ void Application::Shutdown() {
 
 /// Update the Application each frame
 void Application::Run() {
-    PROFILE();
     IK_CORE_INFO(" -----------------------------------------  Starting Game Loop  -----------------------------------------------");
 
     Renderer::WaitAndRender();

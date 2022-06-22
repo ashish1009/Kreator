@@ -20,15 +20,12 @@ OpenGLRendererContext::OpenGLRendererContext(GLFWwindow* window) : m_Window(wind
 
 /// Destructor Open GL Graphics Context
 OpenGLRendererContext::~OpenGLRendererContext() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_WARN("Destroying Open GL Renderer Context !!! ");
 }
 
 /// Initialize the Open GL Graphics Context
-void OpenGLRendererContext::Init() {
-    PROFILE();
-    
+void OpenGLRendererContext::Init() {    
     // Create GLFW Window Context.
     // NOTE: This function makes the OpenGL or OpenGL ES context of the specified window
     //       current on the calling thread.  A context must only be made current on

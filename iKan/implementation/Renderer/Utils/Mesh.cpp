@@ -73,9 +73,7 @@ std::shared_ptr<Mesh> Mesh::Create(const std::string& path, uint32_t entityId, b
 /// Mesh Constructor
 /// @param path File Path
 Mesh::Mesh(const std::string& path, uint32_t entityId, bool loadPredefinedMaterial)
-: m_Path(path), m_Directory(StringUtils::GetDirectoryFromFilePath(path)), m_Name(StringUtils::GetNameFromFilePath(path)), m_EntityId(entityId) {
-    PROFILE();
-    
+: m_Path(path), m_Directory(StringUtils::GetDirectoryFromFilePath(path)), m_Name(StringUtils::GetNameFromFilePath(path)), m_EntityId(entityId) {    
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Creating Mesh ...");
     IK_CORE_INFO("    File Path : {0}", m_Path);

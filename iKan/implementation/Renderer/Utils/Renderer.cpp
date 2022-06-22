@@ -27,7 +27,6 @@ static RendererData s_Data;
 // ----------------------- Core Renderer API ----------------------------------
 /// Initialize the Engine Renderer
 void Renderer::Init() {
-    PROFILE();
     IK_LOG_SEPARATOR();
     IK_CORE_INFO("Initialising all Renderers");
     if (!s_RendererAPI) {
@@ -43,7 +42,6 @@ void Renderer::Init() {
 
 /// Shutdown the Engine Renderer Renderer
 void Renderer::Shutdown() {
-    PROFILE();
     IK_CORE_WARN("Shutting down all Renderers");
     if (s_RendererAPI) {
         s_RendererAPI->Shutdown();
