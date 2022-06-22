@@ -214,13 +214,15 @@ bool Application::WindowResize(WindowResizeEvent& e) {
 
 /// Render GUI Window
 void Application::RenderGui() {
-    m_ImguiLayer->Begin();
+    Renderer::Submit([this]() {    
+        m_ImguiLayer->Begin();
 
-    // Render Imgui for all layers
-    for (auto& layer : m_LayerStack)
-        layer->RenderGui();
+        // Render Imgui for all layers
+        for (auto& layer : m_LayerStack)
+            layer->RenderGui();
 
-    m_ImguiLayer->End();
+        m_ImguiLayer->End();
+    });
 }
 
 /// Close the application

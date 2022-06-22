@@ -36,7 +36,7 @@ void Renderer::Init() {
     }
     s_RendererAPI->Init();
     BatchRenderer::Init();
-    TextRenderer::Init();
+//    TextRenderer::Init();
     PropertyGrid::Init();
 }
 
@@ -53,7 +53,7 @@ void Renderer::Shutdown() {
     TextureLibrary::ResetTextures();
 
     BatchRenderer::Shutdown();
-    TextRenderer::Shutdown();
+//    TextRenderer::Shutdown();
     PropertyGrid::Shutdown();
 }
 
@@ -152,8 +152,8 @@ void Renderer::DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, 
 /// @param scale size of text
 /// @param color color of Text
 void Renderer::RenderText(const std::string& text, const glm::mat4& projection, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color) {
-    TextRenderer::BeginBatch(projection);
-    TextRenderer::RenderText(text, position, scale, color);
+//    TextRenderer::BeginBatch(projection);
+//    TextRenderer::RenderText(text, position, scale, color);
 }
 
 // --------------------- Renderer Stats API ---------------------------------

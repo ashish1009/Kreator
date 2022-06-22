@@ -55,7 +55,9 @@ void ImguiLayer::Attach() {
     /* Setup Platform/Renderer bindings */
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     
-    ImGui_ImplOpenGL3_Init("#version 410");
+    Renderer::Submit([]() {
+        ImGui_ImplOpenGL3_Init("#version 410");
+    });
 }
 
 /// Override font

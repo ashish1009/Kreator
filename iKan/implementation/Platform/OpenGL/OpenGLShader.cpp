@@ -76,22 +76,24 @@ namespace ShaderUtils {
 /// Open GL Shader Constructor
 /// @param path Shaderglsl File path
 OpenGLShader::OpenGLShader(const std::string& path) : m_AssetPath(path), m_Name(StringUtils::GetNameFromFilePath(path)) {
-    m_RendererID = glCreateProgram();
+    Renderer::Submit([this]() {
+        m_RendererID = glCreateProgram();
 
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating Open GL Shader ...");
-    IK_CORE_INFO("    Renderer ID : {0} ", m_RendererID);
-    IK_CORE_INFO("    Name        : {0} ", m_Name);
-    IK_CORE_INFO("    File Path   : {0} ", m_AssetPath);
-    IK_CORE_INFO("    ---------------------------------------------");
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Creating Open GL Shader ...");
+        IK_CORE_INFO("    Renderer ID : {0} ", m_RendererID);
+        IK_CORE_INFO("    Name        : {0} ", m_Name);
+        IK_CORE_INFO("    File Path   : {0} ", m_AssetPath);
+        IK_CORE_INFO("    ---------------------------------------------");
 
-    // Extract and Compile the Shader
-    PreprocessFile(StringUtils::ReadFromFile(m_AssetPath));
-    Compile();
-    
-    // Parse and Store all the Uniform in Shader
-    Parse();
-    ResolveUniforms();
+        // Extract and Compile the Shader
+        PreprocessFile(StringUtils::ReadFromFile(m_AssetPath));
+        Compile();
+        
+        // Parse and Store all the Uniform in Shader
+        Parse();
+        ResolveUniforms();
+    });
 }
 
 /// Open GL Shader Destructor
@@ -433,22 +435,28 @@ ShaderStruct* OpenGLShader::FindStruct(const std::string& name) {
 /// Upload the Uniform Vertex shader
 /// @param buffer Data buffer stored for vertex Shdaer
 void OpenGLShader::SetVSMaterialUniformBuffer(const Buffer& buffer) {
-    glUseProgram(m_RendererID);
-    ResolveAndSetUniforms(m_VSMaterialUniformBuffer, buffer);
+    Renderer::Submit([this, buffer]() {
+        glUseProgram(m_RendererID);
+        ResolveAndSetUniforms(m_VSMaterialUniformBuffer, buffer);
+    });
 }
 
 /// Upload the Uniform Pixel shader
 /// @param buffer Data buffer stored for fragment Shdaer
 void OpenGLShader::SetFSMaterialUniformBuffer(const Buffer& buffer) {
-    glUseProgram(m_RendererID);
-    ResolveAndSetUniforms(m_FSMaterialUniformBuffer, buffer);
+    Renderer::Submit([this, buffer]() {
+        glUseProgram(m_RendererID);
+        ResolveAndSetUniforms(m_FSMaterialUniformBuffer, buffer);
+    });
 }
 
 /// Upload the Uniform Geonatry shader
 /// @param buffer Data buffer stored for geomatry Shdaer
 void OpenGLShader::SetGSMaterialUniformBuffer(const Buffer& buffer) {
-    glUseProgram(m_RendererID);
-    ResolveAndSetUniforms(m_GSMaterialUniformBuffer, buffer);
+    Renderer::Submit([this, buffer]() {
+        glUseProgram(m_RendererID);
+        ResolveAndSetUniforms(m_GSMaterialUniformBuffer, buffer);
+    });
 }
 
 /// ResolveAndSetUniforms

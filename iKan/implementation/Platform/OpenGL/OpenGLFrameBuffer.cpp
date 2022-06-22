@@ -146,47 +146,51 @@ namespace FbUtils {
 /// Open GL Framebuffer constructor
 /// @param specs Frame buffer specificaiton
 OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBuffer::Specification& specs) : m_Specification(specs) {
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating Open GL Framebuffer ...");
-    
-    for (auto attchmentFormat : m_Specification.Attachments.TextureFormats) {
-        if (!FbUtils::IsDepthFormat(attchmentFormat))
-            m_ColorSpecifications.emplace_back(attchmentFormat);
-        else
-            m_DepthSpecification = attchmentFormat;
-    }
-    Invalidate();
+    Renderer::Submit([this]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Creating Open GL Framebuffer ...");
+        
+        for (auto attchmentFormat : m_Specification.Attachments.TextureFormats) {
+            if (!FbUtils::IsDepthFormat(attchmentFormat))
+                m_ColorSpecifications.emplace_back(attchmentFormat);
+            else
+                m_DepthSpecification = attchmentFormat;
+        }
+        Invalidate();
+    });
 }
 
 /// Open GL Framebuffer destructor
 OpenGLFrameBuffer::~OpenGLFrameBuffer() {    
-    IK_LOG_SEPARATOR();
-    IK_CORE_WARN("Destroying Open GL Framebuffer !!!");
-    IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
-    
-    uint32_t i = 0;
-    IK_CORE_WARN("    ---------------------------------------------");
-    IK_CORE_WARN("    Color Attachments ");
-    for (const auto& colorSpec : m_ColorSpecifications) {
-        Renderer::RemoveRendererIDs(m_ColorAttachments[i]);
+    Renderer::Submit([this]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_WARN("Destroying Open GL Framebuffer !!!");
+        IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
         
-        IK_CORE_WARN("        Renderer ID : {0}", m_ColorAttachments[i]);
-        IK_CORE_WARN("        Formate     : {0}", FbUtils::GetTextureFormateStringFromEnum(colorSpec));
-        i++;
-    }
-    
-    Renderer::RemoveRendererIDs(m_DepthAttachment);
-    IK_CORE_WARN("    ---------------------------------------------");
-    IK_CORE_WARN("    Depth Attachments ");
-    IK_CORE_WARN("        Renderer ID : {0}", m_DepthAttachment);
-    IK_CORE_WARN("        Formate     : {0}", FbUtils::GetTextureFormateStringFromEnum(m_DepthSpecification));
+        uint32_t i = 0;
+        IK_CORE_WARN("    ---------------------------------------------");
+        IK_CORE_WARN("    Color Attachments ");
+        for (const auto& colorSpec : m_ColorSpecifications) {
+            Renderer::RemoveRendererIDs(m_ColorAttachments[i]);
+            
+            IK_CORE_WARN("        Renderer ID : {0}", m_ColorAttachments[i]);
+            IK_CORE_WARN("        Formate     : {0}", FbUtils::GetTextureFormateStringFromEnum(colorSpec));
+            i++;
+        }
+        
+        Renderer::RemoveRendererIDs(m_DepthAttachment);
+        IK_CORE_WARN("    ---------------------------------------------");
+        IK_CORE_WARN("    Depth Attachments ");
+        IK_CORE_WARN("        Renderer ID : {0}", m_DepthAttachment);
+        IK_CORE_WARN("        Formate     : {0}", FbUtils::GetTextureFormateStringFromEnum(m_DepthSpecification));
 
 
-    glDeleteFramebuffers(1, &m_RendererID);
-    glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
-    glDeleteTextures(1, &m_DepthAttachment);
-    
-    Renderer::RemoveRendererIDs(m_RendererID);
+        glDeleteFramebuffers(1, &m_RendererID);
+        glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
+        glDeleteTextures(1, &m_DepthAttachment);
+        
+        Renderer::RemoveRendererIDs(m_RendererID);
+    });
 }
 
 /// Invalidate the Frame buffer after changing any specification
@@ -312,35 +316,44 @@ void OpenGLFrameBuffer::Invalidate() {
 
 /// Bind the Frame buffer
 void OpenGLFrameBuffer::Bind() const {
-    glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
-    glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+    Renderer::Submit([this]() {
+        glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
+        glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+    });
 }
 
 /// Bind cubemap texture
 /// @param slot Slot of texture bind
 void OpenGLFrameBuffer::BindCubemapTexture(uint32_t slot) const {
-    glActiveTexture(GL_TEXTURE0 + slot);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, m_DepthAttachment);
+    Renderer::Submit([this, slot]() {
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_DepthAttachment);
+    });
 }
 
 /// Unbind the frame buffer
 void OpenGLFrameBuffer::Unbind() const {
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    Renderer::Submit([this]() {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    });
 }
 
 /// Bind cubemap texture
 void OpenGLFrameBuffer::UnbindCubemapTexture() const {
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    Renderer::Submit([this]() {
+        glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    });
 }
 
 /// invalidate again on resize
 /// @param width width of new Framebuffer
 /// @param height height of new Framebuffer
 void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height) {
-    IK_CORE_INFO("Resizing the Framebuffer");
-    
     m_Specification.Width  = width;
     m_Specification.Height = height;
     
-    Invalidate();
+    Renderer::Submit([this]() {
+        IK_CORE_INFO("Resizing the Framebuffer");
+        Invalidate();
+    });
 }

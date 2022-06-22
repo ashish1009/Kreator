@@ -36,36 +36,38 @@ namespace iKan::TextureUtils {
 /// @param size size of texture
 OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32_t size)
 : m_Width(width), m_Height(height), m_TextureData(data), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA), m_Size(size) {
-    while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
-        /// Checking is this assihned renderer ID already given to some texture.
-        /// If yes then recreate new Texture renderer ID
-        // TODO: Decide later to delete older on or not
-        glGenTextures(1, &m_RendererID);
-    }
-    
-    Renderer::AddRendererIDs(m_RendererID);
-    glBindTexture(GL_TEXTURE_2D, m_RendererID);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    
-    uint16_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
-    IK_CORE_ASSERT((m_Size == m_Width * m_Height * bpp), "Data must be entire texture");
-    glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, (stbi_uc*)(m_TextureData));
-    
-    RendererStatistics::Get().TextureBufferSize += m_Size;
+    Renderer::Submit([this]() {
+        while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
+            /// Checking is this assihned renderer ID already given to some texture.
+            /// If yes then recreate new Texture renderer ID
+            // TODO: Decide later to delete older on or not
+            glGenTextures(1, &m_RendererID);
+        }
+        
+        Renderer::AddRendererIDs(m_RendererID);
+        glBindTexture(GL_TEXTURE_2D, m_RendererID);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        
+        uint16_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+        IK_CORE_ASSERT((m_Size == m_Width * m_Height * bpp), "Data must be entire texture");
+        glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, (stbi_uc*)(m_TextureData));
+        
+        RendererStatistics::Get().TextureBufferSize += m_Size;
 
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating Open GL White Texture ... ");
-    IK_CORE_INFO("    Renderer ID       : {0}", m_RendererID);
-    IK_CORE_INFO("    Width             : {0}", m_Width);
-    IK_CORE_INFO("    Height            : {0}", m_Height);
-    IK_CORE_INFO("    Size              : {0} Bytes, {1} KB, {2} MB", m_Size, (float)m_Size / 1000.0f, (float)m_Size / 1000000.0f);
-    IK_CORE_INFO("    Number of Channel : {0}", m_Channel);
-    IK_CORE_INFO("    InternalFormat    : {0}", TextureUtils::GetFormatNameFromEnum(m_InternalFormat));
-    IK_CORE_INFO("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Creating Open GL White Texture ... ");
+        IK_CORE_INFO("    Renderer ID       : {0}", m_RendererID);
+        IK_CORE_INFO("    Width             : {0}", m_Width);
+        IK_CORE_INFO("    Height            : {0}", m_Height);
+        IK_CORE_INFO("    Size              : {0} Bytes, {1} KB, {2} MB", m_Size, (float)m_Size / 1000.0f, (float)m_Size / 1000000.0f);
+        IK_CORE_INFO("    Number of Channel : {0}", m_Channel);
+        IK_CORE_INFO("    InternalFormat    : {0}", TextureUtils::GetFormatNameFromEnum(m_InternalFormat));
+        IK_CORE_INFO("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
+    });
 }
 
 /// Open GL Texture Constructor
@@ -101,36 +103,38 @@ OpenGLTexture::OpenGLTexture(const std::string& path, bool minLinear, bool magLi
                 IK_CORE_ASSERT(false, "Invalid Format ");
         }
         
-        glGenTextures(1, &m_RendererID);
-        while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
-            /// Checking is this assihned renderer ID already given to some texture.
-            /// If yes then recreate new Texture renderer ID
-            // TODO: decide later to delete older on or not
+        Renderer::Submit([this, minLinear, magLinear]() {
             glGenTextures(1, &m_RendererID);
-        }
+            while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
+                /// Checking is this assihned renderer ID already given to some texture.
+                /// If yes then recreate new Texture renderer ID
+                // TODO: decide later to delete older on or not
+                glGenTextures(1, &m_RendererID);
+            }
+            
+            Renderer::AddRendererIDs(m_RendererID);
+            glBindTexture(GL_TEXTURE_2D, m_RendererID);
+            
+            if (minLinear)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            else
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            
+            if (magLinear)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            else
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            
+            glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, m_TextureData);
+            m_Size = m_Width * m_Height * m_Channel;
+            RendererStatistics::Get().TextureBufferSize += m_Size;
+            
+            delete (stbi_uc*)m_TextureData;
+        });
         
-        Renderer::AddRendererIDs(m_RendererID);
-        glBindTexture(GL_TEXTURE_2D, m_RendererID);
-        
-        if (minLinear)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        else
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        
-        if (magLinear)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        else
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, m_TextureData);
-    
-        m_Size = m_Width * m_Height * m_Channel;
-        RendererStatistics::Get().TextureBufferSize += m_Size;
-        
-        delete (stbi_uc*)m_TextureData;
     }
     
     IK_LOG_SEPARATOR();
@@ -151,34 +155,40 @@ OpenGLTexture::OpenGLTexture(const std::string& path, bool minLinear, bool magLi
 
 /// Open GL Texture Destructor
 OpenGLTexture::~OpenGLTexture() {
-    IK_LOG_SEPARATOR();
-    IK_CORE_WARN("Destroying Open GL Texture: !!! ");
-    if (m_Filepath != "")
-        IK_CORE_WARN("    File Path         : {0}", m_Filepath);
+    Renderer::Submit([this]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_WARN("Destroying Open GL Texture: !!! ");
+        if (m_Filepath != "")
+            IK_CORE_WARN("    File Path         : {0}", m_Filepath);
 
-    IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);
-    IK_CORE_WARN("    Width             : {0}", m_Width);
-    IK_CORE_WARN("    Height            : {0}", m_Height);
-    IK_CORE_WARN("    Size              : {0} Bytes, {1} KB, {2} MB", m_Size, (float)m_Size / 1000.0f, (float)m_Size / 1000000.0f);
-    IK_CORE_WARN("    Number of Channel : {0}", m_Channel);
-    IK_CORE_WARN("    InternalFormat    : {0}", TextureUtils::GetFormatNameFromEnum(m_InternalFormat));
-    IK_CORE_WARN("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
+        IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);
+        IK_CORE_WARN("    Width             : {0}", m_Width);
+        IK_CORE_WARN("    Height            : {0}", m_Height);
+        IK_CORE_WARN("    Size              : {0} Bytes, {1} KB, {2} MB", m_Size, (float)m_Size / 1000.0f, (float)m_Size / 1000000.0f);
+        IK_CORE_WARN("    Number of Channel : {0}", m_Channel);
+        IK_CORE_WARN("    InternalFormat    : {0}", TextureUtils::GetFormatNameFromEnum(m_InternalFormat));
+        IK_CORE_WARN("    DataFormat        : {0}", TextureUtils::GetFormatNameFromEnum(m_DataFormat));
 
-    Renderer::RemoveRendererIDs(m_RendererID);
-    glDeleteTextures(1, &m_RendererID);
-    RendererStatistics::Get().TextureBufferSize -= m_Size;
+        Renderer::RemoveRendererIDs(m_RendererID);
+        glDeleteTextures(1, &m_RendererID);
+        RendererStatistics::Get().TextureBufferSize -= m_Size;
+    });
 }
 
 /// Bind Open GL Texture
 /// @param slot Shader slot in which texture need to be binded
 void OpenGLTexture::Bind(uint32_t slot) const {
-    glActiveTexture(GL_TEXTURE0 + slot);
-    glBindTexture(GL_TEXTURE_2D, m_RendererID);
+    Renderer::Submit([this, slot]() {
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_2D, m_RendererID);
+    });
 }
 
 /// Unbind Open GL Texture
 void OpenGLTexture::Unbind() const {
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Renderer::Submit([this]() {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    });
 }
 
 /// Create Emptry Texture with user Defined Data of size height and Width
@@ -188,57 +198,64 @@ void OpenGLTexture::Unbind() const {
 /// @param advance advance of freetype glyph
 OpenGLCharTexture::OpenGLCharTexture(const FT_Face& face, const glm::ivec2& size, const glm::ivec2& bearing, uint32_t advance)
 : m_Size(size), m_Bearing(bearing), m_Advance(advance) {
-    // generate texture
-    glGenTextures(1, &m_RendererID);
-    while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
-        /// Checking is this assihned renderer ID already given to some texture.
-        /// If yes then recreate new Texture renderer ID
-        // TODO: decide later to delete older on or not
+    Renderer::Submit([this, face]() {
+        // generate texture
         glGenTextures(1, &m_RendererID);
-    }
-    
-    Renderer::AddRendererIDs(m_RendererID);
-    glBindTexture(GL_TEXTURE_2D, m_RendererID);
+        while (Renderer::IsTextureRendererIDExist(m_RendererID)) {
+            /// Checking is this assihned renderer ID already given to some texture.
+            /// If yes then recreate new Texture renderer ID
+            // TODO: decide later to delete older on or not
+            glGenTextures(1, &m_RendererID);
+        }
+        
+        Renderer::AddRendererIDs(m_RendererID);
+        glBindTexture(GL_TEXTURE_2D, m_RendererID);
 
-    glTexImage2D(
-        GL_TEXTURE_2D,
-        0,
-        GL_RED,
-        face->glyph->bitmap.width,
-        face->glyph->bitmap.rows,
-        0,
-        GL_RED,
-        GL_UNSIGNED_BYTE,
-        face->glyph->bitmap.buffer
-    );
-    
-    // set texture options
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0,
+            GL_RED,
+            face->glyph->bitmap.width,
+            face->glyph->bitmap.rows,
+            0,
+            GL_RED,
+            GL_UNSIGNED_BYTE,
+            face->glyph->bitmap.buffer
+        );
+        
+        // set texture options
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating Open GL Char Texture to store Chars ... ");
-    IK_CORE_INFO("    Renderer ID       : {0}", m_RendererID);
-
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Creating Open GL Char Texture to store Chars ... ");
+        IK_CORE_INFO("    Renderer ID       : {0}", m_RendererID);
+    });
 }
 
 /// Open GL Texture Destructor
 OpenGLCharTexture::~OpenGLCharTexture() {
-    IK_LOG_SEPARATOR();
-    IK_CORE_WARN("Creating Open GL Char Texture to store Chars ... ");
-    IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);
+    Renderer::Submit([this]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_WARN("Creating Open GL Char Texture to store Chars ... ");
+        IK_CORE_WARN("    Renderer ID       : {0}", m_RendererID);
 
-    Renderer::RemoveRendererIDs(m_RendererID);
-    glDeleteTextures(1, &m_RendererID);
+        Renderer::RemoveRendererIDs(m_RendererID);
+        glDeleteTextures(1, &m_RendererID);
+    });
 }
 
 RendererID OpenGLCharTexture::GetRendererID() const { return m_RendererID;}
 void OpenGLCharTexture::Bind(uint32_t slot) const {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_RendererID);
+    Renderer::Submit([this]() {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, m_RendererID);
+    });
 }
 void OpenGLCharTexture::Unbind() const {
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Renderer::Submit([this]() {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    });
 }

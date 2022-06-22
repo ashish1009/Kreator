@@ -61,26 +61,32 @@ static std::string ShaderDataTypeToString(ShaderDataType type) {
 
 /// Open GL Pipeline Constructor
 OpenGLRendererPipeline::OpenGLRendererPipeline() {
-    glGenVertexArrays(1, &m_RendererID);
-    glBindVertexArray(m_RendererID);
+    Renderer::Submit([this]() {
+        glGenVertexArrays(1, &m_RendererID);
+        glBindVertexArray(m_RendererID);
 
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating Open GL Pipeline ...");
-    IK_CORE_INFO("    Renderer ID : {0}", m_RendererID);
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Creating Open GL Pipeline ...");
+        IK_CORE_INFO("    Renderer ID : {0}", m_RendererID);
+    });
 }
 
 /// Open GL Pipeline Destructor
 OpenGLRendererPipeline::~OpenGLRendererPipeline() {
-    IK_LOG_SEPARATOR();
-    IK_CORE_WARN("Destroying Open GL Pipeline !!!");
-    IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
+    Renderer::Submit([this]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_WARN("Destroying Open GL Pipeline !!!");
+        IK_CORE_WARN("    Renderer ID : {0}", m_RendererID);
 
-    glDeleteVertexArrays(1, &m_RendererID);
+        glDeleteVertexArrays(1, &m_RendererID);
+    });
 }
 
 /// Bind Open GL Pipeline
 void OpenGLRendererPipeline::Bind() const {
-    glBindVertexArray(m_RendererID);
+    Renderer::Submit([this]() {
+        glBindVertexArray(m_RendererID);
+    });
     for (auto vb : m_VertexBuffers)
         vb->Bind();
     
@@ -90,89 +96,95 @@ void OpenGLRendererPipeline::Bind() const {
 
 /// Unbind Open GL Pipeline
 void OpenGLRendererPipeline::Unbind() const {
-    glBindVertexArray(0);
+    Renderer::Submit([this]() {
+        glBindVertexArray(0);
+    });
 }
 
 /// Add the Pipeline in the Open GL Pipeline.
 /// @param vertexBuffer Vertex Buffer adding to the Pipeline
 void OpenGLRendererPipeline::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) {
-    glBindVertexArray(m_RendererID);
-    m_VertexBuffers.push_back(vertexBuffer);
-    
-    uint32_t index = 0;
-    const auto& layout = vertexBuffer->GetLayout();
-    
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Storing the Vertex Buffer (ID: {0}) into Pipeline (ID: {1})", vertexBuffer->GetRendererID(), m_RendererID);
-    IK_CORE_INFO("    Number of Vertex Buffer stored in Pipeline (ID {0}) : {1}", m_RendererID, m_VertexBuffers.size());
-    IK_CORE_INFO("    Vertex Attrib with Stride : {0} ", layout.GetStride());
-    for (const auto& element : layout.GetElements()) {
-        IK_CORE_INFO("        -----------------------------------------");
-        if (element.Normalized)
-            IK_CORE_INFO("        {0} {1} [{2}] (Normalised)", ShaderDataTypeToString(element.Type), element.Name, element.Count);
-        else
-            IK_CORE_INFO("        {0} {1} [{2}] (Not Normalised)", ShaderDataTypeToString(element.Type), element.Name, element.Count);
-        IK_CORE_INFO("               Offset     : {0}", element.Offset);
-        IK_CORE_INFO("               Size       : {0}", element.Size);
+    Renderer::Submit([this, vertexBuffer]() {
+        glBindVertexArray(m_RendererID);
+        m_VertexBuffers.push_back(vertexBuffer);
+        
+        uint32_t index = 0;
+        const auto& layout = vertexBuffer->GetLayout();
+        
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Storing the Vertex Buffer (ID: {0}) into Pipeline (ID: {1})", vertexBuffer->GetRendererID(), m_RendererID);
+        IK_CORE_INFO("    Number of Vertex Buffer stored in Pipeline (ID {0}) : {1}", m_RendererID, m_VertexBuffers.size());
+        IK_CORE_INFO("    Vertex Attrib with Stride : {0} ", layout.GetStride());
+        for (const auto& element : layout.GetElements()) {
+            IK_CORE_INFO("        -----------------------------------------");
+            if (element.Normalized)
+                IK_CORE_INFO("        {0} {1} [{2}] (Normalised)", ShaderDataTypeToString(element.Type), element.Name, element.Count);
+            else
+                IK_CORE_INFO("        {0} {1} [{2}] (Not Normalised)", ShaderDataTypeToString(element.Type), element.Name, element.Count);
+            IK_CORE_INFO("               Offset     : {0}", element.Offset);
+            IK_CORE_INFO("               Size       : {0}", element.Size);
 
-        switch (element.Type) {
-            case ShaderDataType::Int:
-            case ShaderDataType::Int2:
-            case ShaderDataType::Int3:
-            case ShaderDataType::Int4:
-            case ShaderDataType::Bool: {
-                glEnableVertexAttribArray(index);
-                glVertexAttribIPointer(index,
-                                       element.Count,
-                                       ShaderDataTypeToOpenGLBaseType(element.Type),
-                                       layout.GetStride(),
-                                       (const void*)element.Offset);
-                index++;
-                break;
-            }
-                
-            case ShaderDataType::Float:
-            case ShaderDataType::Float2:
-            case ShaderDataType::Float3:
-            case ShaderDataType::Float4: {
-                glEnableVertexAttribArray(index);
-                glVertexAttribPointer(index,
-                                      element.Count,
-                                      ShaderDataTypeToOpenGLBaseType(element.Type),
-                                      element.Normalized ? GL_TRUE : GL_FALSE,
-                                      layout.GetStride(),
-                                      (const void*)element.Offset);
-                index++;
-                break;
-            }
-            case ShaderDataType::Mat3:
-            case ShaderDataType::Mat4: {
-                uint8_t count = element.Count;
-                for (uint8_t i = 0; i < count; i++) {
+            switch (element.Type) {
+                case ShaderDataType::Int:
+                case ShaderDataType::Int2:
+                case ShaderDataType::Int3:
+                case ShaderDataType::Int4:
+                case ShaderDataType::Bool: {
+                    glEnableVertexAttribArray(index);
+                    glVertexAttribIPointer(index,
+                                           element.Count,
+                                           ShaderDataTypeToOpenGLBaseType(element.Type),
+                                           layout.GetStride(),
+                                           (const void*)element.Offset);
+                    index++;
+                    break;
+                }
+                    
+                case ShaderDataType::Float:
+                case ShaderDataType::Float2:
+                case ShaderDataType::Float3:
+                case ShaderDataType::Float4: {
                     glEnableVertexAttribArray(index);
                     glVertexAttribPointer(index,
-                                          count,
+                                          element.Count,
                                           ShaderDataTypeToOpenGLBaseType(element.Type),
                                           element.Normalized ? GL_TRUE : GL_FALSE,
                                           layout.GetStride(),
-                                          (const void*)(sizeof(float) * count * i));
-                    glVertexAttribDivisor(index, 1);
+                                          (const void*)element.Offset);
                     index++;
+                    break;
                 }
-                break;
-            }
-            default: {
-                IK_CORE_ASSERT(false, "Unknown ShaderDataType!");
-            }
-        } // switch (element.Type)
-    } // for (const auto& element : layout.GetElements())
+                case ShaderDataType::Mat3:
+                case ShaderDataType::Mat4: {
+                    uint8_t count = element.Count;
+                    for (uint8_t i = 0; i < count; i++) {
+                        glEnableVertexAttribArray(index);
+                        glVertexAttribPointer(index,
+                                              count,
+                                              ShaderDataTypeToOpenGLBaseType(element.Type),
+                                              element.Normalized ? GL_TRUE : GL_FALSE,
+                                              layout.GetStride(),
+                                              (const void*)(sizeof(float) * count * i));
+                        glVertexAttribDivisor(index, 1);
+                        index++;
+                    }
+                    break;
+                }
+                default: {
+                    IK_CORE_ASSERT(false, "Unknown ShaderDataType!");
+                }
+            } // switch (element.Type)
+        } // for (const auto& element : layout.GetElements())
+    });
 }
 
 /// Setting Open GL Pipeline Constructor
 /// @param indexBuffer Current Index buffer for Pipeline
 void OpenGLRendererPipeline::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) {
-    IK_CORE_INFO("Setting up the Index Buffer (ID: {0}) into Pipeline (ID: {1})", indexBuffer->GetRendererID(), m_RendererID);
     m_IndexBuffer = indexBuffer;
-    glBindVertexArray(m_RendererID);
+    Renderer::Submit([this, indexBuffer]() {
+        IK_CORE_INFO("Setting up the Index Buffer (ID: {0}) into Pipeline (ID: {1})", indexBuffer->GetRendererID(), m_RendererID);
+        glBindVertexArray(m_RendererID);
+    });
     m_IndexBuffer->Bind();
 }

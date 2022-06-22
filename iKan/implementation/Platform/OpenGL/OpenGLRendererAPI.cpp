@@ -24,16 +24,28 @@ OpenGLRendererAPI::~OpenGLRendererAPI() {
 
 /// Initialize the Renderer API
 void OpenGLRendererAPI::Init() const {
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Initializeing Open GL Renderer API");
+    Renderer::Submit([]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Initializeing Open GL Renderer API");
 
-    // TODO: Make API for Text enable too
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        // TODO: Make API for Text enable too
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    MultiSample(true);
-    Depth(true);
-    Blend(true);
+        IK_CORE_INFO("    Multi Sample Feild  : {0}", true);
+        IK_CORE_INFO("    Blending Test Feild : {0}", true);
+        IK_CORE_INFO("    Depth Test Feild    : {0}", true);
+        
+        // Multi Sample
+        glEnable(GL_MULTISAMPLE);
+        
+        // Blending Teting
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        // Depth Testing
+        glEnable(GL_DEPTH_TEST);
+    });
     
     auto& caps = Renderer::Capabilities::Get();
     
@@ -49,50 +61,62 @@ void OpenGLRendererAPI::Shutdown() const {
 
 /// Update the Depth field. Enable or Disablex
 void OpenGLRendererAPI::Depth(bool state) const {
-    IK_CORE_INFO("    Open GL Depth Feild : {0}", state);
-    if (state)
-        glEnable(GL_DEPTH_TEST);
-    else
-        glDisable(GL_DEPTH_TEST);
+    Renderer::Submit([state]() {
+        IK_CORE_INFO("    Open GL Depth Feild : {0}", state);
+        if (state)
+            glEnable(GL_DEPTH_TEST);
+        else
+            glDisable(GL_DEPTH_TEST);
+    });
 }
 
 /// Update the Blend field. Enable or Disablex
 void OpenGLRendererAPI::Blend(bool state) const {
-    IK_CORE_INFO("    Open GL Blend Feild : {0}", state);
-    if (state) {
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
-    else {
-        glDisable(GL_BLEND);
-    }
+    Renderer::Submit([state]() {
+        IK_CORE_INFO("    Open GL Blend Feild : {0}", state);
+        if (state) {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+        else {
+            glDisable(GL_BLEND);
+        }
+    });
 }
 
 /// Update the Multisample field. Enable or Disablex
 void OpenGLRendererAPI::MultiSample(bool state) const {
-    IK_CORE_INFO("    Open GL Multi Sample Feild : {0}", state);
-    if (state)
-        glEnable(GL_MULTISAMPLE);
-    else
-        glDisable(GL_MULTISAMPLE);
+    Renderer::Submit([state]() {
+        IK_CORE_INFO("    Open GL Multi Sample Feild : {0}", state);
+        if (state)
+            glEnable(GL_MULTISAMPLE);
+        else
+            glDisable(GL_MULTISAMPLE);
+    });
 }
 
 /// Set Background Color
 /// @param vec4 Color to be set as background
 void OpenGLRendererAPI::SetClearColor(const glm::vec4& color) const {
-    glClearColor(color.r, color.g, color.b, color.a);
+    Renderer::Submit([color]() {
+        glClearColor(color.r, color.g, color.b, color.a);
+    });
 }
 
 /// Clear the each bits of renderer Pixels
 void OpenGLRendererAPI::ClearBits() const {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    Renderer::Submit([]() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    });
 }
 
 /// Update the Graphics Viewport
 /// @param widht new width
 /// @param height new heighr
 void OpenGLRendererAPI::SetViewPortSize(uint32_t widht, uint32_t height) const {
-    glViewport(0, 0, widht, height);
+    Renderer::Submit([widht, height]() {
+        glViewport(0, 0, widht, height);
+    });
 }
 
 /// Get the Pixel ID from Frame buffer
@@ -100,8 +124,10 @@ void OpenGLRendererAPI::SetViewPortSize(uint32_t widht, uint32_t height) const {
 /// @param my y pixel
 /// @param pixelData pixel value
 void OpenGLRendererAPI::GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData) const {
-    glReadBuffer(GL_COLOR_ATTACHMENT1);
-    glReadPixels(mx, my, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+    Renderer::Submit([mx, my, &pixelData]() {
+        glReadBuffer(GL_COLOR_ATTACHMENT1);
+        glReadPixels(mx, my, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+    });
 }
 
 /// Draw Indexed Vertex Array
@@ -110,13 +136,13 @@ void OpenGLRendererAPI::GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& p
 void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) const {
     pipeline->Bind();
     uint32_t c = (count ? count : pipeline->GetIndexBuffer()->GetCount());
-    glDrawElements(GL_TRIANGLES, c , GL_UNSIGNED_INT, nullptr);
-    
-    // Unbinding Textures and va
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Renderer::Submit([c]() {
+        glDrawElements(GL_TRIANGLES, c , GL_UNSIGNED_INT, nullptr);
+        // Unbinding Textures and va
+        glBindTexture(GL_TEXTURE_2D, 0);
+        RendererStatistics::Get().DrawCalls++;
+    });
     pipeline->Unbind();
-    
-    RendererStatistics::Get().DrawCalls++;
 }
 
 /// Draw Indexed Vertex Array
@@ -124,10 +150,11 @@ void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<Pipeline>& pipeline, u
 /// @param count number of Indices (if 0 then use index buffer of Vertex array)
 void OpenGLRendererAPI::DrawArrays(const std::shared_ptr<Pipeline>& pipeline, uint32_t count) const {
     pipeline->Bind();
-    glDrawArrays(GL_TRIANGLES, 0, count);
+    Renderer::Submit([count]() {
+        glDrawArrays(GL_TRIANGLES, 0, count);
+        RendererStatistics::Get().DrawCalls++;
+    });
     pipeline->Unbind();
-
-    RendererStatistics::Get().DrawCalls++;
 }
 
 /// Render Complex submesh
@@ -137,11 +164,13 @@ void OpenGLRendererAPI::DrawArrays(const std::shared_ptr<Pipeline>& pipeline, ui
 /// @param basevertex Base vertex pos
 void OpenGLRendererAPI::DrawIndexedBaseVertex(const std::shared_ptr<Pipeline>& pipeline, uint32_t count, void* indicesdata, uint32_t basevertex) const {
     pipeline->Bind();
-    glDrawElementsBaseVertex(GL_TRIANGLES, count, GL_UNSIGNED_INT, indicesdata, basevertex);
-    
-    // Unbinding Textures
-    glBindTexture(GL_TEXTURE_2D, 0);
+
+    Renderer::Submit([count, indicesdata, basevertex]() {
+        glDrawElementsBaseVertex(GL_TRIANGLES, count, GL_UNSIGNED_INT, indicesdata, basevertex);
+        // Unbinding Textures
+        glBindTexture(GL_TEXTURE_2D, 0);
+        RendererStatistics::Get().DrawCalls++;
+    });
     pipeline->Unbind();
     
-    RendererStatistics::Get().DrawCalls++;
 }

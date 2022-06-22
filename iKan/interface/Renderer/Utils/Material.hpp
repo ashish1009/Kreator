@@ -28,11 +28,13 @@ namespace iKan {
         /// @param name name of uniform store in shader
         /// @param value value
         template <typename T> void Set(const std::string& name, const T& value) {
-            auto decl = FindUniformDeclaration(name);
-            auto& buffer = GetUniformBufferTarget(decl);
-            buffer.Write((std::byte*)& value, decl->GetSize(), decl->GetOffset());
-            
-            OnMaterialValueUpdated(decl);
+            Renderer::Submit([this, name, value]() {
+                auto decl = FindUniformDeclaration(name);
+                auto& buffer = GetUniformBufferTarget(decl);
+                buffer.Write((std::byte*)& value, decl->GetSize(), decl->GetOffset());
+                
+                OnMaterialValueUpdated(decl);
+            });
         }
         
         /// Upload the texture to material
@@ -96,11 +98,13 @@ namespace iKan {
         /// @param name name of uniform store in shader
         /// @param value value
         template <typename T> void Set(const std::string& name, const T& value) {
-            auto decl = m_Material->FindUniformDeclaration(name);
-            auto& buffer = GetUniformBufferTarget(decl);
-            buffer.Write((std::byte*)& value, decl->GetSize(), decl->GetOffset());
-            
-            m_OverriddenValues.insert(name);
+            Renderer::Submit([this, name, value]() {
+                auto decl = m_Material->FindUniformDeclaration(name);
+                auto& buffer = GetUniformBufferTarget(decl);
+                buffer.Write((std::byte*)& value, decl->GetSize(), decl->GetOffset());
+                
+                m_OverriddenValues.insert(name);
+            });
         }
         
         /// Upload the texture to material

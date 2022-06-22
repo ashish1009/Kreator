@@ -26,10 +26,12 @@ std::shared_ptr<Material> Material::Create(const std::string& shaderFilePath) {
 /// Material Constructor
 /// @param shader Shader to be binded with this material
 Material::Material(const std::shared_ptr<Shader>& shader) : m_Shader(shader) {
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating Material ...");
-    IK_CORE_INFO("    Shader           : {0}", m_Shader->GetName());
-    AllocateStorage();
+    Renderer::Submit([this]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Creating Material ...");
+        IK_CORE_INFO("    Shader           : {0}", m_Shader->GetName());
+        AllocateStorage();
+    });
 }
 
 /// Material Destructor
@@ -128,12 +130,14 @@ void Material::OnMaterialValueUpdated(ShaderUniformDeclaration* decl) {
 /// @param name name of Shdaer uniform
 /// @param texture Texture Materual
 void Material::Set(const std::string& name, const std::shared_ptr<Texture>& texture) {
-    auto decl = FindResourceDeclaration(name);
+    Renderer::Submit([this, name, texture]() {
+        auto decl = FindResourceDeclaration(name);
     
-    uint32_t slot = decl->GetRegister();
-    if (m_Textures.size() <= slot)
-        m_Textures.resize((size_t)slot + 1);
-    m_Textures[slot] = texture;
+        uint32_t slot = decl->GetRegister();
+        if (m_Textures.size() <= slot)
+            m_Textures.resize((size_t)slot + 1);
+        m_Textures[slot] = texture;
+    });
 }
 
 /// Bind the material and shader
@@ -191,12 +195,14 @@ std::shared_ptr<MaterialInstance> MaterialInstance::Create(const std::shared_ptr
 /// @param material Material
 /// @param name Name
 MaterialInstance::MaterialInstance(const std::shared_ptr<Material>& material, const std::string& name) : m_Material(material), m_Name(name) {
-    IK_LOG_SEPARATOR();
-    IK_CORE_INFO("Creating MaterialInstance ...");
-    IK_CORE_INFO("    Name               : {0}", m_Name);
-    IK_CORE_INFO("    Shader             : {0}", m_Material->m_Shader->GetName());
-    m_Material->m_MaterialInstances.insert(this);
-    AllocateStorage();
+    Renderer::Submit([this]() {
+        IK_LOG_SEPARATOR();
+        IK_CORE_INFO("Creating MaterialInstance ...");
+        IK_CORE_INFO("    Name               : {0}", m_Name);
+        IK_CORE_INFO("    Shader             : {0}", m_Material->m_Shader->GetName());
+        m_Material->m_MaterialInstances.insert(this);
+        AllocateStorage();
+    });
 }
 
 /// Material instnace destructor
@@ -261,12 +267,14 @@ Buffer& MaterialInstance::GetUniformBufferTarget(ShaderUniformDeclaration* unifo
 /// @param name name of uniform
 /// @param texture Texture shared ptr
 void MaterialInstance::Set(const std::string& name, const std::shared_ptr<Texture>& texture) {
-    auto decl = m_Material->FindResourceDeclaration(name);
-    
-    uint32_t slot = decl->GetRegister();
-    if (m_Textures.size() <= slot)
-        m_Textures.resize((size_t)slot + 1);
-    m_Textures[slot] = texture;
+    Renderer::Submit([this, name, texture]() {
+        auto decl = m_Material->FindResourceDeclaration(name);
+        
+        uint32_t slot = decl->GetRegister();
+        if (m_Textures.size() <= slot)
+            m_Textures.resize((size_t)slot + 1);
+        m_Textures[slot] = texture;
+    });
 }
 
 /// Bind Material intance
