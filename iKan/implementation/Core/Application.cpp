@@ -155,11 +155,13 @@ void Application::Init() {
     AssetManager::SetClientAssetPath(m_Specification.ClientAssetPath);
     
     Renderer::Init();
+    Renderer::WaitAndRender();
 }
 
 /// Shutdown the base appplication
 void Application::Shutdown() {
     Renderer::Shutdown();
+    Renderer::WaitAndRender();
 }
 
 /// Update the Application each frame
@@ -167,6 +169,7 @@ void Application::Run() {
     PROFILE();
     IK_CORE_INFO(" -----------------------------------------  Starting Game Loop  -----------------------------------------------");
 
+    Renderer::WaitAndRender();
     while (m_IsRunning) {
         // Store the frame time difference
         m_Timestep = m_Window->GerTimestep();
@@ -177,6 +180,9 @@ void Application::Run() {
 
         if (m_Specification.EnableGui)
             RenderGui();
+
+        // Render all command in queue
+        Renderer::WaitAndRender();
 
         // Window update each frame
         m_Window->Update();
